@@ -1,0 +1,36 @@
+; top-most EditorConfig file
+root = true
+
+; Unix-style newlines with a newline ending every file
+[*]
+indent_style = tab
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+; 4 space indentation for python
+[*.py]
+indent_style = space
+indent_size = 4
+
+; 2 space indentation for yaml, ruby, javascript, html and rake
+[*.yml]
+indent_style = space
+indent_size = 2
+
+[*.js]
+indent_style = space
+indent_size = 2
+
+[*.html]
+indent_style = space
+indent_size = 2
+
+[*.rb]
+indent_style = space
+indent_size = 2
+
+[*.rake]
+indent_style = space
+indent_size = 2
