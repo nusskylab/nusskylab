@@ -14,12 +14,16 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 4
 
-; 2 space indentation for yaml, ruby, javascript, html and rake
+; 2 space indentation for yaml, ruby, javascript, erb, html and rake
 [*.yml]
 indent_style = space
 indent_size = 2
 
 [*.js]
+indent_style = space
+indent_size = 2
+
+[*.erb]
 indent_style = space
 indent_size = 2
 
