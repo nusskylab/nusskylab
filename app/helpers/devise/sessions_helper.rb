@@ -1,2 +1,0 @@
-module Devise::SessionsHelper
-end

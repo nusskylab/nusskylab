@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # :database_authenticatable, :registerable,
   # :recoverable, :rememberable, :trackable, :validatable
-  devise :omniauthable, :omniauth_providers => [:openid]
+  devise :omniauthable
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -11,14 +11,6 @@ class User < ActiveRecord::Base
       user.provider = auth.provider
       user.uid = auth.uid
       user.user_name = auth.info.name
-    end
-  end
-
-  def self.new_with_session(params, session)
-    super.tap do |user|
-      if data = session["devise.nus_data"] && session["devise.nus_data"]["extra"]["raw_info"]
-        user.email = data["email"] if user.email.blank?
-      end
     end
   end
 
