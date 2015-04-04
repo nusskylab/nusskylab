@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   root 'home#index'
 
   # oauth handling
-  match '/auth/:provider/callback' => 'sessions#create', via: [:get, :post]
+  post '/auth/:provider/callback' => 'sessions#create', :as => :oauth_callback
   get '/login' => 'sessions#new', :as => :login
   get '/logout' => 'sessions#destroy', :as => :logout
-  get '/auth/failure' => 'sessions#failure'
+  get '/auth/failure' => 'sessions#failure', :as => :login_failure
+
+  resources :users
 end
