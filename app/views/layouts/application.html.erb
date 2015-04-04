@@ -11,8 +11,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<p class="notice" style="display: none;"><%= notice %></p>
+<p class="alert" style="display: none;"><%= alert %></p>
+<%= link_to "Sign in with NUS", user_omniauth_authorize_path(:openid) %>
 <%= yield %>
 
 </body>
