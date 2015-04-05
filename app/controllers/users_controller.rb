@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def index
     if can_view_all_users
+      @students = Student.all
     else
       does_not_have_access
     end
@@ -11,11 +12,11 @@ class UsersController < ApplicationController
 
   def create
     if not params[:user_type].nil? and params[:user_type] == 'student'
-      @user = create_student_user
+      create_student_user
     elsif not params[:user_type].nil? and params[:user_type] == 'mentor'
     elsif not params[:user_type].nil? and params[:user_type] == 'adviser'
     end
-    render plain: params.inspect
+    redirect_to users_path
   end
 
   private
@@ -24,14 +25,14 @@ class UsersController < ApplicationController
       provider = 'NUS'
       email = params[:user][:email]
       user_name = params[:user][:user_name]
-      @user = User.create_or_silent_failure(uid: uid, provider: provider, email: email, user_name: user_name)
+      user = User.create_or_silent_failure(uid: uid, provider: provider, email: email, user_name: user_name)
       team_name = params[:user_team_name]
       project_title = params[:user_project_title]
-      @team = Team.create_or_silent_failure(team_name: team_name, project_title: project_title)
-      @team.save
-      @student = Student.create_or_silent_failure(user_id: @user.id, team_id: @team.id)
-      @student.save()
-      return @user
+      team = Team.create_or_silent_failure(team_name: team_name, project_title: project_title)
+      team.save
+      student = Student.create_or_silent_failure(user_id: user.id, team_id: team.id)
+      student.save()
+      return user
     end
 
   def edit
