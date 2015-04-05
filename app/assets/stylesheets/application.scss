@@ -1,6 +1,11 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.navbar-nav .btn {
+  margin: 7px;
+  padding: 5px;
+}
+
 .footer {
   width: 100%;
   margin-top: 50px;

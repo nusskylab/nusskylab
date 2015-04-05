@@ -11,10 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150404163930) do
+ActiveRecord::Schema.define(version: 20150405063638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admins", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "admins", ["user_id"], name: "index_admins_on_user_id", using: :btree
+
+  create_table "advisers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "advisers", ["user_id"], name: "index_advisers_on_user_id", using: :btree
+
+  create_table "mentors", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "mentors", ["user_id"], name: "index_mentors_on_user_id", using: :btree
+
+  create_table "students", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",      default: "",    null: false
@@ -25,4 +57,8 @@ ActiveRecord::Schema.define(version: 20150404163930) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "admins", "users"
+  add_foreign_key "advisers", "users"
+  add_foreign_key "mentors", "users"
+  add_foreign_key "students", "users"
 end
