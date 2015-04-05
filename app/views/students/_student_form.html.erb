@@ -1,0 +1,48 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="text-center"><%= locals[:is_new] ? 'Create' : 'Edit' %> student</h3>
+  </div>
+  <div class="panel-body">
+    <%= form_for @student, :url => {action: (locals[:is_new] ? 'create' : 'update')}, :html => {:class => 'form-horizontal'} do |f| %>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="user-matric-num">Matriculation Number:</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" placeholder="Input matriculation number" name="matric_num" id="user-matric-num">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="user-username">Username:</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" placeholder="Input user name"
+                   name="user_name" id="user-username" value="<%= locals[:is_new] ? '' : @student.user.user_name %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="user-user-email">User email:</label>
+          <div class="col-sm-10">
+            <input class="form-control" placeholder="Input user email"
+                   name="user_email" id="user-user-email" value="<%= locals[:is_new] ? '' : @student.user.email %>" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="user-team-name">Team name:</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" placeholder="Input team name"
+                   name="team_name" id="user-team-name" value="<%= locals[:is_new] ? '' : @student.team.team_name %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="user-project-title">Project title:</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" placeholder="Input team's project title"
+                   name="project_title" id="user-project-title" value="<%= locals[:is_new] ? '' : @student.team.project_title %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <%= f.submit 'Submit', class: 'btn btn-success' %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

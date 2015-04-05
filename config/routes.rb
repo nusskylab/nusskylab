@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy', :as => :logout
   get '/auth/failure' => 'sessions#failure', :as => :login_failure
 
-  resources :users
+  resources :users, :only => [:index, :new, :show]
+  resources :students
 end
