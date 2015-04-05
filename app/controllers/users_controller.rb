@@ -20,12 +20,16 @@ class UsersController < ApplicationController
 
   private
     def create_student_user
-      @matric = params[:user_matricnum]
-      @user = User.new(params.require(:user).permit(:user_name, :email))
-      @user.uid = 'https://openid.nus.edu.sg/' + @matric
-      @user.provider = 'NUS'
-      @user.save()
-      @student = Student.new(user_id: @user.id)
+      uid = 'https://openid.nus.edu.sg/' + params[:user_matric_num]
+      provider = 'NUS'
+      email = params[:user][:email]
+      user_name = params[:user][:user_name]
+      @user = User.create_or_silent_failure(uid: uid, provider: provider, email: email, user_name: user_name)
+      team_name = params[:user_team_name]
+      project_title = params[:user_project_title]
+      @team = Team.create_or_silent_failure(team_name: team_name, project_title: project_title)
+      @team.save
+      @student = Student.create_or_silent_failure(user_id: @user.id, team_id: @team.id)
       @student.save()
       return @user
     end

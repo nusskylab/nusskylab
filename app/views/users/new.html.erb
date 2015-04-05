@@ -3,29 +3,41 @@
     <h3 class="text-center">Create student</h3>
   </div>
   <div class="panel-body">
-    <%= form_for :user, :url => {action: :create}, :html => {:class => 'form-horizontal'} do |f| %>
+    <%= form_for :user, :url => {action: :create}, :html => {:class => "form-horizontal"} do |f| %>
         <input type="hidden" name="user_type" value="student">
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="user-matricnum">Matriculation Number:</label>
+          <label class="col-sm-2 control-label" for="user-matric-num">Matriculation Number:</label>
           <div class="col-sm-10">
-            <input class="form-control" type="text" placeholder="Input matriculation Number" name="user_matricnum" id="user-matricnum">
+            <input class="form-control" type="text" placeholder="Input matriculation number" name="user_matric_num" id="user-matric-num">
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="user-username">Username:</label>
           <div class="col-sm-10">
-            <%= f.text_field :user_name, class: 'form-control', placeholder: 'Input username', id: 'user-username' %>
+            <%= f.text_field :user_name, class: "form-control", placeholder: "Input user name", id: "user-username" %>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="user-useremail">User email:</label>
           <div class="col-sm-10">
-            <%= f.email_field :email, class: 'form-control', placeholder: 'Input user email', id: 'user-useremail' %>
+            <%= f.email_field :email, class: "form-control", placeholder: "Input user email", id: "user-useremail" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="user-team-name">Team name:</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" placeholder="Input team name" name="user_team_name" id="user-team-name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="user-project-title">Team name:</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" placeholder="Input team's project title" name="user_project_title" id="user-project-title">
           </div>
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <%= f.submit 'Create student', class: 'btn btn-success' %>
+            <%= f.submit "Create student", class: "btn btn-success" %>
           </div>
         </div>
     <% end %>
