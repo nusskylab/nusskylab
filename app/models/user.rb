@@ -8,12 +8,10 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.create_or_silent_failure(user_hash)
-    where(provider: user_hash[:provider], uid: user_hash[:uid]).first_or_create do |user|
-      user.email = user_hash[:email]
-      user.uid = user_hash[:uid]
-      user.provider = user_hash[:provider]
-      user.user_name = user_hash[:user_name]
-    end
+  def self.create_or_update_by_provider_and_uid(user_hash)
+    user = User.find_by(provider: user_hash[:provider], uid: user_hash[:uid]) || User.new
+    user_hash.each_pair { |key, value| user[key] = value }
+    user.save
+    return user
   end
 end

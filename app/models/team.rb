@@ -3,10 +3,10 @@ class Team < ActiveRecord::Base
   belongs_to :adviser
   belongs_to :mentor
 
-  def self.create_or_silent_failure(team_hash)
-    where(team_name: team_hash[:team_name], project_title: team_hash[:project_title]).first_or_create do |team|
-      team.team_name = team_hash[:team_name]
-      team.project_title = team_hash[:project_title]
-    end
+  def self.create_or_update_by_team_name(team_hash)
+    team = Team.find_by(team_name: team_hash[:team_name]) || Team.new
+    team_hash.each_pair { |key, value| team[key] = value }
+    team.save
+    return team
   end
 end

@@ -1,10 +1,13 @@
 class StudentsController < ApplicationController
+  NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
+  NUS_OPEN_ID_PROVIDER = 'NUS'
+
   def index
     @students = Student.all
   end
 
   def create
-    @student = create_student_user
+    create_or_update_student_user
     redirect_to students_path
   end
 
@@ -21,6 +24,7 @@ class StudentsController < ApplicationController
   end
 
   def update
+    create_or_update_student_user
     redirect_to students_path
   end
 
@@ -31,18 +35,22 @@ class StudentsController < ApplicationController
   end
 
   private
-  def create_student_user
-    uid = 'https://openid.nus.edu.sg/' + params[:matric_num]
-    provider = 'NUS'
+  def create_or_update_student_user
+    uid = NUS_OPEN_ID_PREFIX + params[:nus_id]
+    provider = NUS_OPEN_ID_PROVIDER
     email = params[:user_email]
     user_name = params[:user_name]
-    user = User.create_or_silent_failure(uid: uid, provider: provider, email: email, user_name: user_name)
+    user = User.create_or_update_by_provider_and_uid(uid: uid, provider: provider, email: email, user_name: user_name)
     team_name = params[:team_name]
     project_title = params[:project_title]
-    team = Team.create_or_silent_failure(team_name: team_name, project_title: project_title)
-    team.save
-    @student = Student.create_or_silent_failure(user_id: user.id, team_id: team.id)
-    @student.save()
-    return @student
+    project_level = params[:project_level]
+    # TODO: ensure that only one team entity exists for one team name
+    if student = Student.find_by_user_id(user.id)
+      student.team.update_attributes(team_name: team_name, project_title: project_title, project_level: project_level)
+    else
+      team = Team.create_or_update_by_team_name(team_name: team_name, project_title: project_title, project_level: project_level)
+      student = Student.create_or_update_by_user_id(user_id: user.id, team_id: team.id)
+    end
+    return student
   end
 end
