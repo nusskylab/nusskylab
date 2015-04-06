@@ -1,0 +1,21 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="text-center">Milestones</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-hover">
+      <thead>
+      <tr><th>Milestone name</th><th>Deadline</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+      <% @milestones.each do |milestone| %>
+          <tr>
+            <td><%= milestone.name %></td>
+            <td><%= milestone.deadline %></td>
+            <td></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
