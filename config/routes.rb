@@ -10,5 +10,8 @@ Rails.application.routes.draw do
 
   resources :users, :only => [:index, :new, :show]
   resources :students
+  resources :advisers
+  resources :mentors
+  resources :teams
   resources :milestones
 end

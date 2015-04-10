@@ -41,17 +41,17 @@ class StudentsController < ApplicationController
     provider = NUS_OPEN_ID_PROVIDER
     email = params[:user_email]
     user_name = params[:user_name]
-    user = User.create_or_update_by_provider_and_uid(uid: uid, provider: provider, email: email, user_name: user_name)
+    user = User.create_or_update_by_provider_and_uid(uid: uid,
+                                                     provider: provider,
+                                                     email: email,
+                                                     user_name: user_name)
     team_name = params[:team_name]
     project_title = params[:project_title]
     project_level = params[:project_level]
-    # TODO: ensure that only one team entity exists for one team name
-    if student = Student.find_by_user_id(user.id)
-      student.team.update_attributes(team_name: team_name, project_title: project_title, project_level: project_level)
-    else
-      team = Team.create_or_update_by_team_name(team_name: team_name, project_title: project_title, project_level: project_level)
-      student = Student.create_or_update_by_user_id(user_id: user.id, team_id: team.id)
-    end
+    student = Student.create_or_update_by_user_id(user_id: user.id,
+                                                  team_name: team_name,
+                                                  project_title: project_title,
+                                                  project_level: project_level)
     return student
   end
 end

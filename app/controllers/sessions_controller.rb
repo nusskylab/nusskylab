@@ -10,7 +10,15 @@ class SessionsController < ApplicationController
     user = User.from_omniauth(auth)
     reset_session
     session[:user_id] = user.id
-    redirect_to user
+    if s = Student.is_a_student(user.id)
+      redirect_to s
+    elsif a = Adviser.is_an_adviser(user.id)
+      redirect_to a
+    elsif m = Mentor.is_a_mentor(user.id)
+      redirect_to m
+    else
+      redirect_to user
+    end
   end
 
   def destroy

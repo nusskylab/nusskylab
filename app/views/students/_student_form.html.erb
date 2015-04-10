@@ -44,7 +44,7 @@
           <div class="col-sm-10">
             <select class="form-control" name="project_level" id="user-project-level">
               <option value="Vostok" <%= (not locals[:is_new]) && @student.team.project_level == 'Vostok' ? 'selected' : '' %>>Vostok</option>
-              <option value="Gemini" <%= (not locals[:is_new]) && @student.team.project_level == 'Gemini' ? 'selected' : '' %>>Gemini</option>
+              <option value="Gemini" <%= (not locals[:is_new]) && @student.team.project_level == 'Gemini' ? 'selected' : '' %>>Project Gemini</option>
               <option value="Apollo 11" <%= (not locals[:is_new]) && @student.team.project_level == 'Apollo 11' ? 'selected' : '' %>>Apollo 11</option>
             </select>
           </div>
