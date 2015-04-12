@@ -10,7 +10,11 @@ class User < ActiveRecord::Base
 
   def self.create_or_update_by_provider_and_uid(user_hash)
     user = User.find_by(provider: user_hash[:provider], uid: user_hash[:uid]) || User.new
-    user_hash.each_pair { |key, value| user[key] = value }
+    user_hash.each_pair do |key, value|
+      if user.has_attribute?(key) and (not value.blank?)
+        user[key] = value
+      end
+    end
     user.save
     return user
   end
