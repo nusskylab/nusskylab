@@ -44,7 +44,7 @@ class AdvisersController < ApplicationController
                                                      provider: provider,
                                                      email: email,
                                                      user_name: user_name)
-    adviser = Adviser.create_or_update_adviser_by_user_id(user_id: user.id)
+    adviser = Adviser.create_or_update_by_user_id(user_id: user.id)
     return adviser
   end
 end

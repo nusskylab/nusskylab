@@ -1,23 +1,22 @@
 <div class="panel panel-info">
   <div class="panel-heading">
-    <h3 class="text-center">advisers</h3>
+    <h3 class="text-center">mentors</h3>
   </div>
   <div class="panel-body">
     <table class="table table-hover">
       <thead>
-      <tr><th>User Name</th><th>User Email</th><th>Teams</th><th>Actions</th></tr>
+      <tr><th>User Name</th><th>User Email</th><th>Actions</th></tr>
       </thead>
       <tbody>
-      <% @advisers.each do |adviser| %>
+      <% @mentors.each do |mentor| %>
           <tr>
-            <td><%= adviser.user.user_name %></td>
-            <td><%= adviser.user.email %></td>
-            <td><%= adviser.teams %></td>
+            <td><%= mentor.user.user_name %></td>
+            <td><%= mentor.user.email %></td>
             <td>
-              <a class="btn btn-default btn-xs" href="<%=  adviser_path(adviser.id) %>">View</a>
-              <a class="btn btn-default btn-xs" href="<%= edit_adviser_path(adviser.id) %>">Edit</a>
-              <%= link_to 'Delete', adviser_path(adviser.id),
-                          :confirm => 'Are you sure to delete this adviser permanently?', :method => :delete, :class => 'btn btn-danger btn-xs' %>
+              <a class="btn btn-default btn-xs" href="<%=  mentor_path(mentor.id) %>">View</a>
+              <a class="btn btn-default btn-xs" href="<%= edit_mentor_path(mentor.id) %>">Edit</a>
+              <%= link_to 'Delete', mentor_path(mentor.id),
+                          :confirm => 'Are you sure to delete this mentor permanently?', :method => :delete, :class => 'btn btn-danger btn-xs' %>
             </td>
           </tr>
       <% end %>
