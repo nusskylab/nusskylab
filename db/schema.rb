@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150406035415) do
+ActiveRecord::Schema.define(version: 20150413023531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,18 @@ ActiveRecord::Schema.define(version: 20150406035415) do
   add_index "students", ["team_id"], name: "index_students_on_team_id", using: :btree
   add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
 
+  create_table "submissions", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "milestone_id",                 null: false
+    t.integer  "team_id",                      null: false
+    t.boolean  "published",    default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "submissions", ["milestone_id"], name: "index_submissions_on_milestone_id", using: :btree
+  add_index "submissions", ["team_id"], name: "index_submissions_on_team_id", using: :btree
+
   create_table "teams", force: :cascade do |t|
     t.integer  "adviser_id"
     t.integer  "mentor_id"
@@ -84,6 +96,8 @@ ActiveRecord::Schema.define(version: 20150406035415) do
   add_foreign_key "mentors", "users"
   add_foreign_key "students", "teams"
   add_foreign_key "students", "users"
+  add_foreign_key "submissions", "milestones"
+  add_foreign_key "submissions", "teams"
   add_foreign_key "teams", "advisers"
   add_foreign_key "teams", "mentors"
 end

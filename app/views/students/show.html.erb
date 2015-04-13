@@ -2,5 +2,5 @@
   <%= render 'student_details', object: @student %>
 </div>
 <div class="container">
-  <%= render 'milestones/milestones_table', object: @milestones %>
+  <%= render 'teams/team_milestones_table', locals: {milestones: milestones, team: @student.team} %>
 </div>

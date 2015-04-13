@@ -21,7 +21,9 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
-    @milestones = Milestone.all
+    render locals: {
+             milestones: Milestone.all
+           }
   end
 
   def update

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  milestone_id: 
+  team_id: 
+  published: false
+
+two:
+  content: MyText
+  milestone_id: 
+  team_id: 
+  published: false

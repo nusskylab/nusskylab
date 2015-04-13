@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :students
   resources :advisers
   resources :mentors
-  resources :teams
+  resources :teams do
+    resources :submissions
+  end
   resources :milestones
 end
