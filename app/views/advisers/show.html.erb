@@ -1,1 +1,3 @@
-<%= render 'adviser_details', object: @adviser %>
+<% content_for :advisers_content do %>
+  <%= render 'adviser_details', object: @adviser %>
+<% end %>

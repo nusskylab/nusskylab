@@ -8,21 +8,27 @@
           <label class="col-sm-2 control-label" for="user-nus-id">NUS ID:</label>
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input user's NUS ID"
-                   name="nus_id" id="user-nus-id" value="<%= locals[:is_new] ? '' : @adviser.user.uid[26..-1] %>">
+                   name="nus_id" id="user-nus-id" value="<%= locals[:is_new] ? '' : @adviser.user.uid[26..-1] %>"
+                   required="required" pattern="^[auAU][0-9]{7,7}[A-Za-z]?$">
+            <div class="help-block with-errors">Please provide a valid NUS ID</div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="user-username">Username:</label>
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input user name"
-                   name="user_name" id="user-username" value="<%= locals[:is_new] ? '' : @adviser.user.user_name %>">
+                   name="user_name" id="user-username" value="<%= locals[:is_new] ? '' : @adviser.user.user_name %>"
+                   required="required" pattern="^[_A-Za-z0-9]{5,}$">
+            <div class="help-block with-errors">At least 5 letters, numbers or underscores</div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="user-user-email">User email:</label>
           <div class="col-sm-10">
             <input class="form-control" placeholder="Input user email"
-                   name="user_email" id="user-user-email" value="<%= locals[:is_new] ? '' : @adviser.user.email %>" %>
+                   name="user_email" id="user-user-email" value="<%= locals[:is_new] ? '' : @adviser.user.email %>"
+                   required="required" pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$">
+            <div class="help-block with-errors">Primary email address</div>
           </div>
         </div>
         <div class="form-group">

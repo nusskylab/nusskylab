@@ -1,26 +1,3 @@
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="text-center">Create milestone</h3>
-  </div>
-  <div class="panel-body">
-    <%= form_for :milestone, :url => {action: 'create'}, :html => {:class => 'form-horizontal'} do |f| %>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="milestone-name">Milestone name:</label>
-          <div class="col-sm-10">
-            <%= f.text_field :name, class: 'form-control', placeholder: 'Input milestone name', id: 'milestone-name' %>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="milestone-deadline">Milestone deadline:</label>
-          <div class="col-sm-10">
-            <%= f.date_select :deadline, class: 'form-control', id: 'milestone-deadline' %>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <%= f.submit 'Submit', class: 'btn btn-success' %>
-          </div>
-        </div>
-    <% end %>
-  </div>
-</div>
+<% content_for :milestones_content do %>
+  <%= render 'milestone_form', locals: {milestone: @milestone} %>
+<% end %>

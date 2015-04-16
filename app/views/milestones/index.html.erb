@@ -1,1 +1,3 @@
-<%= render partial: 'milestones_table', object: @milestones %>
+<% content_for :milestones_content do %>
+  <%= render partial: 'milestones_table', object: @milestones %>
+<% end %>

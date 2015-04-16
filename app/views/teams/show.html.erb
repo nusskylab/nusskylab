@@ -1,1 +1,3 @@
-<%= render 'team_details', locals: { team: @team} %>
+<% content_for :teams_content do %>
+  <%= render 'team_details', locals: {team: @team} %>
+<% end %>

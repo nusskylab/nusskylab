@@ -1,1 +1,5 @@
-<%= render 'team_form', object: @team, locals: { is_new: true, advisers: advisers, mentors: mentors} %>
+<% content_for :teams_content do %>
+  <%= render 'team_form', object: @team, locals: {is_new: true,
+                                                  advisers: advisers,
+                                                  mentors: mentors} %>
+<% end %>

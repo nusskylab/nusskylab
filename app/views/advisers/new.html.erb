@@ -1,1 +1,3 @@
-<%= render 'adviser_form', object: @adviser, locals: {is_new: true} %>
+<% content_for :advisers_content do %>
+  <%= render 'adviser_form', object: @adviser, locals: {is_new: true} %>
+<% end %>

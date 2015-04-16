@@ -1,0 +1,36 @@
+<%= content_for :content do %>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-menu">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="nav-menu">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#">Liftoff</a></li>
+            <li><a href="/#">Mission Control</a></li>
+            <li><a href="/#">Splash Down</a></li>
+            <li><a href="/#">Alumni</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if current_user %>
+                <li><a href="/logout" class="btn btn-default btn-sm navbar-btn">Logout</a></li>
+            <% else %>
+                <li><a href="/login" class="btn btn-default btn-sm navbar-btn">Login</a></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container" id="main-content">
+      <p class="notice" style="display: none;"><%= notice %></p>
+      <p class="alert" style="display: none;"><%= alert %></p>
+      <%= content_for?(:advisers_content) ? yield(:advisers_content) : yield %>
+    </div>
+<% end %>
+<%= render template: 'layouts/application' %>

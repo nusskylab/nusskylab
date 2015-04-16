@@ -9,8 +9,8 @@
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input user's NUS ID"
                    name="nus_id" id="user-nus-id" value="<%= locals[:is_new] ? '' : @student.user.uid[26..-1] %>"
-                   required="required" pattern="^[auAU][0-9]{7,7}[A-Za-z]?$" data-error="The input is invalid">
-            <div class="help-block with-errors"></div>
+                   required="required" pattern="^[auAU][0-9]{7,7}[A-Za-z]?$">
+            <div class="help-block with-errors">Please provide a valid NUS ID</div>
           </div>
         </div>
         <div class="form-group">
@@ -18,8 +18,8 @@
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input user name"
                    name="user_name" id="user-username" value="<%= locals[:is_new] ? '' : @student.user.user_name %>"
-                   required="required" pattern="^[_A-Za-z0-9 ]{5,}$" data-error="The input is invalid">
-            <div class="help-block with-errors">At least 5 letters, numbers, spaces or underscores</div>
+                   required="required" pattern="^[_A-Za-z0-9]{5,}$">
+            <div class="help-block with-errors">At least 5 letters, numbers or underscores</div>
           </div>
         </div>
         <div class="form-group">
@@ -28,6 +28,7 @@
             <input class="form-control" type="email" placeholder="Input user email"
                    name="user_email" id="user-user-email" value="<%= locals[:is_new] ? '' : @student.user.email %>"
                    required="required" pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$">
+            <div class="help-block with-errors">Primary email address</div>
           </div>
         </div>
         <div class="form-group">
@@ -35,8 +36,8 @@
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input team name"
                    name="team_name" id="user-team-name" value="<%= locals[:is_new] ? '' : @student.team.team_name %>"
-                   required="required" pattern="^[_A-Za-z0-9 ]{5,}$" data-error="The input is invalid">
-            <div class="help-block with-errors">At least 5 letters, numbers, spaces or underscores</div>
+                   required="required" pattern="^[_A-Za-z0-9]{5,}$">
+            <div class="help-block with-errors">At least 5 letters, numbers or underscores</div>
           </div>
         </div>
         <div class="form-group">
@@ -44,8 +45,8 @@
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input team's project title"
                    name="project_title" id="user-project-title" value="<%= locals[:is_new] ? '' : @student.team.project_title %>"
-                   required="required" pattern="^[_A-Za-z0-9 ]{5,}$" data-error="The input is invalid">
-            <div class="help-block with-errors">At least 5 letters, numbers, spaces or underscores</div>
+                   required="required" pattern="^[_A-Za-z0-9]{5,}$" data-error="The input is invalid">
+            <div class="help-block with-errors">At least 5 letters, numbers or underscores</div>
           </div>
         </div>
         <div class="form-group">
@@ -56,6 +57,7 @@
               <option value="Gemini" <%= (not locals[:is_new]) && @student.team.project_level == 'Gemini' ? 'selected' : '' %>>Project Gemini</option>
               <option value="Apollo 11" <%= (not locals[:is_new]) && @student.team.project_level == 'Apollo 11' ? 'selected' : '' %>>Apollo 11</option>
             </select>
+            <div class="help-block with-errors"></div>
           </div>
         </div>
         <div class="form-group">
