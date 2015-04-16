@@ -1,1 +1,3 @@
-<%= render partial: 'students_table', object: @students %>
+<% content_for :students_content do %>
+  <%= render partial: 'students_table', object: @students %>
+<% end %>

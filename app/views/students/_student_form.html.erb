@@ -4,45 +4,54 @@
   </div>
   <div class="panel-body">
     <%= form_for @student, :url => {action: (locals[:is_new] ? 'create' : 'update')}, :html => {:class => 'form-horizontal'} do |f| %>
-        <div class="form-group">
+        <div class="form-group" role="form">
           <label class="col-sm-2 control-label" for="user-nus-id">NUS ID:</label>
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input user's NUS ID"
-                   name="nus_id" id="user-nus-id" value="<%= locals[:is_new] ? '' : @student.user.uid[26..-1] %>">
+                   name="nus_id" id="user-nus-id" value="<%= locals[:is_new] ? '' : @student.user.uid[26..-1] %>"
+                   required="required" pattern="^[auAU][0-9]{7,7}[A-Za-z]?$" data-error="The input is invalid">
+            <div class="help-block with-errors"></div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="user-username">Username:</label>
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input user name"
-                   name="user_name" id="user-username" value="<%= locals[:is_new] ? '' : @student.user.user_name %>">
+                   name="user_name" id="user-username" value="<%= locals[:is_new] ? '' : @student.user.user_name %>"
+                   required="required" pattern="^[_A-Za-z0-9 ]{5,}$" data-error="The input is invalid">
+            <div class="help-block with-errors">At least 5 letters, numbers, spaces or underscores</div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="user-user-email">User email:</label>
           <div class="col-sm-10">
-            <input class="form-control" placeholder="Input user email"
-                   name="user_email" id="user-user-email" value="<%= locals[:is_new] ? '' : @student.user.email %>" %>
+            <input class="form-control" type="email" placeholder="Input user email"
+                   name="user_email" id="user-user-email" value="<%= locals[:is_new] ? '' : @student.user.email %>"
+                   required="required" pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$">
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="user-team-name">Team name:</label>
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input team name"
-                   name="team_name" id="user-team-name" value="<%= locals[:is_new] ? '' : @student.team.team_name %>">
+                   name="team_name" id="user-team-name" value="<%= locals[:is_new] ? '' : @student.team.team_name %>"
+                   required="required" pattern="^[_A-Za-z0-9 ]{5,}$" data-error="The input is invalid">
+            <div class="help-block with-errors">At least 5 letters, numbers, spaces or underscores</div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="user-project-title">Project title:</label>
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input team's project title"
-                   name="project_title" id="user-project-title" value="<%= locals[:is_new] ? '' : @student.team.project_title %>">
+                   name="project_title" id="user-project-title" value="<%= locals[:is_new] ? '' : @student.team.project_title %>"
+                   required="required" pattern="^[_A-Za-z0-9 ]{5,}$" data-error="The input is invalid">
+            <div class="help-block with-errors">At least 5 letters, numbers, spaces or underscores</div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="user-project-level">Project Level:</label>
           <div class="col-sm-10">
-            <select class="form-control" name="project_level" id="user-project-level">
+            <select class="form-control" name="project_level" id="user-project-level" required="required">
               <option value="Vostok" <%= (not locals[:is_new]) && @student.team.project_level == 'Vostok' ? 'selected' : '' %>>Vostok</option>
               <option value="Gemini" <%= (not locals[:is_new]) && @student.team.project_level == 'Gemini' ? 'selected' : '' %>>Project Gemini</option>
               <option value="Apollo 11" <%= (not locals[:is_new]) && @student.team.project_level == 'Apollo 11' ? 'selected' : '' %>>Apollo 11</option>

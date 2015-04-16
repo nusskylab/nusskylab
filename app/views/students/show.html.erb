@@ -1,6 +1,8 @@
-<div class="container">
-  <%= render 'student_details', object: @student %>
-</div>
-<div class="container">
-  <%= render 'teams/team_milestones_table', locals: {milestones: milestones, team: @student.team} %>
-</div>
+<% content_for :students_content do %>
+    <div class="container">
+      <%= render 'student_details', object: @student %>
+    </div>
+    <div class="container">
+      <%= render 'teams/team_milestones_table', locals: {milestones: milestones, team: @student.team} %>
+    </div>
+<% end %>
