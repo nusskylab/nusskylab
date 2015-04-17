@@ -1,1 +1,4 @@
-<%= render 'submission_details', locals: {submission: @submission, milestones: milestones} %>
+<% content_for :submissions_content do %>
+  <%= render 'submission_details', locals: {submission: @submission,
+                                            milestones: milestones} %>
+<% end %>

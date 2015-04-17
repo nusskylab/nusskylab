@@ -25,9 +25,13 @@ class SubmissionsController < ApplicationController
   def create_or_update_submission
     team_id = params[:team_id]
     milestone_id = params[:milestone_id]
-    content = params[:content]
+    read_me = params[:read_me]
+    project_log = params[:project_log]
+    video_link = params[:video_link]
     Submission.create_or_update_by_team_id_and_milestone_id(team_id: team_id,
                                                             milestone_id: milestone_id,
-                                                            content: content)
+                                                            read_me: read_me,
+                                                            project_log: project_log,
+                                                            video_link: video_link)
   end
 end
