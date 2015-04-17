@@ -1,4 +1,7 @@
 class Submission < ActiveRecord::Base
+  validates :milestone_id, presence: true
+  validates :team_id, presence: true
+
   belongs_to :milestone
   belongs_to :team
 
