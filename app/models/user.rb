@@ -1,4 +1,18 @@
 class User < ActiveRecord::Base
+  before_validation :uid.downcase
+
+  validates :email, presence: true,
+            format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\z/,
+                     message: 'Invalid email address'}
+  validates :user_name, presence: true,
+            format: {with: /\A[_A-Za-z0-9 ]{5,}\z/,
+                     message: 'At least 5 letters, numbers using spaces or underscores as deliminators'}
+  validates :provider, presence: true,
+            format: {with: /\ANUS\z/, message: 'Invalid OpenID provider'}
+  validates :uid, presence: true,
+            uniqueness: {scope: :provider,
+                         message: 'An OpenID account can only be used for creating one account'}
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
