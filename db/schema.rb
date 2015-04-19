@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417090259) do
+ActiveRecord::Schema.define(version: 20150419171400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(version: 20150417090259) do
   end
 
   add_index "advisers", ["user_id"], name: "index_advisers_on_user_id", using: :btree
+
+  create_table "evaluatings", force: :cascade do |t|
+    t.integer "evaluator_id", null: false
+    t.integer "evaluated_id", null: false
+  end
+
+  add_index "evaluatings", ["evaluated_id"], name: "index_evaluatings_on_evaluated_id", using: :btree
+  add_index "evaluatings", ["evaluator_id"], name: "index_evaluatings_on_evaluator_id", using: :btree
 
   create_table "mentors", force: :cascade do |t|
     t.integer  "user_id"
@@ -95,6 +103,8 @@ ActiveRecord::Schema.define(version: 20150417090259) do
 
   add_foreign_key "admins", "users"
   add_foreign_key "advisers", "users"
+  add_foreign_key "evaluatings", "teams", column: "evaluated_id"
+  add_foreign_key "evaluatings", "teams", column: "evaluator_id"
   add_foreign_key "mentors", "users"
   add_foreign_key "students", "teams"
   add_foreign_key "students", "users"

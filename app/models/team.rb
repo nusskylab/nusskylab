@@ -2,6 +2,8 @@ class Team < ActiveRecord::Base
   has_many :students
   belongs_to :adviser
   belongs_to :mentor
+  has_many :evaluateds, class_name: :Evaluating, foreign_key: :evaluator_id
+  has_many :evaluators, class_name: :Evaluating, foreign_key: :evaluated_id
 
   def self.create_or_update_by_team_name(team_hash)
     team = Team.find_by(team_name: team_hash[:team_name]) || Team.new
