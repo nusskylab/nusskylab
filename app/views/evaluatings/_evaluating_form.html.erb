@@ -5,21 +5,21 @@
   <div class="panel-body">
     <%= form_for @evaluating, :url => {action: (locals[:is_new] ? 'create' : 'update')}, :html => {:class => 'form-horizontal'} do |f| %>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="user-evaluated-id">NUS ID:</label>
+          <label class="col-sm-2 control-label" for="user-evaluated-id">Evaluated:</label>
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input evaluated team's id"
                    name="evaluated_id" id="user-evaluated-id" value="<%= locals[:is_new] ? '' : @evaluating.evaluated_id %>"
                    required="required" pattern="^[0-9]{1,}$">
-            <div class="help-block with-errors">Please provide a valid NUS ID</div>
+            <div class="help-block with-errors">Please provide a valid ID</div>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="user-evaluator-id">NUS ID:</label>
+          <label class="col-sm-2 control-label" for="user-evaluator-id">Evaluator:</label>
           <div class="col-sm-10">
             <input class="form-control" type="text" placeholder="Input evaluator team's id"
                    name="evaluator_id" id="user-evaluator-id" value="<%= locals[:is_new] ? '' : @evaluating.evaluator_id %>"
                    required="required" pattern="^[0-9]{1,}$">
-            <div class="help-block with-errors">Please provide a valid NUS ID</div>
+            <div class="help-block with-errors">Please provide a valid ID</div>
           </div>
         </div>
         <div class="form-group">

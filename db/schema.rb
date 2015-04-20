@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419171400) do
+ActiveRecord::Schema.define(version: 20150420014011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,18 @@ ActiveRecord::Schema.define(version: 20150419171400) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "peer_evaluations", force: :cascade do |t|
+    t.text    "public_content"
+    t.text    "private_content"
+    t.date    "submitted_date"
+    t.boolean "published"
+    t.integer "team_id",         null: false
+    t.integer "submission_id",   null: false
+  end
+
+  add_index "peer_evaluations", ["submission_id"], name: "index_peer_evaluations_on_submission_id", using: :btree
+  add_index "peer_evaluations", ["team_id"], name: "index_peer_evaluations_on_team_id", using: :btree
 
   create_table "students", force: :cascade do |t|
     t.integer  "user_id"
@@ -106,6 +118,8 @@ ActiveRecord::Schema.define(version: 20150419171400) do
   add_foreign_key "evaluatings", "teams", column: "evaluated_id"
   add_foreign_key "evaluatings", "teams", column: "evaluator_id"
   add_foreign_key "mentors", "users"
+  add_foreign_key "peer_evaluations", "submissions"
+  add_foreign_key "peer_evaluations", "teams"
   add_foreign_key "students", "teams"
   add_foreign_key "students", "users"
   add_foreign_key "submissions", "milestones"

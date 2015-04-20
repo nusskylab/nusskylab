@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :mentors
   resources :teams do
     resources :submissions
+    resources :peer_evaluations
   end
   resources :evaluatings
   resources :milestones
