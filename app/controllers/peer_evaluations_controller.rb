@@ -16,7 +16,10 @@ class PeerEvaluationsController < ApplicationController
   end
 
   def show
-
+    @peer_evaluation = PeerEvaluation.find(params[:id])
+    render locals: {
+             team: Team.find(params[:team_id])
+           }
   end
 
   private

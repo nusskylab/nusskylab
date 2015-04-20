@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  public_content: MyText
-  private_content: MyText
-  team_id: 
-  submission_id: 
-
-two:
-  public_content: MyText
-  private_content: MyText
-  team_id: 
-  submission_id: 
+#one:
+#  public_content: MyText
+#  private_content: MyText
+#  team_id:
+#  submission_id:
+#
+#two:
+#  public_content: MyText
+#  private_content: MyText
+#  team_id:
+#  submission_id:

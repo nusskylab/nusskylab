@@ -1,0 +1,5 @@
+<% content_for :submissions_content do %>
+    <%= render 'submissions_table', locals: {submissions: @submissions,
+                                           milestones: milestones,
+                                           is_new: true} %>
+<% end %>
