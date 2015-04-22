@@ -1,25 +1,30 @@
 nusskylab
 ========================================================
 
+### Introduction
+
+NUSSkylab is the project for managing Orbital programme in NUS. For more info about Orbital, see Introduction to Orbital.
 
 
-## Introduction
-
-NUSSkylab is the project for managing Orbital project in NUS.
-
-
-## Setup
-
-Currently the project is also being setup by the contributor group. A more detailed instruction will soon be available.
+### Setup
 
 
 
-## Development
+### Development
 
-Coming Soon.
+We are following the [GitHub Flow](https://guides.github.com/introduction/flow/index.html). See the contributing guide for more details.
 
 
+### Test
 
-## Test
+* Before you run tests, make sure database migration is already done for test environment. *
 
-Coming Soon.
+Run the tests with command:
+
+```
+rake test
+```
+
+### License
+
+NUS Skylab is released under [MIT License](https://github.com/nusskylab/nusskylab/blob/master/LICENSE)
