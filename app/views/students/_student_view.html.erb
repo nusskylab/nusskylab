@@ -1,0 +1,73 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>
+      <% if current_user %>
+          <span><%= current_user.user_name %> </span>
+      <% end %>
+      <% if (not locals[:student]) %>
+          <span class="text-danger"> (Not a locals[:student])</span>
+      <% elsif locals[:student] and (not locals[:student].team_id) %>
+          <span class="text-muted"> (Currently no team)</span>
+      <% elsif locals[:student] and locals[:student].team_id %>
+          <span> (<%= locals[:student].team.team_name %>)</span>
+      <% end %>
+    </h2>
+  </div>
+  <div class="panel-body">
+    <div role="tabpanel">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#project-panel" aria-controls="project-panel"
+             role="tab" data-toggle="tab">
+            Project
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#evaluation-panel" aria-controls="evaluation-panel"
+             role="tab" data-toggle="tab">
+            Evaluation
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="project-panel">
+          <div class="well">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                <tr><th>Milestone Name</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                <% locals[:milestones].each do |milestone| %>
+                    <tr>
+                      <td><%= milestone.name %></td>
+                      <td>
+                        <% if not locals[:student].team_id %>
+                            No Actions
+                        <% elsif (submission = locals[:team_submissions_table][milestone.id.to_i]) %>
+                            <a href="<%= edit_team_submission_path(locals[:student].team_id,
+                                                              submission.id) %>"
+                               class="btn btn-success">
+                              Edit
+                            </a>
+                        <% else %>
+                            <a href="<%= new_team_submission_path(locals[:student].team_id, target: milestone.name) %>"
+                               class="btn btn-primary">
+                              Submit
+                            </a>
+                        <% end %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
+          ...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

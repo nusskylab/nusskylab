@@ -12,6 +12,9 @@
         <div class="collapse navbar-collapse" id="nav-menu">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
+            <% if current_user and student? and student?.team_id %>
+                <li><a href="<%= team_path(student?.team_id) %>"></a></li>
+            <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if current_user %>
@@ -20,7 +23,7 @@
                   <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button"
                             id="settings-dropdown" data-toggle="dropdown" aria-expanded="true">
-                      Settings<span class="caret"></span>
+                      <span class="glyphicon glyphicon-cog"></span><span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="settings-dropdown">
                       <li><a href="<%= edit_user_path(current_user.id) %>">Edit User Settings</a></li>

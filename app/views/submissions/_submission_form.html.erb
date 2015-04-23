@@ -36,7 +36,8 @@
               <% locals[:milestones].each do |milestone| %>
                   <option value="<%= milestone.id %>"
                           <%= (not locals[:is_new]) && locals[:submission].milestone_id == milestone.id ? 'selected' : '' %>>
-                    <%= milestone.name %></option>
+                    <%= milestone.name %>
+                  </option>
               <% end %>
             </select>
           </div>

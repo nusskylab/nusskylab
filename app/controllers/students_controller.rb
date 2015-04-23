@@ -24,8 +24,21 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
+    milestones = Milestone.all
+    team_submissions_table = {}
+    if @student.team_id
+      submissions = @student.team.submissions
+      milestones.each do |milestone|
+        submissions.each do |submission|
+          if milestone.id.to_i == submission.id.to_i
+            team_submissions_table[milestone.id.to_i] = submission
+          end
+        end
+      end
+    end
     render locals: {
-             milestones: Milestone.all
+             milestones: milestones,
+             team_submissions_table: team_submissions_table
            }
   end
 

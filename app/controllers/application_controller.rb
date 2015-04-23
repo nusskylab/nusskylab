@@ -8,19 +8,19 @@ class ApplicationController < ActionController::Base
   end
 
   def student?
-    @student ||= Student.student?(@current_user.id) if @current_user
+    @student ||= Student.student?(@current_user.id) if current_user
   end
 
   def adviser?
-    @adviser ||= Adviser.adviser?(@current_user.id) if @current_user
+    @adviser ||= Adviser.adviser?(@current_user.id) if current_user
   end
 
   def mentor?
-    @mentor ||= Mentor.mentor?(@current_user.id) if @current_user
+    @mentor ||= Mentor.mentor?(@current_user.id) if current_user
   end
 
   def admin?
-    @admin ||= Admin.admin?(@current_user.id) if @current_user
+    @admin ||= Admin.admin?(@current_user.id) if current_user
   end
 
   helper_method 'current_user'

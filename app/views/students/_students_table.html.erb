@@ -5,16 +5,13 @@
   <div class="panel-body">
     <table class="table table-hover">
       <thead>
-        <tr><th>User Name</th><th>User Email</th><th>Team Name</th><th>Project Title</th><th>Project Level</th><th>Actions</th></tr>
+        <tr><th>User Name</th><th>User Email</th><th>Actions</th></tr>
       </thead>
       <tbody>
       <% @students.each do |student| %>
           <tr>
             <td><%= student.user.user_name %></td>
             <td><%= student.user.email %></td>
-            <td><%= student.team.team_name %></td>
-            <td><%= student.team.project_title %></td>
-            <td><%= student.team.project_level %></td>
             <td>
               <a class="btn btn-default btn-xs" href="<%=  student_path(student.id) %>">View</a>
               <a class="btn btn-default btn-xs" href="<%= edit_student_path(student.id) %>">Edit</a>
