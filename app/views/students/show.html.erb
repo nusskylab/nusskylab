@@ -1,5 +1,7 @@
 <% content_for :students_content do %>
-    <%= render 'student_view', locals: {student: @student,
-                                        milestones: milestones,
-                                        team_submissions_table: team_submissions_table} %>
+    <%= render 'student_view',
+               locals: {student: @student,
+                        milestones: milestones,
+                        team_submissions_table: team_submissions_table,
+                        team_evaluated_teams_submissions: team_evaluated_teams_submissions} %>
 <% end %>

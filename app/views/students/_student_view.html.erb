@@ -65,7 +65,24 @@
           </div>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
-          ...
+          <div class="well">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr><th>Team Name</th><th>Team Submission</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                  <% locals[:team_evaluated_teams_submissions].each do |submission| %>
+                    <tr>
+                      <td><%= submission.team.team_name %></td>
+                      <td><%= submission.milestone.name %></td>
+                      <td></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
