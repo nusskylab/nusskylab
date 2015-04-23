@@ -10,15 +10,7 @@ class SessionsController < ApplicationController
     user = User.from_omniauth(auth)
     reset_session
     session[:user_id] = user.id
-    if s = Student.is_a_student(user.id)
-      redirect_to s
-    elsif a = Adviser.is_an_adviser(user.id)
-      redirect_to a
-    elsif m = Mentor.is_a_mentor(user.id)
-      redirect_to m
-    else
-      redirect_to user
-    end
+    redirect_user(user)
   end
 
   def destroy
@@ -28,5 +20,24 @@ class SessionsController < ApplicationController
 
   def failure
     redirect_to root_url, :alert => "Authentication error: #{params[:message].humanize}"
+  end
+
+  private
+  def redirect_user(user)
+    student = Student.student?(user.id)
+    adviser = Adviser.adviser?(user.id)
+    mentor = Mentor.mentor?(user.id)
+    admin = Admin.admin?(user.id)
+    if student and (not adviser) and (not mentor) and (not admin)
+      redirect_to student_path(student.id)
+    elsif (not student) and adviser and (not mentor) and (not admin)
+      redirect_to adviser_path(adviser.id)
+    elsif (not student) and (not adviser) and mentor and (not admin)
+      redirect_to mentor_path(mentor.id)
+    elsif (not student) and (not adviser) and (not mentor) and admin
+      redirect_to admin_path(admin.id)
+    else
+      redirect_to user_path(user.id)
+    end
   end
 end

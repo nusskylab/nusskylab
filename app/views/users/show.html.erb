@@ -1,14 +1,20 @@
-<p>
-  <strong>User Name:</strong>
-  <%= @user.user_name %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Authentication:</strong>
-  <%= @user.provider %>
-</p>
+<% content_for :users_content do %>
+    <div class="jumbotron">
+      <h1 class="text-center">Welcome to Orbital</h1>
+      <p>You can choose to view as one of the following roles:</p>
+      <p>
+        <% if student? %>
+            <a href="<%= student_path(student?.id) %>" class="btn btn-primary btn-lg">View as a student</a>
+        <% end %>
+        <% if adviser? %>
+            <a href="<%= adviser_path(adviser?.id) %>" class="btn btn-primary btn-lg">View as an adviser</a>
+        <% end %>
+        <% if mentor? %>
+            <a href="<%= mentor_path(mentor?.id) %>" class="btn btn-primary btn-lg">View as a mentor</a>
+        <% end %>
+        <% if admin? %>
+            <a href="<%= adviser_path(admin?.id) %>" class="btn btn-primary btn-lg">View as an admin</a>
+        <% end %>
+      </p>
+    </div>
+<% end %>

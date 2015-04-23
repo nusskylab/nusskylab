@@ -14,6 +14,12 @@
   padding: 10px 0 0 0;
 }
 
+@media (max-width: 600px) {
+  .user-name-text {
+    margin-left: 8px;
+  }
+}
+
 #main-content {
   min-height: 500px;
 }

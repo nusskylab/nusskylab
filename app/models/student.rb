@@ -25,7 +25,7 @@ class Student < ActiveRecord::Base
     return student
   end
 
-  def self.is_a_student(user_id)
+  def self.student?(user_id)
     Student.find_by(user_id: user_id)
   end
 end
