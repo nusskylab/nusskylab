@@ -12,14 +12,25 @@
         <div class="collapse navbar-collapse" id="nav-menu">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
-            <li><a href="/#">Liftoff</a></li>
-            <li><a href="/#">Mission Control</a></li>
-            <li><a href="/#">Splash Down</a></li>
-            <li><a href="/#">Alumni</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if current_user %>
-                <li><a href="/logout" class="btn btn-default btn-sm navbar-btn">Logout</a></li>
+                <li><p class="navbar-text user-name-text"> Welcome, <%= current_user.user_name %></p></li>
+                <li>
+                  <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button"
+                            id="settings-dropdown" data-toggle="dropdown" aria-expanded="true">
+                      Settings<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="settings-dropdown">
+                      <li><a href="<%= edit_user_path(current_user.id) %>">Edit User Settings</a></li>
+                      <% if student? %>
+                          <li><a href="<%= edit_student_path(student?.id) %>">Edit Student Settings</a></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </li>
+                <li><a href="/logout" class="btn btn-default btn-sm navbar-btn"><b>Logout</b></a></li>
             <% else %>
                 <li><a href="/login" class="btn btn-default btn-sm navbar-btn">Login</a></li>
             <% end %>
@@ -34,3 +45,4 @@
     </div>
 <% end %>
 <%= render template: 'layouts/application' %>
+

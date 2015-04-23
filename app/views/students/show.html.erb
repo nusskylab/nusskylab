@@ -1,8 +1,44 @@
 <% content_for :students_content do %>
-    <div class="container">
-      <%= render 'student_details', object: @student %>
-    </div>
-    <div class="container">
-      <%= render 'teams/team_milestones_table', locals: {milestones: milestones, team: @student.team} %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2>
+          <% if current_user %>
+              <span><%= current_user.user_name %> </span>
+          <% end %>
+          <% if (not student?) %>
+              <span class="text-danger"> (Not a student)</span>
+          <% elsif student? and (not student?.team_id) %>
+              <span class="text-muted"> (Currently no team)</span>
+          <% elsif student? and student?.team_id %>
+              <span> (<%= student?.team.team_name %>)</span>
+          <% end %>
+        </h2>
+      </div>
+      <div class="panel-body">
+        <div role="tabpanel">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#project-panel" aria-controls="project-panel"
+                 role="tab" data-toggle="tab">
+                Project
+              </a>
+            </li>
+            <li role="presentation">
+              <a href="#evaluation-panel" aria-controls="evaluation-panel"
+                 role="tab" data-toggle="tab">
+                Evaluation
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="project-panel">
+              ...
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
+              ...
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 <% end %>
