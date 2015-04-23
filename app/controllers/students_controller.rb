@@ -26,8 +26,12 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:id])
     milestones = Milestone.all
     team_submissions_table = {}
+    team_evaluated_teams_submissions = []
+    team_evaluator_teams_evaluations = []
     if @student.team_id
       submissions = @student.team.submissions
+      evaluateds = @student.team.evaluateds
+      evaluators = @student.team.evaluators
       milestones.each do |milestone|
         submissions.each do |submission|
           if milestone.id.to_i == submission.id.to_i
@@ -35,10 +39,14 @@ class StudentsController < ApplicationController
           end
         end
       end
+      evaluateds.each do |evaluated|
+        team_evaluated_teams_submissions += evaluated.evaluated.submissions
+      end
     end
     render locals: {
              milestones: milestones,
-             team_submissions_table: team_submissions_table
+             team_submissions_table: team_submissions_table,
+             team_evaluated_teams_submissions: team_evaluated_teams_submissions
            }
   end
 
