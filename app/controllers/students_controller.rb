@@ -42,11 +42,15 @@ class StudentsController < ApplicationController
       evaluateds.each do |evaluated|
         team_evaluated_teams_submissions += evaluated.evaluated.submissions
       end
+      evaluators.each do |evaluator|
+        team_evaluator_teams_evaluations += evaluator.evaluator.peer_evaluations
+      end
     end
     render locals: {
              milestones: milestones,
              team_submissions_table: team_submissions_table,
-             team_evaluated_teams_submissions: team_evaluated_teams_submissions
+             team_evaluated_teams_submissions: team_evaluated_teams_submissions,
+             team_evaluator_teams_evaluations: team_evaluator_teams_evaluations
            }
   end
 

@@ -1,11 +1,13 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h2>
-      <% if current_user %>
-          <span><%= current_user.user_name %> </span>
+      <% if (not locals[:student]) %>
+          <span class="text-danger">Not a student </span>
+      <% else %>
+          <span><%= locals[:student].user.user_name %> </span>
       <% end %>
       <% if (not locals[:student]) %>
-          <span class="text-danger"> (Not a locals[:student])</span>
+          <span class="text-danger"> (Not a student)</span>
       <% elsif locals[:student] and (not locals[:student].team_id) %>
           <span class="text-muted"> (Currently no team)</span>
       <% elsif locals[:student] and locals[:student].team_id %>
@@ -26,6 +28,12 @@
           <a href="#evaluation-panel" aria-controls="evaluation-panel"
              role="tab" data-toggle="tab">
             Evaluation
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#feedback-panel" aria-controls="feedback-panel"
+             role="tab" data-toggle="tab">
+            Feedback
           </a>
         </li>
       </ul>
@@ -79,6 +87,26 @@
                       <td></td>
                     </tr>
                   <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="feedback-panel">
+          <div class="well">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                <tr><th>Team Name</th><th>Team Submission</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                <% locals[:team_evaluator_teams_evaluations].each do |peer_evaluation| %>
+                    <tr>
+                      <td><%= peer_evaluation.team.team_name %></td>
+                      <td><%= peer_evaluation.submission.id %></td>
+                      <td></td>
+                    </tr>
+                <% end %>
                 </tbody>
               </table>
             </div>
