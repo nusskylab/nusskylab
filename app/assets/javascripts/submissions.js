@@ -1,6 +1,5 @@
 'use strict';
 $(document).ready(function () {
-  $('form[id^=edit_submission], form[id^=new_submission]').validator();
 
   function getParameterByName (name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
