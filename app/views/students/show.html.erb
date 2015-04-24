@@ -2,7 +2,10 @@
     <%= render 'student_view',
                locals: {student: @student,
                         milestones: milestones,
-                        team_submissions_table: team_submissions_table,
-                        team_evaluated_teams_submissions: team_evaluated_teams_submissions,
-                        team_evaluator_teams_evaluations: team_evaluator_teams_evaluations} %>
+                        evaluateds: evaluateds,
+                        evaluators: evaluators,
+                        team_submissions: team_submissions,
+                        team_evaluateds_submissions: team_evaluateds_submissions,
+                        team_evaluations: team_evaluations,
+                        team_evaluators_evaluations: team_evaluators_evaluations} %>
 <% end %>

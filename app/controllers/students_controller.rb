@@ -26,31 +26,42 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:id])
     milestones = Milestone.all
     team_submissions_table = {}
-    team_evaluated_teams_submissions = []
-    team_evaluator_teams_evaluations = []
+    team_evaluateds_submissions_table = {}
+    team_evaluations_table = {}
+    team_evaluators_evaluations_table = {}
+    evaluateds = @student.team.evaluateds
+    evaluators = @student.team.evaluators
     if @student.team_id
-      submissions = @student.team.submissions
-      evaluateds = @student.team.evaluateds
-      evaluators = @student.team.evaluators
       milestones.each do |milestone|
-        submissions.each do |submission|
-          if milestone.id.to_i == submission.id.to_i
-            team_submissions_table[milestone.id.to_i] = submission
+        team_evaluateds_submissions_table[milestone.id] = {}
+        team_evaluators_evaluations_table[milestone.id] = {}
+        team_evaluations_table[milestone.id] = {}
+        evaluateds.each do |evaluated|
+          temp_evaluated_submission = Submission.find_by(team_id: evaluated.evaluated_id, milestone_id: milestone.id)
+          if temp_evaluated_submission
+            team_evaluateds_submissions_table[milestone.id][evaluated.evaluated_id] = temp_evaluated_submission
+            team_evaluations_table[milestone.id][evaluated.evaluated_id] = PeerEvaluation.find_by(team_id: @student.team_id,
+                                                                                                  submission_id: temp_evaluated_submission.id)
           end
         end
-      end
-      evaluateds.each do |evaluated|
-        team_evaluated_teams_submissions += evaluated.evaluated.submissions
-      end
-      evaluators.each do |evaluator|
-        team_evaluator_teams_evaluations += evaluator.evaluator.peer_evaluations
+        temp_team_submission = Submission.find_by(team_id: @student.team_id, milestone_id: milestone.id)
+        if temp_team_submission
+          team_submissions_table[milestone.id] = temp_team_submission
+          evaluators.each do |evaluator|
+            team_evaluators_evaluations_table[milestone.id][evaluator.evaluator_id] = PeerEvaluation.find_by(team_id: evaluator.evaluator_id,
+                                                                                                             submission_id: temp_team_submission.id)
+          end
+        end
       end
     end
     render locals: {
              milestones: milestones,
-             team_submissions_table: team_submissions_table,
-             team_evaluated_teams_submissions: team_evaluated_teams_submissions,
-             team_evaluator_teams_evaluations: team_evaluator_teams_evaluations
+             evaluateds: evaluateds,
+             evaluators: evaluators,
+             team_submissions: team_submissions_table,
+             team_evaluateds_submissions: team_evaluateds_submissions_table,
+             team_evaluations: team_evaluations_table,
+             team_evaluators_evaluations: team_evaluators_evaluations_table
            }
   end
 

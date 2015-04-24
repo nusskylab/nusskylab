@@ -15,6 +15,12 @@ class EvaluatingsController < ApplicationController
   def show
   end
 
+  def destroy
+    evaluating = Evaluating.find(params[:id])
+    evaluating.destroy if evaluating
+    redirect_to evaluatings_path
+  end
+
   private
   def create_or_update_evaluation_relationship
     evaluated_id = params[:evaluated_id]
