@@ -1,6 +1,8 @@
 NUS Skylab
 ========================================================
 
+[![Code Climate](https://codeclimate.com/github/nusskylab/nusskylab/badges/gpa.svg)](https://codeclimate.com/github/nusskylab/nusskylab)
+
 ### Introduction
 
 NUS Skylab is the project for managing Orbital programme in NUS. For more info about Orbital, see [Introduction to Orbital](https://github.com/nusskylab/nusskylab/blob/master/docs/orbital.md).
