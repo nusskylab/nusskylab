@@ -1,7 +1,8 @@
 class Milestone < ActiveRecord::Base
   validates :name, presence: true,
-            format: {with: /\A[_A-Za-z0-9 ]{5,}\z/,
-                     message: 'At least 5 letters, numbers using spaces or underscores as deliminators'}
+            format: {with: /\A[*]{5,}\z/,
+                     message: 'Must be of at least of length of 5'},
+            uniqueness: {message: 'Milestone names cannot be the same'}
   validates :deadline, presence: true
 
   def self.create_or_update_by_name(milestone_hash)

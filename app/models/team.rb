@@ -1,4 +1,8 @@
 class Team < ActiveRecord::Base
+  validates :team_name, presence: true,
+            uniqueness: {message: 'A team name should be unique'}
+  validates :project_level, :project_title, presence: true
+
   has_many :students
   belongs_to :adviser
   belongs_to :mentor
