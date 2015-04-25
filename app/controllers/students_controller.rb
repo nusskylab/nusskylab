@@ -29,9 +29,11 @@ class StudentsController < ApplicationController
     team_evaluateds_submissions_table = {}
     team_evaluations_table = {}
     team_evaluators_evaluations_table = {}
-    evaluateds = @student.team.evaluateds
-    evaluators = @student.team.evaluators
+    evaluateds = []
+    evaluators = []
     if @student.team_id
+      evaluateds = @student.team.evaluateds
+      evaluators = @student.team.evaluators
       milestones.each do |milestone|
         team_evaluateds_submissions_table[milestone.id] = {}
         team_evaluators_evaluations_table[milestone.id] = {}

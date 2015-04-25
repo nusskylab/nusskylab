@@ -15,15 +15,17 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_url, :notice => 'Signed out!'
+    redirect_to root_url, flash[:notice] => 'Signed out!'
   end
 
   def failure
-    redirect_to root_url, :alert => "Authentication error: #{params[:message].humanize}"
+    redirect_to root_url, flash[:alert] => "Authentication error: #{params[:message].humanize}"
   end
 
   private
   def redirect_user(user)
+    flash = {}
+    flash[:success] = "Welcome, #{user.user_name}"
     student = Student.student?(user.id)
     adviser = Adviser.adviser?(user.id)
     mentor = Mentor.mentor?(user.id)
@@ -37,7 +39,7 @@ class SessionsController < ApplicationController
     elsif (not student) and (not adviser) and (not mentor) and admin
       redirect_to admin_path(admin.id)
     else
-      redirect_to user_path(user.id)
+      redirect_to user_path(user.id), flash: flash
     end
   end
 end

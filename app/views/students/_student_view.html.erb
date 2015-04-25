@@ -112,7 +112,12 @@
                             </tr>
                         <% else %>
                             <tr>
-                              <td><%= evaluated.evaluated.team_name %></td>
+                              <td>
+                                <span data-toggle="tooltip" data-placement="top"
+                                      title="The team has not submitted project log yet">
+                                  <%= evaluated.evaluated.team_name %>
+                                </span>
+                              </td>
                               <td>
                                 <a href="#" class="btn btn-default" disabled="disabled">
                                   View

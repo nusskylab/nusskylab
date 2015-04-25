@@ -3,10 +3,10 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true,
             format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\z/,
-                     message: 'Invalid email address'}
+                     message: 'Invalid email address format'}
   validates :user_name, presence: true,
-            format: {with: /\A[_A-Za-z0-9 ]{5,}\z/,
-                     message: 'At least 5 letters, numbers using spaces or underscores as deliminators'}
+            format: {with: /\A[*]{5,}\z/,
+                     message: 'Must be of at least of length of 5'}
   validates :provider, presence: true,
             format: {with: /\ANUS\z/, message: 'Invalid OpenID provider'}
   validates :uid, presence: true,

@@ -12,10 +12,6 @@
         <div class="collapse navbar-collapse" id="nav-menu">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
-            <li><a href="/#">Liftoff</a></li>
-            <li><a href="/#">Mission Control</a></li>
-            <li><a href="/#">Splash Down</a></li>
-            <li><a href="/#">Alumni</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if current_user %>
@@ -28,8 +24,9 @@
       </div>
     </nav>
     <div class="container" id="main-content">
-      <p class="notice" style="display: none;"><%= notice %></p>
-      <p class="alert" style="display: none;"><%= alert %></p>
+      <% flash.each do |message_type, message| %>
+          <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end %>
       <%= content_for?(:submissions_content) ? yield(:submissions_content) : yield %>
     </div>
 <% end %>

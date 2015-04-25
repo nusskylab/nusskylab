@@ -3,43 +3,42 @@
     <h3 class="text-center"><%= locals[:is_new] ? 'Create' : 'Edit' %> submission of team <%= locals[:submission].team.team_name %></h3>
   </div>
   <div class="panel-body">
-    <%= form_for locals[:submission], :url => {action: (locals[:is_new] ? 'create' : 'update')},
-                 :html => {:class => 'form-horizontal'} do |f| %>
+    <%= simple_form_for locals[:submission],
+                        url: {action: (locals[:is_new] ? 'create' : 'update')},
+                        html: {class: 'form-horizontal'} do |f| %>
+        <%= render 'shared/error_messages', locals: {target_model: locals[:submission]} %>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="submission-read-me">Project Readme:</label>
           <div class="col-sm-10">
-            <textarea class="form-control" placeholder="Input project readme"
-                   name="read_me" id="submission-read-me"
-                   rows="7"><%= locals[:is_new] ? '' : locals[:submission].read_me %></textarea>
+            <%= f.text_area :read_me, id: 'submission-read-me',
+                             class: 'form-control', placeholder: 'Input project readme',
+                             rows: '7', required: true,
+                             value: locals[:is_new] ? '' : locals[:submission].read_me %>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="submission-project-log">Project Log:</label>
           <div class="col-sm-10">
-            <textarea class="form-control" placeholder="Input project log"
-                      name="project_log" id="submission-project-log"
-                      rows="7"><%= locals[:is_new] ? '' : locals[:submission].project_log %></textarea>
+            <%= f.text_area :project_log, id: 'submission-project-log',
+                            class: 'form-control', placeholder: 'Input project readme',
+                            rows: '7', required: true,
+                            value: locals[:is_new] ? '' : locals[:submission].project_log %>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="submission-video-link">Video Link:</label>
           <div class="col-sm-10">
-            <input class="form-control" placeholder="Input video link"
-                      name="video_link" id="submission-video-link"
-                      <%= locals[:is_new] ? '' : 'value="' + locals[:submission].video_link + '"' %>>
+            <%= f.url_field :video_link, id: 'submission-video-link',
+                            class: 'form-control', placeholder: 'Input project readme',
+                            required: true,
+                            value: locals[:is_new] ? '' : locals[:submission].video_link %>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="user-submission-milestone">Milestone:</label>
           <div class="col-sm-10">
-            <select class="form-control" name="milestone_id" id="user-submission-milestone">
-              <% locals[:milestones].each do |milestone| %>
-                  <option value="<%= milestone.id %>"
-                          <%= (not locals[:is_new]) && locals[:submission].milestone_id == milestone.id ? 'selected' : '' %>>
-                    <%= milestone.name %>
-                  </option>
-              <% end %>
-            </select>
+            <%= f.select :milestone_id, locals[:milestones].map {|m| [m.name, m.id]}, {},
+                         {class: 'form-control'} %>
           </div>
         </div>
         <div class="form-group">
