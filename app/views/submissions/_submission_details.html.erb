@@ -4,36 +4,30 @@
   </div>
   <div class="panel-body">
     <%= form_for locals[:submission],
-                 :url => {action: 'create'},
-                 :html => {:class => 'form-horizontal'} do |f| %>
+                 :url => {action: 'create'} do |f| %>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="submission-read-me">Project Readme:</label>
-          <div class="col-sm-10">
-            <textarea class="form-control" placeholder="Input project readme"
-                      name="read_me" id="submission-read-me"
-                      rows="7" disabled="disabled"><%= locals[:submission].read_me %></textarea>
-          </div>
+          <label class="col-sm-2 control-label">Project Readme:</label>
+          <pre class="col-sm-12">
+            <%= locals[:submission].read_me.html_safe %>
+          </pre>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="submission-project-log">Project Log:</label>
-          <div class="col-sm-10">
-            <textarea class="form-control" placeholder="Input project log"
-                      name="project_log" id="submission-project-log"
-                      rows="7" disabled="disabled"><%= locals[:submission].project_log %></textarea>
-          </div>
+          <label class="col-sm-2 control-label">Project Log:</label>
+          <pre class="col-sm-12">
+            <%= locals[:submission].project_log.html_safe %>
+          </pre>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="submission-video-link">Video Link:</label>
-          <div class="col-sm-10">
-            <input class="form-control" placeholder="Input video link"
-                   name="video_link" id="submission-video-link"
-                   value="<%= locals[:is_new] ? '' : locals[:submission].video_link %>" disabled="disabled">
-          </div>
+          <label class="col-sm-2 control-label" for="submission_video_link">Video Link:</label>
+          <%= f.url_field :video_link, class: 'form-control',
+                          placeholder: 'Input project video link',
+                          required: true, readonly: 'readonly' %>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="user-submission-milestone">Milestone:</label>
-          <div class="col-sm-10">
-          </div>
+          <label class="col-sm-2 control-label" for="submission_milestone_id">Milestone:</label>
+          <%= f.text_field :milestone_id, value: locals[:submission].team.team_name +
+                                                 ' @ ' + locals[:submission].milestone.name,
+                            class: 'form-control', readonly: 'readonly' %>
         </div>
     <% end %>
   </div>
