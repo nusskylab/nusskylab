@@ -151,15 +151,30 @@
                     </thead>
                     <tbody>
                     <% locals[:evaluators].each do |evaluator| %>
-                        <% if (temp_evaluator_submission = locals[:team_evaluateds_submissions][milestone.id][evaluator.evaluator_id]) %>
+                        <% if (temp_evaluator_evaluation = locals[:team_evaluators_evaluations][milestone.id][evaluator.evaluator_id]) %>
                             <tr>
                               <td><%= evaluator.evaluator.team_name %></td>
-                              <td>Edit</td>
+                              <td>
+                                <a href="<%= team_peer_evaluation_path(evaluator.evaluator_id, temp_evaluator_evaluation.id) %>"
+                                   class="btn btn-success">
+                                  View
+                                </a>
+                              </td>
                             </tr>
                         <% else %>
                             <tr>
-                              <td><%= evaluator.evaluator.team_name %></td>
-                              <td>Not submitted yet</td>
+                              <td>
+                                <span data-toggle="tooltip" data-placement="top"
+                                      title="The team has not submitted peer evaluation yet">
+                                  <%= evaluator.evaluator.team_name %>
+                                </span>
+                              </td>
+                              <td>
+                                <a href="#" disabled="disabled"
+                                   class="btn btn-default">
+                                  View
+                                </a>
+                              </td>
                             </tr>
                         <% end %>
                     <% end %>
