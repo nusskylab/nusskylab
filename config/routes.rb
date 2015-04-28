@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :students
   resources :advisers
   resources :mentors
+  resources :admins
   resources :teams do
     resources :submissions
     resources :peer_evaluations
