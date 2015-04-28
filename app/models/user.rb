@@ -4,9 +4,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true,
             format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\z/,
                      message: 'Invalid email address format'}
-  validates :user_name, presence: true,
-            format: {with: /\A[*]{5,}\z/,
-                     message: 'Must be of at least of length of 5'}
+  validates :user_name, presence: true
   validates :provider, presence: true,
             format: {with: /\ANUS\z/, message: 'Invalid OpenID provider'}
   validates :uid, presence: true,
@@ -14,12 +12,13 @@ class User < ActiveRecord::Base
                          message: 'An OpenID account can only be used for creating one account'}
 
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.user_name = auth.info.name
-    end
+    user = User.find_by(provider: auth.provider, uid: auth.uid) || User.new
+    user.email = auth.info.email
+    user.provider = auth.provider
+    user.uid = auth.uid
+    user.user_name = auth.info.name
+    user.save
+    user
   end
 
   def self.create_or_update_by_provider_and_uid(user_hash)
