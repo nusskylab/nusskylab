@@ -2,6 +2,8 @@ class AdvisersController < ApplicationController
   NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
   NUS_OPEN_ID_PROVIDER = 'NUS'
 
+  layout 'advisers_mentors'
+
   def index
     @advisers = Adviser.all
   end

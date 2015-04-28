@@ -1,10 +1,10 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h2>
-      <% if (not locals[:adviser]) %>
-          <span class="text-danger">Not an adviser </span>
+      <% if (not locals[:mentor]) %>
+          <span class="text-danger">Not a mentor </span>
       <% else %>
-          <span><%= locals[:adviser].user.user_name %> </span>
+          <span><%= locals[:mentor].user.user_name %> </span>
       <% end %>
     </h2>
   </div>
@@ -21,7 +21,7 @@
               <tr><th>Team Name</th><th>Status</th><th>Action</th></tr>
               </thead>
               <tbody>
-              <% locals[:adviser].teams.each do |team| %>
+              <% locals[:mentor].teams.each do |team| %>
                   <% if (team_submission = locals[:teams_submissions][milestone.id][team.id]) %>
                       <tr>
                         <td><%= team.team_name %></td>
