@@ -15,11 +15,15 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_url, flash[:notice] => 'Signed out!'
+    flash = {}
+    flash[:info] = 'You have signed out!'
+    redirect_to root_url, flash: flash
   end
 
   def failure
-    redirect_to root_url, flash[:alert] => "Authentication error: #{params[:message].humanize}"
+    flash = {}
+    flash[:danger] = "Authentication error: #{params[:message].humanize}"
+    redirect_to root_url, flash: flash
   end
 
   private

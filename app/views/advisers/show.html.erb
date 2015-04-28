@@ -1,3 +1,5 @@
-<% content_for :advisers_content do %>
-  <%= render 'adviser_details', object: @adviser %>
+<% content_for :advisers_mentors_content do %>
+  <%= render 'adviser_view', locals: {adviser: @adviser,
+                                      milestones: milestones,
+                                      teams_submissions: teams_submissions} %>
 <% end %>

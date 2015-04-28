@@ -48,9 +48,7 @@
       </div>
     </nav>
     <div class="container" id="main-content">
-      <% flash.each do |message_type, message| %>
-          <div class="alert alert-<%= message_type %>"><%= message %></div>
-      <% end %>
+      <%= render 'shared/flash_messages' %>
       <%= content_for?(:users_content) ? yield(:users_content) : yield %>
     </div>
 <% end %>

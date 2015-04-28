@@ -2,6 +2,8 @@ class AdvisersController < ApplicationController
   NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
   NUS_OPEN_ID_PROVIDER = 'NUS'
 
+  layout 'advisers_mentors'
+
   def index
     @advisers = Adviser.all
   end
@@ -17,6 +19,12 @@ class AdvisersController < ApplicationController
 
   def show
     @adviser = Adviser.find(params[:id])
+    milestones, teams_submissions, own_evaluations = get_data_for_adviser
+    render locals: {
+             milestones: milestones,
+             teams_submissions: teams_submissions,
+             own_evaluations: own_evaluations
+           }
   end
 
   def edit
@@ -46,5 +54,19 @@ class AdvisersController < ApplicationController
                                                      user_name: user_name)
     adviser = Adviser.create_or_update_by_user_id(user_id: user.id)
     return adviser
+  end
+
+  def get_data_for_adviser
+    milestones = Milestone.all
+    teams_submissions = {}
+    own_evaluations = {}
+    milestones.each do |milestone|
+      teams_submissions[milestone.id] = {}
+      @adviser.teams.each do |team|
+        teams_submissions[milestone.id][team.id] = Submission.find_by(milestone_id: milestone.id,
+                                                                      team_id: team.id)
+      end
+    end
+    return milestones, teams_submissions, own_evaluations
   end
 end

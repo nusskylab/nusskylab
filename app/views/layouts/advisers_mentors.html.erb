@@ -12,9 +12,6 @@
         <div class="collapse navbar-collapse" id="nav-menu">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
-            <% if current_user and student? and student?.team_id %>
-                <li><a href="<%= team_path(student?.team_id) %>"></a></li>
-            <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if current_user %>
@@ -30,6 +27,15 @@
                       <% if student? %>
                           <li><a href="<%= edit_student_path(student?.id) %>">Edit Student Settings</a></li>
                       <% end %>
+                      <% if adviser? %>
+                          <li><a href="<%= edit_adviser_path(adviser?.id) %>">Edit Adviser Settings</a></li>
+                      <% end %>
+                      <% if mentor? %>
+                          <li><a href="<%= edit_mentor_path(mentor?.id) %>">Edit Mentor Settings</a></li>
+                      <% end %>
+                      <% if admin? %>
+                          <li><a href="<%= edit_student_path(admin?.id) %>">Edit Admin Settings</a></li>
+                      <% end %>
                     </ul>
                   </div>
                 </li>
@@ -43,7 +49,7 @@
     </nav>
     <div class="container" id="main-content">
       <%= render 'shared/flash_messages' %>
-      <%= content_for?(:students_content) ? yield(:students_content) : yield %>
+      <%= content_for?(:advisers_mentors_content) ? yield(:advisers_mentors_content) : yield %>
     </div>
 <% end %>
 <%= render template: 'layouts/application' %>

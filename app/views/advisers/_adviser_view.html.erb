@@ -1,0 +1,66 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>
+      <% if (not locals[:adviser]) %>
+          <span class="text-danger">Not an adviser </span>
+      <% else %>
+          <span><%= locals[:adviser].user.user_name %> </span>
+      <% end %>
+    </h2>
+  </div>
+  <div class="panel-body">
+    <div class="container">
+      <% locals[:milestones].each do |milestone| %>
+          <h3 class="text-center"><%= milestone.name %></h3>
+          <div class="table-responsive">
+            <table class="table">
+              <col width="33%">
+              <col width="33%">
+              <col width="33%">
+              <thead>
+              <tr><th>Team Name</th><th>Status</th><th>Action</th></tr>
+              </thead>
+              <tbody>
+              <% locals[:adviser].teams.each do |team| %>
+                  <% if (team_submission = locals[:teams_submissions][milestone.id][team.id]) %>
+                      <tr>
+                        <td><%= team.team_name %></td>
+                        <td>
+                          <a href="<%= team_submission_path(team.id, team_submission.id) %>"
+                             class="btn btn-success">
+                            View
+                          </a>
+                        </td>
+                        <td>
+                          TODO
+                        </td>
+                      </tr>
+                  <% else %>
+                      <tr>
+                        <td>
+                                <span data-toggle="tooltip" data-placement="top"
+                                      title="The team has not submitted project log yet">
+                                  <%= team.team_name %>
+                                </span>
+                        </td>
+                        <td>
+                          <a href="#" class="btn btn-default" disabled="disabled">
+                            View
+                          </a>
+                        </td>
+                        <td>
+                          <a href="#" class="btn btn-default" disabled="disabled">
+                            Start Evaluation
+                          </a>
+                        </td>
+                      </tr>
+                  <% end %>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+          <hr>
+      <% end %>
+    </div>
+  </div>
+</div>
