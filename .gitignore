@@ -58,6 +58,11 @@ doc/
 *.ipr
 *.iws
 
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
 # Ruby Managers
 .rbenv
 .ruby-gemset
