@@ -12,10 +12,6 @@
         <div class="collapse navbar-collapse" id="nav-menu">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
-            <li><a href="/#">Liftoff</a></li>
-            <li><a href="/#">Mission Control</a></li>
-            <li><a href="/#">Splash Down</a></li>
-            <li><a href="/#">Alumni</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if current_user %>
@@ -28,7 +24,8 @@
       </div>
     </nav>
     <div class="container">
-      <div class="col-lg-8 col-lg-offset-2">
+      <%= render 'shared/flash_messages' %>
+      <div class="col-sm-8 col-sm-offset-2">
         <h1>What is Orbital?</h1>
         <div id="player">
           <iframe width="609" height="371" src="https://www.youtube.com/embed/y-dDF70qOe8"

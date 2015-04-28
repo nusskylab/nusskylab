@@ -42,8 +42,7 @@
       </div>
     </nav>
     <div class="container" id="main-content">
-      <p class="notice" style="display: none;"><%= notice %></p>
-      <p class="alert" style="display: none;"><%= alert %></p>
+      <%= render 'shared/flash_messages' %>
       <%= content_for?(:students_content) ? yield(:students_content) : yield %>
     </div>
 <% end %>
