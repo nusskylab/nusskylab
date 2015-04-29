@@ -9,7 +9,12 @@ Rails.application.routes.draw do
   get '/auth/failure' => 'sessions#failure', :as => :login_failure
 
   resources :users
-  resources :students
+  resources :students do
+    collection do
+      get 'batch_upload'
+      post 'batch_create'
+    end
+  end
   resources :advisers
   resources :mentors
   resources :admins do

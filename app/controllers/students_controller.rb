@@ -6,16 +6,27 @@ class StudentsController < ApplicationController
     @students = Student.all
   end
 
+  def new
+    @student = Student.new
+  end
+
   def create
     create_or_update_student_user
     redirect_to students_path
   end
 
-  def new
+  def batch_upload
     @student = Student.new
-    render locals: {
-             batch_csv: ''
-           }
+  end
+
+  def batch_create
+    require 'csv'
+    students_csv_file = params[:student][:batch_csv]
+    file_rows = CSV.read(students_csv_file.path, headers: true)
+    file_rows.each do |row|
+      create_student_from_csv_row(row)
+    end
+    redirect_to students_path
   end
 
   def edit
@@ -48,31 +59,77 @@ class StudentsController < ApplicationController
   end
 
   private
-  def create_or_update_student_user
-    if params[:batch_creation]
-      require 'csv'
-      batch_csv = params[:batch_csv]
-      CSV.foreach(batch_csv, {col_sep: "\t", headers: true}) do |row|
-        puts row
-      end
+  def create_student_from_params(user_params, user2_params, team_params)
+    user_params[:provider] = NUS_OPEN_ID_PROVIDER
+    user_params[:uid] = NUS_OPEN_ID_PREFIX + user_params[:uid][0, 8]
+    if user2_params and team_params
+      create_student_with_team(team_params, user2_params, user_params)
     else
-      uid = NUS_OPEN_ID_PREFIX + params[:nus_id]
-      provider = NUS_OPEN_ID_PROVIDER
-      email = params[:user_email]
-      user_name = params[:user_name]
-      user = User.create_or_update_by_provider_and_uid(uid: uid,
-                                                       provider: provider,
-                                                       email: email,
-                                                       user_name: user_name)
-      team_name = params[:team_name]
-      project_title = params[:project_title]
-      project_level = params[:project_level]
-      student = Student.create_or_update_by_user_id(user_id: user.id,
-                                                    team_name: team_name,
-                                                    project_title: project_title,
-                                                    project_level: project_level)
+      create_student_without_team(user_params)
     end
-    return student
+  end
+
+  def create_student_without_team(user_params)
+    user = User.find_by(uid: user_params[:uid],
+                        provider: user_params[:provider]) || User.new(user_params)
+    if not user.save
+      # TODO: deal with this
+    end
+    student = Student.new(user_id: user.id)
+    student.save ? student : nil
+  end
+
+  def create_student_with_team(team_params, user2_params, user_params)
+    user2_params[:provider] = NUS_OPEN_ID_PROVIDER
+    user2_params[:uid] = NUS_OPEN_ID_PREFIX + user2_params[:uid][0, 8]
+    user = User.find_by(uid: user_params[:uid],
+                        provider: user_params[:provider]) || User.new(user_params)
+    if not user.save
+      # TODO: deal with this
+    end
+    user2 = User.find_by(uid: user2_params[:uid],
+                         provider: user2_params[:provider]) || User.new(user2_params)
+    if not user2.save
+      # TODO: deal with this
+    end
+    if team_params[:project_level][/\ABeginner/]
+      team_params[:project_level] = 'Vostok'
+    elsif team_params[:project_level][/\AIntermediate/]
+      team_params[:project_level] = 'Gemini'
+    else
+      team_params[:project_level] = 'Apollo 11'
+    end
+    team = Team.new(team_params)
+    if not team.save
+      # TODO: deal with this
+    end
+    student = Student.new(user_id: user.id, team_id: team.id)
+    student2 = Student.new(user_id: user2.id, team_id: team.id)
+    student.save ? student : nil
+    student2.save ? student2 : nil
+  end
+
+  def create_student_from_csv_row(row)
+    if row[1] == 'As an individual'
+      user_params = {}
+      user_params[:user_name] = row[2]
+      user_params[:email] = row[6]
+      user_params[:uid] = row[3]
+      create_student_from_params(user_params, nil, nil)
+    else
+      user1_params = {}
+      user2_params = {}
+      team_params = {}
+      team_params[:team_name] = row[10]
+      user1_params[:user_name] = row[11]
+      user1_params[:uid] = row[12]
+      user1_params[:email] = row[15]
+      user2_params[:user_name] = row[16]
+      user2_params[:uid] = row [17]
+      user2_params[:email] = row[20]
+      team_params[:project_level] = row[22]
+      create_student_from_params(user1_params, user2_params, team_params)
+    end
   end
 
   def get_render_variable_for_student
