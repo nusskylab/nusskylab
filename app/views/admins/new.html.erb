@@ -1,0 +1,43 @@
+<% content_for :admins_content do %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2>
+          Create an admin
+        </h2>
+      </div>
+      <div class="panel-body">
+        <div role="tabpanel">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#new-user-panel" aria-controls="new-user-panel"
+                 role="tab" data-toggle="tab">
+            <span data-toggle="tooltip" data-placement="bottom"
+                  title="Create new user with admin role assigned">New user</span>
+              </a>
+            </li>
+            <li role="presentation">
+              <a href="#existing-user-panel" aria-controls="existing-user-panel"
+                 role="tab" data-toggle="tab">
+            <span data-toggle="tooltip" data-placement="bottom"
+                  title="Assign admin role to existing user">Existing user</span>
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="new-user-panel">
+              <div class="form-container">
+                <%= render 'users/user_form', locals: {user: User.new, is_new: true} %>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="existing-user-panel">
+              <div class="form-container">
+                <%= render 'admin_form', locals: {admin: @admin,
+                                                  users: users,
+                                                  is_new: true} %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>

@@ -1,0 +1,58 @@
+<%= simple_form_for locals[:user],
+                    url: {action: (locals[:is_new] ? 'create' : 'update')},
+                    html: {class: 'form-horizontal'} do |f| %>
+    <%= render 'shared/error_messages', locals: {target_model: locals[:user]} %>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">User Name:</label>
+      <div class="col-sm-10">
+        <%= f.text_field :user_name, class: 'form-control',
+                         placeholder: 'Provide a username',
+                         required: true %>
+        <div class="help-block with-errors">Provide a username</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">User Email:</label>
+      <div class="col-sm-10">
+        <%= f.email_field :email, class: 'form-control',
+                          placeholder: 'Provide a valid email address',
+                          required: true %>
+        <div class="help-block with-errors">Provide a valid email address</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">OpenID provider:</label>
+      <div class="col-sm-10">
+        <% if locals[:is_new] %>
+            <%= f.text_field :provider, class: 'form-control',
+                             placeholder: 'Provide a valid OpenID provider',
+                             required: true %>
+            <div class="help-block with-errors">Provide a valid OpenID provider</div>
+        <% else %>
+            <%= f.text_field :provider, class: 'form-control',
+                             required: true, readonly: 'readonly' %>
+            <div class="help-block with-errors">Readonly OpenID provider</div>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">OpenID uid:</label>
+      <div class="col-sm-10">
+        <% if locals[:is_new] %>
+            <%= f.text_field :uid, class: 'form-control',
+                             placeholder: 'Provide a valid OpenId uid',
+                             required: true %>
+            <div class="help-block with-errors">Provide a valid OpenId uid</div>
+        <% else %>
+            <%= f.text_field :uid, class: 'form-control',
+                             required: true, readonly: 'readonly' %>
+            <div class="help-block with-errors">Readonly OpenID uid</div>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= f.submit 'Submit', class: 'btn btn-success' %>
+      </div>
+    </div>
+<% end %>

@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def new
-    @student = Student.new
+    @user = User.new
   end
 
   def edit
