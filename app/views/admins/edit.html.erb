@@ -1,0 +1,3 @@
+<% content_for :admins_content do %>
+  <%= render 'users/user_form', locals: {user: @admin.user, is_new: false} %>
+<% end %>
