@@ -1,4 +1,3 @@
 <% content_for :students_content do %>
   <%= render 'student_form', object: @student, locals: {is_new: true} %>
-  <%= render 'batch_students', object: @student, locals: {batch_csv: batch_csv} %>
 <% end %>
