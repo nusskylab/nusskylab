@@ -13,8 +13,11 @@ class AdvisersController < ApplicationController
   end
 
   def create
-    @adviser = create_or_update_adviser
-    redirect_to advisers_path
+    @adviser = create_user_and_adviser
+  end
+
+  def use_existing
+    @adviser = create_adviser_for_existing_user
   end
 
   def show
@@ -32,8 +35,12 @@ class AdvisersController < ApplicationController
   end
 
   def update
-    @adviser = create_or_update_adviser
-    redirect_to @adviser
+    @adviser = Adviser.find(params[:id])
+    if update_user
+      redirect_to @adviser
+    else
+      render 'edit'
+    end
   end
 
   def destroy
@@ -43,17 +50,45 @@ class AdvisersController < ApplicationController
   end
 
   private
-  def create_or_update_adviser
-    uid = NUS_OPEN_ID_PREFIX + params[:nus_id]
-    provider = NUS_OPEN_ID_PROVIDER
-    email = params[:user_email]
-    user_name = params[:user_name]
-    user = User.create_or_update_by_provider_and_uid(uid: uid,
-                                                     provider: provider,
-                                                     email: email,
-                                                     user_name: user_name)
-    adviser = Adviser.create_or_update_by_user_id(user_id: user.id)
-    return adviser
+  def get_user_params
+    user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
+  end
+
+  def create_user_and_adviser
+    user_params = get_user_params
+    user = User.new(user_params)
+    if user.save
+      @adviser = Adviser.new(user_id: user.id)
+      if @adviser.save
+        redirect_to advisers_path
+      else
+        render_new_template
+      end
+    else
+      render_new_template
+    end
+  end
+
+  def create_adviser_for_existing_user
+    user = User.find(params[:admin][:user_id])
+    if user
+      @adviser = Admin.new(user_id: user.id)
+      if @adviser.save
+        redirect_to advisers_path
+      else
+        render_new_template
+      end
+    else
+      render_new_template
+    end
+  end
+
+  def update_user
+    user = @adviser.user
+    user_param = get_user_param
+    user_param[:uid] = user.uid
+    user_param[:provider] = user.provider
+    user.update(user_param) ? user : nil
   end
 
   def get_data_for_adviser
@@ -62,11 +97,21 @@ class AdvisersController < ApplicationController
     own_evaluations = {}
     milestones.each do |milestone|
       teams_submissions[milestone.id] = {}
+      own_evaluations[milestone.id] = {}
       @adviser.teams.each do |team|
-        teams_submissions[milestone.id][team.id] = Submission.find_by(milestone_id: milestone.id,
-                                                                      team_id: team.id)
+        team_sub = Submission.find_by(milestone_id: milestone.id,
+                                      team_id: team.id)
+        teams_submissions[milestone.id][team.id] = team_sub
+        own_evaluations[milestone.id][team.id] = PeerEvaluation.find_by(submission_id: team_sub.id,
+                                                                        adviser_id: @adviser.id)
       end
     end
     return milestones, teams_submissions, own_evaluations
+  end
+
+  def render_new_template
+    render 'new', locals: {
+                  users: User.all
+                }
   end
 end

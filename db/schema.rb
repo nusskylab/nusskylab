@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150429131345) do
+ActiveRecord::Schema.define(version: 20150430115508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,10 +60,13 @@ ActiveRecord::Schema.define(version: 20150429131345) do
     t.text    "private_content"
     t.date    "submitted_date"
     t.boolean "published"
-    t.integer "team_id",         null: false
-    t.integer "submission_id",   null: false
+    t.integer "team_id"
+    t.integer "submission_id"
+    t.integer "adviser_id"
+    t.string  "owner_type",      default: "teams"
   end
 
+  add_index "peer_evaluations", ["adviser_id"], name: "index_peer_evaluations_on_adviser_id", using: :btree
   add_index "peer_evaluations", ["submission_id"], name: "index_peer_evaluations_on_submission_id", using: :btree
   add_index "peer_evaluations", ["team_id"], name: "index_peer_evaluations_on_team_id", using: :btree
 
@@ -117,6 +120,7 @@ ActiveRecord::Schema.define(version: 20150429131345) do
   add_foreign_key "evaluatings", "teams", column: "evaluated_id"
   add_foreign_key "evaluatings", "teams", column: "evaluator_id"
   add_foreign_key "mentors", "users"
+  add_foreign_key "peer_evaluations", "advisers"
   add_foreign_key "peer_evaluations", "submissions"
   add_foreign_key "peer_evaluations", "teams"
   add_foreign_key "students", "teams"
