@@ -1,0 +1,37 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+    <tr><th>Milestone Name</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+    <% locals[:milestones].each do |milestone| %>
+        <tr>
+          <td>
+            <span data-toggle="tooltip" data-placement="top"
+                  title="<%= I18n.t('students.show.submission_milestone_tooltip',
+                                    milestone_name: milestone.name,
+                                    deadline: milestone.deadline) %>">
+              <%= milestone.name %>
+            </span>
+          </td>
+          <td>
+            <% if not locals[:student].team_id %>
+                No Actions
+            <% elsif (submission = locals[:team_submissions][milestone.id]) %>
+                <a href="<%= edit_team_submission_path(locals[:student].team_id,
+                                                       submission.id) %>"
+                   class="btn btn-success">
+                  Edit
+                </a>
+            <% else %>
+                <a href="<%= new_team_submission_path(locals[:student].team_id, target: milestone.name) %>"
+                   class="btn btn-primary">
+                  Submit
+                </a>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

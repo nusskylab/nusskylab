@@ -34,6 +34,9 @@ gem 'simple_form'
 # tiny_mce for rails
 gem 'tinymce-rails'
 
+# internalization
+gem 'rails-i18n'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

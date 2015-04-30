@@ -1,23 +1,16 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  students:
+    show:
+      submission_instruction: 'Submissions to milestones are listed here.
+       You can submit for a milestone or edit a previously created submission.'
+      submission_milestone_tooltip: 'Deadline for %{milestone_name} is %{deadline}'
+      evaluation_instruction: 'Submissions from teams that you are evaluating and
+       evaluations from your team to submissions are listed here. You can view submissions
+       from other teams, submit peer evaluation to these submissions or edit a previously
+       created evaluation.'
+      evaluation_team_no_submission_tooltip: 'Well, they have not submitted their projectlog
+       yet.'
+      feedback_instruction: 'Peer evaluations from teams that are evaluating your team and
+       feedbacks to evaluations from your team to evaluations are listed here. You can view
+       evaluations from other teams, submit feedback to these evaluations or edit a previously
+       created feedback.'

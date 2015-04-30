@@ -1,11 +1,76 @@
 <% content_for :students_content do %>
-    <%= render 'student_view',
-               locals: {student: @student,
-                        milestones: milestones,
-                        evaluateds: evaluateds,
-                        evaluators: evaluators,
-                        team_submissions: team_submissions,
-                        team_evaluateds_submissions: team_evaluateds_submissions,
-                        team_evaluations: team_evaluations,
-                        team_evaluators_evaluations: team_evaluators_evaluations} %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1>
+          <% if (not @student) %>
+              <span class="text-danger">Not a student </span>
+          <% else %>
+              <span><%= @student.user.user_name %> </span>
+          <% end %>
+          <% if (not @student) %>
+              <span class="text-danger"> (Not a student)</span>
+          <% elsif @student and (not @student.team_id) %>
+              <span class="text-muted"> (Currently no team)</span>
+          <% elsif @student and @student.team_id %>
+              <span> @<%= @student.team.team_name %></span>
+          <% end %>
+        </h1>
+      </div>
+      <div class="panel-body">
+        <div role="tabpanel">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#project-panel" aria-controls="project-panel"
+                 role="tab" data-toggle="tab">
+                Submit projectlog
+              </a>
+            </li>
+            <li role="presentation">
+              <a href="#evaluation-panel" aria-controls="evaluation-panel"
+                 role="tab" data-toggle="tab">
+                Evaluate other teams
+              </a>
+            </li>
+            <li role="presentation">
+              <a href="#feedback-panel" aria-controls="feedback-panel"
+                 role="tab" data-toggle="tab">
+                Submit feedback
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="project-panel">
+              <h2 class="text-center">Submissions</h2>
+              <div class="well">
+                <p class="small"><%= t '.submission_instruction' %></p>
+              </div>
+              <%= render 'student_submissions', locals: {student: @student,
+                                                         milestones: milestones,
+                                                         team_submissions: team_submissions} %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
+              <h2 class="text-center">Evaluations</h2>
+              <div class="well">
+                <p class="small"><%= t '.submission_instruction' %></p>
+              </div>
+              <%= render 'student_evaluations', locals: {student: @student,
+                                                         milestones: milestones,
+                                                         evaluateds: evaluateds,
+                                                         team_evaluateds_submissions: team_evaluateds_submissions,
+                                                         team_evaluations: team_evaluations} %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="feedback-panel">
+              <h2 class="text-center">Feedbacks</h2>
+              <div class="well">
+                <p class="small"><%= t '.feedback_instruction' %></p>
+              </div>
+              <%= render 'student_feedbacks', locals: {student: @student,
+                                                       milestones: milestones,
+                                                       evaluators: evaluators,
+                                                       team_evaluators_evaluations: team_evaluators_evaluations} %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 <% end %>
