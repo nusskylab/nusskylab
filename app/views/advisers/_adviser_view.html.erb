@@ -32,16 +32,26 @@
                           </a>
                         </td>
                         <td>
-                          TODO
+                          <% if (eval = locals[:own_evaluations][milestone.id][team.id]) %>
+                              <a href="<%= edit_adviser_peer_evaluation_path(locals[:adviser].id, eval.id) %>"
+                                 class="btn btn-default">
+                                Edit Evaluation
+                              </a>
+                          <% else %>
+                              <a href="<%= new_adviser_peer_evaluation_path(locals[:adviser].id) %>"
+                                 class="btn btn-default">
+                                Start Evaluation
+                              </a>
+                          <% end %>
                         </td>
                       </tr>
                   <% else %>
                       <tr>
                         <td>
-                                <span data-toggle="tooltip" data-placement="top"
-                                      title="The team has not submitted project log yet">
-                                  <%= team.team_name %>
-                                </span>
+                          <span data-toggle="tooltip" data-placement="top"
+                                title="The team has not submitted project log yet">
+                            <%= team.team_name %>
+                          </span>
                         </td>
                         <td>
                           <a href="#" class="btn btn-default" disabled="disabled">
@@ -49,7 +59,8 @@
                           </a>
                         </td>
                         <td>
-                          <a href="#" class="btn btn-default" disabled="disabled">
+                          <a href="<%= new_adviser_peer_evaluation_path(locals[:adviser].id) %>"
+                             class="btn btn-default" disabled="disabled">
                             Start Evaluation
                           </a>
                         </td>

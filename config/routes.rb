@@ -15,7 +15,12 @@ Rails.application.routes.draw do
       post 'batch_create'
     end
   end
-  resources :advisers
+  resources :advisers do
+    resources :peer_evaluations
+    collection do
+      post 'use_existing'
+    end
+  end
   resources :mentors
   resources :admins do
     collection do

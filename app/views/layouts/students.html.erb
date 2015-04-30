@@ -30,6 +30,15 @@
                       <% if student? %>
                           <li><a href="<%= edit_student_path(student?.id) %>">Edit Student Settings</a></li>
                       <% end %>
+                      <% if adviser? %>
+                          <li><a href="<%= edit_adviser_path(adviser?.id) %>">Edit Adviser Settings</a></li>
+                      <% end %>
+                      <% if mentor? %>
+                          <li><a href="<%= edit_mentor_path(mentor?.id) %>">Edit Mentor Settings</a></li>
+                      <% end %>
+                      <% if admin? %>
+                          <li><a href="<%= edit_admin_path(admin?.id) %>">Edit Admin Settings</a></li>
+                      <% end %>
                     </ul>
                   </div>
                 </li>

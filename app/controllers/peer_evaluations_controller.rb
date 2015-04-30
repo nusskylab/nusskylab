@@ -5,14 +5,12 @@ class PeerEvaluationsController < ApplicationController
 
   def new
     @peer_evaluation = PeerEvaluation.new
-    render locals: {
-             submissions: get_submissions_for_team_to_evaluate
-           }
+    render_template('new') and return
   end
 
   def create
-    peer_evaluation = create_peer_evaluation
-    redirect_to team_peer_evaluations_path(params[:team_id])
+    create_peer_evaluation
+    redirect_back_user
   end
 
   def show
@@ -21,14 +19,12 @@ class PeerEvaluationsController < ApplicationController
 
   def edit
     @peer_evaluation = PeerEvaluation.find(params[:id])
-    render locals: {
-             submissions: get_submissions_for_team_to_evaluate
-           }
+    render_template('edit') and return
   end
 
   def update
-    peer_evaluation = update_peer_evaluation
-    redirect_to team_peer_evaluations_path(params[:team_id])
+    update_peer_evaluation
+    redirect_back_user
   end
 
   def destroy
@@ -54,12 +50,23 @@ class PeerEvaluationsController < ApplicationController
                                                           :private_content,
                                                           :submission_id,
                                                           :published)
-    eval_params[:team_id] = params[:team_id]
-    eval_params[:submitted_date] = Date.today
+    if params[:team_id]
+      eval_params[:team_id] = params[:team_id]
+    elsif params[:adviser_id]
+      eval_params[:adviser_id] = params[:adviser_id]
+    end
     eval_params
   end
 
-  def get_submissions_for_team_to_evaluate
+  def get_submissions_for_page
+    if params[:team_id]
+      get_submissions_for_team
+    elsif params[:adviser_id]
+      get_submissions_for_adviser
+    end
+  end
+
+  def get_submissions_for_team
     team = Team.find(params[:team_id])
     evaluateds = team.evaluateds
     submissions = []
@@ -67,5 +74,32 @@ class PeerEvaluationsController < ApplicationController
       submissions += evaluated.evaluated.submissions
     end
     submissions
+  end
+
+  def get_submissions_for_adviser
+    adviser = Adviser.find(params[:adviser_id])
+    teams = adviser.teams
+    submissions = []
+    teams.each do |team|
+      submissions += team.submissions
+    end
+    submissions
+  end
+
+  def render_template(template_name)
+    render template_name, locals: {
+             submissions: get_submissions_for_page
+           }
+  end
+
+  def redirect_back_user
+    if @peer_evaluation.errors.any?
+    else
+      if @peer_evaluation[:team_id]
+        redirect_to team_path(@peer_evaluation[:team_id])
+      elsif @peer_evaluation[:adviser_id]
+        redirect_to adviser_path(@peer_evaluation[:adviser_id])
+      end
+    end
   end
 end

@@ -48,7 +48,7 @@ class AdminsController < ApplicationController
 
   def create_user_and_admin
     # TODO: handle errors here more gracefully
-    user_params = create_user_and_admin
+    user_params = get_user_param
     user = User.new(user_params)
     if user.save
       @admin = Admin.new(user_id: user.id)
