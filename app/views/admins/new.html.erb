@@ -26,7 +26,7 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="new-user-panel">
               <div class="form-container">
-                <%= render 'users/user_form', locals: {user: User.new, is_new: true} %>
+                <%= render 'users/user_form', locals: {user: user || User.new, is_new: true} %>
               </div>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="existing-user-panel">

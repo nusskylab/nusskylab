@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
-  before_validation :uid.downcase
+  NUS_OPEN_ID_PREFIX_REGEX = /\Ahttps:\/\/openid.nus.edu.sg\//
+  NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
+
+  before_validation :uid.downcase, :process_uid
 
   validates :email, presence: true,
             format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\z/,
@@ -30,5 +33,11 @@ class User < ActiveRecord::Base
     end
     user.save
     return user
+  end
+
+  def process_uid
+    if not self.uid[NUS_OPEN_ID_PREFIX_REGEX]
+      self.uid = NUS_OPEN_ID_PREFIX + self.uid
+    end
   end
 end
