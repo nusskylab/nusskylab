@@ -1,7 +1,4 @@
 class AdvisersController < ApplicationController
-  NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
-  NUS_OPEN_ID_PROVIDER = 'NUS'
-
   layout 'advisers_mentors'
 
   def index
@@ -13,11 +10,22 @@ class AdvisersController < ApplicationController
   end
 
   def create
-    @adviser = create_user_and_adviser
+    user_params = get_user_params
+    user = User.new(user_params)
+    if user.save
+      create_adviser_for_user_and_respond(user)
+    else
+      render_new_template
+    end
   end
 
   def use_existing
-    @adviser = create_adviser_for_existing_user
+    user = User.find(params[:admin][:user_id])
+    if user
+      create_adviser_for_user_and_respond(user)
+    else
+      render_new_template
+    end
   end
 
   def show
@@ -54,30 +62,10 @@ class AdvisersController < ApplicationController
     user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
   end
 
-  def create_user_and_adviser
-    user_params = get_user_params
-    user = User.new(user_params)
-    if user.save
-      @adviser = Adviser.new(user_id: user.id)
-      if @adviser.save
-        redirect_to advisers_path
-      else
-        render_new_template
-      end
-    else
-      render_new_template
-    end
-  end
-
-  def create_adviser_for_existing_user
-    user = User.find(params[:admin][:user_id])
-    if user
-      @adviser = Admin.new(user_id: user.id)
-      if @adviser.save
-        redirect_to advisers_path
-      else
-        render_new_template
-      end
+  def create_adviser_for_user_and_respond(user)
+    @adviser = Adviser.new(user_id: user.id)
+    if @adviser.save
+      redirect_to advisers_path
     else
       render_new_template
     end
@@ -85,7 +73,7 @@ class AdvisersController < ApplicationController
 
   def update_user
     user = @adviser.user
-    user_param = get_user_param
+    user_param = get_user_params
     user_param[:uid] = user.uid
     user_param[:provider] = user.provider
     user.update(user_param) ? user : nil

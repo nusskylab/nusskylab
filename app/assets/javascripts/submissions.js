@@ -9,7 +9,7 @@ $(document).ready(function () {
   }
 
   var milestone = getParameterByName('target');
-  $('#user-submission-milestone option').filter(function () {
+  $('#submission_milestone_id option').filter(function () {
     return $(this).text().trim() === milestone;
   }).attr('selected', 'selected');
 });
