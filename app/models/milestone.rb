@@ -1,7 +1,5 @@
 class Milestone < ActiveRecord::Base
   validates :name, presence: true,
-            format: {with: /\A[*]{5,}\z/,
-                     message: 'Must be of at least of length of 5'},
             uniqueness: {message: 'Milestone names cannot be the same'}
   validates :deadline, presence: true
 

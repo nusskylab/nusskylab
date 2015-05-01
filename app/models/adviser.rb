@@ -1,5 +1,6 @@
 class Adviser < ActiveRecord::Base
-  validates :user_id, presence: true
+  validates :user_id, presence: true,
+            uniqueness: {message: 'can only have one adviser role'}
 
   belongs_to :user
   has_many :teams

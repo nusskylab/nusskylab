@@ -7,24 +7,32 @@ class AdvisersController < ApplicationController
 
   def new
     @adviser = Adviser.new
+    render_new_template and return
   end
 
   def create
+    # create separate render template for create and use_existing
     user_params = get_user_params
     user = User.new(user_params)
     if user.save
       create_adviser_for_user_and_respond(user)
     else
-      render_new_template
+      render 'new', locals: {
+                    users: User.all,
+                    user: user
+                  }
     end
   end
 
   def use_existing
-    user = User.find(params[:admin][:user_id])
+    user = User.find(params[:adviser][:user_id])
     if user
       create_adviser_for_user_and_respond(user)
     else
-      render_new_template
+      render 'new', locals: {
+                    users: User.all,
+                    user: user
+                  }
     end
   end
 
@@ -90,8 +98,11 @@ class AdvisersController < ApplicationController
         team_sub = Submission.find_by(milestone_id: milestone.id,
                                       team_id: team.id)
         teams_submissions[milestone.id][team.id] = team_sub
-        own_evaluations[milestone.id][team.id] = PeerEvaluation.find_by(submission_id: team_sub.id,
-                                                                        adviser_id: @adviser.id)
+        if team_sub
+          own_evaluations[milestone.id][team.id] =
+            PeerEvaluation.find_by(submission_id: team_sub.id,
+                                   adviser_id: @adviser.id)
+        end
       end
     end
     return milestones, teams_submissions, own_evaluations
@@ -99,7 +110,8 @@ class AdvisersController < ApplicationController
 
   def render_new_template
     render 'new', locals: {
-                  users: User.all
+                  users: User.all,
+                  user: User.new
                 }
   end
 end
