@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     collection do
       get 'batch_upload'
       post 'batch_create'
+      post 'use_existing'
     end
   end
   resources :advisers do
