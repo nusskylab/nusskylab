@@ -1,3 +1,5 @@
-<div class="container">
-  <%= render 'students/students_table', object: @students %>
-</div>
+<% content_for :users_content do %>
+    <div class="container">
+      <%= render 'all_users', locals: {users: @users} %>
+    </div>
+<% end %>
