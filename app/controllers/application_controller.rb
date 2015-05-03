@@ -23,6 +23,12 @@ class ApplicationController < ActionController::Base
     admin ||= Admin.admin?(@current_user.id) if current_user
   end
 
+  def does_not_have_access
+    flash = {}
+    flash[:danger] = 'You do not have privilege to do this'
+    redirect_to root_url, flash: flash
+  end
+
   helper_method 'current_user'
   helper_method 'student?'
   helper_method 'adviser?'

@@ -66,52 +66,52 @@ class AdvisersController < ApplicationController
   end
 
   private
-  def get_user_params
-    user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
-  end
-
-  def create_adviser_for_user_and_respond(user)
-    @adviser = Adviser.new(user_id: user.id)
-    if @adviser.save
-      redirect_to advisers_path
-    else
-      render_new_template
+    def get_user_params
+      user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
     end
-  end
 
-  def update_user
-    user = @adviser.user
-    user_param = get_user_params
-    user_param[:uid] = user.uid
-    user_param[:provider] = user.provider
-    user.update(user_param) ? user : nil
-  end
-
-  def get_data_for_adviser
-    milestones = Milestone.all
-    teams_submissions = {}
-    own_evaluations = {}
-    milestones.each do |milestone|
-      teams_submissions[milestone.id] = {}
-      own_evaluations[milestone.id] = {}
-      @adviser.teams.each do |team|
-        team_sub = Submission.find_by(milestone_id: milestone.id,
-                                      team_id: team.id)
-        teams_submissions[milestone.id][team.id] = team_sub
-        if team_sub
-          own_evaluations[milestone.id][team.id] =
-            PeerEvaluation.find_by(submission_id: team_sub.id,
-                                   adviser_id: @adviser.id)
-        end
+    def create_adviser_for_user_and_respond(user)
+      @adviser = Adviser.new(user_id: user.id)
+      if @adviser.save
+        redirect_to advisers_path
+      else
+        render_new_template
       end
     end
-    return milestones, teams_submissions, own_evaluations
-  end
 
-  def render_new_template
-    render 'new', locals: {
-                  users: User.all,
-                  user: User.new
-                }
-  end
+    def update_user
+      user = @adviser.user
+      user_param = get_user_params
+      user_param[:uid] = user.uid
+      user_param[:provider] = user.provider
+      user.update(user_param) ? user : nil
+    end
+
+    def get_data_for_adviser
+      milestones = Milestone.all
+      teams_submissions = {}
+      own_evaluations = {}
+      milestones.each do |milestone|
+        teams_submissions[milestone.id] = {}
+        own_evaluations[milestone.id] = {}
+        @adviser.teams.each do |team|
+          team_sub = Submission.find_by(milestone_id: milestone.id,
+                                        team_id: team.id)
+          teams_submissions[milestone.id][team.id] = team_sub
+          if team_sub
+            own_evaluations[milestone.id][team.id] =
+              PeerEvaluation.find_by(submission_id: team_sub.id,
+                                     adviser_id: @adviser.id)
+          end
+        end
+      end
+      return milestones, teams_submissions, own_evaluations
+    end
+
+    def render_new_template
+      render 'new', locals: {
+                    users: User.all,
+                    user: User.new
+                  }
+    end
 end
