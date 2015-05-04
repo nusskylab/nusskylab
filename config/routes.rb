@@ -22,7 +22,11 @@ Rails.application.routes.draw do
       post 'use_existing'
     end
   end
-  resources :mentors
+  resources :mentors do
+    collection do
+      post 'use_existing'
+    end
+  end
   resources :admins do
     collection do
       post 'use_existing'

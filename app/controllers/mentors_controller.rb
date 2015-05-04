@@ -1,7 +1,4 @@
 class MentorsController < ApplicationController
-  NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
-  NUS_OPEN_ID_PROVIDER = 'NUS'
-
   layout 'advisers_mentors'
 
   def index
@@ -10,11 +7,52 @@ class MentorsController < ApplicationController
 
   def new
     @mentor = Mentor.new
+    render locals: {
+             user: nil,
+             users: User.all
+           }
   end
 
   def create
-    @mentor = create_or_update_mentor
-    redirect_to mentors_path
+    user = User.new(get_user_params)
+    flash = {}
+    if not user.save
+      render 'new', locals: {
+               user: user,
+               users: User.all
+                  } and return
+    end
+    @mentor = Mentor.new(user_id: user.id)
+    if @mentor.save
+      flash[:success] = 'The mentor is successfully created'
+      redirect_to mentors_path, flash: flash
+    else
+      render 'new', locals: {
+                    user: user,
+                    users: User.all
+                  }
+    end
+  end
+
+  def use_existing
+    user = User.find(params[:mentor][:user_id])
+    if not user
+      render 'new', locals: {
+                    users: User.all,
+                    user: user
+                  } and return
+    end
+    @mentor = Mentor.new(user_id: user.id)
+    if @mentor.save
+      flash = {}
+      flash[:success] = 'The mentor is successfully created'
+      redirect_to mentors_path, flash: flash
+    else
+      render 'new', locals: {
+                    user: user,
+                    users: User.all
+                  }
+    end
   end
 
   def show
@@ -32,8 +70,13 @@ class MentorsController < ApplicationController
   end
 
   def update
-    @mentor = create_or_update_mentor
-    redirect_to @mentor
+    @mentor = Mentor.find(params[:id])
+    user = @mentor.user
+    if user.update(get_user_params)
+      redirect_to @mentor
+    else
+      render 'edit'
+    end
   end
 
   def destroy
@@ -43,30 +86,21 @@ class MentorsController < ApplicationController
   end
 
   private
-  def create_or_update_mentor
-    uid = NUS_OPEN_ID_PREFIX + params[:nus_id]
-    provider = NUS_OPEN_ID_PROVIDER
-    email = params[:user_email]
-    user_name = params[:user_name]
-    user = User.create_or_update_by_provider_and_uid(uid: uid,
-                                                     provider: provider,
-                                                     email: email,
-                                                     user_name: user_name)
-    mentor = Mentor.create_or_update_by_user_id(user_id: user.id)
-    return mentor
-  end
-
-  def get_data_for_adviser
-    milestones = Milestone.all
-    teams_submissions = {}
-    own_evaluations = {}
-    milestones.each do |milestone|
-      teams_submissions[milestone.id] = {}
-      @mentor.teams.each do |team|
-        teams_submissions[milestone.id][team.id] = Submission.find_by(milestone_id: milestone.id,
-                                                                      team_id: team.id)
-      end
+    def get_user_params
+      user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
     end
-    return milestones, teams_submissions, own_evaluations
-  end
+
+    def get_data_for_adviser
+      milestones = Milestone.all
+      teams_submissions = {}
+      own_evaluations = {}
+      milestones.each do |milestone|
+        teams_submissions[milestone.id] = {}
+        @mentor.teams.each do |team|
+          teams_submissions[milestone.id][team.id] = Submission.find_by(milestone_id: milestone.id,
+                                                                        team_id: team.id)
+        end
+      end
+      return milestones, teams_submissions, own_evaluations
+    end
 end
