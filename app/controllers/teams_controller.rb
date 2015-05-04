@@ -12,8 +12,15 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = create_or_update_team
-    redirect_to teams_path
+    @team = Team.new(get_team_params)
+    if @team.save
+      redirect_to teams_path
+    else
+      render 'new', locals: {
+                    advisers: Adviser.all,
+                    mentors: Mentor.all
+                  }
+    end
   end
 
   def show
@@ -29,27 +36,35 @@ class TeamsController < ApplicationController
   end
 
   def update
-    @team = create_or_update_team
-    redirect_to @team
+    team = update_team
+    if team
+      redirect_to @team
+    else
+      render 'edit', locals: {
+                     advisers: Adviser.all,
+                     mentors: Mentor.all
+                   }
+    end
   end
 
   def destroy
     @team = Team.find(params[:id])
-    @team.destroy
-    redirect_to teams_path
+    if @team.destroy
+      flash = {}
+      flash[:info] = 'The team is deleted successfully'
+      redirect_to teams_path, flash: flash
+    end
   end
 
   private
-  def create_or_update_team
-    team_name = params[:team_name]
-    project_title = params[:project_title]
-    project_level = params[:project_level]
-    adviser_id = params[:adviser_id]
-    mentor_id = params[:mentor_id]
-    Team.create_or_update_by_team_name(team_name: team_name,
-                                       project_level: project_level,
-                                       project_title: project_title,
-                                       adviser_id: adviser_id,
-                                       mentor_id: mentor_id)
+  def update_team
+    @team = Team.find(params[:id])
+    team_params = get_team_params
+    @team.update(team_params) ? @team : nil
+  end
+
+  def get_team_params
+    team_params = params.require(:team).permit(:team_name, :project_level,
+                                               :adviser_id, :mentor_id)
   end
 end

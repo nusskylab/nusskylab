@@ -1,3 +1,43 @@
 <% content_for :teams_content do %>
-  <%= render 'team_details', locals: {team: @team} %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1>
+          <span><%= @team.team_name %></span>
+        </h1>
+      </div>
+      <div class="panel-body">
+        <div role="tabpanel">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#basic-info-panel" aria-controls="basic-info-panel"
+                 role="tab" data-toggle="tab">
+                Basic information
+              </a>
+            </li>
+            <li role="presentation">
+              <a href="#submission-panel" aria-controls="submission-panel"
+                 role="tab" data-toggle="tab">
+                Submissions
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="basic-info-panel">
+              <h2 class="text-center">Basic information</h2>
+              <div class="well">
+                <p class="small"><%= 'Basic information instruction' %></p>
+              </div>
+              <%= render 'team_basic_info', locals: {team: @team} %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="submission-panel">
+              <h2 class="text-center">Submissions</h2>
+              <div class="well">
+                <p class="small"><%= 'Submission instruction' %></p>
+              </div>
+              <%= render 'team_submissions', locals: {team: @team} %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 <% end %>
