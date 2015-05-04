@@ -1,41 +1,18 @@
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="text-center"><%= locals[:is_new] ? 'Create' : 'Edit' %> mentor</h3>
-  </div>
-  <div class="panel-body">
-    <%= form_for @mentor, :url => {action: (locals[:is_new] ? 'create' : 'update')}, :html => {:class => 'form-horizontal'} do |f| %>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="user-nus-id">NUS ID:</label>
-          <div class="col-sm-10">
-            <input class="form-control" type="text" placeholder="Input user's NUS ID"
-                   name="nus_id" id="user-nus-id" value="<%= locals[:is_new] ? '' : @mentor.user.uid[26..-1] %>"
-                   required="required" pattern="^[auAU][0-9]{7,7}[A-Za-z]?$">
-            <div class="help-block with-errors">Please provide a valid NUS ID</div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="user-username">Username:</label>
-          <div class="col-sm-10">
-            <input class="form-control" type="text" placeholder="Input user name"
-                   name="user_name" id="user-username" value="<%= locals[:is_new] ? '' : @mentor.user.user_name %>"
-                   required="required" pattern="^[_A-Za-z0-9]{5,}$">
-            <div class="help-block with-errors">At least 5 letters, numbers or underscores</div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="user-user-email">User email:</label>
-          <div class="col-sm-10">
-            <input class="form-control" placeholder="Input user email"
-                   name="user_email" id="user-user-email" value="<%= locals[:is_new] ? '' : @mentor.user.email %>"
-                   required="required" pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$">
-            <div class="help-block with-errors">Primary email address</div>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <%= f.submit 'Submit', class: 'btn btn-success' %>
-          </div>
-        </div>
-    <% end %>
-  </div>
-</div>
+<%= simple_form_for locals[:mentor],
+                    url: {action: (locals[:is_new] ? 'use_existing' : 'update')},
+                    html: {class: 'form-horizontal'} do |f| %>
+    <%= render 'shared/error_messages', locals: {target_model: locals[:mentor]} %>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">User ID:</label>
+      <div class="col-sm-10">
+        <%= f.select :user_id, locals[:users].map {|user| [user.user_name, user.id]}, {},
+                     {class: 'form-control'} %>
+        <div class="help-block with-errors">Select a user ID</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= f.submit 'Submit', class: 'btn btn-success' %>
+      </div>
+    </div>
+<% end %>
