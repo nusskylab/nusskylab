@@ -12,12 +12,18 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = create_or_update_team
-    redirect_to teams_path
+    @team = Team.new(get_team_params)
+    if @team.save
+      redirect_to teams_path
+    else
+      render 'new', locals: {
+                    advisers: Adviser.all,
+                    mentors: Mentor.all
+                  }
+    end
   end
 
   def show
-    # TODO: this action is not yet complete
     @team = Team.find(params[:id])
   end
 
@@ -43,8 +49,11 @@ class TeamsController < ApplicationController
 
   def destroy
     @team = Team.find(params[:id])
-    @team.destroy
-    redirect_to teams_path
+    if @team.destroy
+      flash = {}
+      flash[:info] = 'The team is deleted successfully'
+      redirect_to teams_path, flash: flash
+    end
   end
 
   private

@@ -1,0 +1,22 @@
+<div>
+  <div>
+    <p class="col-sm-3 col-sm-offset-2">Team name:</p>
+    <p class="col-sm-7"><%= locals[:team].team_name %></p>
+  </div>
+  <div>
+    <p class="col-sm-3 col-sm-offset-2">Project level:</p>
+    <p class="col-sm-7"><%= locals[:team].project_level %></p>
+  </div>
+  <div>
+    <p class="col-sm-3 col-sm-offset-2">Adviser:</p>
+    <p class="col-sm-7">
+      <%= locals[:team].adviser ? locals[:team].adviser.user.user_name : 'Nil' %>
+    </p>
+  </div>
+  <div>
+    <p class="col-sm-3 col-sm-offset-2">Mentor:</p>
+    <p class="col-sm-7">
+      <%= locals[:team].mentor ? locals[:team].mentor.user.user_name : 'Nil' %>
+    </p>
+  </div>
+</div>
