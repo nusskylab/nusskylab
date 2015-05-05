@@ -49,9 +49,7 @@
     </nav>
     <div class="container" id="main-content">
       <%= render 'shared/flash_messages' %>
-      <%= content_for?(:milestones_content) ? yield(:milestones_content) : yield %>
+      <%= content_for?(:main_content) ? yield(:main_content) : yield %>
     </div>
 <% end %>
 <%= render template: 'layouts/application' %>
-
-

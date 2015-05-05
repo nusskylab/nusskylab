@@ -1,5 +1,18 @@
-<% content_for :submissions_content do %>
-    <%= render 'submission_form', locals: {submission: @submission,
-                                           milestones: milestones,
-                                           is_new: false} %>
+<% content_for :main_content do %>
+    <%= tinymce_assets %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="text-center">Create submission</h3>
+      </div>
+      <div class="panel-body">
+        <%= render 'submission_form', locals: {submission: @submission,
+                                               milestones: milestones,
+                                               is_new: false} %>
+      </div>
+    </div>
+    <script type="text/javascript">
+        tinyMCE.init({
+            selector: 'textarea.tinymce'
+        });
+    </script>
 <% end %>
