@@ -1,3 +1,14 @@
 <% content_for :milestones_content do %>
-  <%= render partial: 'milestones_table', object: @milestones %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="text-center">Milestones</h3>
+      </div>
+      <div class="panel-body">
+        <%= render 'milestones_table', object: @milestones %>
+        <hr>
+        <div class="col-sm-7 col-sm-offset-5">
+          <a href="<%= new_milestone_path %>" class="btn btn-success">Create New Milestone</a>
+        </div>
+      </div>
+    </div>
 <% end %>
