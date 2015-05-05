@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     end
   end
   resources :teams do
-    resources :submissions
+    resources :submissions, only: [:index, :new, :create, :edit, :update, :show]
     resources :peer_evaluations
   end
   resources :evaluatings

@@ -1,45 +1,32 @@
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="text-center"><%= locals[:is_new] ? 'Create' : 'Edit' %> submission of team <%= locals[:submission].team.team_name %></h3>
-  </div>
-  <div class="panel-body">
-    <%= simple_form_for locals[:submission],
-                        url: {action: (locals[:is_new] ? 'create' : 'update')} do |f| %>
-        <%= render 'shared/error_messages', locals: {target_model: locals[:submission]} %>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Project Readme:</label>
-          <%= f.text_area :read_me, class: 'form-control tinymce',
-                          placeholder: 'Input project readme', rows: '7',
-                          required: true %>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Project Log:</label>
-          <%= f.text_area :project_log, class: 'form-control tinymce',
-                          placeholder: 'Input project log',
-                          rows: '7', required: true %>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="submission_video_link">Video Link:</label>
-          <%= f.url_field :video_link, class: 'form-control',
-                          placeholder: 'Input project video link',
-                          required: true %>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="submission_milestone_id">Milestone:</label>
-          <%= f.select :milestone_id, locals[:milestones].map {|m| [m.name, m.id]}, {},
-                       {class: 'form-control'} %>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <%= f.submit 'Submit', class: 'btn btn-success' %>
-          </div>
-        </div>
-    <% end %>
-  </div>
-</div>
-
-<script type="text/javascript">
-    tinyMCE.init({
-        selector: 'textarea.tinymce'
-    });
-</script>
+<%= simple_form_for locals[:submission],
+                    url: {action: (locals[:is_new] ? 'create' : 'update')} do |f| %>
+    <%= render 'shared/error_messages', locals: {target_model: locals[:submission]} %>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Project Readme:</label>
+      <%= f.text_area :read_me, class: 'form-control tinymce',
+                      placeholder: 'Input project readme', rows: '7',
+                      required: true %>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Project Log:</label>
+      <%= f.text_area :project_log, class: 'form-control tinymce',
+                      placeholder: 'Input project log',
+                      rows: '7', required: true %>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="submission_video_link">Video Link:</label>
+      <%= f.url_field :video_link, class: 'form-control',
+                      placeholder: 'Input project video link',
+                      required: true %>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="submission_milestone_id">Milestone:</label>
+      <%= f.select :milestone_id, locals[:milestones].map {|m| [m.name, m.id]}, {},
+                   {class: 'form-control'} %>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= f.submit 'Submit', class: 'btn btn-success' %>
+      </div>
+    </div>
+<% end %>
