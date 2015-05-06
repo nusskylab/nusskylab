@@ -58,6 +58,9 @@ doc/
 *.ipr
 *.iws
 
+# public content
+public/
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

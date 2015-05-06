@@ -24,17 +24,6 @@ class User < ActiveRecord::Base
     user
   end
 
-  def self.create_or_update_by_provider_and_uid(user_hash)
-    user = User.find_by(provider: user_hash[:provider], uid: user_hash[:uid]) || User.new
-    user_hash.each_pair do |key, value|
-      if user.has_attribute?(key) and (not value.blank?)
-        user[key] = value
-      end
-    end
-    user.save
-    return user
-  end
-
   def process_uid
     if not self.uid[NUS_OPEN_ID_PREFIX_REGEX]
       self.uid = NUS_OPEN_ID_PREFIX + self.uid
