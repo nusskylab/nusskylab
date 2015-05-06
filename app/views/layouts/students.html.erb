@@ -11,9 +11,9 @@
         </div>
         <div class="collapse navbar-collapse" id="nav-menu">
           <ul class="nav navbar-nav">
-            <li><a href="<%= student_path(student?.id) %>">Home</a></li>
+            <li><a href="<%= student? ? student_path(student?.id) : '/' %>">Home</a></li>
             <% if current_user and student? and student?.team_id %>
-                <li><a href="<%= team_path(student?.team_id) %>"></a></li>
+                <li><a href="<%= team_path(student?.team_id) %>">Team</a></li>
             <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
