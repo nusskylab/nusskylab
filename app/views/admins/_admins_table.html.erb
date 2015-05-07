@@ -1,0 +1,22 @@
+<table class="table table-hover">
+  <thead>
+  <tr><th>User Name</th><th>User Email</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+  <% locals[:admins].each do |admin| %>
+      <tr>
+        <td><%= admin.user.user_name %></td>
+        <td><%= admin.user.email %></td>
+        <td>
+          <a class="btn btn-default btn-xs" href="<%=  admin_path(admin.id) %>">View</a>
+          <a class="btn btn-default btn-xs" href="<%= edit_admin_path(admin.id) %>">Edit</a>
+          <% if not (admin?.id == admin.id) %>
+              <%= link_to 'Delete', admin_path(admin.id),
+                          :confirm => 'Are you sure to delete this admin permanently?',
+                          :method => :delete, :class => 'btn btn-danger btn-xs' %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
