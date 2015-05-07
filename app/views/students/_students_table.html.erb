@@ -1,27 +1,20 @@
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="text-center">Students</h3>
-  </div>
-  <div class="panel-body">
-    <table class="table table-hover">
-      <thead>
-        <tr><th>User Name</th><th>User Email</th><th>Actions</th></tr>
-      </thead>
-      <tbody>
-      <% @students.each do |student| %>
-          <tr>
-            <td><%= student.user.user_name %></td>
-            <td><%= student.user.email %></td>
-            <td>
-              <a class="btn btn-default btn-xs" href="<%=  student_path(student.id) %>">View</a>
-              <a class="btn btn-default btn-xs" href="<%= edit_student_path(student.id) %>">Edit</a>
-              <%= link_to 'Delete', student_path(student.id),
-                          :confirm => 'Are you sure to delete this student permanently?',
-                          :method => :delete, :class => 'btn btn-danger btn-xs' %>
-            </td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+<table class="table table-hover">
+  <thead>
+  <tr><th>User Name</th><th>User Email</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+  <% locals[:students].each do |student| %>
+      <tr>
+        <td><%= student.user.user_name %></td>
+        <td><%= student.user.email %></td>
+        <td>
+          <a class="btn btn-default btn-xs" href="<%=  student_path(student.id) %>">View</a>
+          <a class="btn btn-default btn-xs" href="<%= edit_student_path(student.id) %>">Edit</a>
+          <%= link_to 'Delete', student_path(student.id),
+                      :confirm => 'Are you sure to delete this student permanently?',
+                      :method => :delete, :class => 'btn btn-danger btn-xs' %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
