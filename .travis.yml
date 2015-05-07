@@ -2,8 +2,6 @@ language: ruby
 rvm:
   - 2.2.1
 
-cache: bundler
-
 addons:
   postgresql: "9.3"
 
@@ -12,10 +10,6 @@ before_script:
   - cp config/database.yml.travis config/database.yml
   - cp config/secrets.yml.travis config/secrets.yml
   - cp config/initializers/secret_token.rb.travis config/initializers/secret_token.rb
-
-env:
-  SECRET_KEY_BASE="$(bundle exec rake secret)"
-  SECRET_TOKEN="$(bundle exec rake secret)"
 
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
