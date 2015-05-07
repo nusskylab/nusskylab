@@ -13,13 +13,7 @@
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <% if current_user %>
-                <li><a href="/logout" class="btn btn-default btn-sm navbar-btn">Logout</a></li>
-            <% else %>
-                <li><a href="/login" class="btn btn-default btn-sm navbar-btn">Login</a></li>
-            <% end %>
-          </ul>
+          <%= render 'shared/user_nav_right_menu' %>
         </div>
       </div>
     </nav>
