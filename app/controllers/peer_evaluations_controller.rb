@@ -1,6 +1,12 @@
 class PeerEvaluationsController < ApplicationController
+  layout 'general_layout'
+
   def index
-    @peer_evaluations = PeerEvaluation.all
+    if params[:team_id]
+      @peer_evaluations = PeerEvaluation.where(team_id: params[:team_id])
+    else
+      @peer_evaluations = PeerEvaluation.where(adviser_id: params[:adviser_id])
+    end
   end
 
   def new

@@ -1,3 +1,14 @@
-<% content_for :peer_evaluations_content do %>
-    <%= render 'peer_evaluations_table', locals: {peer_evaluations: @peer_evaluations} %>
+<% content_for :main_content do %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="text-center">All Peer evaluations</h3>
+      </div>
+      <div class="panel-body">
+        <%= render 'peer_evaluations_table', locals: {peer_evaluations: @peer_evaluations} %>
+        <hr>
+        <div class="col-sm-7 col-sm-offset-5">
+          <a href="<%= new_team_peer_evaluation_path(params[:team_id]) %>" class="btn btn-success">Submit peer evaluation</a>
+        </div>
+      </div>
+    </div>
 <% end %>

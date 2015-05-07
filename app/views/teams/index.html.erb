@@ -1,3 +1,14 @@
 <% content_for :teams_content do %>
-  <%= render 'teams_table', locals: { teams: @teams} %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="text-center">Teams</h3>
+      </div>
+      <div class="panel-body">
+        <%= render 'teams_table', locals: { teams: @teams} %>
+        <hr>
+        <div class="col-sm-2 col-sm-offset-5">
+          <a href="<%= new_team_path %>" class="btn btn-success">Create New Team</a>
+        </div>
+      </div>
+    </div>
 <% end %>
