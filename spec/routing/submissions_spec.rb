@@ -39,12 +39,5 @@ RSpec.describe 'routing to team submissions', :type => :routing do
                                                      team_id: '1',
                                                      id: '1')
   end
-
-  it 'routes teams/:team_id/submissions/:id to submissions#destroy for id' do
-    expect(delete: 'teams/1/submissions/1').to route_to(controller: 'submissions',
-                                                        action: 'destroy',
-                                                        team_id: '1',
-                                                        id: '1')
-  end
 end
 

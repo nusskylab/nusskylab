@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   end
 
   def process_uid
-    if not self.uid[NUS_OPEN_ID_PREFIX_REGEX]
+    if self.uid and (not self.uid[NUS_OPEN_ID_PREFIX_REGEX])
       self.uid = NUS_OPEN_ID_PREFIX + self.uid
     end
   end
