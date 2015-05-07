@@ -40,8 +40,8 @@ gem 'rails-i18n'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use Unicorn as the app server
-gem 'unicorn'
+# Use Puma as the app server
+gem 'puma'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -60,5 +60,10 @@ group :development, :test do
 	# rspec for test & dev
 	gem 'rspec'
 	gem 'rspec-rails', '~> 3.0'
+end
+
+group :test do
+	# codeclimate coverage
+	gem "codeclimate-test-reporter"
 end
 
