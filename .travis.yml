@@ -2,12 +2,17 @@ language: ruby
 rvm:
   - 2.2.1
 
+env:
+  SECRET_KEY_BASE="$(bundle exec rake secret)"
+
 addons:
   postgresql: "9.3"
 
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
+  - cp config/secrets.yml.travis config/secrets.yml
+  - cp config/initializers/secret_token.rb.travis config/initializers/secret_token.rb
 
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
