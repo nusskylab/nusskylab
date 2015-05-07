@@ -7,6 +7,23 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  def get_current_role
+    if not current_user
+      return 'As a visitor'
+    end
+    if admin?
+      return 'As an admin'
+    elsif student?
+      return 'As a student'
+    elsif adviser?
+      return 'As an adviser'
+    elsif mentor?
+      return 'As a mentor'
+    else
+      return 'As a visitor'
+    end
+  end
+
   def student?
     student ||= Student.student?(@current_user.id) if current_user
   end
@@ -30,6 +47,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method 'current_user'
+  helper_method 'get_current_role'
   helper_method 'student?'
   helper_method 'adviser?'
   helper_method 'mentor?'

@@ -1,0 +1,39 @@
+<ul class="nav navbar-nav navbar-right">
+  <% if current_user %>
+      <li>
+        <p class="navbar-text user-name-text">
+          Welcome,
+          <span data-toggle="tooltip"
+                data-placement="top" title="<%= get_current_role %>">
+            <%= current_user.user_name %>
+          </span>
+        </p>
+      </li>
+      <li>
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button"
+                  id="settings-dropdown" aria-expanded="true">
+            <span class="glyphicon glyphicon-cog"></span><span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="settings-dropdown">
+            <li><a href="<%= edit_user_path(current_user.id) %>">Edit User Settings</a></li>
+            <% if student? %>
+                <li><a href="<%= edit_student_path(student?.id) %>">Edit Student Settings</a></li>
+            <% end %>
+            <% if adviser? %>
+                <li><a href="<%= edit_adviser_path(adviser?.id) %>">Edit Adviser Settings</a></li>
+            <% end %>
+            <% if mentor? %>
+                <li><a href="<%= edit_mentor_path(mentor?.id) %>">Edit Mentor Settings</a></li>
+            <% end %>
+            <% if admin? %>
+                <li><a href="<%= edit_admin_path(admin?.id) %>">Edit Admin Settings</a></li>
+            <% end %>
+          </ul>
+        </div>
+      </li>
+      <li><a href="/logout" class="btn btn-default btn-sm navbar-btn"><b>Logout</b></a></li>
+  <% else %>
+      <li><a href="/login" class="btn btn-default btn-sm navbar-btn">Login</a></li>
+  <% end %>
+</ul>

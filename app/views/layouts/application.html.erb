@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="NUS Orbital official website">
+  <%= favicon_link_tag 'favicon.ico' %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -14,9 +15,9 @@
   <%= content_for?(:content) ? yield(:content) : yield %>
   <footer class="col-lg-12 footer text-muted">
     <div class="container">
-      <p class="col-lg-4 text-center">&copy;NUS SoC</p>
-      <p class="col-lg-4 text-center">Orbital Program</p>
-      <p class="col-lg-4 text-center"><a href="#">Contact</a></p>
+      <p class="col-sm-4 text-center">&copy;NUS SoC</p>
+      <p class="col-sm-4 text-center">Orbital Program</p>
+      <p class="col-sm-4 text-center"><a href="https://github.com/nusskylab/nusskylab/issues">Report Issues</a></p>
     </div>
   </footer>
 </body>
