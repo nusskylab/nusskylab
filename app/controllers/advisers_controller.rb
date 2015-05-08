@@ -1,13 +1,14 @@
 class AdvisersController < ApplicationController
-  layout 'advisers_mentors'
+  layout 'general_layout'
 
   def index
     @advisers = Adviser.all
+    render layout: 'admins'
   end
 
   def new
     @adviser = Adviser.new
-    render_new_template and return
+    render_new_template(nil) and return
   end
 
   def create
@@ -17,10 +18,7 @@ class AdvisersController < ApplicationController
     if user.save
       create_adviser_for_user_and_respond(user)
     else
-      render 'new', locals: {
-                    users: User.all,
-                    user: user
-                  }
+      render_new_template(user)
     end
   end
 
@@ -29,10 +27,7 @@ class AdvisersController < ApplicationController
     if user
       create_adviser_for_user_and_respond(user)
     else
-      render 'new', locals: {
-                    users: User.all,
-                    user: user
-                  }
+      render_new_template(user)
     end
   end
 
@@ -48,14 +43,19 @@ class AdvisersController < ApplicationController
 
   def edit
     @adviser = Adviser.find(params[:id])
+    render layout: get_layout_for_role
   end
 
   def update
     @adviser = Adviser.find(params[:id])
     if update_user
-      redirect_to @adviser
+      if admin?
+        redirect_to advisers_path
+      else
+        redirect_to @adviser
+      end
     else
-      render 'edit'
+      render layout: get_layout_for_role, template: 'edit'
     end
   end
 
@@ -75,7 +75,7 @@ class AdvisersController < ApplicationController
       if @adviser.save
         redirect_to advisers_path
       else
-        render_new_template
+        render_new_template(nil)
       end
     end
 
@@ -108,10 +108,10 @@ class AdvisersController < ApplicationController
       return milestones, teams_submissions, own_evaluations
     end
 
-    def render_new_template
-      render 'new', locals: {
+    def render_new_template(user)
+      render layout: 'admins', template: 'new', locals: {
                     users: User.all,
-                    user: User.new
+                    user: user || User.new
                   }
     end
 end
