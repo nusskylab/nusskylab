@@ -1,4 +1,6 @@
 class TeamsController < ApplicationController
+  layout 'general_layout'
+
   def index
     @teams = Team.all
   end

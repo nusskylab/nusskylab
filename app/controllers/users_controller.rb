@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  layout 'admins'
+
   def index
     if can_view_all_users
       @users = User.all
@@ -25,8 +27,9 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.find(params[:id])
     if can_view_a_user
-      @user = User.find(params[:id])
+      render layout: 'general_layout'
     else
       does_not_have_access
     end
@@ -55,13 +58,34 @@ class UsersController < ApplicationController
     redirect_to users_path, flash: flash
   end
 
+  def user_student?
+    student ||= Student.student?(@user.id) if @user
+  end
+
+  def user_adviser?
+    adviser ||= Adviser.adviser?(@user.id) if @user
+  end
+
+  def user_mentor?
+    mentor ||= Mentor.mentor?(@user.id) if @user
+  end
+
+  def user_admin?
+    admin ||= Admin.admin?(@user.id) if @user
+  end
+
+  helper_method 'user_student?'
+  helper_method 'user_adviser?'
+  helper_method 'user_mentor?'
+  helper_method 'user_admin?'
+
   private
     def get_user_params
       user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
     end
 
     def can_view_a_user
-      (not session[:user_id].nil? and not params[:id].nil? and session[:user_id].to_i == params[:id].to_i)
+      admin? or (current_user and current_user.id == @user.id)
     end
 
     def can_view_all_users
