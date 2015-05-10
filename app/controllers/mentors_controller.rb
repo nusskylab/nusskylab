@@ -9,7 +9,7 @@ class MentorsController < ApplicationController
   def new
     @mentor = Mentor.new
     render layout: 'admins', locals: {
-             user: nil,
+             user: User.new,
              users: User.all
            }
   end

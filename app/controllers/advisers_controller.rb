@@ -8,7 +8,10 @@ class AdvisersController < ApplicationController
 
   def new
     @adviser = Adviser.new
-    render_new_template(nil) and return
+    render layout: 'admins', locals: {
+                             users: User.all,
+                             user: User.new
+                           }
   end
 
   def create
