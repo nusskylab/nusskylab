@@ -1,26 +1,18 @@
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="text-center">Evaluation relationships</h3>
-  </div>
-  <div class="panel-body">
-    <table class="table table-hover">
-      <thead>
-      <tr><th>Evaluator</th><th>Evaluated</th><th>Actions</th></tr>
-      </thead>
-      <tbody>
-      <% @evaluatings.each do |evaluating| %>
-          <tr>
-            <td><%= evaluating.evaluator.team_name %></td>
-            <td><%= evaluating.evaluated.team_name %></td>
-            <td>
-              <a class="btn btn-default btn-xs" href="<%=  evaluating_path(evaluating.id) %>">View</a>
-              <a class="btn btn-default btn-xs" href="<%= edit_evaluating_path(evaluating.id) %>">Edit</a>
-              <%= link_to 'Delete', evaluating_path(evaluating.id),
-                          :confirm => 'Are you sure to delete this evaluating permanently?', :method => :delete, :class => 'btn btn-danger btn-xs' %>
-            </td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+<table class="table table-hover">
+  <thead>
+  <tr><th>Evaluator</th><th>Evaluated</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+  <% @evaluatings.each do |evaluating| %>
+      <tr>
+        <td><%= evaluating.evaluator.team_name %></td>
+        <td><%= evaluating.evaluated.team_name %></td>
+        <td>
+          <a class="btn btn-default btn-xs" href="<%= edit_evaluating_path(evaluating.id) %>">Edit</a>
+          <%= link_to 'Delete', evaluating_path(evaluating.id),
+                      :confirm => 'Are you sure to delete this evaluating permanently?', :method => :delete, :class => 'btn btn-danger btn-xs' %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

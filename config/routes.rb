@@ -36,6 +36,6 @@ Rails.application.routes.draw do
     resources :submissions, only: [:index, :new, :create, :edit, :update, :show]
     resources :peer_evaluations
   end
-  resources :evaluatings
+  resources :evaluatings, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :milestones
 end
