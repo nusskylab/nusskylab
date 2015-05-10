@@ -24,6 +24,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def get_layout_for_role
+    if admin?
+      'admins'
+    else
+      'general_layout'
+    end
+  end
+
   def student?
     student ||= Student.student?(@current_user.id) if current_user
   end

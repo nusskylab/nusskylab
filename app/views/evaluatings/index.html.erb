@@ -1,3 +1,14 @@
-<% content_for :evaluatings_content do %>
-    <%= render 'evaluatings_table', object: @evaluatings %>
+<% content_for :main_content do %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="text-center">Evaluation relationships</h3>
+      </div>
+      <div class="panel-body">
+        <%= render 'evaluatings_table', locals: {evaluatings: @evaluatings} %>
+        <hr>
+        <div class="col-sm-8 col-sm-offset-4">
+          <a href="<%= new_evaluating_path %>" class="btn btn-success">Create New Evaluation relationship</a>
+        </div>
+      </div>
+    </div>
 <% end %>

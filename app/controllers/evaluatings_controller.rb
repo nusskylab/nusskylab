@@ -1,18 +1,44 @@
 class EvaluatingsController < ApplicationController
+  layout 'admins'
+
   def index
     @evaluatings = Evaluating.all
   end
 
   def new
     @evaluating = Evaluating.new
+    render locals: {
+             teams: Team.all
+           }
   end
 
   def create
-    @evaluating = create_or_update_evaluation_relationship
-    redirect_to evaluatings_path
+    evaluating = create_evaluation_relationship
+    if evaluating
+      redirect_to evaluatings_path
+    else
+      render 'new', locals: {
+               teams: Team.all
+                  }
+    end
   end
 
-  def show
+  def edit
+    @evaluating = Evaluating.find(params[:id])
+    render locals: {
+             teams: Team.all
+           }
+  end
+
+  def update
+    evaluating = update_evaluation_relationship
+    if evaluating
+      redirect_to evaluatings_path
+    else
+      render 'edit', locals: {
+                    teams: Team.all
+                  }
+    end
   end
 
   def destroy
@@ -22,11 +48,17 @@ class EvaluatingsController < ApplicationController
   end
 
   private
-  def create_or_update_evaluation_relationship
-    evaluated_id = params[:evaluated_id]
-    evaluator_id = params[:evaluator_id]
-    evaluating = Evaluating.new(evaluated_id: evaluated_id, evaluator_id: evaluator_id)
-    evaluating.save
-    evaluating
+  def get_evaluating_params
+    evaluating_params = params.require(:evaluating).permit(:evaluated_id, :evaluator_id)
+  end
+
+  def create_evaluation_relationship
+    @evaluating = Evaluating.new(get_evaluating_params)
+    @evaluating.save ? @evaluating : nil
+  end
+
+  def update_evaluation_relationship
+    @evaluating = Evaluating.find(params[:id])
+    (@evaluating and @evaluating.update(get_evaluating_params)) ? @evaluating : nil
   end
 end
