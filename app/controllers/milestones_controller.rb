@@ -1,4 +1,6 @@
 class MilestonesController < ApplicationController
+  layout 'admins'
+
   def index
     @milestones = Milestone.all
   end

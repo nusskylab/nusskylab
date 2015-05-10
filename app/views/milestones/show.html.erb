@@ -1,3 +1,12 @@
-<% content_for :milestones_content do %>
-  <%= render 'milestone_info', locals: {milestone: @milestone} %>
+<% content_for :main_content do %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h2 class="text-center">
+          <%= @milestone.name %>
+        </h2>
+      </div>
+      <div class="panel-body">
+        <%= render 'milestone_info', locals: {milestone: @milestone} %>
+      </div>
+    </div>
 <% end %>
