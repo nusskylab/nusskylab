@@ -3,14 +3,15 @@ class TeamsController < ApplicationController
 
   def index
     @teams = Team.all
+    render layout: 'admins'
   end
 
   def new
     @team = Team.new
-    render locals: {
-             advisers: Adviser.all,
-             mentors: Mentor.all
-           }
+    render layout: 'admins', locals: {
+                             advisers: Adviser.all,
+                             mentors: Mentor.all
+                           }
   end
 
   def create
@@ -18,10 +19,7 @@ class TeamsController < ApplicationController
     if @team.save
       redirect_to teams_path
     else
-      render 'new', locals: {
-                    advisers: Adviser.all,
-                    mentors: Mentor.all
-                  }
+      render_new_template
     end
   end
 
@@ -59,14 +57,21 @@ class TeamsController < ApplicationController
   end
 
   private
-  def update_team
-    @team = Team.find(params[:id])
-    team_params = get_team_params
-    @team.update(team_params) ? @team : nil
-  end
+    def update_team
+      @team = Team.find(params[:id])
+      team_params = get_team_params
+      @team.update(team_params) ? @team : nil
+    end
 
-  def get_team_params
-    team_params = params.require(:team).permit(:team_name, :project_level,
-                                               :adviser_id, :mentor_id)
-  end
+    def get_team_params
+      team_params = params.require(:team).permit(:team_name, :project_level,
+                                                 :adviser_id, :mentor_id)
+    end
+
+    def render_new_template
+      render layout: 'admins', template: 'new', locals: {
+                               advisers: Adviser.all,
+                               mentors: Mentor.all
+                             }
+    end
 end
