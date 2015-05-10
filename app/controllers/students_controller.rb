@@ -2,8 +2,11 @@ class StudentsController < ApplicationController
   NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
   NUS_OPEN_ID_PROVIDER = 'NUS'
 
+  layout 'general_layout'
+
   def index
     @students = Student.all
+    render layout: 'admins'
   end
 
   def new
@@ -224,7 +227,7 @@ class StudentsController < ApplicationController
     end
 
     def render_new_template
-      render 'new', locals: {
+      render layout: 'admins', template: 'new', locals: {
                     users: User.all
                   }
     end
