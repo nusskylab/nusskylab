@@ -48,6 +48,26 @@ class ApplicationController < ActionController::Base
     admin ||= Admin.admin?(@current_user.id) if current_user
   end
 
+  def check_access(login_required: true, admin_only: false)
+    if login_required
+      if not current_user
+        does_not_have_access
+      end
+    end
+    if admin_only
+      if not admin?
+        does_not_have_access
+      end
+    end
+    if not special_access_strategy
+      does_not_have_access
+    end
+  end
+
+  def special_access_strategy
+    true
+  end
+
   def does_not_have_access
     flash = {}
     flash[:danger] = 'You do not have privilege to do this'
