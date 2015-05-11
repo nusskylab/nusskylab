@@ -48,20 +48,23 @@ class ApplicationController < ActionController::Base
     admin ||= Admin.admin?(@current_user.id) if current_user
   end
 
-  def check_access(login_required: true, admin_only: false)
+  def check_access(login_required = true, admin_only = false)
     if login_required
       if not current_user
-        does_not_have_access
+        does_not_have_access and return false
+        false
       end
     end
     if admin_only
       if not admin?
-        does_not_have_access
+        does_not_have_access and return false
+        false
       end
     end
     if not special_access_strategy
-      does_not_have_access
+      does_not_have_access and return false
     end
+    true
   end
 
   def special_access_strategy
