@@ -5,16 +5,19 @@ class StudentsController < ApplicationController
   layout 'general_layout'
 
   def index
+    not check_access(true, true) and return
     @students = Student.all
     render layout: 'admins'
   end
 
   def new
+    not check_access(true, true) and return
     @student = Student.new
     render_new_template
   end
 
   def create
+    not check_access(true, true) and return
     user_params = get_user_params
     user = User.new(user_params)
     if user.save
@@ -25,10 +28,12 @@ class StudentsController < ApplicationController
   end
 
   def batch_upload
+    not check_access(true, true) and return
     @student = Student.new
   end
 
   def batch_create
+    not check_access(true, true) and return
     require 'csv'
     students_csv_file = params[:student][:batch_csv]
     file_rows = CSV.read(students_csv_file.path, headers: true)
@@ -39,6 +44,7 @@ class StudentsController < ApplicationController
   end
 
   def use_existing
+    not check_access(true, true) and return
     user = User.find(params[:student][:user_id])
     if user
       create_student_for_user_and_respond(user)
@@ -48,10 +54,12 @@ class StudentsController < ApplicationController
   end
 
   def edit
+    not check_access(true, false) and return
     @student = Student.find(params[:id])
   end
 
   def show
+    not check_access(true, false) and return
     @student = Student.find(params[:id])
     evaluateds, evaluators, milestones, team_evaluateds_submissions_table, team_evaluations_table, team_evaluators_evaluations_table, team_submissions_table = get_render_variable_for_student
     render locals: {
@@ -66,6 +74,7 @@ class StudentsController < ApplicationController
   end
 
   def update
+    not check_access(true, false) and return
     @student = Student.find(params[:id])
     if update_user
       redirect_to @student
@@ -75,6 +84,7 @@ class StudentsController < ApplicationController
   end
 
   def destroy
+    not check_access(true, false) and return
     @student = Student.find(params[:id])
     @student.destroy
     redirect_to students_path

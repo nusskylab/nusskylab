@@ -2,29 +2,35 @@ class SubmissionsController < ApplicationController
   layout 'general_layout'
 
   def index
+    not check_access(true, false) and return
     @submissions = Submission.where(team_id: params[:team_id])
   end
 
   def new
+    not check_access(true, false) and return
     @submission = Submission.new(team_id: params[:team_id])
     render_new_action and return
   end
 
   def create
+    not check_access(true, false) and return
     sub = create_submission
     render_or_redirect_for_submission(sub, true)
   end
 
   def show
+    not check_access(true, false) and return
     @submission = Submission.find(params[:id])
   end
 
   def edit
+    not check_access(true, false) and return
     @submission = Submission.find(params[:id])
     render_edit_action and return
   end
 
   def update
+    not check_access(true, false) and return
     sub = update_submission
     render_or_redirect_for_submission(sub, false)
   end

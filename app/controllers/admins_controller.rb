@@ -1,9 +1,13 @@
 class AdminsController < ApplicationController
+  layout 'admins'
+
   def index
+    not check_access(true, true) and return
     @admins = Admin.all
   end
 
   def new
+    not check_access(true, true) and return
     @admin = Admin.new
     render locals: {
              user: nil,
@@ -12,22 +16,27 @@ class AdminsController < ApplicationController
   end
 
   def create
+    not check_access(true, true) and return
     create_user_and_admin
   end
 
   def use_existing
+    not check_access(true, true) and return
     create_admin_using_existing_user
   end
 
   def show
+    not check_access(true, true) and return
     @admin = Admin.find(params[:id])
   end
 
   def edit
+    not check_access(true, true) and return
     @admin = Admin.find(params[:id])
   end
 
   def update
+    not check_access(true, true) and return
     @admin = Admin.find(params[:id])
     if update_user
       redirect_to admin_path(@admin.id)
@@ -37,6 +46,7 @@ class AdminsController < ApplicationController
   end
 
   def destroy
+    not check_access(true, true) and return
     @admin = Admin.find(params[:id])
     @admin.destroy
     redirect_to admins_path

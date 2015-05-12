@@ -2,14 +2,17 @@ class MilestonesController < ApplicationController
   layout 'admins'
 
   def index
+    not check_access(true, true) and return
     @milestones = Milestone.all
   end
 
   def new
+    not check_access(true, true) and return
     @milestone = Milestone.new
   end
 
   def create
+    not check_access(true, true) and return
     test = Milestone.new(get_milestone_params)
     @milestone = Milestone.new(:name => test.name, :deadline => test.deadline)
     if @milestone.save
@@ -22,14 +25,17 @@ class MilestonesController < ApplicationController
   end
 
   def show
+    not check_access(true, true) and return
     @milestone = Milestone.find(params[:id])
   end
 
   def edit
+    not check_access(true, true) and return
     @milestone = Milestone.find(params[:id])
   end
 
   def update
+    not check_access(true, true) and return
     @milestone = Milestone.find(params[:id])
     if @milestone.update(get_milestone_params)
       flash = {}
@@ -41,6 +47,7 @@ class MilestonesController < ApplicationController
   end
 
   def destroy
+    not check_access(true, true) and return
     @milestone = Milestone.find(params[:id])
     @milestone.destroy
     flash = {}

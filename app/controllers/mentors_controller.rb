@@ -2,11 +2,13 @@ class MentorsController < ApplicationController
   layout 'general_layout'
 
   def index
+    not check_access(true, true) and return
     @mentors = Mentor.all
     render layout: 'admins'
   end
 
   def new
+    not check_access(true, true) and return
     @mentor = Mentor.new
     render layout: 'admins', locals: {
              user: User.new,
@@ -15,6 +17,7 @@ class MentorsController < ApplicationController
   end
 
   def create
+    not check_access(true, true) and return
     user = User.new(get_user_params)
     flash = {}
     if not user.save
@@ -30,6 +33,7 @@ class MentorsController < ApplicationController
   end
 
   def use_existing
+    not check_access(true, true) and return
     user = User.find(params[:mentor][:user_id])
     if not user
       render_new_template_with_err(user) and return
@@ -45,6 +49,7 @@ class MentorsController < ApplicationController
   end
 
   def show
+    not check_access(true, false) and return
     @mentor = Mentor.find(params[:id])
     milestones, teams_submissions, own_evaluations = get_data_for_mentor
     render locals: {
@@ -55,11 +60,13 @@ class MentorsController < ApplicationController
   end
 
   def edit
+    not check_access(true, false) and return
     @mentor = Mentor.find(params[:id])
     render layout: get_layout_for_role
   end
 
   def update
+    not check_access(true, false) and return
     @mentor = Mentor.find(params[:id])
     user = @mentor.user
     if user.update(get_user_params)
@@ -74,6 +81,7 @@ class MentorsController < ApplicationController
   end
 
   def destroy
+    not check_access(true, true) and return
     @mentor = Mentor.find(params[:id])
     @mentor.destroy
     redirect_to mentors_path

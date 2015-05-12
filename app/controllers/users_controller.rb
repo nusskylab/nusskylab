@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   layout 'admins'
 
   def index
+    not check_access(true, true) and return
     if can_view_all_users
       @users = User.all
     else
@@ -10,10 +11,12 @@ class UsersController < ApplicationController
   end
 
   def new
+    not check_access(true, true) and return
     @user = User.new
   end
 
   def create
+    not check_access(true, true) and return
     @user = User.new(get_user_params)
     flash = {}
     if @user.save
@@ -23,10 +26,12 @@ class UsersController < ApplicationController
   end
 
   def edit
+    not check_access(true, false) and return
     @user = User.find(params[:id])
   end
 
   def show
+    not check_access(true, false) and return
     @user = User.find(params[:id])
     if can_view_a_user
       render layout: 'general_layout'
@@ -36,6 +41,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    not check_access(true, false) and return
     @user = User.find(params[:id])
     flash = {}
     if @user and @user.update(get_user_params)
@@ -48,6 +54,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    not check_access(true, true) and return
     @user = User.find(params[:id])
     flash = {}
     if @user.destroy

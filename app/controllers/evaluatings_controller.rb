@@ -2,10 +2,12 @@ class EvaluatingsController < ApplicationController
   layout 'admins'
 
   def index
+    not check_access(true, true) and return
     @evaluatings = Evaluating.all
   end
 
   def new
+    not check_access(true, true) and return
     @evaluating = Evaluating.new
     render locals: {
              teams: Team.all
@@ -13,6 +15,7 @@ class EvaluatingsController < ApplicationController
   end
 
   def create
+    not check_access(true, true) and return
     evaluating = create_evaluation_relationship
     if evaluating
       redirect_to evaluatings_path
@@ -24,6 +27,7 @@ class EvaluatingsController < ApplicationController
   end
 
   def edit
+    not check_access(true, true) and return
     @evaluating = Evaluating.find(params[:id])
     render locals: {
              teams: Team.all
@@ -31,6 +35,7 @@ class EvaluatingsController < ApplicationController
   end
 
   def update
+    not check_access(true, true) and return
     evaluating = update_evaluation_relationship
     if evaluating
       redirect_to evaluatings_path
@@ -42,6 +47,7 @@ class EvaluatingsController < ApplicationController
   end
 
   def destroy
+    not check_access(true, true) and return
     evaluating = Evaluating.find(params[:id])
     evaluating.destroy if evaluating
     redirect_to evaluatings_path

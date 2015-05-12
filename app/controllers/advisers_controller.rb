@@ -2,11 +2,13 @@ class AdvisersController < ApplicationController
   layout 'general_layout'
 
   def index
+    not check_access(true, true) and return
     @advisers = Adviser.all
     render layout: 'admins'
   end
 
   def new
+    not check_access(true, true) and return
     @adviser = Adviser.new
     render layout: 'admins', locals: {
                              users: User.all,
@@ -16,6 +18,7 @@ class AdvisersController < ApplicationController
 
   def create
     # create separate render template for create and use_existing
+    not check_access(true, true) and return
     user_params = get_user_params
     user = User.new(user_params)
     if user.save
@@ -26,6 +29,7 @@ class AdvisersController < ApplicationController
   end
 
   def use_existing
+    not check_access(true, true) and return
     user = User.find(params[:adviser][:user_id])
     if user
       create_adviser_for_user_and_respond(user)
@@ -35,6 +39,7 @@ class AdvisersController < ApplicationController
   end
 
   def show
+    not check_access(true, false) and return
     @adviser = Adviser.find(params[:id])
     milestones, teams_submissions, own_evaluations = get_data_for_adviser
     render locals: {
@@ -45,11 +50,13 @@ class AdvisersController < ApplicationController
   end
 
   def edit
+    not check_access(true, false) and return
     @adviser = Adviser.find(params[:id])
     render layout: get_layout_for_role
   end
 
   def update
+    not check_access(true, false) and return
     @adviser = Adviser.find(params[:id])
     if update_user
       if admin?
@@ -63,6 +70,7 @@ class AdvisersController < ApplicationController
   end
 
   def destroy
+    not check_access(true, true) and return
     @adviser = Adviser.find(params[:id])
     @adviser.destroy
     redirect_to advisers_path
