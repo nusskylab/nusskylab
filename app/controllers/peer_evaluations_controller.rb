@@ -2,6 +2,7 @@ class PeerEvaluationsController < ApplicationController
   layout 'general_layout'
 
   def index
+    not check_access(true, false) and return
     if params[:team_id]
       @peer_evaluations = PeerEvaluation.where(team_id: params[:team_id])
     else
@@ -10,30 +11,36 @@ class PeerEvaluationsController < ApplicationController
   end
 
   def new
+    not check_access(true, false) and return
     @peer_evaluation = PeerEvaluation.new
     render_template('new') and return
   end
 
   def create
+    not check_access(true, false) and return
     create_peer_evaluation
     redirect_back_user
   end
 
   def show
+    not check_access(true, false) and return
     @peer_evaluation = PeerEvaluation.find(params[:id])
   end
 
   def edit
+    not check_access(true, false) and return
     @peer_evaluation = PeerEvaluation.find(params[:id])
     render_template('edit') and return
   end
 
   def update
+    not check_access(true, false) and return
     update_peer_evaluation
     redirect_back_user
   end
 
   def destroy
+    not check_access(true, false) and return
     @peer_evaluation = PeerEvaluation.find(params[:id])
     @peer_evaluation.destroy
     redirect_to team_peer_evaluations_path(params[:team_id])

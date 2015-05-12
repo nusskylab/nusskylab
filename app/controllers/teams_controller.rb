@@ -2,11 +2,13 @@ class TeamsController < ApplicationController
   layout 'general_layout'
 
   def index
+    not check_access(true, true) and return
     @teams = Team.all
     render layout: 'admins'
   end
 
   def new
+    not check_access(true, true) and return
     @team = Team.new
     render layout: 'admins', locals: {
                              advisers: Adviser.all,
@@ -15,6 +17,7 @@ class TeamsController < ApplicationController
   end
 
   def create
+    not check_access(true, true) and return
     @team = Team.new(get_team_params)
     if @team.save
       redirect_to teams_path
@@ -24,10 +27,12 @@ class TeamsController < ApplicationController
   end
 
   def show
+    not check_access(true, false) and return
     @team = Team.find(params[:id])
   end
 
   def edit
+    not check_access(true, false) and return
     @team = Team.find(params[:id])
     render locals: {
              advisers: Adviser.all,
@@ -36,6 +41,7 @@ class TeamsController < ApplicationController
   end
 
   def update
+    not check_access(true, false) and return
     team = update_team
     if team
       redirect_to @team
@@ -48,6 +54,7 @@ class TeamsController < ApplicationController
   end
 
   def destroy
+    not check_access(true, true) and return
     @team = Team.find(params[:id])
     if @team.destroy
       flash = {}
