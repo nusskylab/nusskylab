@@ -1,8 +1,8 @@
 'use strict';
 $(document).ready(function () {
   if ($('#main-content > div > div.panel-heading > h3').html() === 'Edit peer evaluation') {
-    //$('#eval-public').html($('#peer-evaluation-public-content').val());
-    //$('#eval-private').html($('#peer-evaluation-private-content').val());
+    fillInPublicPartOfHtmlForm();
+    fillInPrivatePartOfHtmlForm();
   }
 
   $('.new_peer_evaluation').on('submit', function () {
@@ -35,5 +35,21 @@ $(document).ready(function () {
       values[$(val).attr('name')] = $(val).val();
     });
     return JSON.stringify(values);
+  }
+
+  function fillInPublicPartOfHtmlForm() {
+    var publicValues = JSON.parse($('#peer-evaluation-public-content').val());
+    $.each(publicValues, function (attrName, attrVal) {
+      $('#eval-public input[type=radio][name="' + attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
+      $('#eval-public textarea[name="' + attrName + '"]').val(attrVal);
+    });
+  }
+
+  function fillInPrivatePartOfHtmlForm() {
+    var privateValues = JSON.parse($('#peer-evaluation-private-content').val());
+    $.each(privateValues, function (attrName, attrVal) {
+      $('#eval-private input[type=radio][name="' + attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
+      $('#eval-private textarea[name="' + attrName + '"]').val(attrVal);
+    });
   }
 });
