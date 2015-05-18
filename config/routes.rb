@@ -37,5 +37,9 @@ Rails.application.routes.draw do
     resources :peer_evaluations
   end
   resources :evaluatings, only: [:index, :new, :create, :edit, :update, :destroy]
-  resources :milestones
+  resources :milestones do
+    resources :teams, only: [:show] do
+      resources :received_evals, only: [:index]
+    end
+  end
 end
