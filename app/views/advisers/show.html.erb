@@ -1,4 +1,5 @@
 <% content_for :main_content do %>
+    <% javascript 'advisers.js' %>
   <%= render 'adviser_view', locals: {adviser: @adviser,
                                       milestones: milestones,
                                       teams_submissions: teams_submissions,

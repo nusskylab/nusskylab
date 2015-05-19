@@ -1,3 +1,4 @@
 <% content_for :main_content do %>
+    <% javascript 'students.js' %>
     <%= render 'batch_students', locals: {student: @student} %>
 <% end %>

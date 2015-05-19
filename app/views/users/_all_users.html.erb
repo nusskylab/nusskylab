@@ -15,6 +15,8 @@
             <td>
               <a class="btn btn-default btn-xs" href="<%=  user_path(user.id) %>">View</a>
               <a class="btn btn-default btn-xs" href="<%= edit_user_path(user.id) %>">Edit</a>
+              <%= link_to 'Preview as', preview_as_user_path(user.id),
+                          :confirm => 'Are you sure to preview as this user?', :method => :post, :class => 'btn btn-warning btn-xs' %>
               <%= link_to 'Delete', user_path(user.id),
                           :confirm => 'Are you sure to delete this user permanently?', :method => :delete, :class => 'btn btn-danger btn-xs' %>
             </td>

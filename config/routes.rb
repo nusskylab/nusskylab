@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy', :as => :logout
   get '/auth/failure' => 'sessions#failure', :as => :login_failure
 
-  resources :users
+  resources :users do
+    member do
+      post 'preview_as'
+    end
+  end
   resources :students do
     collection do
       get 'batch_upload'

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  layout 'admins'
+  layout 'general_layout'
 
   def index
     not check_access(true, true) and return
@@ -38,6 +38,14 @@ class UsersController < ApplicationController
     else
       does_not_have_access
     end
+  end
+
+  def preview_as
+    @user = User.find(params[:id])
+    reset_session
+    session[:user_id] = @user.id
+    current_user
+    redirect_to user_path(@user.id)
   end
 
   def update
