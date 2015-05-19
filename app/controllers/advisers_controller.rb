@@ -76,6 +76,10 @@ class AdvisersController < ApplicationController
     redirect_to advisers_path
   end
 
+  def get_home_link
+    @adviser ? adviser_path(@adviser) : '/'
+  end
+
   private
     def get_user_params
       user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)

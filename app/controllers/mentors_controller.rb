@@ -87,6 +87,10 @@ class MentorsController < ApplicationController
     redirect_to mentors_path
   end
 
+  def get_home_link
+    @mentor ? mentor_path(@mentor) : '/'
+  end
+
   private
     def get_user_params
       user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
