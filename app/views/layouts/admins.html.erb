@@ -12,13 +12,14 @@
         <div class="collapse navbar-collapse" id="nav-menu">
           <ul class="nav navbar-nav">
             <li><a href="<%= admin_path(admin?.id) %>">Home</a></li>
+            <li><a href="<%= users_path %>">Users</a></li>
             <li><a href="<%= students_path %>">Students</a></li>
             <li><a href="<%= advisers_path %>">Advisers</a></li>
             <li><a href="<%= mentors_path %>">Mentors</a></li>
             <li><a href="<%= admins_path %>">Admins</a></li>
+            <li><a href="<%= milestones_path %>">Milestones</a></li>
             <li><a href="<%= teams_path %>">Teams</a></li>
             <li><a href="<%= evaluatings_path %>">Evaluatings</a></li>
-            <li><a href="<%= milestones_path %>">Milestones</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if current_user %>

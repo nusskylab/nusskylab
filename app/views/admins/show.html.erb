@@ -1,3 +1,4 @@
 <% content_for :main_content do %>
-  <%= render 'admin_view', locals: {admin: @admin} %>
+    <% javascript 'admins.js' %>
+    <%= render 'admin_view', locals: {admin: @admin} %>
 <% end %>
