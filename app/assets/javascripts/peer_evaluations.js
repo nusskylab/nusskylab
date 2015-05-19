@@ -44,19 +44,27 @@ $(document).ready(function () {
   }
 
   function fillInPublicPartOfHtmlForm() {
-    var publicValues = JSON.parse($('#peer-evaluation-public-content').val());
-    $.each(publicValues, function (attrName, attrVal) {
-      $('#eval-public input[type=radio][name="' + attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
-      $('#eval-public textarea[name="' + attrName + '"]').val(attrVal);
-    });
+    try {
+      var publicValues = JSON.parse($('#peer-evaluation-public-content').val());
+      $.each(publicValues, function (attrName, attrVal) {
+        $('#eval-public input[type=radio][name="' + attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
+        $('#eval-public textarea[name="' + attrName + '"]').val(attrVal);
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   function fillInPrivatePartOfHtmlForm() {
-    var privateValues = JSON.parse($('#peer-evaluation-private-content').val());
-    $.each(privateValues, function (attrName, attrVal) {
-      $('#eval-private input[type=radio][name="' + attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
-      $('#eval-private textarea[name="' + attrName + '"]').val(attrVal);
-    });
+    try {
+      var privateValues = JSON.parse($('#peer-evaluation-private-content').val());
+      $.each(privateValues, function (attrName, attrVal) {
+        $('#eval-private input[type=radio][name="' + attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
+        $('#eval-private textarea[name="' + attrName + '"]').val(attrVal);
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   function disableAllEvalFormInputs() {

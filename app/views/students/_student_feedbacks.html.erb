@@ -1,5 +1,11 @@
 <% locals[:milestones].each do |milestone| %>
     <h3 class="text-center"><%= milestone.name %></h3>
+    <% if locals[:student].team %>
+        <a href="<%= milestone_team_received_evals_path(milestone.id, locals[:student].team.id) %>"
+           class="btn btn-xs btn-info">
+          View evaluations
+        </a>
+    <% end %>
     <div class="table-responsive">
       <table class="table">
         <col width="50%">
