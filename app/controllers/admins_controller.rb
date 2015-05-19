@@ -52,6 +52,10 @@ class AdminsController < ApplicationController
     redirect_to admins_path
   end
 
+  def get_home_link
+    @admin ? admin_path(@admin) : '/'
+  end
+
   private
     def get_user_param
       user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)

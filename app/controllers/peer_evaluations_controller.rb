@@ -46,6 +46,16 @@ class PeerEvaluationsController < ApplicationController
     redirect_to team_peer_evaluations_path(params[:team_id])
   end
 
+  def get_home_link
+    if (params[:team_id])
+      team = Team.find(params[:team_id])
+      return team ? team_path(team) : '/'
+    else
+      adviser = Adviser.find(params[:adviser_id])
+      return adviser ? adviser_path(adviser) : '/'
+    end
+  end
+
   private
     def create_peer_evaluation
       @peer_evaluation = PeerEvaluation.new(get_evaluation_params)

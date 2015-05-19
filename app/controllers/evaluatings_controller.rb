@@ -53,18 +53,22 @@ class EvaluatingsController < ApplicationController
     redirect_to evaluatings_path
   end
 
+  def get_home_link
+    admin? ? admin_path(admin?) : '/'
+  end
+
   private
-  def get_evaluating_params
-    evaluating_params = params.require(:evaluating).permit(:evaluated_id, :evaluator_id)
-  end
+    def get_evaluating_params
+      evaluating_params = params.require(:evaluating).permit(:evaluated_id, :evaluator_id)
+    end
 
-  def create_evaluation_relationship
-    @evaluating = Evaluating.new(get_evaluating_params)
-    @evaluating.save ? @evaluating : nil
-  end
+    def create_evaluation_relationship
+      @evaluating = Evaluating.new(get_evaluating_params)
+      @evaluating.save ? @evaluating : nil
+    end
 
-  def update_evaluation_relationship
-    @evaluating = Evaluating.find(params[:id])
-    (@evaluating and @evaluating.update(get_evaluating_params)) ? @evaluating : nil
-  end
+    def update_evaluation_relationship
+      @evaluating = Evaluating.find(params[:id])
+      (@evaluating and @evaluating.update(get_evaluating_params)) ? @evaluating : nil
+    end
 end

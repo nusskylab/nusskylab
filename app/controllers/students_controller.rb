@@ -90,6 +90,10 @@ class StudentsController < ApplicationController
     redirect_to students_path
   end
 
+  def get_home_link
+    @student ? student_path(@student) : '/'
+  end
+
   private
     def create_student_from_params(user_params, user2_params, team_params)
       user_params[:provider] = NUS_OPEN_ID_PROVIDER

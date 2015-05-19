@@ -77,10 +77,15 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, flash: flash
   end
 
+  def get_home_link
+    '/'
+  end
+
   helper_method 'current_user'
   helper_method 'get_current_role'
   helper_method 'student?'
   helper_method 'adviser?'
   helper_method 'mentor?'
   helper_method 'admin?'
+  helper_method 'get_home_link'
 end

@@ -20,4 +20,9 @@ class ReceivedEvalsController < ApplicationController
              team_evaluation_table: team_evaluation_table
            }
   end
+
+  def get_home_link
+    team = Team.find(params[:team_id])
+    team ? team_path(team) : '/'
+  end
 end

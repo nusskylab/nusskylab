@@ -55,6 +55,10 @@ class MilestonesController < ApplicationController
     redirect_to milestones_path, flash: flash
   end
 
+  def get_home_link
+    admin? ? admin_path(admin?) : '/'
+  end
+
   private
     def get_milestone_params
       params.require(:milestone).permit(:name, :deadline)

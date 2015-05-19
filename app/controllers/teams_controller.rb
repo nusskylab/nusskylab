@@ -63,6 +63,10 @@ class TeamsController < ApplicationController
     end
   end
 
+  def get_home_link
+    @team ? team_path(@team) : '/'
+  end
+
   private
     def update_team
       @team = Team.find(params[:id])
