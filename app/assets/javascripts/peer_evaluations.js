@@ -1,14 +1,17 @@
 'use strict';
 $(document).ready(function () {
-  if ($('#main-content > div > div.panel-heading > h3').html() === 'Edit peer evaluation') {
+  var currentPageHeading = $('#main-content > div > div.panel-heading > h3').html();
+  if (currentPageHeading === 'Edit peer evaluation') {
     fillInPublicPartOfHtmlForm();
     fillInPrivatePartOfHtmlForm();
-  } else if ($('#main-content > div > div.panel-heading > h3').html() === 'View peer evaluation') {
+  } else if (currentPageHeading === 'View peer evaluation') {
     fillInPublicPartOfHtmlForm();
     if ($('#peer-evaluation-private-content').length) {
       fillInPrivatePartOfHtmlForm();
     }
     disableAllEvalFormInputs();
+  } else if (currentPageHeading === 'Create peer evaluation') {
+    setSubmissionForEval();
   }
 
   $('.new_peer_evaluation').on('submit', function () {
@@ -20,6 +23,13 @@ $(document).ready(function () {
     $('#peer-evaluation-public-content').val(getPublicPartValues());
     $('#peer-evaluation-private-content').val(getPrivatePartValues());
   });
+
+  function setSubmissionForEval() {
+    var submission_id = getQueryParameterByName('target');
+    $('#peer_evaluation_submission_id option').filter(function () {
+      return $(this).val() === submission_id;
+    }).attr('selected', 'selected');
+  }
 
   function getPublicPartValues() {
     var values = {};
@@ -70,5 +80,12 @@ $(document).ready(function () {
   function disableAllEvalFormInputs() {
     $('input').attr('disabled', 'disabled');
     $('textarea').attr('disabled', 'disabled');
+  }
+
+  function getQueryParameterByName (name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
 });

@@ -38,7 +38,7 @@
                                 Edit Evaluation
                               </a>
                           <% else %>
-                              <a href="<%= new_adviser_peer_evaluation_path(locals[:adviser].id) %>"
+                              <a href="<%= new_adviser_peer_evaluation_path(locals[:adviser].id, target: team_submission.id) %>"
                                  class="btn btn-default">
                                 Start Evaluation
                               </a>

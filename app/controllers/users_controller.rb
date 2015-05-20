@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  layout 'general_layout'
+  layout 'admins'
 
   def index
     not check_access(true, true) and return
@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   def edit
     not check_access(true, false) and return
     @user = User.find(params[:id])
+    render layout: 'general_layout'
   end
 
   def show
