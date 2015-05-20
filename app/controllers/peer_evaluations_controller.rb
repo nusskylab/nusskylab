@@ -19,7 +19,7 @@ class PeerEvaluationsController < ApplicationController
   def create
     not check_access(true, false) and return
     create_peer_evaluation
-    redirect_back_user
+    response_to_user(true)
   end
 
   def show
@@ -36,7 +36,7 @@ class PeerEvaluationsController < ApplicationController
   def update
     not check_access(true, false) and return
     update_peer_evaluation
-    redirect_back_user
+    response_to_user(false)
   end
 
   def destroy
@@ -116,8 +116,13 @@ class PeerEvaluationsController < ApplicationController
              }
     end
 
-    def redirect_back_user
+    def response_to_user(is_create_action = true)
       if @peer_evaluation.errors.any?
+        if is_create_action
+          render_template('new')
+        else
+          render_template('edit')
+        end
       else
         if @peer_evaluation[:team_id]
           redirect_to team_path(@peer_evaluation[:team_id])
