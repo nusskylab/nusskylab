@@ -63,9 +63,10 @@ class PeerEvaluationsController < ApplicationController
     end
 
     def update_peer_evaluation
-      # TODO: check for duplicate submissions
       @peer_evaluation = PeerEvaluation.find(params[:id])
-      @peer_evaluation.update(get_evaluation_params) ? @peer_evaluation : nil
+      eval_params = get_evaluation_params
+      eval_params[:submission_id] = @peer_evaluation.submission_id
+      @peer_evaluation.update(eval_params) ? @peer_evaluation : nil
     end
 
     def get_evaluation_params
