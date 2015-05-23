@@ -91,6 +91,11 @@ class MentorsController < ApplicationController
     @mentor ? mentor_path(@mentor) : '/'
   end
 
+  def get_page_title
+    @page_title = @page_title || 'Mentors | Orbital'
+    super
+  end
+
   private
     def get_user_params
       user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)

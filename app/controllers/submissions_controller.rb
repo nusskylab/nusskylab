@@ -40,6 +40,11 @@ class SubmissionsController < ApplicationController
     team ? team_path(team) : '/'
   end
 
+  def get_page_title
+    @page_title = @page_title || 'Submissions | Orbital'
+    super
+  end
+
   private
     def create_submission
       sub_params = exact_submission_params

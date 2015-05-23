@@ -80,6 +80,11 @@ class AdvisersController < ApplicationController
     @adviser ? adviser_path(@adviser) : '/'
   end
 
+  def get_page_title
+    @page_title = @page_title || 'Advisers | Orbital'
+    super
+  end
+
   private
     def get_user_params
       user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)

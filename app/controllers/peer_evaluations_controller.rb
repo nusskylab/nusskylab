@@ -56,6 +56,11 @@ class PeerEvaluationsController < ApplicationController
     end
   end
 
+  def get_page_title
+    @page_title = @page_title || 'Peer Evaluations | Orbital'
+    super
+  end
+
   private
     def create_peer_evaluation
       @peer_evaluation = PeerEvaluation.new(get_evaluation_params)

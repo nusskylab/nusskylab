@@ -57,6 +57,11 @@ class EvaluatingsController < ApplicationController
     admin? ? admin_path(admin?) : '/'
   end
 
+  def get_page_title
+    @page_title = @page_title || 'Evaluatings | Orbital'
+    super
+  end
+
   private
     def get_evaluating_params
       evaluating_params = params.require(:evaluating).permit(:evaluated_id, :evaluator_id)

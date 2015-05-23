@@ -59,6 +59,11 @@ class MilestonesController < ApplicationController
     admin? ? admin_path(admin?) : '/'
   end
 
+  def get_page_title
+    @page_title = @page_title || 'Milestones | Orbital'
+    super
+  end
+
   private
     def get_milestone_params
       params.require(:milestone).permit(:name, :deadline)

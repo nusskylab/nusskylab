@@ -91,7 +91,12 @@ class StudentsController < ApplicationController
   end
 
   def get_home_link
-    @student ? student_path(@student) : '/'
+    @student and @student.id ? student_path(@student) : '/'
+  end
+
+  def get_page_title
+    @page_title = @page_title || 'Students | Orbital'
+    super
   end
 
   private
