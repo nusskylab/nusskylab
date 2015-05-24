@@ -115,9 +115,14 @@ class StudentsController < ApplicationController
                           provider: user_params[:provider]) || User.new(user_params)
       if not user.save
         # TODO: deal with this
+        print(user_params)
       end
       student = Student.new(user_id: user.id)
-      student.save ? student : nil
+      if not student.save
+        print(user_params)
+      else
+        student
+      end
     end
 
     def create_student_with_team(team_params, user2_params, user_params)
@@ -127,11 +132,13 @@ class StudentsController < ApplicationController
                           provider: user_params[:provider]) || User.new(user_params)
       if not user.save
         # TODO: deal with this
+        print(user_params)
       end
       user2 = User.find_by(uid: user2_params[:uid],
                            provider: user2_params[:provider]) || User.new(user2_params)
       if not user2.save
         # TODO: deal with this
+        print(user2_params)
       end
       set_team_params_project_level(team_params)
       team = Team.new(team_params)
@@ -140,8 +147,16 @@ class StudentsController < ApplicationController
       end
       student = Student.new(user_id: user.id, team_id: team.id)
       student2 = Student.new(user_id: user2.id, team_id: team.id)
-      student.save ? student : nil
-      student2.save ? student2 : nil
+      if not student.save
+        print(user_params)
+      else
+        student
+      end
+      if not student2.save
+        print(user2_params)
+      else
+        student2
+      end
     end
 
     def set_team_params_project_level(team_params)
@@ -167,7 +182,7 @@ class StudentsController < ApplicationController
     def extract_user_without_team(row)
       user_params = {}
       user_params[:user_name] = row[2]
-      user_params[:email] = row[6]
+      user_params[:email] = row[5]
       user_params[:uid] = row[3]
       user_params
     end
@@ -179,10 +194,10 @@ class StudentsController < ApplicationController
       team_params[:team_name] = row[10]
       user1_params[:user_name] = row[11]
       user1_params[:uid] = row[12]
-      user1_params[:email] = row[15]
+      user1_params[:email] = row[14]
       user2_params[:user_name] = row[16]
       user2_params[:uid] = row [17]
-      user2_params[:email] = row[20]
+      user2_params[:email] = row[19]
       team_params[:project_level] = row[22]
       return team_params, user1_params, user2_params
     end
