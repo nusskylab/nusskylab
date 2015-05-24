@@ -78,7 +78,12 @@ class ApplicationController < ActionController::Base
   end
 
   def get_home_link
-    '/'
+    current_user ? user_path(@current_user) : '/'
+  end
+
+  def get_page_title
+    @page_title = @page_title || 'Orbital'
+    return @page_title
   end
 
   helper_method 'current_user'
@@ -88,4 +93,5 @@ class ApplicationController < ActionController::Base
   helper_method 'mentor?'
   helper_method 'admin?'
   helper_method 'get_home_link'
+  helper_method 'get_page_title'
 end

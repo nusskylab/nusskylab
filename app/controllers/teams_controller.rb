@@ -67,6 +67,11 @@ class TeamsController < ApplicationController
     @team ? team_path(@team) : '/'
   end
 
+  def get_page_title
+    @page_title = @page_title || 'Teams | Orbital'
+    super
+  end
+
   private
     def update_team
       @team = Team.find(params[:id])

@@ -78,6 +78,11 @@ class UsersController < ApplicationController
     @user ? user_path(@user) : '/'
   end
 
+  def get_page_title
+    @page_title = @page_title || 'Users | Orbital'
+    super
+  end
+
   def user_student?
     student ||= Student.student?(@user.id) if @user
   end

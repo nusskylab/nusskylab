@@ -8,6 +8,14 @@
     <p class="col-sm-7"><%= locals[:team].project_level %></p>
   </div>
   <div>
+    <p class="col-sm-3 col-sm-offset-2">Members:</p>
+    <p class="col-sm-7">
+      <% locals[:team].students.each do |student| %>
+          <a class="btn btn-info" href="<%= student_path(student) %>"><%= student.user.user_name %></a>&nbsp;&nbsp;
+      <% end %>
+    </p>
+  </div>
+  <div>
     <p class="col-sm-3 col-sm-offset-2">Adviser:</p>
     <p class="col-sm-7">
       <%= locals[:team].adviser ? locals[:team].adviser.user.user_name : 'Nil' %>

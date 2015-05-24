@@ -13,7 +13,7 @@
           <% elsif @student and (not @student.team_id) %>
               <span class="text-muted"> (Currently no team)</span>
           <% elsif @student and @student.team_id %>
-              <span> @<%= @student.team.team_name %></span>
+              <span> @<a href="<%= team_path(@student.team) %>" class="btn btn-info"><%= @student.team.team_name %></a></span>
           <% end %>
         </h1>
       </div>
