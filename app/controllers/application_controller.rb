@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_home_link
-    '/'
+    current_user ? user_path(@current_user) : '/'
   end
 
   def get_page_title
