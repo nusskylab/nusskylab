@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :omniauthable, omniauth_providers: [:NUS]
+  devise :recoverable, :rememberable, :trackable, :validatable
   NUS_OPEN_ID_PREFIX_REGEX = /\Ahttps:\/\/openid.nus.edu.sg\//
   NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
 
@@ -25,9 +29,11 @@ class User < ActiveRecord::Base
   end
 
   def process_uid
-    self.uid = self.uid.downcase
-    if self.uid and (not self.uid[NUS_OPEN_ID_PREFIX_REGEX])
-      self.uid = NUS_OPEN_ID_PREFIX + self.uid
+    if self.uid
+      self.uid = self.uid.downcase
+      if (not self.uid[NUS_OPEN_ID_PREFIX_REGEX])
+        self.uid = NUS_OPEN_ID_PREFIX + self.uid
+      end
     end
   end
 end
