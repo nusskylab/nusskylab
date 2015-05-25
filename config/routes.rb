@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   # homepage
   root 'home#index'
 
-  devise_for :users
+  devise_for :users, path: "authentication",
+             path_names: { sign_in: 'login', sign_out: 'logout' }, controllers: {
+      sessions: 'auth/sessions',
+      omniauth_callbacks: 'auth/omniauth_callbacks',
+      passwords: 'auth/passwords'
+    }
 
   # oauth handling
   # post '/auth/:provider/callback' => 'sessions#create', :as => :oauth_callback

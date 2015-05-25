@@ -233,6 +233,9 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  # To the Devise initializer (initializer/devise.rb) before setup block:
+  require "openid/store/filesystem"
+  config.omniauth :open_id, :name => 'NUS', :identifier => 'https://openid.nus.edu.sg/', :store => OpenID::Store::Filesystem.new('/tmp')
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
