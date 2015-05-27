@@ -5,15 +5,14 @@ Rails.application.routes.draw do
   devise_for :users, path: "authentication",
              path_names: { sign_in: 'login', sign_out: 'logout' }, controllers: {
       sessions: 'auth/sessions',
-      omniauth_callbacks: 'auth/omniauth_callbacks',
       passwords: 'auth/passwords'
     }
 
   # oauth handling
-  # post '/auth/:provider/callback' => 'sessions#create', :as => :oauth_callback
-  # get '/login' => 'sessions#new', :as => :login
-  # get '/logout' => 'sessions#destroy', :as => :logout
-  # get '/auth/failure' => 'sessions#failure', :as => :login_failure
+  post '/auth/:provider/callback' => 'sessions#create', :as => :nus_openid_callback
+  get '/nus/login' => 'sessions#new', :as => :nus_openid_login
+  get '/nus/logout' => 'sessions#destroy', :as => :nus_openid_logout
+  get '/auth/failure' => 'sessions#failure', :as => :nus_openid_login_failure
 
   resources :users do
     member do

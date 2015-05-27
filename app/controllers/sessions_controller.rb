@@ -8,13 +8,12 @@ class SessionsController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
     user = User.from_omniauth(auth)
-    reset_session
-    session[:user_id] = user.id
+    sign_in(user)
     redirect_user(user)
   end
 
   def destroy
-    reset_session
+    sign_out(user)
     flash = {}
     flash[:info] = 'You have signed out!'
     redirect_to root_url, flash: flash

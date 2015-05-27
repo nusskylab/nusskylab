@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :omniauthable, omniauth_providers: [:open_id]
+  devise :database_authenticatable
   devise :recoverable, :rememberable, :trackable, :validatable
+
   NUS_OPEN_ID_PREFIX_REGEX = /\Ahttps:\/\/openid.nus.edu.sg\//
   NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
 

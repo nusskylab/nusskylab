@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def get_current_role
-    if not @current_user
+    if not current_user
       return 'As a visitor'
     end
     if admin?
@@ -29,19 +29,19 @@ class ApplicationController < ActionController::Base
   end
 
   def student?
-    student ||= Student.student?(@current_user.id) if @current_user
+    student ||= Student.student?(current_user.id) if current_user
   end
 
   def adviser?
-    adviser ||= Adviser.adviser?(@current_user.id) if @current_user
+    adviser ||= Adviser.adviser?(current_user.id) if current_user
   end
 
   def mentor?
-    mentor ||= Mentor.mentor?(@current_user.id) if @current_user
+    mentor ||= Mentor.mentor?(current_user.id) if current_user
   end
 
   def admin?
-    admin ||= Admin.admin?(@current_user.id) if @current_user
+    admin ||= Admin.admin?(current_user.id) if current_user
   end
 
   def check_access(login_required = true, admin_only = false)

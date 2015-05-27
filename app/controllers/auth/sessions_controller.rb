@@ -13,9 +13,6 @@ class Auth::SessionsController < Devise::SessionsController
 
 # DELETE /resource/sign_out
   def destroy
-    reset_session
-    flash = {}
-    flash[:info] = 'You have signed out!'
     super
   end
 
