@@ -11,6 +11,11 @@ class Auth::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   # GET|POST /resource/auth/twitter
   def passthru
+    redirect_to 'https://openid.nus.edu.sg/auth'
+  end
+
+  # GET|POST /users/auth/twitter/callback
+  def failure
     auth = request.env["omniauth.auth"]
     user = User.from_omniauth(auth)
     reset_session
@@ -18,19 +23,14 @@ class Auth::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_user(user)
   end
 
-  # GET|POST /users/auth/twitter/callback
-  def failure
+  # protected
+
+  # The path used when omniauth fails
+  def after_omniauth_failure_path_for(scope)
     flash = {}
     flash[:danger] = "Authentication error: #{params[:message].humanize}"
     redirect_to root_url, flash: flash
   end
-
-  # protected
-
-  # The path used when omniauth fails
-  # def after_omniauth_failure_path_for(scope)
-  #   super(scope)
-  # end
 
   def create
     auth = request.env["omniauth.auth"]
@@ -44,12 +44,6 @@ class Auth::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     reset_session
     flash = {}
     flash[:info] = 'You have signed out!'
-    redirect_to root_url, flash: flash
-  end
-
-  def failure
-    flash = {}
-    flash[:danger] = "Authentication error: #{params[:message].humanize}"
     redirect_to root_url, flash: flash
   end
 
