@@ -23,5 +23,6 @@
     <%= link_to "Sign in with #{provider.to_s.titleize}", user_omniauth_authorize_path(provider) %><br />
   <% end -%>
 <% end -%>
-
-  <%= link_to 'Sign in with NUS',  nus_openid_login_path %>
+<hr>
+Or you can
+  <%= link_to 'Sign in with NUS',  nus_openid_login_path, class: 'btn btn-info' %>
