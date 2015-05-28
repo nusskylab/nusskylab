@@ -16,6 +16,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# Use devise for email sign-up and sign-in
+gem 'devise'
 # Use omniauth for openid authentication
 gem 'omniauth'
 gem 'omniauth-openid'

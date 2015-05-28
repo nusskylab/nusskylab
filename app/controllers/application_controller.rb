@@ -3,10 +3,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
-
   def get_current_role
     if not current_user
       return 'As a visitor'
@@ -33,19 +29,19 @@ class ApplicationController < ActionController::Base
   end
 
   def student?
-    student ||= Student.student?(@current_user.id) if current_user
+    student ||= Student.student?(current_user.id) if current_user
   end
 
   def adviser?
-    adviser ||= Adviser.adviser?(@current_user.id) if current_user
+    adviser ||= Adviser.adviser?(current_user.id) if current_user
   end
 
   def mentor?
-    mentor ||= Mentor.mentor?(@current_user.id) if current_user
+    mentor ||= Mentor.mentor?(current_user.id) if current_user
   end
 
   def admin?
-    admin ||= Admin.admin?(@current_user.id) if current_user
+    admin ||= Admin.admin?(current_user.id) if current_user
   end
 
   def check_access(login_required = true, admin_only = false)
@@ -79,6 +75,25 @@ class ApplicationController < ActionController::Base
 
   def get_home_link
     current_user ? user_path(@current_user) : '/'
+  end
+
+  def after_sign_in_path_for(resource)
+    user = current_user
+    student = Student.student?(user.id)
+    adviser = Adviser.adviser?(user.id)
+    mentor = Mentor.mentor?(user.id)
+    admin = Admin.admin?(user.id)
+    if student and (not adviser) and (not mentor) and (not admin)
+      return student_path(student.id)
+    elsif (not student) and adviser and (not mentor) and (not admin)
+      return adviser_path(adviser.id)
+    elsif (not student) and (not adviser) and mentor and (not admin)
+      return mentor_path(mentor.id)
+    elsif (not student) and (not adviser) and (not mentor) and admin
+      return admin_path(admin.id)
+    else
+      return user_path(user.id)
+    end
   end
 
   def get_page_title

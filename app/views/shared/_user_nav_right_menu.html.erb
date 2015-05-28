@@ -32,8 +32,14 @@
           </ul>
         </div>
       </li>
-      <li><a href="/logout" class="btn btn-default btn-sm navbar-btn"><b>Logout</b></a></li>
+      <li>
+        <%= link_to 'Logout', destroy_user_session_path,
+                    method: :delete, class: 'btn btn-default btn-sm navbar-btn' %>
+      </li>
   <% else %>
-      <li><a href="/login" class="btn btn-default btn-sm navbar-btn">Login</a></li>
+      <li>
+        <%= link_to 'Login', new_user_session_path,
+                    method: :get, class: 'btn btn-default btn-sm navbar-btn' %>
+      </li>
   <% end %>
 </ul>

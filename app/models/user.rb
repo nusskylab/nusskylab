@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable
+  devise :recoverable, :rememberable, :trackable, :validatable
+
   NUS_OPEN_ID_PREFIX_REGEX = /\Ahttps:\/\/openid.nus.edu.sg\//
   NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
 
@@ -6,7 +11,8 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true,
             format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\z/,
-                     message: 'Invalid email address format'}
+                     message: 'Invalid email address format'},
+            uniqueness: {message: 'user email should be unique'}
   validates :user_name, presence: true
   validates :provider, presence: true,
             format: {with: /\ANUS\z/, message: 'Invalid OpenID provider'}
@@ -25,9 +31,11 @@ class User < ActiveRecord::Base
   end
 
   def process_uid
-    self.uid = self.uid.downcase
-    if self.uid and (not self.uid[NUS_OPEN_ID_PREFIX_REGEX])
-      self.uid = NUS_OPEN_ID_PREFIX + self.uid
+    if self.uid
+      self.uid = self.uid.downcase
+      if (not self.uid[NUS_OPEN_ID_PREFIX_REGEX])
+        self.uid = NUS_OPEN_ID_PREFIX + self.uid
+      end
     end
   end
 end
