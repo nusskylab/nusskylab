@@ -13,7 +13,9 @@ class StudentsController < ApplicationController
   def new
     not check_access(true, true) and return
     @student = Student.new
-    render_new_template
+    render layout: 'admins', locals: {
+                             users: User.all
+                           }
   end
 
   def create
@@ -261,7 +263,7 @@ class StudentsController < ApplicationController
     end
 
     def render_new_template
-      render layout: 'admins', template: 'new', locals: {
+      render layout: 'admins', template: 'students/new', locals: {
                     users: User.all
                   }
     end

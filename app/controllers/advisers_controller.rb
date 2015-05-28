@@ -65,7 +65,7 @@ class AdvisersController < ApplicationController
         redirect_to @adviser
       end
     else
-      render layout: get_layout_for_role, template: 'edit'
+      render layout: get_layout_for_role, template: 'advisers/edit'
     end
   end
 
@@ -129,7 +129,7 @@ class AdvisersController < ApplicationController
     end
 
     def render_new_template(user)
-      render layout: 'admins', template: 'new', locals: {
+      render layout: 'admins', template: 'advisers/new', locals: {
                     users: User.all,
                     user: user || User.new
                   }

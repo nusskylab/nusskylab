@@ -102,7 +102,7 @@ class MentorsController < ApplicationController
     end
 
     def render_new_template_with_err(user)
-      render layout: 'admins', template: 'new', locals: {
+      render layout: 'admins', template: 'mentors/new', locals: {
                                users: User.all,
                                user: user
                              }
