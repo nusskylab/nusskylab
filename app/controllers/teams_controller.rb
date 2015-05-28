@@ -85,7 +85,7 @@ class TeamsController < ApplicationController
     end
 
     def render_new_template
-      render layout: 'admins', template: 'new', locals: {
+      render layout: 'admins', template: 'teams/new', locals: {
                                advisers: Adviser.all,
                                mentors: Mentor.all
                              }
