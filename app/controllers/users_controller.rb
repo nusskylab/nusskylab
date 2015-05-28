@@ -107,6 +107,9 @@ class UsersController < ApplicationController
   private
     def get_user_params
       user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
+      generated_password = Devise.friendly_token.first(8)
+      user_param[:password] = generated_password
+      user_param
     end
 
     def can_view_a_user

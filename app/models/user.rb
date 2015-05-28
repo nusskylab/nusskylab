@@ -11,7 +11,8 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true,
             format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\z/,
-                     message: 'Invalid email address format'}
+                     message: 'Invalid email address format'},
+            uniqueness: {message: 'user email should be unique'}
   validates :user_name, presence: true
   validates :provider, presence: true,
             format: {with: /\ANUS\z/, message: 'Invalid OpenID provider'}

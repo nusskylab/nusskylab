@@ -46,10 +46,10 @@ class ApplicationController < ActionController::Base
 
   def check_access(login_required = true, admin_only = false)
     if login_required
-      # if not current_user
-      #   does_not_have_access and return false
-      #   false
-      # end
+      if not current_user
+        does_not_have_access and return false
+        false
+      end
     end
     if admin_only
       if not admin?
@@ -75,6 +75,25 @@ class ApplicationController < ActionController::Base
 
   def get_home_link
     current_user ? user_path(@current_user) : '/'
+  end
+
+  def after_sign_in_path_for(resource)
+    user = current_user
+    student = Student.student?(user.id)
+    adviser = Adviser.adviser?(user.id)
+    mentor = Mentor.mentor?(user.id)
+    admin = Admin.admin?(user.id)
+    if student and (not adviser) and (not mentor) and (not admin)
+      return student_path(student.id)
+    elsif (not student) and adviser and (not mentor) and (not admin)
+      return adviser_path(adviser.id)
+    elsif (not student) and (not adviser) and mentor and (not admin)
+      return mentor_path(mentor.id)
+    elsif (not student) and (not adviser) and (not mentor) and admin
+      return admin_path(admin.id)
+    else
+      return user_path(user.id)
+    end
   end
 
   def get_page_title
