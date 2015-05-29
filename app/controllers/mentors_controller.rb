@@ -60,13 +60,13 @@ class MentorsController < ApplicationController
   end
 
   def edit
-    not check_access(true, false) and return
+    not check_access(true, true) and return
     @mentor = Mentor.find(params[:id])
     render layout: get_layout_for_role
   end
 
   def update
-    not check_access(true, false) and return
+    not check_access(true, true) and return
     @mentor = Mentor.find(params[:id])
     user = @mentor.user
     if user.update(get_user_params)

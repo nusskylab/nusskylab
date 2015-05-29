@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
   def get_current_role
     if not current_user
       return 'As a visitor'
@@ -99,6 +101,12 @@ class ApplicationController < ActionController::Base
   def get_page_title
     @page_title = @page_title || 'Orbital'
     return @page_title
+  end
+
+  def record_not_found
+    flash = {}
+    flash[:warning] = 'The object you tried to access does not exist'
+    redirect_to get_home_link, flash: flash
   end
 
   helper_method 'current_user'

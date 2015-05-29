@@ -13,6 +13,9 @@
       <% locals[:team].students.each do |student| %>
           <a class="btn btn-info" href="<%= student_path(student) %>"><%= student.user.user_name %></a>&nbsp;&nbsp;
       <% end %>
+      <% if locals[:team].students.length == 0 %>
+          <span class="text-muted">No students in this team</span>
+      <% end %>
     </p>
   </div>
   <div>

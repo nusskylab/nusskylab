@@ -42,11 +42,11 @@ class UsersController < ApplicationController
   end
 
   def preview_as
-    @user = User.find(params[:id])
-    reset_session
-    session[:user_id] = @user.id
-    current_user
-    redirect_to user_path(@user.id)
+    not check_access(true, true) and return
+    sign_out(current_user)
+    user = User.find(params[:id])
+    sign_in(user)
+    redirect_to user_path(user.id)
   end
 
   def update

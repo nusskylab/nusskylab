@@ -49,8 +49,12 @@ class EvaluatingsController < ApplicationController
   def destroy
     not check_access(true, true) and return
     evaluating = Evaluating.find(params[:id])
-    evaluating.destroy if evaluating
-    redirect_to evaluatings_path
+    if evaluating.nil?
+      redirect_to evaluatings_path
+    end
+    if evaluating.destroy
+      redirect_to evaluatings_path
+    end
   end
 
   def get_home_link

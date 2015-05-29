@@ -24,7 +24,7 @@
               <% locals[:adviser].teams.each do |team| %>
                   <% if (team_submission = locals[:teams_submissions][milestone.id][team.id]) %>
                       <tr>
-                        <td><%= team.team_name %></td>
+                        <td><a href="<%= team_path(team.id) %>" class="btn btn-default"><%= team.team_name %></a></td>
                         <td>
                           <a href="<%= team_submission_path(team.id, team_submission.id) %>"
                              class="btn btn-success">
@@ -50,7 +50,7 @@
                         <td>
                           <span data-toggle="tooltip" data-placement="top"
                                 title="The team has not submitted project log yet">
-                            <%= team.team_name %>
+                            <a href="<%= team_path(team.id) %>" class="btn btn-default"><%= team.team_name %></a>
                           </span>
                         </td>
                         <td>
