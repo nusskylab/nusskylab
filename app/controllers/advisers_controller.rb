@@ -50,13 +50,13 @@ class AdvisersController < ApplicationController
   end
 
   def edit
-    not check_access(true, false) and return
+    not check_access(true, true) and return
     @adviser = Adviser.find(params[:id])
     render layout: get_layout_for_role
   end
 
   def update
-    not check_access(true, false) and return
+    not check_access(true, true) and return
     @adviser = Adviser.find(params[:id])
     if update_user
       if admin?

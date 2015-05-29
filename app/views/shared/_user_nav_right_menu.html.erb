@@ -17,15 +17,6 @@
           </button>
           <ul class="dropdown-menu" role="menu" aria-labelledby="settings-dropdown">
             <li><a href="<%= edit_user_path(current_user.id) %>">Edit User Settings</a></li>
-            <% if adviser? %>
-                <li><a href="<%= edit_adviser_path(adviser?.id) %>">Edit Adviser Settings</a></li>
-            <% end %>
-            <% if mentor? %>
-                <li><a href="<%= edit_mentor_path(mentor?.id) %>">Edit Mentor Settings</a></li>
-            <% end %>
-            <% if admin? %>
-                <li><a href="<%= edit_admin_path(admin?.id) %>">Edit Admin Settings</a></li>
-            <% end %>
           </ul>
         </div>
       </li>
