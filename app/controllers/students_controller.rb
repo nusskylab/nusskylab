@@ -56,8 +56,11 @@ class StudentsController < ApplicationController
   end
 
   def edit
-    not check_access(true, false) and return
+    not check_access(true, true) and return
     @student = Student.find(params[:id])
+    render layout: 'admins', locals: {
+             teams: Team.all
+                           }
   end
 
   def show
@@ -76,12 +79,15 @@ class StudentsController < ApplicationController
   end
 
   def update
-    not check_access(true, false) and return
+    not check_access(true, true) and return
     @student = Student.find(params[:id])
-    if update_user
+    student_params = params.require(:student).permit(:team_id)
+    if @student.update(student_params)
       redirect_to @student
     else
-      render 'edit'
+      render layout: 'admins', template: 'students/edit', locals: {
+               teams: Team.all
+                             }
     end
   end
 
@@ -266,13 +272,5 @@ class StudentsController < ApplicationController
       render layout: 'admins', template: 'students/new', locals: {
                     users: User.all
                   }
-    end
-
-    def update_user
-      user = @student.user
-      user_param = get_user_params
-      user_param[:uid] = user.uid
-      user_param[:provider] = user.provider
-      user.update(user_param) ? user : nil
     end
 end

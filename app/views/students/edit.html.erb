@@ -5,7 +5,7 @@
         <h3 class="text-center">Edit student</h3>
       </div>
       <div class="panel-body">
-        <%= render 'users/user_form', locals: {user: @student.user, is_new: false} %>
+        <%= render 'edit_student_form', locals: {student: @student, is_new: false, teams: teams} %>
       </div>
     </div>
 <% end %>
