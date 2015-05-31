@@ -28,8 +28,11 @@
     <div id="eval-template">
       <%= render 'eval_public_form_part' %>
       <%= render 'eval_private_form_part' %>
+      <div id="eval-template-error" class="alert alert-danger" style="display: none;">
+      </div>
     </div>
-    <div class="checkbox">
+    <br>
+    <div class="checkbox" style="display: none;">
       <label class="col-sm-offset-2">
         <%= f.check_box :published, {}, 'true', 'false' %> Publish
       </label>
