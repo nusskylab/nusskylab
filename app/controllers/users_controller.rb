@@ -3,11 +3,7 @@ class UsersController < ApplicationController
 
   def index
     not check_access(true, true) and return
-    if can_view_all_users
-      @users = User.all
-    else
-      does_not_have_access
-    end
+    @users = User.all
   end
 
   def new
@@ -25,20 +21,12 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-    not check_access(true, false) and return
-    @user = User.find(params[:id])
-    render layout: 'general_layout'
-  end
-
   def show
-    not check_access(true, false) and return
     @user = User.find(params[:id])
-    if can_view_a_user
-      render layout: 'general_layout'
-    else
-      does_not_have_access
-    end
+    not check_access(true, false, lambda {
+                       return current_user.id == @user.id
+                         }) and return
+    render layout: 'general_layout'
   end
 
   def preview_as
@@ -49,9 +37,19 @@ class UsersController < ApplicationController
     redirect_to user_path(user.id)
   end
 
-  def update
-    not check_access(true, false) and return
+  def edit
     @user = User.find(params[:id])
+    not check_access(true, false, lambda {
+                       return current_user.id == @user.id
+                         }) and return
+    render layout: 'general_layout'
+  end
+
+  def update
+    @user = User.find(params[:id])
+    not check_access(true, false, lambda {
+                       return current_user.id == @user.id
+                         }) and return
     flash = {}
     if @user and @user.update(get_user_params)
       flash[:success] = 'The update is successfully saved'
@@ -110,13 +108,5 @@ class UsersController < ApplicationController
       generated_password = Devise.friendly_token.first(8)
       user_param[:password] = generated_password
       user_param
-    end
-
-    def can_view_a_user
-      admin? or (current_user and current_user.id == @user.id)
-    end
-
-    def can_view_all_users
-      admin?
     end
 end
