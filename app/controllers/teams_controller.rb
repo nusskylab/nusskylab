@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
 
   def index
     not check_access(true, true) and return
-    @teams = Team.all
+    @teams = Team.order(:team_name).all
     render layout: 'admins'
   end
 
