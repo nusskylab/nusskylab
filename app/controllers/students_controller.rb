@@ -38,9 +38,10 @@ class StudentsController < ApplicationController
     not check_access(true, true) and return
     require 'csv'
     students_csv_file = params[:student][:batch_csv]
-    file_rows = CSV.read(students_csv_file.path, headers: true)
-    file_rows.each do |row|
-      create_student_from_csv_row(row)
+    CSV.read(students_csv_file.path, headers: true) do |file_rows|
+      file_rows.each do |row|
+        create_student_from_csv_row(row)
+      end
     end
     redirect_to students_path
   end
@@ -64,8 +65,26 @@ class StudentsController < ApplicationController
   end
 
   def show
-    not check_access(true, false) and return
     @student = Student.find(params[:id])
+    display_student_access_strategy = lambda {
+      if @student.user_id == current_user.id
+        return true
+      end
+      if @student.team_id.nil?
+        return false
+      else
+        if @student.team.adviser and @student.team.adviser.user_id == current_user.id
+          return true
+        end
+        @student.get_teammates.each do |teammate|
+          if teammate.user_id == current_user.id
+            return true
+          end
+        end
+        return false
+      end
+    }
+    not check_access(true, false, display_student_access_strategy) and return
     evaluateds, evaluators, milestones, team_evaluateds_submissions_table, team_evaluations_table, team_evaluators_evaluations_table, team_submissions_table = get_render_variable_for_student
     render locals: {
              milestones: milestones,

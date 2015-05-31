@@ -17,12 +17,37 @@ $(document).ready(function () {
   $('.new_peer_evaluation').on('submit', function () {
     $('#peer-evaluation-public-content').val(getPublicPartValues());
     $('#peer-evaluation-private-content').val(getPrivatePartValues());
+    return validateEvalTemplate();
   });
 
   $('.edit_peer_evaluation').on('submit', function () {
     $('#peer-evaluation-public-content').val(getPublicPartValues());
     $('#peer-evaluation-private-content').val(getPrivatePartValues());
+    return validateEvalTemplate();
   });
+
+  function validateEvalTemplate() {
+    var values = {};
+    var isValid = true;
+    $('#eval-template input[type=radio]:checked').each(function (idx, val) {
+      values[$(val).attr('name')] = $(val).attr('value');
+    });
+    $('#eval-template input[type=radio]').each(function (idx, val) {
+      if (!(values[$(val).attr('name')])) {
+        isValid = false;
+        $('#eval-template-error').html('The evaluation contains error(s). Please complete the form and submit again');
+        $('#eval-template-error').show();
+      }
+    });
+    $('#eval-template textarea[required=required]').each(function (idx, val) {
+      if ($(val).val().length < 30) {
+        isValid = false;
+        $('#eval-template-error').html('The evaluation contains error(s). Please complete the form and submit again');
+        $('#eval-template-error').show();
+      }
+    });
+    return isValid;
+  }
 
   function setSubmissionForEval() {
     var submission_id = getQueryParameterByName('target');

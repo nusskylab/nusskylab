@@ -1,5 +1,6 @@
 class Team < ActiveRecord::Base
-  validates :team_name, presence: true
+  validates :team_name, presence: true,
+            uniqueness: {message: 'Team name should be unique'}
   validates :project_level, presence: true
 
   has_many :students

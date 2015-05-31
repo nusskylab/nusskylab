@@ -46,27 +46,29 @@ class ApplicationController < ActionController::Base
     admin ||= Admin.admin?(current_user.id) if current_user
   end
 
-  def check_access(login_required = true, admin_only = false)
+  def check_access(login_required = true, admin_only = false, special_access_strategy = nil)
     if login_required
       if not current_user
         does_not_have_access and return false
-        false
       end
     end
     if admin_only
       if not admin?
         does_not_have_access and return false
-        false
       end
     end
-    if not special_access_strategy
-      does_not_have_access and return false
+    if admin?
+      return true
     end
-    true
-  end
-
-  def special_access_strategy
-    true
+    if special_access_strategy.nil?
+      return true
+    else
+      if not (special_access_strategy.call())
+        does_not_have_access and return false
+      else
+        return true
+      end
+    end
   end
 
   def does_not_have_access
@@ -76,7 +78,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_home_link
-    current_user ? user_path(@current_user) : '/'
+    current_user ? user_path(current_user) : '/'
   end
 
   def after_sign_in_path_for(resource)
