@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def index
     not check_access(true, true) and return
-    @users = User.all
+    @users = User.order(:user_name).all
   end
 
   def new
