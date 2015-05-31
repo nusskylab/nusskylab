@@ -1,6 +1,9 @@
-<table class="table table-hover">
+<table class="table table-hover table-sortable">
   <thead>
-  <tr><th>Team Name</th><th>Project Level</th><th>Adviser</th><th>Mentor</th><th>Actions</th></tr>
+  <tr>
+    <th>Team Name</th><th>Project Level</th>
+    <th>Adviser</th><th>Mentor</th><th class="unsortable">Actions</th>
+  </tr>
   </thead>
   <tbody>
   <% locals[:teams].each do |team| %>
