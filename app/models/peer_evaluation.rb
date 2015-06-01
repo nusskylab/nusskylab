@@ -11,7 +11,7 @@ class PeerEvaluation < ActiveRecord::Base
               message: 'An adviser can only evaluate a submission once'},
             :if => :evaluated_by_adviser
 
-  before_save :init_date
+  before_validation :init_date
 
   belongs_to :team
   belongs_to :adviser

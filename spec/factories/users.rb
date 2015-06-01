@@ -1,9 +1,9 @@
 FactoryGirl.define do
-  factory :user do |f|
-    f.email 'test1@example.com'
-    f.user_name 'test user1'
-    f.provider 'NUS'
-    f.uid 'https://openid.nus.edu.sg/a0000001'
-    f.password 'password'
+  factory :user do
+    email 'test1@example.com'
+    user_name 'test user1'
+    provider 'NUS'
+    uid 'https://openid.nus.edu.sg/a0000001'
+    password 'password'
   end
 end
