@@ -107,7 +107,7 @@ var ts = $.tablesorter || {};
 
 ts.themes = {
 	'bootstrap' : {
-		table        : 'table table-bordered table-striped',
+		table        : 'table table-striped',
 		caption      : 'caption',
 		// header class names
 		header       : 'bootstrap-header', // give the header a gradient background (theme.bootstrap_2.css)
