@@ -1,0 +1,23 @@
+<% content_for :main_content do %>
+    <% javascript 'evaluatings.js' %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="text-center">Create evaluatings</h3>
+      </div>
+      <div class="panel-body">
+        <%= simple_form_for @evaluating, url: {action: 'batch_create'},
+                            html: {multipart: true, accept: 'text/csv'} do |f| %>
+            <div class="form-group">
+              <label class="control-label">CSV file:</label>
+              <%= f.file_field :batch_csv, required: 'required', class: 'form-control'  %>
+              <div class="help-block with-errors">Please provide a valid CSV file content</div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <%= f.submit 'Submit', class: 'btn btn-success' %>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+<% end %>

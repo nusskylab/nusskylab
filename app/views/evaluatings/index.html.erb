@@ -7,7 +7,10 @@
       <div class="panel-body">
         <%= render 'evaluatings_table', locals: {evaluatings: @evaluatings} %>
         <hr>
-        <div class="col-sm-8 col-sm-offset-4">
+        <div class="col-sm-2 col-sm-offset-4">
+          <a href="<%= batch_upload_evaluatings_path %>" class="btn btn-success">Batch upload</a>
+        </div>
+        <div class="col-sm-2">
           <a href="<%= new_evaluating_path %>" class="btn btn-success">Create New Evaluation relationship</a>
         </div>
       </div>
