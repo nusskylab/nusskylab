@@ -46,7 +46,12 @@ Rails.application.routes.draw do
     resources :submissions, only: [:index, :new, :create, :edit, :update, :show]
     resources :peer_evaluations
   end
-  resources :evaluatings, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :evaluatings, only: [:index, :new, :create, :edit, :update, :destroy] do
+    collection do
+      get 'batch_upload'
+      post 'batch_create'
+    end
+  end
   resources :milestones do
     resources :teams, only: [:show] do
       resources :received_evals, only: [:index]

@@ -38,10 +38,9 @@ class StudentsController < ApplicationController
     not check_access(true, true) and return
     require 'csv'
     students_csv_file = params[:student][:batch_csv]
-    CSV.read(students_csv_file.path, headers: true) do |file_rows|
-      file_rows.each do |row|
-        create_student_from_csv_row(row)
-      end
+    file_rows = CSV.read(students_csv_file.path, headers: true)
+    file_rows.each do |row|
+      create_student_from_csv_row(row)
     end
     redirect_to students_path
   end
