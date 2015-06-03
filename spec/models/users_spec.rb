@@ -14,13 +14,13 @@ describe User do
 
   it 'is invalid with duplicated uid from one provider' do
     expect(FactoryGirl.create(:user)).to be_valid
-    expect(FactoryGirl.build(:user, email: 'test1@example.com')).not_to be_valid
+    expect(FactoryGirl.build(:user, email: 'test1@gmail.com')).not_to be_valid
   end
 
   it 'is invalid with wrong email format' do
-    expect(FactoryGirl.build(:user, email: 'test1@example')).not_to be_valid
+    expect(FactoryGirl.build(:user, email: 'test1@gmail')).not_to be_valid
     expect(FactoryGirl.build(:user, email: 'test1@.com')).not_to be_valid
-    expect(FactoryGirl.build(:user, email: '@example.com')).not_to be_valid
+    expect(FactoryGirl.build(:user, email: '@gmail.com')).not_to be_valid
     expect(FactoryGirl.build(:user, email: 'test1')).not_to be_valid
   end
 

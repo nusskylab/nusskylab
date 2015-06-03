@@ -1,6 +1,5 @@
 FactoryGirl.define do
-  factory :student do
+  factory :adviser do
     user
-    team
   end
 end
