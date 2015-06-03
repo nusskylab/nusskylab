@@ -35,14 +35,16 @@ $(document).ready(function () {
     $('#eval-template input[type=radio]').each(function (idx, val) {
       if (!(values[$(val).attr('name')])) {
         isValid = false;
-        $('#eval-template-error').html('The evaluation contains error(s). Please complete the form and submit again');
+        $(val).parent().addClass('eval-has-error');
+        $('#eval-template-error').html('The evaluation contains error(s). Please fill in required fields, with enough feedback and submit again');
         $('#eval-template-error').show();
       }
     });
     $('#eval-template textarea[required=required]').each(function (idx, val) {
       if ($(val).val().length < 30) {
+        $(val).addClass('eval-has-error');
         isValid = false;
-        $('#eval-template-error').html('The evaluation contains error(s). Please complete the form and submit again');
+        $('#eval-template-error').html('The evaluation contains error(s). Please fill in required fields, with enough feedback and submit again');
         $('#eval-template-error').show();
       }
     });
