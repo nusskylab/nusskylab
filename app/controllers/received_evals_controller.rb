@@ -6,7 +6,8 @@ class ReceivedEvalsController < ApplicationController
     evaluators = team.evaluators
     milestone = Milestone.find(params[:milestone_id])
     team_evaluation_table = {}
-    temp_team_submission = Submission.find_by(team_id: team.id, milestone_id: milestone.id)
+    temp_team_submission = Submission.find_by(team_id: team.id,
+                                              milestone_id: milestone.id)
     if temp_team_submission
       evaluators.each do |evaluator|
         team_evaluation_table[evaluator.evaluator_id] = PeerEvaluation.find_by(team_id: evaluator.evaluator_id,

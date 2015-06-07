@@ -26,7 +26,10 @@
             <div role="tabpanel" class="tab-pane fade in active" id="public-content">
               <h2 class="text-center">Evaluation public part</h2>
               <% evaluators.each do |evaluator| %>
-                  <%= render 'eval_public_part', locals: {eval: team_evaluation_table[evaluator.evaluator_id]} %>
+                  <% if not team_evaluation_table[evaluator.evaluator_id].nil? %>
+                      <%= render 'eval_public_part',
+                                 locals: {eval: team_evaluation_table[evaluator.evaluator_id]} %>
+                  <% end %>
               <% end %>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="private-content">

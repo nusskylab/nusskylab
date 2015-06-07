@@ -237,9 +237,14 @@ class StudentsController < ApplicationController
       evaluateds = []
       evaluators = []
       if @student.team_id
-        evaluateds, evaluators, milestones, team_evaluateds_submissions_table, team_evaluations_table, team_evaluators_evaluations_table, team_submissions_table = get_additional_render_variables_for_student_with_team(milestones)
+        evaluateds, evaluators,
+          milestones, team_evaluateds_submissions_table,
+          team_evaluations_table, team_evaluators_evaluations_table,
+          team_submissions_table = get_additional_render_variables_for_student_with_team(milestones)
       end
-      return evaluateds, evaluators, milestones, team_evaluateds_submissions_table, team_evaluations_table, team_evaluators_evaluations_table, team_submissions_table
+      return evaluateds, evaluators, milestones,
+        team_evaluateds_submissions_table, team_evaluations_table,
+        team_evaluators_evaluations_table, team_submissions_table
     end
 
     def get_additional_render_variables_for_student_with_team(milestones)
@@ -270,7 +275,9 @@ class StudentsController < ApplicationController
           end
         end
       end
-      return evaluateds, evaluators, milestones, team_evaluateds_submissions_table, team_evaluations_table, team_evaluators_evaluations_table, team_submissions_table
+      return evaluateds, evaluators, milestones,
+        team_evaluateds_submissions_table, team_evaluations_table,
+        team_evaluators_evaluations_table, team_submissions_table
     end
 
     def get_user_params
