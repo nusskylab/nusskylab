@@ -1,8 +1,8 @@
 <div id="private-part-compiled">
-  <% locals[:evals_table].values.each_with_index do |eval, idx| %>
+  <% locals[:evals_table].values.each do |eval| %>
       <% if not eval.nil? %>
           <div>
-            <h3>From team <%= idx %></h3>
+            <h3>From anonymous</h3>
             <div class="eval-private-part well">
               <%= render 'peer_evaluations/eval_private_form_part' %>
             </div>

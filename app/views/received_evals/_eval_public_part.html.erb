@@ -1,5 +1,5 @@
 <div id="<%= locals[:eval].id %>_public">
-  <h3>From team: <%= locals[:eval].team.team_name %></h3>
+  <h3>From <%= locals[:evaluator_name] %></h3>
   <div class="eval-public-part well">
     <%= render 'peer_evaluations/eval_public_form_part' %>
   </div>
@@ -7,3 +7,5 @@
     <%= locals[:eval].public_content %>
   </div>
 </div>
+<br>
+<br>
