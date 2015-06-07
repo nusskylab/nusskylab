@@ -1,5 +1,12 @@
 <div id="<%= locals[:eval].id %>_public">
-  <h3>From <%= locals[:evaluator_name] %></h3>
+  <div>
+    <% if locals[:eval].updated_at %>
+        <span class="text-muted pull-right">
+          Last modified at: <%= locals[:eval].updated_at.strftime('%d/%m/%Y %H:%M:%S') %>
+        </span>
+    <% end %>
+    <h3>From <%= locals[:evaluator_name] %></h3>
+  </div>
   <form class="eval-public-part well">
     <%= render 'peer_evaluations/eval_public_form_part' %>
   </form>
