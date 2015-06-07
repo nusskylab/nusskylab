@@ -29,6 +29,7 @@ $(document).ready(function () {
   function validateEvalTemplate() {
     var values = {};
     var isValid = true;
+    $('.eval-has-error').removeClass('eval-has-error');
     $('#eval-template input[type=radio]:checked').each(function (idx, val) {
       values[$(val).attr('name')] = $(val).attr('value');
     });
