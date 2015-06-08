@@ -5,7 +5,7 @@ describe Adviser do
     expect(FactoryGirl.build(:admin, user: nil)).not_to be_valid
   end
 
-  it 'is invalid to associate with adviser#user' do
+  it 'is invalid to associate with admin#user' do
     user = FactoryGirl.create(:user)
     expect(FactoryGirl.create(:admin, user: user)).to be_valid
     expect(FactoryGirl.build(:admin, user: user)).not_to be_valid
