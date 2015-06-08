@@ -18,5 +18,6 @@ class Student < ActiveRecord::Base
         teammates.push(student)
       end
     end
+    teammates
   end
 end

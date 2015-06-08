@@ -11,14 +11,14 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true,
             format: {with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\z/,
-                     message: 'Invalid email address format'},
-            uniqueness: {message: 'user email should be unique'}
+                     message: ': Invalid email address format'},
+            uniqueness: {message: 'should be unique'}
   validates :user_name, presence: true
   validates :provider, presence: true,
-            format: {with: /\ANUS\z/, message: 'Invalid OpenID provider'}
+            format: {with: /\ANUS\z/, message: ': Invalid OpenID provider'}
   validates :uid, presence: true,
             uniqueness: {scope: :provider,
-                         message: 'An OpenID account can only be used for creating one account'}
+                         message: ': An OpenID account can only be used for creating one account'}
 
   def self.from_omniauth(auth)
     user = User.find_by(provider: auth.provider, uid: auth.uid) || User.new

@@ -3,7 +3,7 @@ class Team < ActiveRecord::Base
             uniqueness: {message: 'Team name should be unique'}
   validates :project_level, presence: true
 
-  before_save :clean_project_level
+  before_validation :clean_project_level
 
   has_many :students
   belongs_to :adviser

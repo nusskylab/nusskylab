@@ -13,8 +13,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
 
 # Use devise for email sign-up and sign-in
 gem 'devise'
@@ -49,10 +47,6 @@ gem 'puma'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-	# stop use of byebug cause this will cause rubymine debugging not working on ubuntu 14
-  # gem 'byebug'
-
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
@@ -60,8 +54,9 @@ group :development, :test do
   gem 'spring'
 
 	# rspec for test & dev
-	gem 'rspec'
-	gem 'rspec-rails', '~> 3.0'
+	gem 'rspec-rails'
+	gem 'database_cleaner'
+	gem 'factory_girl_rails'
 end
 
 group :test do

@@ -11,6 +11,8 @@ class PeerEvaluation < ActiveRecord::Base
               message: 'An adviser can only evaluate a submission once'},
             :if => :evaluated_by_adviser
 
+  validate :check_evaluation_owner_presence
+
   belongs_to :team
   belongs_to :adviser
   belongs_to :submission
@@ -21,5 +23,12 @@ class PeerEvaluation < ActiveRecord::Base
 
   def evaluated_by_adviser
     not self.adviser_id.blank?
+  end
+
+  def check_evaluation_owner_presence
+    if self.adviser_id.blank? and self.team_id.blank?
+      errors.add(:adviser_id, 'cannot be blank if evaluation is not owned by a team')
+      errors.add(:team_id, 'cannot be blank if evaluation is not owned by an adviser')
+    end
   end
 end
