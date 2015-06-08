@@ -29,20 +29,23 @@ $(document).ready(function () {
   function validateEvalTemplate() {
     var values = {};
     var isValid = true;
+    $('.eval-has-error').removeClass('eval-has-error');
     $('#eval-template input[type=radio]:checked').each(function (idx, val) {
       values[$(val).attr('name')] = $(val).attr('value');
     });
     $('#eval-template input[type=radio]').each(function (idx, val) {
       if (!(values[$(val).attr('name')])) {
         isValid = false;
-        $('#eval-template-error').html('The evaluation contains error(s). Please complete the form and submit again');
+        $(val).parent().addClass('eval-has-error');
+        $('#eval-template-error').html('The evaluation contains error(s). Please fill in required fields, with enough feedback and submit again');
         $('#eval-template-error').show();
       }
     });
     $('#eval-template textarea[required=required]').each(function (idx, val) {
       if ($(val).val().length < 30) {
+        $(val).addClass('eval-has-error');
         isValid = false;
-        $('#eval-template-error').html('The evaluation contains error(s). Please complete the form and submit again');
+        $('#eval-template-error').html('The evaluation contains error(s). Please fill in required fields, with enough feedback and submit again');
         $('#eval-template-error').show();
       }
     });
@@ -82,7 +85,11 @@ $(document).ready(function () {
     try {
       var publicValues = JSON.parse($('#peer-evaluation-public-content').val());
       $.each(publicValues, function (attrName, attrVal) {
-        $('#eval-public input[type=radio][name="' + attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
+        if (attrVal && !isNaN(parseInt(attrVal))
+            && parseInt(attrVal) >= 0 && attrVal.match(/^[0-9]+$/)) {
+          $('#eval-public input[type=radio][name="' +
+          attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
+        }
         $('#eval-public textarea[name="' + attrName + '"]').val(attrVal);
       });
     } catch (err) {
@@ -94,7 +101,11 @@ $(document).ready(function () {
     try {
       var privateValues = JSON.parse($('#peer-evaluation-private-content').val());
       $.each(privateValues, function (attrName, attrVal) {
-        $('#eval-private input[type=radio][name="' + attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
+        if (attrVal && !isNaN(parseInt(attrVal))
+            && parseInt(attrVal) >= 0 && attrVal.match(/^[0-9]+$/)) {
+          $('#eval-private input[type=radio][name="' +
+          attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
+        }
         $('#eval-private textarea[name="' + attrName + '"]').val(attrVal);
       });
     } catch (err) {

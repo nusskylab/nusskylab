@@ -16,6 +16,10 @@
   @extend .alert-info;
 }
 
+.alert-alert {
+  @extend .alert-danger;
+}
+
 .footer {
   width: 100%;
   margin-top: 50px;
@@ -47,4 +51,8 @@
 }
 .submission-project-log table {
   border: 2px #000000 solid;
+}
+
+.eval-has-error {
+  background: #F2DEDE;
 }

@@ -11,15 +11,9 @@ class PeerEvaluation < ActiveRecord::Base
               message: 'An adviser can only evaluate a submission once'},
             :if => :evaluated_by_adviser
 
-  before_validation :init_date
-
   belongs_to :team
   belongs_to :adviser
   belongs_to :submission
-
-  def init_date
-    self.submitted_date = Date.today if new_record?
-  end
 
   def evaluated_by_team
     not self.team_id.blank?
