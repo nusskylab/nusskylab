@@ -58,12 +58,12 @@ ActiveRecord::Schema.define(version: 20150607130342) do
   create_table "peer_evaluations", force: :cascade do |t|
     t.text     "public_content"
     t.text     "private_content"
+    t.date     "created_at"
     t.boolean  "published"
     t.integer  "team_id"
     t.integer  "submission_id"
     t.integer  "adviser_id"
     t.string   "owner_type",      default: "teams"
-    t.datetime "created_at"
     t.datetime "updated_at"
   end
 
