@@ -27,8 +27,29 @@ class TeamsController < ApplicationController
   end
 
   def show
-    not check_access(true, false) and return
     @team = Team.find(params[:id])
+    display_team_access_control_strategy = lambda {
+      loggedin_user = current_user
+      if @team.adviser and @team.adviser.user_id == loggedin_user.id
+        return true
+      end
+      if @team.mentor and @team.mentor.user_id == loggedin_user.id
+        return true
+      end
+      students = @team.students
+      is_student = false
+      students.each do |student|
+        if student.user_id == loggedin_user.id
+          is_student = true
+        end
+      end
+      if is_student
+        return true
+      end
+      # TODO: to think about whether to allow evaluator/evaluated teams to view
+      return false
+    }
+    not check_access(true, false, display_team_access_control_strategy) and return
   end
 
   def edit

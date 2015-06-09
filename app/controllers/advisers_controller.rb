@@ -39,8 +39,15 @@ class AdvisersController < ApplicationController
   end
 
   def show
-    not check_access(true, false) and return
     @adviser = Adviser.find(params[:id])
+    display_adviser_access_control_strategy = lambda {
+      if @adviser.user_id == current_user.id
+        return true
+      else
+        return false
+      end
+    }
+    not check_access(true, false, display_adviser_access_control_strategy) and return
     milestones, teams_submissions, own_evaluations = get_data_for_adviser
     render locals: {
              milestones: milestones,
