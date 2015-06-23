@@ -1,7 +1,16 @@
 <% content_for :main_content do %>
     <% javascript 'advisers.js' %>
-  <%= render 'adviser_view', locals: {adviser: @adviser,
-                                      milestones: milestones,
-                                      teams_submissions: teams_submissions,
-                                      own_evaluations: own_evaluations} %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2>
+          <span><%= @adviser.user.user_name %> </span>
+        </h2>
+      </div>
+      <div class="panel-body">
+        <%= render 'adviser_milestones', locals: {adviser: @adviser,
+                                                  milestones: milestones,
+                                                  teams_submissions: teams_submissions,
+                                                  own_evaluations: own_evaluations} %>
+      </div>
+    </div>
 <% end %>
