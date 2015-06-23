@@ -1,30 +1,62 @@
 <div>
-  <div>
+  <div class="col-sm-12">
     <p class="col-sm-3 col-sm-offset-2">Team name:</p>
     <p class="col-sm-7"><%= locals[:team].team_name %></p>
   </div>
-  <div>
+  <hr>
+  <div class="col-sm-12">
     <p class="col-sm-3 col-sm-offset-2">Project level:</p>
     <p class="col-sm-7"><%= locals[:team].project_level %></p>
   </div>
-  <div>
+  <hr>
+  <div class="col-sm-12">
     <p class="col-sm-3 col-sm-offset-2">Members:</p>
     <p class="col-sm-7">
       <% locals[:team].students.each do |student| %>
-          <a class="btn btn-info" href="<%= student_path(student) %>"><%= student.user.user_name %></a>&nbsp;&nbsp;
+          <a class="btn btn-info btn-sm" href="<%= student_path(student) %>"><%= student.user.user_name %></a>&nbsp;&nbsp;
       <% end %>
       <% if locals[:team].students.length == 0 %>
           <span class="text-muted">No students in this team</span>
       <% end %>
     </p>
   </div>
-  <div>
+  <hr>
+  <div class="col-sm-12">
+    <p class="col-sm-3 col-sm-offset-2">Evaluated teams:</p>
+    <p class="col-sm-7">
+      <% locals[:team].evaluateds.each do |evaluated| %>
+          <a class="btn btn-info btn-sm"
+             href="<%= team_path(evaluated.evaluated) %>">
+            <%= evaluated.evaluated.team_name %></a>&nbsp;&nbsp;
+      <% end %>
+      <% if locals[:team].evaluateds.length == 0 %>
+          <span class="text-muted">Not evaluated teams assigned to this team</span>
+      <% end %>
+    </p>
+  </div>
+  <hr>
+  <div class="col-sm-12">
+    <p class="col-sm-3 col-sm-offset-2">Evaluator teams:</p>
+    <p class="col-sm-7">
+      <% locals[:team].evaluators.each do |evaluator| %>
+          <a class="btn btn-info btn-sm"
+             href="<%= team_path(evaluator.evaluator) %>">
+            <%= evaluator.evaluator.team_name %></a>&nbsp;&nbsp;
+      <% end %>
+      <% if locals[:team].evaluateds.length == 0 %>
+          <span class="text-muted">Not evaluated teams assigned to this team</span>
+      <% end %>
+    </p>
+  </div>
+  <hr>
+  <div class="col-sm-12">
     <p class="col-sm-3 col-sm-offset-2">Adviser:</p>
     <p class="col-sm-7">
       <%= locals[:team].adviser ? locals[:team].adviser.user.user_name : 'Nil' %>
     </p>
   </div>
-  <div>
+  <hr>
+  <div class="col-sm-12">
     <p class="col-sm-3 col-sm-offset-2">Mentor:</p>
     <p class="col-sm-7">
       <%= locals[:team].mentor ? locals[:team].mentor.user.user_name : 'Nil' %>

@@ -85,7 +85,8 @@ class SubmissionsController < ApplicationController
 
     def render_new_action
       render 'new', locals: {
-               milestones: Milestone.all
+                    team_id: params[:team_id],
+                    milestones: Milestone.all
                   }
     end
 
