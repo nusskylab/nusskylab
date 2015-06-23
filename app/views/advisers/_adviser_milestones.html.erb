@@ -10,28 +10,28 @@
         <tr><th>Team Name</th><th>Status</th><th>Last updated at</th><th>Action</th></tr>
         </thead>
         <tbody>
-        <% locals[:evaluateds].each do |evaluated| %>
-            <% if (temp_evaluated_submission = locals[:team_evaluateds_submissions][milestone.id][evaluated.evaluated_id]) %>
+        <% locals[:adviser].teams.each do |team| %>
+            <% if (team_submission = locals[:teams_submissions][milestone.id][team.id]) %>
                 <tr>
-                  <td><%= evaluated.evaluated.team_name %></td>
+                  <td><a href="<%= team_path(team.id) %>" class="btn btn-default"><%= team.team_name %></a></td>
                   <td>
-                    <a href="<%= team_submission_path(evaluated.evaluated_id, temp_evaluated_submission.id) %>"
+                    <a href="<%= team_submission_path(team.id, team_submission.id) %>"
                        class="btn btn-success">
                       View
                     </a>
                   </td>
                   <td>
-                    <%= temp_evaluated_submission.updated_at.strftime('%Y-%m-%d %I:%M %p') %>
+                    <%= team_submission.updated_at.strftime('%Y-%m-%d %I:%M %p') %>
                   </td>
                   <td>
-                    <% if (temp_evaluation = locals[:team_evaluations][milestone.id][evaluated.evaluated_id]) %>
-                        <a href="<%= edit_team_peer_evaluation_path(evaluated.evaluator_id, temp_evaluation.id) %>"
-                           class="btn btn-success">
+                    <% if (eval = locals[:own_evaluations][milestone.id][team.id]) %>
+                        <a href="<%= edit_adviser_peer_evaluation_path(locals[:adviser].id, eval.id) %>"
+                           class="btn btn-default">
                           Edit Evaluation
                         </a>
                     <% else %>
-                        <a href="<%= new_team_peer_evaluation_path(evaluated.evaluator_id, target: temp_evaluated_submission.id) %>"
-                           class="btn btn-primary">
+                        <a href="<%= new_adviser_peer_evaluation_path(locals[:adviser].id, target: team_submission.id) %>"
+                           class="btn btn-default">
                           Start Evaluation
                         </a>
                     <% end %>
@@ -41,8 +41,8 @@
                 <tr>
                   <td>
                     <span data-toggle="tooltip" data-placement="top"
-                          title="<%= t 'students.show.evaluation_team_no_submission_tooltip' %>">
-                      <%= evaluated.evaluated.team_name %>
+                          title="The team has not submitted project log yet">
+                      <a href="<%= team_path(team.id) %>" class="btn btn-default"><%= team.team_name %></a>
                     </span>
                   </td>
                   <td>
@@ -54,7 +54,8 @@
                     Not submitted yet
                   </td>
                   <td>
-                    <a href="#" class="btn btn-default" disabled="disabled">
+                    <a href="<%= new_adviser_peer_evaluation_path(locals[:adviser].id) %>"
+                       class="btn btn-default" disabled="disabled">
                       Start Evaluation
                     </a>
                   </td>
