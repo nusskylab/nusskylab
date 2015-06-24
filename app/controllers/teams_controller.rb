@@ -27,8 +27,46 @@ class TeamsController < ApplicationController
   end
 
   def show
-    not check_access(true, false) and return
     @team = Team.find(params[:id])
+    display_team_access_control_strategy = lambda {
+      loggedin_user = current_user
+      if @team.adviser and @team.adviser.user_id == loggedin_user.id
+        return true
+      end
+      if @team.mentor and @team.mentor.user_id == loggedin_user.id
+        return true
+      end
+      students = @team.students
+      is_student = false
+      students.each do |student|
+        if student.user_id == loggedin_user.id
+          is_student = true
+          break
+        end
+      end
+      if is_student
+        return true
+      end
+      evaluateds_and_evaluators = []
+      @team.evaluateds.each do |evaluated|
+        evaluateds_and_evaluators.concat(evaluated.evaluated.students)
+      end
+      @team.evaluators.each do |evaluator|
+        evaluateds_and_evaluators.concat(evaluator.evaluator.students)
+      end
+      has_evaluating_relation = false
+      evaluateds_and_evaluators.each do |eval_er|
+        if eval_er.user_id == loggedin_user.id
+          has_evaluating_relation = true
+          break
+        end
+      end
+      if has_evaluating_relation
+        return true
+      end
+      return false
+    }
+    not check_access(true, false, display_team_access_control_strategy) and return
   end
 
   def edit
