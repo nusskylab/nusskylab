@@ -3,7 +3,7 @@
 //= require bootstrap
 //= require select2
 
-$(function(){
+$(function () {
   if ($('.table-sortable').length) {
     $('.table-sortable').tablesorter({
       theme : 'bootstrap',
@@ -17,4 +17,19 @@ $(function(){
       }
     });
   }
+});
+
+$(function () {
+  function convertImageToBase64Str(imgInput) {
+    if (imgInput.files && imgInput.files[0]) {
+      var fileReader = new FileReader();
+      return fileReader.readAsDataURL(imgInput.files[0]);
+    } else {
+      return null;
+    }
+  }
+  $('input.imgur-upload').change(function () {
+    var convertedStr = convertImageToBase64Str(this);
+    $(this).prop('data-base64str', convertedStr);
+  });
 });
