@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622161304) do
+ActiveRecord::Schema.define(version: 20150628151742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,10 +49,11 @@ ActiveRecord::Schema.define(version: 20150622161304) do
   add_index "mentors", ["user_id"], name: "index_mentors_on_user_id", using: :btree
 
   create_table "milestones", force: :cascade do |t|
-    t.date     "deadline"
+    t.datetime "submission_deadline",      default: '2015-06-28 15:26:03', null: false
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+    t.datetime "peer_evaluation_deadline", default: '2015-06-28 15:26:03', null: false
   end
 
   create_table "peer_evaluations", force: :cascade do |t|
