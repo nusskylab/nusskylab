@@ -13,8 +13,7 @@ class MilestonesController < ApplicationController
 
   def create
     not check_access(true, true) and return
-    test = Milestone.new(get_milestone_params)
-    @milestone = Milestone.new(:name => test.name, :deadline => test.deadline)
+    @milestone = Milestone.new(get_milestone_params)
     if @milestone.save
       flash = {}
       flash[:success] = 'The milestone is successfully created'
@@ -66,6 +65,6 @@ class MilestonesController < ApplicationController
 
   private
     def get_milestone_params
-      params.require(:milestone).permit(:name, :deadline)
+      params.require(:milestone).permit(:name, :submission_deadline, :peer_evaluation_deadline)
     end
 end
