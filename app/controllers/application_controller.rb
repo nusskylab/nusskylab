@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
 
   def does_not_have_access
     flash = {}
-    flash[:danger] = 'You do not have privilege to do this'
+    flash[:danger] = 'You are not allowed to do this, please contact admin for more information'
     redirect_to root_url, flash: flash
   end
 

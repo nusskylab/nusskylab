@@ -1,12 +1,13 @@
 <table class="table table-hover">
   <thead>
-  <tr><th>Milestone name</th><th>Deadline</th><th>Actions</th></tr>
+  <tr><th>Milestone name</th><th>Submission Deadline</th><th>Evaluation Deadline</th><th>Actions</th></tr>
   </thead>
   <tbody>
   <% @milestones.each do |milestone| %>
       <tr>
         <td><%= milestone.name %></td>
-        <td><%= milestone.deadline %></td>
+        <td><%= milestone.submission_deadline.strftime('%Y-%m-%d %I:%M %p') %></td>
+        <td><%= milestone.peer_evaluation_deadline.strftime('%Y-%m-%d %I:%M %p') %></td>
         <td>
           <a class="btn btn-default btn-xs" href="<%=  milestone_path(milestone.id) %>">View</a>
           <a class="btn btn-default btn-xs" href="<%= edit_milestone_path(milestone.id) %>">Edit</a>

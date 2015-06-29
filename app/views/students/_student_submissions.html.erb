@@ -10,7 +10,7 @@
             <span data-toggle="tooltip" data-placement="top"
                   title="<%= I18n.t('students.show.submission_milestone_tooltip',
                                     milestone_name: milestone.name,
-                                    deadline: milestone.deadline) %>">
+                                    deadline: milestone.submission_deadline.strftime('%Y-%m-%d %I:%M %p')) %>">
               <%= milestone.name %>
             </span>
           </td>
