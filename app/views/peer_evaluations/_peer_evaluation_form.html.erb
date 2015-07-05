@@ -26,8 +26,13 @@
                       id: 'peer-evaluation-private-content', rows: '10', required: 'required' %>
     </div>
     <div id="eval-template">
-      <%= render 'eval_public_form_part' %>
-      <%= render 'eval_private_form_part' %>
+      <% if (not locals[:is_new]) and locals[:peer_evaluation].submission.milestone.name =='Milestone 1' %>
+          <%= render 'eval1_public_form_part' %>
+          <%= render 'eval1_private_form_part' %>
+      <% else %>
+          <%= render 'eval2_public_form_part' %>
+          <%= render 'eval2_private_form_part' %>
+      <% end %>
       <div id="eval-template-error" class="alert alert-danger" style="display: none;">
       </div>
     </div>
