@@ -7,7 +7,9 @@
       </div>
       <div class="panel-body">
         <p class="alert alert-info">You can view all you previous submissions
-          <a href="<%= team_submissions_path(team_id) %>" class="btn btn-success btn-xs">here</a></p>
+          <a href="<%= team_submissions_path(team_id) %>" class="btn btn-success btn-xs">here</a>
+        </p>
+        <%= render 'image_upload_modal' %>
         <%= render 'submission_form', locals: {submission: @submission,
                                                milestones: milestones,
                                                is_new: true} %>
