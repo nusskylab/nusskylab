@@ -6,7 +6,7 @@
   <% locals[:team].submissions.each do |submission| %>
       <tr>
         <td><%= submission.milestone.name %></td>
-        <td><%= submission.milestone.deadline %></td>
+        <td><%= submission.milestone.submission_deadline %></td>
         <td>
           <a class="btn btn-xs btn-success"
              href="<%= edit_team_submission_path(locals[:team].id, submission.id) %>">Edit</a>
