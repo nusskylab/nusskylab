@@ -6,8 +6,8 @@
   <% @milestones.each do |milestone| %>
       <tr>
         <td><%= milestone.name %></td>
-        <td><%= milestone.submission_deadline.strftime('%Y-%m-%d %I:%M %p') %></td>
-        <td><%= milestone.peer_evaluation_deadline.strftime('%Y-%m-%d %I:%M %p') %></td>
+        <td><%= milestone.submission_deadline %></td>
+        <td><%= milestone.peer_evaluation_deadline %></td>
         <td>
           <a class="btn btn-default btn-xs" href="<%=  milestone_path(milestone.id) %>">View</a>
           <a class="btn btn-default btn-xs" href="<%= edit_milestone_path(milestone.id) %>">Edit</a>

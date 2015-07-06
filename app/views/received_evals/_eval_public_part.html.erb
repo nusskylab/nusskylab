@@ -2,7 +2,7 @@
   <div>
     <% if locals[:eval].updated_at %>
         <span class="text-muted pull-right">
-          Last modified at: <%= locals[:eval].updated_at.strftime('%d/%m/%Y %H:%M:%S') %>
+          Last modified at: <%= locals[:eval].updated_at %>
         </span>
     <% end %>
     <h3>From <%= locals[:evaluator_name] %></h3>

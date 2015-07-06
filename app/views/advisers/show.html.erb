@@ -7,10 +7,43 @@
         </h2>
       </div>
       <div class="panel-body">
-        <%= render 'adviser_milestones', locals: {adviser: @adviser,
-                                                  milestones: milestones,
-                                                  teams_submissions: teams_submissions,
-                                                  own_evaluations: own_evaluations} %>
+        <div role="tabpanel">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#teams-panel" aria-controls="teams-panel"
+                 role="tab" data-toggle="tab">
+                View all your teams
+              </a>
+            </li>
+            <li role="presentation">
+              <a href="#evaluations-panel" aria-controls="evaluations-panel"
+                 role="tab" data-toggle="tab">
+                Submit evaluations
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="teams-panel">
+              <h2 class="text-center">Teams</h2>
+
+              <div class="well">
+                <p class="small"><%= t '.view_teams_instruction' %></p>
+              </div>
+              <%= render 'adviser_teams', locals: {adviser: @adviser} %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="evaluations-panel">
+              <h2 class="text-center">Evaluations</h2>
+
+              <div class="well">
+                <p class="small"><%= t '.evaluation_instruction' %></p>
+              </div>
+              <%= render 'adviser_milestones', locals: {adviser: @adviser,
+                                                        milestones: milestones,
+                                                        teams_submissions: teams_submissions,
+                                                        own_evaluations: own_evaluations} %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 <% end %>

@@ -7,7 +7,12 @@
         <col width="25%">
         <col width="25%">
         <thead>
-        <tr><th>Team Name</th><th>Status</th><th>Last updated at</th><th>Action</th></tr>
+        <tr>
+          <th>Team Name</th>
+          <th>Status</th>
+          <th>Last updated at</th>
+          <th>Action</th>
+        </tr>
         </thead>
         <tbody>
         <% locals[:adviser].teams.each do |team| %>
@@ -21,7 +26,7 @@
                     </a>
                   </td>
                   <td>
-                    <%= team_submission.updated_at.strftime('%Y-%m-%d %I:%M %p') %>
+                    <%= l team_submission.updated_at %>
                   </td>
                   <td>
                     <% if (eval = locals[:own_evaluations][milestone.id][team.id]) %>
