@@ -23,10 +23,12 @@
             <%= team.project_level %>
           </td>
           <td>
-            View team link for now
+            <% team.evaluateds.each do |evaluated| %>
+                <%= evaluated.evaluated.team_name %><br>
+            <% end %>
           </td>
           <td>
-            To be implemented
+            <a href="<%= edit_team_path(team) %>" class="btn btn-success">Edit</a>
           </td>
         </tr>
     <% end %>

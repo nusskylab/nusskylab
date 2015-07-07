@@ -2,20 +2,59 @@ class EvaluatingsController < ApplicationController
   layout 'admins'
 
   def index
-    not check_access(true, true) and return
-    @evaluatings = Evaluating.all
+    display_all_evaluatings_strategy = lambda {
+      if not Adviser.adviser?(current_user.id).nil?
+        return true
+      end
+    }
+    not check_access(true, false, display_all_evaluatings_strategy) and return
+    adviser = Adviser.adviser?(current_user.id)
+    if Admin.admin?(current_user.id)
+      @evaluatings = Evaluating.all
+    elsif adviser
+      evaluatings = Evaluating.all
+      advisers_evaluatings = []
+      evaluatings.each do |evaluating|
+        if (evaluating.evaluated.adviser_id and
+          evaluating.evaluated.adviser_id == adviser.id) and
+          (evaluating.evaluator.adviser_id and
+          evaluating.evaluator.adviser_id == adviser.id)
+          advisers_evaluatings.append(evaluating)
+        end
+      end
+      @evaluatings = advisers_evaluatings
+      render layout: 'general_layout'
+    end
   end
 
   def new
-    not check_access(true, true) and return
+    create_evaluatings_strategy = lambda {
+      if not Adviser.adviser?(current_user.id).nil?
+        return true
+      end
+    }
+    not check_access(true, false, create_evaluatings_strategy) and return
     @evaluating = Evaluating.new
-    render locals: {
-             teams: Team.all
-           }
+    adviser = Adviser.adviser?(current_user.id)
+    if Admin.admin?(current_user.id)
+      render locals: {
+               teams: Team.all
+             }
+    elsif adviser
+      render layout: 'general_layout', locals: {
+               teams: adviser.teams
+                                     }
+    end
   end
 
   def create
-    not check_access(true, true) and return
+    # TODO: Complete this method
+    create_evaluatings_strategy = lambda {
+      if not Adviser.adviser?(current_user.id).nil?
+        return true
+      end
+    }
+    not check_access(true, false, create_evaluatings_strategy) and return
     evaluating = create_evaluation_relationship
     if evaluating
       redirect_to evaluatings_path
