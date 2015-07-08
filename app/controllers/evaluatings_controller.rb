@@ -28,12 +28,12 @@ class EvaluatingsController < ApplicationController
   end
 
   def new
-    create_evaluatings_strategy = lambda {
+    create_evaluating_strategy = lambda {
       if not Adviser.adviser?(current_user.id).nil?
         return true
       end
     }
-    not check_access(true, false, create_evaluatings_strategy) and return
+    not check_access(true, false, create_evaluating_strategy) and return
     @evaluating = Evaluating.new
     adviser = Adviser.adviser?(current_user.id)
     if Admin.admin?(current_user.id)
@@ -48,20 +48,16 @@ class EvaluatingsController < ApplicationController
   end
 
   def create
-    # TODO: Complete this method
     create_evaluatings_strategy = lambda {
       if not Adviser.adviser?(current_user.id).nil?
         return true
       end
     }
     not check_access(true, false, create_evaluatings_strategy) and return
-    evaluating = create_evaluation_relationship
-    if evaluating
-      redirect_to evaluatings_path
+    if create_evaluation_relationship
+      redirect_to evaluatings_path, flash: {success: 'The evaluating relation is successfully created'}
     else
-      render 'new', locals: {
-               teams: Team.all
-                  }
+      redirect_to new_evaluating_path, flash: {danger: @evaluating.errors.full_messages.join(', ')}
     end
   end
 
@@ -82,22 +78,48 @@ class EvaluatingsController < ApplicationController
   end
 
   def edit
-    not check_access(true, true) and return
     @evaluating = Evaluating.find(params[:id])
-    render locals: {
-             teams: Team.all
-           }
+    adviser = Adviser.adviser?(current_user.id)
+    edit_evaluating_strategy = lambda {
+      if not adviser.nil?
+        if @evaluating and @evaluating.evaluated.adviser_id == adviser.id and
+          @evaluating.evaluator.adviser_id == adviser.id
+          return true
+        else
+          return false
+        end
+      end
+    }
+    not check_access(true, false, edit_evaluating_strategy) and return
+    if Admin.admin?(current_user.id)
+      render locals: {
+               teams: Team.all
+             }
+    elsif adviser
+      render layout: 'general_layout', locals: {
+                                       teams: adviser.teams
+                                     }
+    end
   end
 
   def update
-    not check_access(true, true) and return
-    evaluating = update_evaluation_relationship
-    if evaluating
-      redirect_to evaluatings_path
+    @evaluating = Evaluating.find(params[:id])
+    adviser = Adviser.adviser?(current_user.id)
+    update_evaluating_strategy = lambda {
+      if not adviser.nil?
+        if @evaluating and @evaluating.evaluated.adviser_id == adviser.id and
+          @evaluating.evaluator.adviser_id == adviser.id
+          return true
+        else
+          return false
+        end
+      end
+    }
+    not check_access(true, false, update_evaluating_strategy) and return
+    if update_evaluation_relationship
+      redirect_to evaluatings_path, flash: {success: 'The evaluating relation is successfully edited'}
     else
-      render 'edit', locals: {
-                    teams: Team.all
-                  }
+      redirect_to edit_evaluating_path(@evaluating.id), flash: {danger: @evaluating.errors.full_messages.join(', ')}
     end
   end
 
@@ -105,6 +127,7 @@ class EvaluatingsController < ApplicationController
     not check_access(true, true) and return
     evaluating = Evaluating.find(params[:id])
     if evaluating.nil?
+      # Silent failure
       redirect_to evaluatings_path
     end
     if evaluating.destroy
@@ -128,11 +151,20 @@ class EvaluatingsController < ApplicationController
 
     def create_evaluation_relationship
       @evaluating = Evaluating.new(get_evaluating_params)
-      @evaluating.save ? @evaluating : nil
+      adviser = Adviser.adviser?(current_user.id)
+      if not Admin.admin?(current_user.id).nil?
+        @evaluating.save ? @evaluating : nil
+      elsif not adviser.nil?
+        if @evaluating.evaluated and @evaluating.evaluated.adviser_id == adviser.id and
+          @evaluating.evaluator and @evaluating.evaluator.adviser_id == adviser.id
+          @evaluating.save ? @evaluating : nil
+        else
+          nil
+        end
+      end
     end
 
     def update_evaluation_relationship
-      @evaluating = Evaluating.find(params[:id])
       (@evaluating and @evaluating.update(get_evaluating_params)) ? @evaluating : nil
     end
 

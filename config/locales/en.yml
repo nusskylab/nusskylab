@@ -1,4 +1,12 @@
 en:
+  date:
+    formats:
+      default: >
+        %Y-%m-%d
+      long: >
+        %Y-%m-%d
+      short: >
+        %m-%d
   datetime:
     formats:
       default: >
