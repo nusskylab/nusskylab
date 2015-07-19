@@ -135,10 +135,6 @@ class EvaluatingsController < ApplicationController
     end
   end
 
-  def get_home_link
-    admin? ? admin_path(admin?) : '/'
-  end
-
   def get_page_title
     @page_title = @page_title || 'Evaluatings | Orbital'
     super

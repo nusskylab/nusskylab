@@ -101,10 +101,6 @@ class TeamsController < ApplicationController
     end
   end
 
-  def get_home_link
-    @team ? team_path(@team) : '/'
-  end
-
   def get_page_title
     @page_title = @page_title || 'Teams | Orbital'
     super

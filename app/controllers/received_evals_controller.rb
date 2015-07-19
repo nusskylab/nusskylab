@@ -59,11 +59,6 @@ class ReceivedEvalsController < ApplicationController
     end
   end
 
-  def get_home_link
-    team = Team.find(params[:team_id])
-    team ? team_path(team) : '/'
-  end
-
   def get_page_title
     @page_title = @page_title || 'Received Evaluations | Orbital'
     super

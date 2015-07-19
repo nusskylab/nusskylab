@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_home_link
-    current_user ? user_path(current_user) : '/'
+    current_user ? after_sign_in_path_for(current_user) : '/'
   end
 
   def after_sign_in_path_for(resource)

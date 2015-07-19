@@ -52,10 +52,6 @@ class MilestonesController < ApplicationController
     redirect_to milestones_path, flash: flash
   end
 
-  def get_home_link
-    admin? ? admin_path(admin?) : '/'
-  end
-
   def get_page_title
     @page_title = @page_title || 'Milestones | Orbital'
     super
