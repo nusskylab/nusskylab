@@ -116,10 +116,6 @@ class StudentsController < ApplicationController
     redirect_to students_path
   end
 
-  def get_home_link
-    @student and @student.id ? student_path(@student) : '/'
-  end
-
   def get_page_title
     @page_title = @page_title || 'Students | Orbital'
     super

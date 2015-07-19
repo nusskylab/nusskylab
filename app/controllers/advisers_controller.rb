@@ -83,10 +83,6 @@ class AdvisersController < ApplicationController
     redirect_to advisers_path
   end
 
-  def get_home_link
-    @adviser ? adviser_path(@adviser) : '/'
-  end
-
   def get_page_title
     @page_title = @page_title || 'Advisers | Orbital'
     super

@@ -52,10 +52,6 @@ class AdminsController < ApplicationController
     redirect_to admins_path
   end
 
-  def get_home_link
-    @admin ? admin_path(@admin) : '/'
-  end
-
   def get_page_title
     @page_title = @page_title || 'Admins | Orbital'
     super
