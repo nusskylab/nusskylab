@@ -14,12 +14,12 @@
 <% else %>
     <tr>
       <td><%= submission.milestone.name %></td>
-      <td><%= l submission.milestone.submission_deadline %></td>
+      <td><%= l submission.updated_at %></td>
       <td>
-        <a class="btn btn-default btn-xs"
+        <a class="btn btn-default"
            href="<%=  team_submission_path(submission.team_id, submission.id) %>">
           View</a>
-        <a class="btn btn-xs btn-success"
+        <a class="btn btn-success"
            href="<%= edit_team_submission_path(submission.team_id, submission.id) %>">Edit</a>
       </td>
     </tr>

@@ -84,7 +84,8 @@ class StudentsController < ApplicationController
       end
     }
     not check_access(true, false, display_student_access_strategy) and return
-    evaluateds, evaluators, milestones, team_evaluateds_submissions_table, team_evaluations_table, team_evaluators_evaluations_table, team_submissions_table = get_render_variable_for_student
+    evaluateds, evaluators, milestones, team_evaluateds_submissions_table,
+      team_evaluations_table, team_evaluators_evaluations_table, team_submissions_table = get_render_variable_for_student
     render locals: {
              milestones: milestones,
              evaluateds: evaluateds,
@@ -269,6 +270,8 @@ class StudentsController < ApplicationController
             team_evaluators_evaluations_table[milestone.id][evaluator.evaluator_id] = PeerEvaluation.find_by(team_id: evaluator.evaluator_id,
                                                                                                              submission_id: temp_team_submission.id)
           end
+          team_evaluators_evaluations_table[milestone.id][:adviser] = PeerEvaluation.find_by(adviser_id: @student.team.adviser_id,
+                                                                                             submission_id: temp_team_submission.id)
         end
       end
       return evaluateds, evaluators, milestones,
