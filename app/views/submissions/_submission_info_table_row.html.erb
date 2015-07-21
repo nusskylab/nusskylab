@@ -14,7 +14,12 @@
 <% else %>
     <tr>
       <td><%= submission.milestone.name %></td>
-      <td><%= l submission.updated_at %></td>
+      <td
+      <% if submission.updated_at > submission.milestone.submission_deadline %>
+      class="late-submitted" data-toggle="tooltip" data-placement="top"
+      title="<%= I18n.t('submissions.late_submission_tooltip') %>"
+      <% end %>
+      ><%= l submission.updated_at %></td>
       <td>
         <a class="btn btn-default"
            href="<%=  team_submission_path(submission.team_id, submission.id) %>">

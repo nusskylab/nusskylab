@@ -20,7 +20,12 @@
                       View
                     </a>
                   </td>
-                  <td>
+                  <td
+                  <% if temp_evaluated_submission.updated_at > temp_evaluated_submission.milestone.submission_deadline %>
+                  class="late-submitted" data-toggle="tooltip" data-placement="top"
+                  title="<%= I18n.t('submissions.late_submission_tooltip') %>"
+                  <% end %>
+                  >
                     <%= l temp_evaluated_submission.updated_at %>
                   </td>
                   <td>

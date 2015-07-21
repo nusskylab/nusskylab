@@ -23,6 +23,9 @@ en:
         %Y-%m-%d %I:%M %p
       short: >
         %m-%d %I:%M %p
+  submissions:
+    late_submission_tooltip: >
+      Submission is submitted or modified after deadline.
   students:
     show:
       submission_instruction: >
