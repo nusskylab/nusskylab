@@ -1,20 +1,10 @@
-<table class="table table-hover">
+<table class="table">
   <thead>
-  <tr><th>Milestone name</th><th>Actions</th></tr>
+  <tr><th>Milestone name</th><th>Last updated at</th><th>Actions</th></tr>
   </thead>
   <tbody>
   <% locals[:submissions].each do |submission| %>
-      <tr>
-        <td><%= submission.milestone.name %></td>
-        <td>
-          <a class="btn btn-default btn-xs"
-             href="<%=  team_submission_path(submission.team_id, submission.id) %>">
-            View</a>
-          <a class="btn btn-default btn-xs"
-             href="<%= edit_team_submission_path(submission.team_id, submission.id) %>">
-            Edit</a>
-        </td>
-      </tr>
+      <%= render 'submission_info_table_row', locals: {submission: submission} %>
   <% end %>
   </tbody>
 </table>

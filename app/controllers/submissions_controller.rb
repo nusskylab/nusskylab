@@ -35,11 +35,6 @@ class SubmissionsController < ApplicationController
     render_or_redirect_for_submission(sub, false)
   end
 
-  def get_home_link
-    team = Team.find(params[:team_id])
-    team ? team_path(team) : '/'
-  end
-
   def get_page_title
     @page_title = @page_title || 'Submissions | Orbital'
     super

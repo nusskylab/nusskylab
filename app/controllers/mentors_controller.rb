@@ -87,10 +87,6 @@ class MentorsController < ApplicationController
     redirect_to mentors_path
   end
 
-  def get_home_link
-    @mentor ? mentor_path(@mentor) : '/'
-  end
-
   def get_page_title
     @page_title = @page_title || 'Mentors | Orbital'
     super

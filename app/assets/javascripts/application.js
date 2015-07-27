@@ -16,6 +16,9 @@ $(function () {
         }
       }
     });
+    var numberOfRows = $('.table-sortable tbody tr').length;
+    $('<div></div>').html('Number of rows: ' + numberOfRows)
+        .addClass('alert alert-info').prependTo($('.table-sortable').parent());
   }
 });
 

@@ -4,8 +4,9 @@
     <%= render 'shared/error_messages', locals: {target_model: locals[:adviser]} %>
     <div class="form-group">
       <label class="col-sm-2 control-label">User ID:</label>
+
       <div class="col-sm-10">
-        <%= f.select :user_id, locals[:users].map {|user| [user.user_name, user.id]}, {},
+        <%= f.select :user_id, locals[:users].map { |user| [user.user_name, user.id] }, {},
                      {class: 'form-control'} %>
         <div class="help-block with-errors">Select a user ID</div>
       </div>

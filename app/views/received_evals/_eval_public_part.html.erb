@@ -2,13 +2,13 @@
   <div>
     <% if locals[:eval].updated_at %>
         <span class="text-muted pull-right">
-          Last modified at: <%= locals[:eval].updated_at.strftime('%d/%m/%Y %H:%M:%S') %>
+          Last modified at: <%= l locals[:eval].updated_at %>
         </span>
     <% end %>
     <h3>From <%= locals[:evaluator_name] %></h3>
   </div>
   <form class="eval-public-part well">
-    <% if locals[:eval].submission.milestone.name =='Milestone 1' %>
+    <% if locals[:eval].submission.milestone.name == 'Milestone 1' %>
         <%= render 'peer_evaluations/eval1_public_form_part' %>
     <% else %>
         <%= render 'peer_evaluations/eval2_public_form_part' %>

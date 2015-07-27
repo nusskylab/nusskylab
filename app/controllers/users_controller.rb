@@ -72,10 +72,6 @@ class UsersController < ApplicationController
     redirect_to users_path, flash: flash
   end
 
-  def get_home_link
-    @user ? user_path(@user) : '/'
-  end
-
   def get_page_title
     @page_title = @page_title || 'Users | Orbital'
     super

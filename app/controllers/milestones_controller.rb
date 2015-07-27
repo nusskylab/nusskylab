@@ -37,11 +37,9 @@ class MilestonesController < ApplicationController
     not check_access(true, true) and return
     @milestone = Milestone.find(params[:id])
     if @milestone.update(get_milestone_params)
-      flash = {}
-      flash[:success] = 'The milestone is successfully edited'
-      redirect_to milestones_path, flash: flash
+      redirect_to milestones_path, flash: {success: 'The milestone is successfully edited'}
     else
-      render 'edit'
+      redirect_to edit_milestone_path(@milestone.id), flash: {danger: @milestone.errors.full_messages.join(', ')}
     end
   end
 
@@ -52,10 +50,6 @@ class MilestonesController < ApplicationController
     flash = {}
     flash[:success] = 'The milestone is successfully deleted'
     redirect_to milestones_path, flash: flash
-  end
-
-  def get_home_link
-    admin? ? admin_path(admin?) : '/'
   end
 
   def get_page_title

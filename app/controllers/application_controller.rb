@@ -78,11 +78,14 @@ class ApplicationController < ActionController::Base
   end
 
   def get_home_link
-    current_user ? user_path(current_user) : '/'
+    current_user ? after_sign_in_path_for(current_user) : '/'
   end
 
   def after_sign_in_path_for(resource)
     user = current_user
+    if user.nil?
+      return '/'
+    end
     student = Student.student?(user.id)
     adviser = Adviser.adviser?(user.id)
     mentor = Mentor.mentor?(user.id)

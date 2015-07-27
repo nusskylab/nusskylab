@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     auth = request.env["omniauth.auth"]
     user = User.from_omniauth(auth)
     sign_in(user)
-    redirect_user()
+    redirect_user
   end
 
   def destroy
@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
   end
 
   private
-    def redirect_user()
+    def redirect_user
       user = current_user
       flash = {}
       flash[:success] = "Welcome, #{user.user_name}"

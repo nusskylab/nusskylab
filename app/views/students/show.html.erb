@@ -52,9 +52,9 @@
             <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
               <h2 class="text-center">Evaluations</h2>
               <div class="well">
-                <p class="small"><%= t '.submission_instruction' %></p>
+                <p class="small"><%= t '.evaluation_instruction' %></p>
               </div>
-              <%= render 'student_evaluations', locals: {student: @student,
+              <%= render 'student_submit_evaluations', locals: {student: @student,
                                                          milestones: milestones,
                                                          evaluateds: evaluateds,
                                                          team_evaluateds_submissions: team_evaluateds_submissions,
@@ -65,7 +65,7 @@
               <div class="well">
                 <p class="small"><%= t '.feedback_instruction' %></p>
               </div>
-              <%= render 'student_feedbacks', locals: {student: @student,
+              <%= render 'student_view_others_evaluations', locals: {student: @student,
                                                        milestones: milestones,
                                                        evaluators: evaluators,
                                                        team_evaluators_evaluations: team_evaluators_evaluations} %>

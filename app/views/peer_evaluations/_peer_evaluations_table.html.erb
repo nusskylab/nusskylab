@@ -1,25 +1,22 @@
 <table class="table table-hover">
   <thead>
-  <tr><th>Team name</th><th>Target team name</th><th>Target milestone name</th><th>Actions</th></tr>
+  <tr><th>Milestone</th><th>Target team</th><th>Last updated at</th><th>Actions</th></tr>
   </thead>
   <tbody>
   <% locals[:peer_evaluations].each do |peer_evaluation| %>
       <tr>
-        <td><%= peer_evaluation.team.team_name %></td>
-        <td><%= peer_evaluation.submission.team.team_name %></td>
         <td><%= peer_evaluation.submission.milestone.name %></td>
+        <td><%= peer_evaluation.submission.team.team_name %></td>
+        <td><%= l peer_evaluation.updated_at %></td>
         <td>
-          <a class="btn btn-default btn-xs"
+          <a class="btn btn-default"
              href="<%= team_peer_evaluation_path(peer_evaluation.team_id, peer_evaluation.id) %>">
             View
           </a>
-          <a class="btn btn-default btn-xs"
+          <a class="btn btn-success"
              href="<%= edit_team_peer_evaluation_path(peer_evaluation.team_id, peer_evaluation.id) %>">
             Edit
           </a>
-          <%= link_to 'Delete', team_peer_evaluation_path(peer_evaluation.team_id, peer_evaluation.id),
-                      :confirm => 'Are you sure to delete this evaluation permanently?',
-                      :method => :delete, :class => 'btn btn-danger btn-xs' %>
         </td>
       </tr>
   <% end %>

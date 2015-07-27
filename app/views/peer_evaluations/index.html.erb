@@ -8,7 +8,8 @@
         <%= render 'peer_evaluations_table', locals: {peer_evaluations: @peer_evaluations} %>
         <hr>
         <div class="col-sm-7 col-sm-offset-5">
-          <a href="<%= new_team_peer_evaluation_path(params[:team_id]) %>" class="btn btn-success">Submit peer evaluation</a>
+          <a href="<%= new_team_peer_evaluation_path(params[:team_id]) %>" class="btn btn-success">
+            Submit new peer evaluation</a>
         </div>
       </div>
     </div>

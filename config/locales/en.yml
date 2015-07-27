@@ -1,16 +1,59 @@
 en:
+  date:
+    formats:
+      default: >
+        %Y-%m-%d
+      long: >
+        %Y-%m-%d
+      short: >
+        %m-%d
+  datetime:
+    formats:
+      default: >
+        %Y-%m-%d %I:%M %p
+      long: >
+        %Y-%m-%d %I:%M %p
+      short: >
+        %m-%d %I:%M %p
+  time:
+    formats:
+      default: >
+        %Y-%m-%d %I:%M %p
+      long: >
+        %Y-%m-%d %I:%M %p
+      short: >
+        %m-%d %I:%M %p
+  submissions:
+    late_submission_tooltip: >
+      Submission is submitted or modified after deadline.
   students:
     show:
-      submission_instruction: 'Submissions to milestones are listed here.
-       You can submit for a milestone or edit a previously created submission.'
-      submission_milestone_tooltip: 'Deadline for %{milestone_name} is %{deadline}'
-      evaluation_instruction: 'Submissions from teams that you are evaluating and
-       evaluations from your team to submissions are listed here. You can view submissions
-       from other teams, submit peer evaluation to these submissions or edit a previously
-       created evaluation.'
-      evaluation_team_no_submission_tooltip: 'Well, they have not submitted their projectlog
-       yet.'
-      feedback_instruction: 'Peer evaluations from teams that are evaluating your team and
-       feedbacks to evaluations from your team to evaluations are listed here. You can view
-       evaluations from other teams, submit feedback to these evaluations or edit a previously
-       created feedback.'
+      submission_instruction: >
+        Submissions to milestones are listed here.
+        You can submit for a milestone or edit a previously created submission.
+      submission_milestone_tooltip: >
+        Deadline for %{milestone_name} is %{deadline}
+      evaluation_instruction: >
+        Submissions from teams that you are evaluating and
+        evaluations from your team to submissions are listed here. You can view submissions
+        from other teams, submit peer evaluation to these submissions or edit a previously
+        created evaluation.
+      evaluation_team_no_submission_tooltip: >
+        Well, they have not submitted their project log yet.
+      feedback_instruction: >
+        Peer evaluations from teams that are evaluating your team and
+        feedback to evaluations from your team to evaluations are listed here. You can view
+        evaluations from other teams, submit feedback to these evaluations or edit a previously
+        created feedback.
+  advisers:
+     show:
+       view_teams_instruction: >
+         All of your teams are listed below. You can edit any team's information
+         or edit evaluation relation among them.
+       evaluation_instruction: >
+         Submissions from all of your teams are listed here. You can view their submissions
+         and submit/edit your evaluation for one submission.
+       evaluating_relation_instruction: >
+         Temporarily you have to use evaluatings pages to manage evaluating relations.
+         Integrated functionality for adviser to manage those without being
+         redirected will come soon.
