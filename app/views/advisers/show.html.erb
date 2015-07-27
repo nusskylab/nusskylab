@@ -21,11 +21,16 @@
                 Submit evaluations
               </a>
             </li>
+            <li role="presentation">
+              <a href="#evaluatings-panel" aria-controls="evaluatings-panel"
+                 role="tab" data-toggle="tab">
+                View Evaluating relations
+              </a>
+            </li>
           </ul>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="teams-panel">
               <h2 class="text-center">Teams</h2>
-
               <div class="well">
                 <p class="small"><%= t '.view_teams_instruction' %></p>
               </div>
@@ -33,7 +38,6 @@
             </div>
             <div role="tabpanel" class="tab-pane fade" id="evaluations-panel">
               <h2 class="text-center">Evaluations</h2>
-
               <div class="well">
                 <p class="small"><%= t '.evaluation_instruction' %></p>
               </div>
@@ -41,6 +45,15 @@
                                                         milestones: milestones,
                                                         teams_submissions: teams_submissions,
                                                         own_evaluations: own_evaluations} %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="evaluatings-panel">
+              <h2 class="text-center">Evaluating relations</h2>
+              <div class="well">
+                <p class="small"><%= t '.evaluating_relation_instruction' %></p>
+              </div>
+              <div class="text-center">
+                You go view and manage relations <a href="<%= evaluatings_path %>" class="btn btn-success">here</a>
+              </div>
             </div>
           </div>
         </div>

@@ -124,14 +124,24 @@ class EvaluatingsController < ApplicationController
   end
 
   def destroy
-    not check_access(true, true) and return
+    @evaluating = Evaluating.find(params[:id])
+    adviser = Adviser.adviser?(current_user.id)
+    destroy_evaluating_strategy = lambda {
+      if not adviser.nil?
+        if @evaluating and @evaluating.evaluated.adviser_id == adviser.id and
+          @evaluating.evaluator.adviser_id == adviser.id
+          return true
+        else
+          return false
+        end
+      end
+    }
+    not check_access(true, false, destroy_evaluating_strategy) and return
     evaluating = Evaluating.find(params[:id])
-    if evaluating.nil?
-      # Silent failure
-      redirect_to evaluatings_path
-    end
     if evaluating.destroy
-      redirect_to evaluatings_path
+      redirect_to evaluatings_path, flash: {success: 'The evaluating relation is successfully deleted'}
+    else
+      redirect_to evaluatings_path, flash: {danger: 'The evaluating relation is not successfully deleted'}
     end
   end
 
@@ -145,6 +155,7 @@ class EvaluatingsController < ApplicationController
       evaluating_params = params.require(:evaluating).permit(:evaluated_id, :evaluator_id)
     end
 
+    # TODO: refactor the following two methods for common part
     def create_evaluation_relationship
       @evaluating = Evaluating.new(get_evaluating_params)
       adviser = Adviser.adviser?(current_user.id)
@@ -161,7 +172,17 @@ class EvaluatingsController < ApplicationController
     end
 
     def update_evaluation_relationship
-      (@evaluating and @evaluating.update(get_evaluating_params)) ? @evaluating : nil
+      adviser = Adviser.adviser?(current_user.id)
+      if not Admin.admin?(current_user.id).nil?
+        (@evaluating and @evaluating.update(get_evaluating_params)) ? @evaluating : nil
+      elsif not adviser.nil?
+        if @evaluating.evaluated and @evaluating.evaluated.adviser_id == adviser.id and
+          @evaluating.evaluator and @evaluating.evaluator.adviser_id == adviser.id
+          @evaluating.save ? @evaluating : nil
+        else
+          nil
+        end
+      end
     end
 
     def create_evaluating_from_csv_row(row)

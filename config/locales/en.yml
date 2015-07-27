@@ -53,3 +53,7 @@ en:
        evaluation_instruction: >
          Submissions from all of your teams are listed here. You can view their submissions
          and submit/edit your evaluation for one submission.
+       evaluating_relation_instruction: >
+         Temporarily you have to use evaluatings pages to manage evaluating relations.
+         Integrated functionality for adviser to manage those without being
+         redirected will come soon.
