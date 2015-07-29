@@ -4,10 +4,15 @@
       <% if (student? and student?.team and student?.team_id == locals[:eval].team_id) %>
           <%= render 'eval1_private_form_part' %>
       <% end %>
-  <% else %>
+  <% elsif locals[:eval].submission.milestone.name =='Milestone 2' %>
       <%= render 'eval2_public_form_part' %>
       <% if (student? and student?.team and student?.team_id == locals[:eval].team_id) %>
           <%= render 'eval2_private_form_part' %>
+      <% end %>
+  <% else %>
+      <%= render 'eval3_public_form_part' %>
+      <% if (student? and student?.team and student?.team_id == locals[:eval].team_id) %>
+          <%= render 'eval3_private_form_part' %>
       <% end %>
   <% end %>
 </div>

@@ -29,9 +29,12 @@
       <% if (not locals[:is_new]) and locals[:peer_evaluation].submission.milestone.name =='Milestone 1' %>
           <%= render 'eval1_public_form_part' %>
           <%= render 'eval1_private_form_part' %>
-      <% else %>
+      <% elsif (not locals[:is_new]) and locals[:peer_evaluation].submission.milestone.name =='Milestone 2' %>
           <%= render 'eval2_public_form_part' %>
           <%= render 'eval2_private_form_part' %>
+      <% else %>
+          <%= render 'eval3_public_form_part' %>
+          <%= render 'eval3_private_form_part' %>
       <% end %>
       <div id="eval-template-error" class="alert alert-danger" style="display: none;">
       </div>
