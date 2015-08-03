@@ -6,8 +6,10 @@
             <form class="eval-private-part well">
               <% if eval.submission.milestone.name == 'Milestone 1' %>
                   <%= render 'peer_evaluations/eval1_private_form_part' %>
-              <% else %>
+              <% elsif eval.submission.milestone.name == 'Milestone 2' %>
                   <%= render 'peer_evaluations/eval2_private_form_part' %>
+              <% else %>
+                  <%= render 'peer_evaluations/eval3_private_form_part' %>
               <% end %>
             </form>
             <div class="eval-private-value" style="display: none;">
