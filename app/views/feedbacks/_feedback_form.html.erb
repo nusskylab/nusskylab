@@ -1,0 +1,29 @@
+<%= simple_form_for locals[:feedback],
+                    url: {action: (locals[:is_new] ? 'create' : 'update')} do |f| %>
+    <%= render 'shared/error_messages', locals: {target_model: locals[:feedback]} %>
+    <div class="form-group">
+      <p>Question(s) to be loaded</p>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="submission_milestone_id">Evaluator:</label>
+      <div id="target_type_teams">
+        <%= f.select :target_team_id, locals[:evaluators].map {|a| [a.team_name, a.id]}, {},
+                     {class: 'form-control'} %>
+      </div>
+      <div id="target_type_advisers" style="display: none;">
+        <%= f.select :adviser_id, locals[:advisers].map {|a| [a.user.user_name, a.id]}, {},
+                     {class: 'form-control'} %>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" checked="checked" name="feedback[feedback_to_team]">
+           Feedback to peer teams
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= f.submit 'Submit', class: 'btn btn-success' %>
+      </div>
+    </div>
+<% end %>

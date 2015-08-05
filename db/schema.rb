@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150801154939) do
+ActiveRecord::Schema.define(version: 20150805142037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,12 +42,14 @@ ActiveRecord::Schema.define(version: 20150801154939) do
 
   create_table "feedbacks", force: :cascade do |t|
     t.integer  "team_id"
-    t.integer  "evaluating_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "target_team_id"
+    t.integer  "adviser_id"
+    t.integer  "target_type"
   end
 
-  add_index "feedbacks", ["evaluating_id"], name: "index_feedbacks_on_evaluating_id", using: :btree
+  add_index "feedbacks", ["adviser_id"], name: "index_feedbacks_on_adviser_id", using: :btree
   add_index "feedbacks", ["team_id"], name: "index_feedbacks_on_team_id", using: :btree
 
   create_table "mentors", force: :cascade do |t|
@@ -156,8 +158,9 @@ ActiveRecord::Schema.define(version: 20150801154939) do
   add_foreign_key "advisers", "users"
   add_foreign_key "evaluatings", "teams", column: "evaluated_id"
   add_foreign_key "evaluatings", "teams", column: "evaluator_id"
-  add_foreign_key "feedbacks", "evaluatings"
+  add_foreign_key "feedbacks", "advisers"
   add_foreign_key "feedbacks", "teams"
+  add_foreign_key "feedbacks", "teams", column: "target_team_id"
   add_foreign_key "mentors", "users"
   add_foreign_key "peer_evaluations", "advisers"
   add_foreign_key "peer_evaluations", "submissions"
