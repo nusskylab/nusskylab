@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   resources :teams do
     resources :submissions, only: [:index, :new, :create, :edit, :update, :show]
     resources :peer_evaluations
-    resources :feedbacks
+    resources :feedbacks, only: [:new, :create, :edit, :update]
   end
   resources :evaluatings, only: [:index, :new, :create, :edit, :update, :destroy] do
     collection do

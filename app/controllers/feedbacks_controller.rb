@@ -1,11 +1,6 @@
 class FeedbacksController < ApplicationController
   layout 'general_layout'
 
-  def index
-    check_access(true, false)
-    @feedbacks = Feedback.where(team_id: params[:team_id])
-  end
-
   def new
     check_access(true, false)
     team = Team.find(params[:team_id])
@@ -14,21 +9,32 @@ class FeedbacksController < ApplicationController
     team.evaluators.each do |evaluator|
       evaluators.append(evaluator.evaluator)
     end
+    # TODO: need to properly handle this!!!
+    feedback_template = SurveyTemplate.all()[0]
     render locals: {
              advisers: [team.adviser],
-             evaluators: evaluators
+             evaluators: evaluators,
+             feedback_template: feedback_template
            }
   end
 
   def create
     check_access(true, false)
     if create_feedback_and_responses
-      redirect_to team_feedbacks_path(team_id: params[:team_id]), flash: {success: 'Feedback is saved successfully'}
+      redirect_to get_home_link, flash: {success: 'Feedback is saved successfully'}
     else
-      redirect_to new_team_feedback_path(team_id: params[:team_id]),
+      redirect_to get_home_link,
                   flash: {danger: 'Feedback could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;' +
                     @feedback.errors.full_messages.join(', ')}
     end
+  end
+
+  def edit
+    # TODO: to be implemented
+  end
+
+  def update
+    # TODO: to be implemented
   end
 
   private
@@ -44,9 +50,15 @@ class FeedbacksController < ApplicationController
     feedback_params
   end
 
+  def get_questions_params
+    questions_params = params.require(:questions).permit!
+  end
+
   def create_feedback_and_responses
-    # TODO: create responses for feedback
     @feedback = Feedback.new(get_feedback_params)
+    feedback_template = SurveyTemplate.all()[0]
+    @feedback.survey_template_id = feedback_template.id
+    @feedback.response_content = get_questions_params.to_json
     if not @feedback.target_team_id.nil?
       @feedback.target_type = Feedback.target_types[:target_type_team]
     elsif not @feedback.adviser_id.nil?

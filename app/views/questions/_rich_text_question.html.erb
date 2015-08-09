@@ -1,0 +1,7 @@
+<div class="form-group">
+  <!--TODO: rich text support to be loaded-->
+  <label class="control-label"><%= locals[:question].title %></label>
+  <div class="help-block"><%= locals[:question].instruction %></div>
+  <textarea class="form-control tinymce" rows="7" name="<%= locals[:question].get_question_id_for_form %>"
+            placeholder="<%= locals[:question].content %>"></textarea>
+</div>

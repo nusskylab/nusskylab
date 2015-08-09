@@ -28,23 +28,24 @@ en:
       Submission is submitted or modified after deadline.
   students:
     show:
-      submission_instruction: >
+      submit_submission_instruction: >
         Submissions to milestones are listed here.
         You can submit for a milestone or edit a previously created submission.
       submission_milestone_tooltip: >
         Deadline for %{milestone_name} is %{deadline}
-      evaluation_instruction: >
+      submit_evaluation_instruction: >
         Submissions from teams that you are evaluating and
         evaluations from your team to submissions are listed here. You can view submissions
         from other teams, submit peer evaluation to these submissions or edit a previously
         created evaluation.
       evaluation_team_no_submission_tooltip: >
         Well, they have not submitted their project log yet.
-      feedback_instruction: >
+      view_evaluation_instruction: >
         Peer evaluations from teams that are evaluating your team and
         feedback to evaluations from your team to evaluations are listed here. You can view
-        evaluations from other teams, submit feedback to these evaluations or edit a previously
-        created feedback.
+        evaluations from other teams.
+      submit_feedback_instruction: >
+        You can submit your feedback here.
   advisers:
      show:
        view_teams_instruction: >

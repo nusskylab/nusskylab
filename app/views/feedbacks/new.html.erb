@@ -6,6 +6,7 @@
       </div>
       <div class="panel-body">
         <%= render 'feedback_form', locals: {feedback: @feedback, advisers: advisers,
+                                             feedback_template: feedback_template,
                                              evaluators: evaluators, is_new: true} %>
       </div>
     </div>
