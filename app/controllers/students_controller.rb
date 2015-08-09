@@ -85,7 +85,8 @@ class StudentsController < ApplicationController
     }
     not check_access(true, false, display_student_access_strategy) and return
     evaluateds, evaluators, milestones, team_evaluateds_submissions_table,
-      team_evaluations_table, team_evaluators_evaluations_table, team_submissions_table = get_render_variable_for_student
+      team_evaluations_table, team_evaluators_evaluations_table,
+      team_submissions_table, team_feedbacks = get_render_variable_for_student
     render locals: {
              milestones: milestones,
              evaluateds: evaluateds,
@@ -93,7 +94,8 @@ class StudentsController < ApplicationController
              team_submissions: team_submissions_table,
              team_evaluateds_submissions: team_evaluateds_submissions_table,
              team_evaluations: team_evaluations_table,
-             team_evaluators_evaluations: team_evaluators_evaluations_table
+             team_evaluators_evaluations: team_evaluators_evaluations_table,
+             team_feedbacks: team_feedbacks
            }
   end
 
@@ -154,19 +156,19 @@ class StudentsController < ApplicationController
       user = User.find_by(uid: user_params[:uid],
                           provider: user_params[:provider]) || User.new(user_params)
       if not user.save
-        # TODO: deal with this
+        # TODO: deal with this exception
         print(user_params)
       end
       user2 = User.find_by(uid: user2_params[:uid],
                            provider: user2_params[:provider]) || User.new(user2_params)
       if not user2.save
-        # TODO: deal with this
+        # TODO: deal with this exception
         print(user2_params)
       end
       set_team_params_project_level(team_params)
       team = Team.new(team_params)
       if not team.save
-        # TODO: deal with this
+        # TODO: deal with this exception
       end
       student = Student.new(user_id: user.id, team_id: team.id)
       student2 = Student.new(user_id: user2.id, team_id: team.id)
@@ -231,17 +233,18 @@ class StudentsController < ApplicationController
       team_evaluateds_submissions_table = {}
       team_evaluations_table = {}
       team_evaluators_evaluations_table = {}
+      team_feedbacks_table = {}
       evaluateds = []
       evaluators = []
       if @student.team_id
         evaluateds, evaluators,
           milestones, team_evaluateds_submissions_table,
           team_evaluations_table, team_evaluators_evaluations_table,
-          team_submissions_table = get_additional_render_variables_for_student_with_team(milestones)
+          team_submissions_table, team_feedbacks_table = get_additional_render_variables_for_student_with_team(milestones)
       end
       return evaluateds, evaluators, milestones,
         team_evaluateds_submissions_table, team_evaluations_table,
-        team_evaluators_evaluations_table, team_submissions_table
+        team_evaluators_evaluations_table, team_submissions_table, team_feedbacks_table
     end
 
     def get_additional_render_variables_for_student_with_team(milestones)
@@ -249,6 +252,7 @@ class StudentsController < ApplicationController
       team_evaluateds_submissions_table = {}
       team_evaluations_table = {}
       team_evaluators_evaluations_table = {}
+      team_feedbacks_table = {}
       evaluateds = @student.team.evaluateds
       evaluators = @student.team.evaluators
       milestones.each do |milestone|
@@ -274,9 +278,15 @@ class StudentsController < ApplicationController
                                                                                              submission_id: temp_team_submission.id)
         end
       end
+      evaluators.each do |evaluator|
+        team_feedbacks_table[evaluator.evaluator_id] = Feedback.find_by(team_id: @student.team_id,
+                                                                        target_team_id: evaluator.evaluator_id)
+      end
+      team_feedbacks_table[:adviser] = Feedback.find_by(team_id: @student.team_id,
+                                                        adviser_id: @student.team.adviser_id)
       return evaluateds, evaluators, milestones,
         team_evaluateds_submissions_table, team_evaluations_table,
-        team_evaluators_evaluations_table, team_submissions_table
+        team_evaluators_evaluations_table, team_submissions_table, team_feedbacks_table
     end
 
     def get_user_params

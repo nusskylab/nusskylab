@@ -38,12 +38,18 @@
                 View peer evaluations
               </a>
             </li>
+            <li role="presentation">
+              <a href="#submit-feedback-panel" aria-controls="submit-feedback-panel"
+                 role="tab" data-toggle="tab">
+                Submit feedback
+              </a>
+            </li>
           </ul>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="project-panel">
               <h2 class="text-center">Submissions</h2>
               <div class="well">
-                <p class="small"><%= t '.submission_instruction' %></p>
+                <p class="small"><%= t '.submit_submission_instruction' %></p>
               </div>
               <%= render 'student_submissions', locals: {student: @student,
                                                          milestones: milestones,
@@ -52,7 +58,7 @@
             <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
               <h2 class="text-center">Evaluations</h2>
               <div class="well">
-                <p class="small"><%= t '.evaluation_instruction' %></p>
+                <p class="small"><%= t '.submit_evaluation_instruction' %></p>
               </div>
               <%= render 'student_submit_evaluations', locals: {student: @student,
                                                          milestones: milestones,
@@ -61,14 +67,23 @@
                                                          team_evaluations: team_evaluations} %>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="view-evaluation-panel">
-              <h2 class="text-center">Feedbacks</h2>
+              <h2 class="text-center">View all evaluations</h2>
               <div class="well">
-                <p class="small"><%= t '.feedback_instruction' %></p>
+                <p class="small"><%= t '.view_evaluation_instruction' %></p>
               </div>
               <%= render 'student_view_others_evaluations', locals: {student: @student,
                                                        milestones: milestones,
                                                        evaluators: evaluators,
                                                        team_evaluators_evaluations: team_evaluators_evaluations} %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="submit-feedback-panel">
+              <h2 class="text-center">Submit feedback</h2>
+              <div class="well">
+                <p class="small"><%= t '.submit_feedback_instruction' %></p>
+              </div>
+              <%= render 'student_submit_feedbacks', locals: {student: @student,
+                                                              evaluators: evaluators,
+                                                              team_feedbacks: team_feedbacks} %>
             </div>
           </div>
         </div>

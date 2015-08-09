@@ -1,0 +1,49 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+    <tr><th>Evaluator Name</th><th>Status</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      <% locals[:evaluators].each do |evaluator| %>
+          <tr>
+            <td>
+              <%= evaluator.evaluator.team_name %>
+            </td>
+            <td>
+              <% if evaluator.evaluator.has_dropped %>
+                  <span style="color: #ff0000;">Dropped</span>
+              <% else %>
+                  Active
+              <% end %>
+            </td>
+            <td>
+              <% if (team_feedback = locals[:team_feedbacks][evaluator.evaluator_id]) %>
+                  <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:student].team_id, team_feedback.id) %>">
+                    Edit feedback</a>
+              <% else %>
+                  <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:student].team_id) %>">
+                    Submit feedback</a>
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      <tr>
+        <td>
+          <%= locals[:student].team.adviser.user.user_name %>
+        </td>
+        <td>
+          Active
+        </td>
+        <td>
+          <% if (adviser_feedback = locals[:team_feedbacks][:adviser]) %>
+              <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:student].team_id, adviser_feedback.id) %>">
+                Edit feedback</a>
+          <% else %>
+              <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:student].team_id) %>">
+                Submit feedback</a>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

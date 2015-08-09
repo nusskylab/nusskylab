@@ -1,0 +1,13 @@
+<% content_for :main_content do %>
+    <% javascript 'feedbacks.js' %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="text-center">Create feedback</h3>
+      </div>
+      <div class="panel-body">
+        <%= render 'feedback_form', locals: {feedback: @feedback, advisers: advisers,
+                                             feedback_template: feedback_template,
+                                             evaluators: evaluators, is_new: true} %>
+      </div>
+    </div>
+<% end %>
