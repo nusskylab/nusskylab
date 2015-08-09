@@ -47,14 +47,25 @@ en:
       submit_feedback_instruction: >
         You can submit your feedback here.
   advisers:
-     show:
-       view_teams_instruction: >
-         All of your teams are listed below. You can edit any team's information
-         or edit evaluation relation among them.
-       evaluation_instruction: >
-         Submissions from all of your teams are listed here. You can view their submissions
-         and submit/edit your evaluation for one submission.
-       evaluating_relation_instruction: >
-         Temporarily you have to use evaluatings pages to manage evaluating relations.
-         Integrated functionality for adviser to manage those without being
-         redirected will come soon.
+    show:
+      view_teams_instruction: >
+        All of your teams are listed below. You can edit any team's information
+        or edit evaluation relation among them.
+      evaluation_instruction: >
+        Submissions from all of your teams are listed here. You can view their submissions
+        and submit/edit your evaluation for one submission.
+      evaluating_relation_instruction: >
+        Temporarily you have to use evaluatings pages to manage evaluating relations.
+        Integrated functionality for adviser to manage those without being
+        redirected will come soon.
+  feedbacks:
+    create:
+      success_message: >
+        Feedback is saved successfully
+      failure_message: >
+        Feedback could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+    update:
+      success_message: >
+        Feedback is saved successfully
+      failure_message: >
+        Feedback could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;

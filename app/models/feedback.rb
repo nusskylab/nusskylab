@@ -12,4 +12,12 @@ class Feedback < ActiveRecord::Base
   belongs_to :adviser
 
   enum target_type: [ :target_type_team, :target_type_adviser ]
+
+  def get_response_for_question(question_id)
+    if self.response_content.blank?
+      return nil
+    else
+      return self.response_content[question_id.to_s]
+    end
+  end
 end

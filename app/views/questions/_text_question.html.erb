@@ -2,5 +2,6 @@
   <label class="control-label"><%= locals[:question].title %></label>
   <div class="help-block"><%= locals[:question].instruction %></div>
   <textarea class="form-control" rows="7" name="<%= locals[:question].get_question_id_for_form %>"
-            placeholder="<%= locals[:question].content %>"></textarea>
+            placeholder="<%= locals[:question].content %>"><%= locals[:question_response] %>
+  </textarea>
 </div>

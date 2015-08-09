@@ -17,8 +17,13 @@
               <% end %>
             </td>
             <td>
-              <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:student].team_id) %>">
-                Submit feedback</a>
+              <% if (team_feedback = locals[:team_feedbacks][evaluator.evaluator_id]) %>
+                  <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:student].team_id, team_feedback.id) %>">
+                    Edit feedback</a>
+              <% else %>
+                  <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:student].team_id) %>">
+                    Submit feedback</a>
+              <% end %>
             </td>
           </tr>
       <% end %>
@@ -30,8 +35,13 @@
           Active
         </td>
         <td>
-          <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:student].team_id) %>">
-            Submit feedback</a>
+          <% if (adviser_feedback = locals[:team_feedbacks][:adviser]) %>
+              <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:student].team_id, adviser_feedback.id) %>">
+                Edit feedback</a>
+          <% else %>
+              <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:student].team_id) %>">
+                Submit feedback</a>
+          <% end %>
         </td>
       </tr>
     </tbody>
