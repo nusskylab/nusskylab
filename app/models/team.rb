@@ -38,10 +38,10 @@ class Team < ActiveRecord::Base
       relevant_users.append(self.mentor.user)
     end
     if include_evaluator
-      relevant_users.append(self.get_evaluator_teams_members)
+      relevant_users.concat(self.get_evaluator_teams_members)
     end
     if include_evaluated
-      relevant_users.append(self.get_evaluated_teams_members)
+      relevant_users.concat(self.get_evaluated_teams_members)
     end
     return relevant_users
   end
@@ -130,7 +130,6 @@ class Team < ActiveRecord::Base
     # TODO: to be implemented
   end
 
-  private
   # Get a team's members as user
   def get_team_members
     team_members = []
@@ -144,7 +143,7 @@ class Team < ActiveRecord::Base
   def get_evaluator_teams_members
     evaluator_members = []
     self.evaluators.each do |evaluator|
-      evaluator_members.append(evaluator.get_team_members)
+      evaluator_members.concat(evaluator.evaluator.get_team_members)
     end
     return evaluator_members
   end
@@ -153,7 +152,7 @@ class Team < ActiveRecord::Base
   def get_evaluated_teams_members
     evaluated_members = []
     self.evaluateds.each do |evaluated|
-      evaluated_members.append(evaluated.get_team_members)
+      evaluated_members.concat(evaluated.evaluated.get_team_members)
     end
     return evaluated_members
   end

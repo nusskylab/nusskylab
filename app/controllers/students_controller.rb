@@ -66,22 +66,19 @@ class StudentsController < ApplicationController
   def show
     @student = Student.find(params[:id])
     display_student_access_strategy = lambda {
-      if @student.user_id == current_user.id
-        return true
-      end
-      if @student.team_id.nil?
-        return false
+      can_access_student_page = false
+      loggedin_user = current_user
+      if @student.team_id.blank?
+        can_access_student_page = loggedin_user.id == @student.user_id
       else
-        if @student.team.adviser and @student.team.adviser.user_id == current_user.id
-          return true
-        end
-        @student.get_teammates.each do |teammate|
-          if teammate.user_id == current_user.id
-            return true
+        relevant_users = @student.team.get_relevant_users(false, false)
+        relevant_users.each do |user|
+          if user.id == loggedin_user.id
+            can_access_student_page = true and break
           end
         end
-        return false
       end
+      return can_access_student_page
     }
     not check_access(true, false, display_student_access_strategy) and return
     evaluateds, evaluators, milestones, team_evaluateds_submissions_table,
