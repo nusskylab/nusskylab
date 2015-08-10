@@ -21,21 +21,35 @@
                 Submissions
               </a>
             </li>
+            <li role="presentation">
+              <a href="#more-info-panel" aria-controls="more-info-panel"
+                 role="tab" data-toggle="tab">
+                More information
+              </a>
+            </li>
           </ul>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="basic-info-panel">
               <h2 class="text-center">Basic information</h2>
               <div class="well">
-                <p class="small"><%= 'Basic information' %></p>
+                <p class="small"><%= t '.basic_info_instruction' %></p>
               </div>
               <%= render 'team_basic_info', locals: {team: @team} %>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="submission-panel">
               <h2 class="text-center">Submissions</h2>
               <div class="well">
-                <p class="small"><%= 'Submission instruction' %></p>
+                <p class="small"><%= t '.submission_instruction' %></p>
               </div>
               <%= render 'team_submissions', locals: {team: @team} %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="more-info-panel">
+              <h2 class="text-center">More information</h2>
+              <div class="well">
+                <p class="small"><%= t '.more_info_instruction' %></p>
+              </div>
+              <%= render 'calculated_team_info', locals: {team: @team, milestones: milestones,
+                                                          ratings_hash: ratings_hash} %>
             </div>
           </div>
         </div>

@@ -42,8 +42,8 @@ $(function () {
           image: imgStr
         },
         success: function (res) {
-          if (res['data'] && res['data']['link']) {
-            imgFeedback.html('The uploaded image link: ' + res['data']['link']);
+          if (res.data && res.data.link) {
+            imgFeedback.html('The uploaded image link: ' + res.data.link);
             imgFeedback.removeClass('alert alert-info alert-danger');
             imgFeedback.addClass('alert alert-success');
           } else {
@@ -53,6 +53,7 @@ $(function () {
           }
         },
         error: function (err) {
+          console.log(err);
           imgFeedback.html('Some error happened while uploading the image, please try again');
           imgFeedback.removeClass('alert alert-info alert-success');
           imgFeedback.addClass('alert alert-danger');
@@ -64,9 +65,9 @@ $(function () {
       if (imgInput.files && imgInput.files[0]) {
         var fileReader = new FileReader();
         fileReader.readAsDataURL(imgInput.files[0]);
-        fileReader.onload = function (e) {
+        fileReader.onload = function () {
           setDataAttributeOfImageInput(this.result);
-        }
+        };
       }
     }
 
