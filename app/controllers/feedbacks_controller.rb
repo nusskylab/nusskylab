@@ -65,6 +65,9 @@ class FeedbacksController < ApplicationController
     else
       feedback_params.except!(:target_team_id)
     end
+    if feedback_params[:edit] == 'on'
+      feedback_params = {}
+    end
     feedback_params.except!(:feedback_to_team)
     feedback_params
   end

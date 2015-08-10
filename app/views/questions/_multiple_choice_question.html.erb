@@ -1,16 +1,22 @@
 <div class="form-group">
-  <label class="control-label"><%= locals[:question].title %></label>
-  <div class="help-block small"><%= locals[:question].instruction %></div>
-  <div class="col-sm-12">
-    <% options = JSON.parse(locals[:question].content); options.each_with_index do |itm, idx| %>
-        <div class="radio">
-          <input type="radio" name="<%= locals[:question].get_question_id_for_form %>" value="<%= idx %>"
-            <% if not locals[:question_response].nil? and locals[:question_response].to_s == idx.to_s %>
-                 checked="checked"
-            <% end %>
-            >
-          <%= itm %>
-        </div>
-    <% end %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <label><%= locals[:question].title %></label>
+    </div>
+    <div class="panel-body">
+      <div class="help-block small"><%= locals[:question].instruction %></div>
+      <div class="col-sm-12">
+        <% options = JSON.parse(locals[:question].content); options.each_with_index do |itm, idx| %>
+            <div class="radio">
+              <input type="radio" name="<%= locals[:question].get_question_id_for_form %>" value="<%= idx %>"
+                     <% if not locals[:question_response].nil? and locals[:question_response].to_s == idx.to_s %>
+                     checked="checked"
+                     <% end %>
+                     >
+              <%= itm %>
+            </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

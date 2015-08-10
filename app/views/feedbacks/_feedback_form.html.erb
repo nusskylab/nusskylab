@@ -1,6 +1,10 @@
 <%= simple_form_for locals[:feedback],
                     url: {action: (locals[:is_new] ? 'create' : 'update')} do |f| %>
     <%= render 'shared/error_messages', locals: {target_model: locals[:feedback]} %>
+    <div class="form-group">
+      <div class="text-muted"><%= locals[:feedback_template].instruction.html_safe %></div>
+    </div>
+    <br>
     <% locals[:feedback_template].questions.each do |question| %>
         <%= render 'questions/question_template',
                    locals: {question: question,
@@ -24,7 +28,9 @@
             </label>
           </div>
         </div>
-      <% end %>
+    <% else %>
+        <input type="hidden" name="feedback[edit]" value="on">
+    <% end %>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <%= f.submit 'Submit', class: 'btn btn-success' %>
