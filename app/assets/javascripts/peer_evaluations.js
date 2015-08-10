@@ -85,8 +85,8 @@ $(document).ready(function () {
     try {
       var publicValues = JSON.parse($('#peer-evaluation-public-content').val());
       $.each(publicValues, function (attrName, attrVal) {
-        if (attrVal && !isNaN(parseInt(attrVal))
-            && parseInt(attrVal) >= 0 && attrVal.match(/^[0-9]+$/)) {
+        if (attrVal && !isNaN(parseInt(attrVal)) &&
+            parseInt(attrVal) >= 0 && attrVal.match(/^[0-9]+$/)) {
           $('#eval-public input[type=radio][name="' +
           attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
         }
@@ -101,8 +101,8 @@ $(document).ready(function () {
     try {
       var privateValues = JSON.parse($('#peer-evaluation-private-content').val());
       $.each(privateValues, function (attrName, attrVal) {
-        if (attrVal && !isNaN(parseInt(attrVal))
-            && parseInt(attrVal) >= 0 && attrVal.match(/^[0-9]+$/)) {
+        if (attrVal && !isNaN(parseInt(attrVal)) &&
+            parseInt(attrVal) >= 0 && attrVal.match(/^[0-9]+$/)) {
           $('#eval-private input[type=radio][name="' +
           attrName + '"][value="' + attrVal + '"]').attr('checked', 'checked');
         }

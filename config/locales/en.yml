@@ -23,29 +23,6 @@ en:
         %Y-%m-%d %I:%M %p
       short: >
         %m-%d %I:%M %p
-  submissions:
-    late_submission_tooltip: >
-      Submission is submitted or modified after deadline.
-  students:
-    show:
-      submit_submission_instruction: >
-        Submissions to milestones are listed here.
-        You can submit for a milestone or edit a previously created submission.
-      submission_milestone_tooltip: >
-        Deadline for %{milestone_name} is %{deadline}
-      submit_evaluation_instruction: >
-        Submissions from teams that you are evaluating and
-        evaluations from your team to submissions are listed here. You can view submissions
-        from other teams, submit peer evaluation to these submissions or edit a previously
-        created evaluation.
-      evaluation_team_no_submission_tooltip: >
-        Well, they have not submitted their project log yet.
-      view_evaluation_instruction: >
-        Peer evaluations from teams that are evaluating your team and
-        feedback to evaluations from your team to evaluations are listed here. You can view
-        evaluations from other teams.
-      submit_feedback_instruction: >
-        You can submit your feedback here.
   advisers:
     show:
       view_teams_instruction: >
@@ -69,3 +46,46 @@ en:
         Feedback is saved successfully
       failure_message: >
         Feedback could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+  students:
+    show:
+      submit_submission_instruction: >
+        Submissions to milestones are listed here.
+        You can submit for a milestone or edit a previously created submission.
+      submission_milestone_tooltip: >
+        Deadline for %{milestone_name} is %{deadline}
+      submit_evaluation_instruction: >
+        Submissions from teams that you are evaluating and
+        evaluations from your team to submissions are listed here. You can view submissions
+        from other teams, submit peer evaluation to these submissions or edit a previously
+        created evaluation.
+      evaluation_team_no_submission_tooltip: >
+        Well, they have not submitted their project log yet.
+      view_evaluation_instruction: >
+        Peer evaluations from teams that are evaluating your team and
+        feedback to evaluations from your team to evaluations are listed here. You can view
+        evaluations from other teams.
+      submit_feedback_instruction: >
+        You can submit your feedback here.
+  submissions:
+    late_submission_tooltip: >
+      Submission is submitted or modified after deadline.
+  teams:
+    create:
+      success_message: >
+        Submission is saved successfully
+      failure_message: >
+        Submission could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+    update:
+      success_message: >
+        Submission is saved successfully
+      failure_message: >
+        Submission could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+    show:
+      basic_info_instruction: >
+        Team's basic information including team name, aimed project levels, members, peer teams,
+        adviser and mentor is listed here.
+      submission_instruction: >
+        Team's submissions to milestones are listed here.
+      more_info_instruction: >
+        More information about the team, including calculated average peer evaluations from
+        peer teams is listed here.

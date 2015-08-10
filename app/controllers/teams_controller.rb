@@ -20,53 +20,32 @@ class TeamsController < ApplicationController
     not check_access(true, true) and return
     @team = Team.new(get_team_params)
     if @team.save
-      redirect_to teams_path
+      redirect_to teams_path, flash: {success: t('.success_message')}
     else
-      render_new_template
+      redirect_to new_team_path,
+                  flash: {success: t('.failure_message' + @team.errors.full_messages.join(', '))}
     end
   end
 
   def show
     @team = Team.find(params[:id])
     display_team_access_control_strategy = lambda {
+      can_access_team_page = false
       loggedin_user = current_user
-      if @team.adviser and @team.adviser.user_id == loggedin_user.id
-        return true
-      end
-      if @team.mentor and @team.mentor.user_id == loggedin_user.id
-        return true
-      end
-      students = @team.students
-      is_student = false
-      students.each do |student|
-        if student.user_id == loggedin_user.id
-          is_student = true
-          break
+      relevant_users = @team.get_relevant_users(true, true)
+      relevant_users.each do |user|
+        if user.id == loggedin_user.id
+          can_access_team_page = true and break
         end
       end
-      if is_student
-        return true
-      end
-      evaluateds_and_evaluators = []
-      @team.evaluateds.each do |evaluated|
-        evaluateds_and_evaluators.concat(evaluated.evaluated.students)
-      end
-      @team.evaluators.each do |evaluator|
-        evaluateds_and_evaluators.concat(evaluator.evaluator.students)
-      end
-      has_evaluating_relation = false
-      evaluateds_and_evaluators.each do |eval_er|
-        if eval_er.user_id == loggedin_user.id
-          has_evaluating_relation = true
-          break
-        end
-      end
-      if has_evaluating_relation
-        return true
-      end
-      return false
+      return can_access_team_page
     }
     not check_access(true, false, display_team_access_control_strategy) and return
+    ratings_hash = @team.get_average_rating_for_self_team_as_hash
+    render locals: {
+             milestones: Milestone.all,
+             ratings_hash: ratings_hash
+           }
   end
 
   def edit
@@ -80,14 +59,11 @@ class TeamsController < ApplicationController
 
   def update
     not check_access(true, false) and return
-    team = update_team
-    if team
-      redirect_to @team
+    if update_team
+      redirect_to teams_path, flash: {success: t('.success_message')}
     else
-      render 'edit', locals: {
-                     advisers: Adviser.all,
-                     mentors: Mentor.all
-                   }
+      redirect_to edit_team_path(params[:id]),
+                  flash: {success: t('.failure_message' + @team.errors.full_messages.join(', '))}
     end
   end
 
@@ -107,21 +83,14 @@ class TeamsController < ApplicationController
   end
 
   private
-    def update_team
-      @team = Team.find(params[:id])
-      team_params = get_team_params
-      @team.update(team_params) ? @team : nil
-    end
+  def update_team
+    @team = Team.find(params[:id])
+    team_params = get_team_params
+    @team.update(team_params) ? @team : nil
+  end
 
-    def get_team_params
-      team_params = params.require(:team).permit(:team_name, :project_level,
-                                                 :adviser_id, :mentor_id)
-    end
-
-    def render_new_template
-      render layout: 'admins', template: 'teams/new', locals: {
-                               advisers: Adviser.all,
-                               mentors: Mentor.all
-                             }
-    end
+  def get_team_params
+    team_params = params.require(:team).permit(:team_name, :project_level,
+                                               :adviser_id, :mentor_id)
+  end
 end
