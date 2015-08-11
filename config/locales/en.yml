@@ -1,4 +1,8 @@
 en:
+  float:
+    formats:
+      default: >
+        "%.2f"
   date:
     formats:
       default: >
@@ -70,16 +74,18 @@ en:
     late_submission_tooltip: >
       Submission is submitted or modified after deadline.
   teams:
+    has_dropped_tooltip: >
+      This team has dropped out of Skylab :(
     create:
       success_message: >
-        Submission is saved successfully
+        Team information is saved successfully
       failure_message: >
-        Submission could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+        Team information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
     update:
       success_message: >
-        Submission is saved successfully
+        Team information is saved successfully
       failure_message: >
-        Submission could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+        Team information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
     show:
       basic_info_instruction: >
         Team's basic information including team name, aimed project levels, members, peer teams,

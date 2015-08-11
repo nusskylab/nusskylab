@@ -7,7 +7,7 @@
       <% locals[:evaluators].each do |evaluator| %>
           <tr>
             <td>
-              <%= evaluator.evaluator.team_name %>
+              <%= render 'teams/team_name_representation', locals: {team: evaluator.evaluator} %>
             </td>
             <td>
               <% if evaluator.evaluator.has_dropped %>
