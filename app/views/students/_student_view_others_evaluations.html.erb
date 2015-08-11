@@ -60,7 +60,8 @@
               <td>
                 <span data-toggle="tooltip" data-placement="top"
                       title="The team has not submitted peer evaluation yet">
-                  <%= locals[:student].team.adviser.user.user_name %>
+                  <%= (not locals[:student].team.nil? and not locals[:student].team.adviser_id.nil?) ?
+                              locals[:student].team.adviser.user.user_name : 'No adviser' %>
                 </span>
               </td>
               <td>

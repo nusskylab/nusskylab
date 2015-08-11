@@ -29,7 +29,8 @@
       <% end %>
       <tr>
         <td>
-          <%= locals[:student].team.adviser.user.user_name %>
+          <%= (not locals[:student].team.nil? and not locals[:student].team.adviser_id.nil?) ?
+                      locals[:student].team.adviser.user.user_name: 'No adviser' %>
         </td>
         <td>
           Active
