@@ -8,7 +8,9 @@
   <tbody>
   <% locals[:teams].each do |team| %>
       <tr>
-        <td><%= team.team_name %></td>
+        <td>
+          <%= render 'team_name_representation', locals: {team: team} %>
+        </td>
         <td><%= team.project_level %></td>
         <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
         <td><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>

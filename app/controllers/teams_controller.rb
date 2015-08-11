@@ -91,6 +91,6 @@ class TeamsController < ApplicationController
 
   def get_team_params
     team_params = params.require(:team).permit(:team_name, :project_level,
-                                               :adviser_id, :mentor_id)
+                                               :adviser_id, :mentor_id, :has_dropped)
   end
 end

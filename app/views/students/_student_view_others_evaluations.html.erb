@@ -9,7 +9,9 @@
         <% locals[:evaluators].each do |evaluator| %>
             <% if (temp_evaluator_evaluation = locals[:team_evaluators_evaluations][milestone.id][evaluator.evaluator_id]) %>
                 <tr>
-                  <td><%= evaluator.evaluator.team_name %></td>
+                  <td>
+                    <%= render 'teams/team_name_representation', locals: {team: evaluator.evaluator} %>
+                  </td>
                   <td>
                     <a href="<%= team_peer_evaluation_path(evaluator.evaluator_id, temp_evaluator_evaluation.id) %>"
                        class="btn btn-success">
@@ -23,10 +25,7 @@
             <% else %>
                 <tr>
                   <td>
-                    <span data-toggle="tooltip" data-placement="top"
-                          title="The team has not submitted peer evaluation yet">
-                      <%= evaluator.evaluator.team_name %>
-                    </span>
+                    <%= render 'teams/team_name_representation', locals: {team: evaluator.evaluator} %>
                   </td>
                   <td>
                     <a href="#" disabled="disabled"
@@ -60,7 +59,8 @@
               <td>
                 <span data-toggle="tooltip" data-placement="top"
                       title="The team has not submitted peer evaluation yet">
-                  <%= locals[:student].team.adviser.user.user_name %>
+                  <%= (not locals[:student].team.nil? and not locals[:student].team.adviser_id.nil?) ?
+                              locals[:student].team.adviser.user.user_name : 'No adviser' %>
                 </span>
               </td>
               <td>

@@ -7,7 +7,7 @@
       <% locals[:evaluators].each do |evaluator| %>
           <tr>
             <td>
-              <%= evaluator.evaluator.team_name %>
+              <%= render 'teams/team_name_representation', locals: {team: evaluator.evaluator} %>
             </td>
             <td>
               <% if evaluator.evaluator.has_dropped %>
@@ -29,7 +29,8 @@
       <% end %>
       <tr>
         <td>
-          <%= locals[:student].team.adviser.user.user_name %>
+          <%= (not locals[:student].team.nil? and not locals[:student].team.adviser_id.nil?) ?
+                      locals[:student].team.adviser.user.user_name: 'No adviser' %>
         </td>
         <td>
           Active

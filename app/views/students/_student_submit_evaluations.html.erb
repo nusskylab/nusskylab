@@ -13,7 +13,9 @@
         <% locals[:evaluateds].each do |evaluated| %>
             <% if (temp_evaluated_submission = locals[:team_evaluateds_submissions][milestone.id][evaluated.evaluated_id]) %>
                 <tr>
-                  <td><%= evaluated.evaluated.team_name %></td>
+                  <td>
+                    <%= render 'teams/team_name_representation', locals: {team: evaluated.evaluated} %>
+                  </td>
                   <td>
                     <a href="<%= team_submission_path(evaluated.evaluated_id, temp_evaluated_submission.id) %>"
                        class="btn btn-success">
@@ -45,10 +47,7 @@
             <% else %>
                 <tr>
                   <td>
-                    <span data-toggle="tooltip" data-placement="top"
-                          title="<%= t 'students.show.evaluation_team_no_submission_tooltip' %>">
-                      <%= evaluated.evaluated.team_name %>
-                    </span>
+                    <%= render 'teams/team_name_representation', locals: {team: evaluated.evaluated} %>
                   </td>
                   <td>
                     <a href="#" class="btn btn-default" disabled="disabled">
