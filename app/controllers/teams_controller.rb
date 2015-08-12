@@ -49,8 +49,19 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    not check_access(true, false) and return
     @team = Team.find(params[:id])
+    edit_team_access_controll_strategy = lambda {
+      can_access_team_page = false
+      loggedin_user = current_user
+      relevant_users = @team.get_relevant_users
+      relevant_users.each do |user|
+        if user.id == loggedin_user.id
+          can_access_team_page = true and break
+        end
+      end
+      return can_access_team_page
+    }
+    not check_access(true, false, edit_team_access_controll_strategy) and return
     render locals: {
              advisers: Adviser.all,
              mentors: Mentor.all
@@ -58,9 +69,21 @@ class TeamsController < ApplicationController
   end
 
   def update
-    not check_access(true, false) and return
+    @team = Team.find(params[:id])
+    update_team_access_controll_strategy = lambda {
+      can_access_team_page = false
+      loggedin_user = current_user
+      relevant_users = @team.get_relevant_users
+      relevant_users.each do |user|
+        if user.id == loggedin_user.id
+          can_access_team_page = true and break
+        end
+      end
+      return can_access_team_page
+    }
+    not check_access(true, false, update_team_access_controll_strategy) and return
     if update_team
-      redirect_to teams_path, flash: {success: t('.success_message')}
+      redirect_to team_path(@team.id), flash: {success: t('.success_message')}
     else
       redirect_to edit_team_path(params[:id]),
                   flash: {success: t('.failure_message' + @team.errors.full_messages.join(', '))}
@@ -84,7 +107,6 @@ class TeamsController < ApplicationController
 
   private
   def update_team
-    @team = Team.find(params[:id])
     team_params = get_team_params
     @team.update(team_params) ? @team : nil
   end
