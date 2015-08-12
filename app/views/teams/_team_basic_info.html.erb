@@ -13,7 +13,8 @@
     <p class="col-sm-3 col-sm-offset-2">Members:</p>
     <p class="col-sm-7">
       <% locals[:team].students.each do |student| %>
-          <a class="btn btn-info btn-sm" href="<%= student_path(student) %>"><%= student.user.user_name %></a>&nbsp;&nbsp;
+          <a class="btn btn-info btn-sm" href="<%= student_path(student) %>">
+            <%= student.user.user_name %></a>&nbsp;&nbsp;
       <% end %>
       <% if locals[:team].students.length == 0 %>
           <span class="text-muted">No students in this team</span>

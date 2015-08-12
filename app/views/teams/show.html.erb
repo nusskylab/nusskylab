@@ -4,7 +4,9 @@
       <div class="panel-heading">
         <h1>
           <%= render 'team_name_representation', locals: {team: @team} %>
-          <a href="<%= edit_team_path(@team) %>" class="btn btn-info">Edit Team</a>
+          <% if can_edit_team %>
+              <a href="<%= edit_team_path(@team) %>" class="btn btn-info">Edit Team</a>
+          <% end %>
         </h1>
       </div>
       <div class="panel-body">
