@@ -125,10 +125,10 @@ class Team < ActiveRecord::Base
 
   # Get own feedbacks to evaluator teams as hash, first level of keys are milestone_ids,
   #   second level of keys are evaluating_ids
-  def get_feedbacks_for_evaluator_teams
-    feedbacks_hash = {}
-    # TODO: to be implemented
-  end
+  # def get_feedbacks_for_evaluator_teams
+  #   feedbacks_hash = {}
+  #   # TODO: to be implemented
+  # end
 
   # Get a team's members as user
   def get_team_members

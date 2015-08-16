@@ -70,6 +70,15 @@ en:
         evaluations from other teams.
       submit_feedback_instruction: >
         You can submit your feedback here.
+  sessions:
+    sign_in_success_message: >
+      Welcome, %{user_name}
+    sign_in_failure_message: >
+      Sign-in not successful. You may need to contact admin for assistance
+    sign_in_authentication_error_message: >
+      Authentication error: %{auth_error}
+    sign_out_success_message: >
+      You have signed out of Skylab
   submissions:
     late_submission_tooltip: >
       Submission is submitted or modified after deadline.

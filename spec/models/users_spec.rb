@@ -13,8 +13,8 @@ describe User do
   end
 
   it 'is invalid with duplicated uid from one provider' do
-    expect(FactoryGirl.create(:user)).to be_valid
-    expect(FactoryGirl.build(:user, email: 'test1@gmail.com')).not_to be_valid
+    expect(FactoryGirl.create(:user, email: 'user1@user.model.spec')).to be_valid
+    expect(FactoryGirl.build(:user, email: 'user1@user.model.spec')).not_to be_valid
   end
 
   it 'is invalid with wrong email format' do
@@ -27,11 +27,36 @@ describe User do
   it 'should auto downcase its uid' do
     user = FactoryGirl.build(:user, uid: 'https://openid.nus.edu.sg/A0000001')
     expect(user).to be_valid
-    expect(user.uid).to eq('https://openid.nus.edu.sg/a0000001')
+    expect(user.uid).to eq 'https://openid.nus.edu.sg/a0000001'
   end
 
   it 'should only allow NUS as provider currently' do
     expect(FactoryGirl.build(:user, provider: 'facebook')).not_to be_valid
     expect(FactoryGirl.build(:user, provider: 'github')).not_to be_valid
+  end
+
+  it 'should have from_omniauth class method' do
+    auth_info = {email: 'user1@user.model.spec', name: 'user 1'}
+    auth_info.define_singleton_method(:email) do
+      return self[:email]
+    end
+    auth_info.define_singleton_method(:name) do
+      return self[:name]
+    end
+    auth = {provider: 'NUS', uid: 'uid1@user.model.spec',
+            info: auth_info}
+    auth.define_singleton_method(:provider) do
+      return self[:provider]
+    end
+    auth.define_singleton_method(:uid) do
+      return self[:uid]
+    end
+    auth.define_singleton_method(:info) do
+      return self[:info]
+    end
+    user_auth = User.from_omniauth(auth)
+    expect(user_auth).not_to be_nil
+    user1 = FactoryGirl.build(:user, email: 'user1@user.model.spec', uid: 'uid1@user.model.spec')
+    expect(user1).not_to be_valid
   end
 end

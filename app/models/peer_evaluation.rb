@@ -25,6 +25,7 @@ class PeerEvaluation < ActiveRecord::Base
     not self.adviser_id.blank?
   end
 
+  # TODO: remove this matter later as it will be coupled with evaluating relation only
   def check_evaluation_owner_presence
     if self.adviser_id.blank? and self.team_id.blank?
       errors.add(:adviser_id, 'cannot be blank if evaluation is not owned by a team')
