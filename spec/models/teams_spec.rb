@@ -152,7 +152,9 @@ describe Team do
     milestone1 = FactoryGirl.create(:milestone, name: '1.team.model.spec')
     milestone2 = FactoryGirl.create(:milestone, name: '2.team.model.spec')
     milestone3 = FactoryGirl.create(:milestone, name: '3.team.model.spec')
-    team = FactoryGirl.create(:team, team_name: '1.team.model.spec')
+    user_adviser = FactoryGirl.create(:user, email: 'user1@team.model.spec', uid: 'uid6@team.model.spec')
+    adviser = FactoryGirl.create(:adviser, user: user_adviser)
+    team = FactoryGirl.create(:team, team_name: '1.team.model.spec', adviser: adviser)
     team_evaluator1 = FactoryGirl.create(:team, team_name: '2.team.model.spec')
     team_evaluator2 = FactoryGirl.create(:team, team_name: '3.team.model.spec')
     team_evaluator3 = FactoryGirl.create(:team, team_name: '4.team.model.spec')
@@ -166,21 +168,24 @@ describe Team do
     peer_eval3 = FactoryGirl.create(:peer_evaluation, team: team_evaluator3, submission: submission1)
     peer_eval4 = FactoryGirl.create(:peer_evaluation, team: team_evaluator1, submission: submission2)
     peer_eval5 = FactoryGirl.create(:peer_evaluation, team: team_evaluator2, submission: submission2)
+    peer_eval6 = FactoryGirl.create(:peer_evaluation, adviser: adviser, submission: submission2)
 
     peer_evals_hash = team.get_peer_evaluations_for_self_team_as_hash
     expect(peer_evals_hash.length).to eql 3
-    expect(peer_evals_hash[milestone1.id].length).to eql 3
     expect(peer_evals_hash[milestone1.id][evaluating1.id]).to eql peer_eval1
     expect(peer_evals_hash[milestone1.id][evaluating2.id]).to eql peer_eval2
     expect(peer_evals_hash[milestone1.id][evaluating3.id]).to eql peer_eval3
+    expect(peer_evals_hash[milestone1.id][:adviser]).to be_nil
 
     expect(peer_evals_hash[milestone2.id][evaluating1.id]).to eql peer_eval4
     expect(peer_evals_hash[milestone2.id][evaluating2.id]).to eql peer_eval5
     expect(peer_evals_hash[milestone2.id][evaluating3.id]).to be_nil
+    expect(peer_evals_hash[milestone2.id][:adviser]).to eql peer_eval6
 
     expect(peer_evals_hash[milestone3.id][evaluating1.id]).to be_nil
     expect(peer_evals_hash[milestone3.id][evaluating2.id]).to be_nil
     expect(peer_evals_hash[milestone3.id][evaluating3.id]).to be_nil
+    expect(peer_evals_hash[milestone3.id][:adviser]).to be_nil
   end
 
   it 'should have get_average_rating_for_self_team_as_hash method' do
@@ -209,9 +214,18 @@ describe Team do
     FactoryGirl.create(:peer_evaluation, team: team_evaluator2,
                        submission: submission2, private_content: '{"q[6][1]":"3"}')
     average_ratings_hash = team.get_average_rating_for_self_team_as_hash
-    expect(average_ratings_hash.length).to eql 3
-    expect(average_ratings_hash[milestone1.id]).to be_within(0.1).of(2.33)
-    expect(average_ratings_hash[milestone2.id]).to be_within(0.1).of(2.5)
+    expect(average_ratings_hash.length).to eql 4
+    expect(average_ratings_hash[milestone1.id]).to be_within(0.05).of(2.33)
+    expect(average_ratings_hash[milestone2.id]).to be_within(0.05).of(2.5)
     expect(average_ratings_hash[milestone3.id]).to be_nil
+    expect(average_ratings_hash[:all]).to be_within(0.05).of(2.4)
+    FactoryGirl.create(:peer_evaluation, adviser: adviser, owner_type: 1,
+                       submission: submission2, private_content: '{"q[6][1]":"3"}')
+    average_ratings_hash = team.get_average_rating_for_self_team_as_hash
+    expect(average_ratings_hash.length).to eql 4
+    expect(average_ratings_hash[milestone1.id]).to be_within(0.05).of(2.33)
+    expect(average_ratings_hash[milestone2.id]).to be_within(0.05).of(2.75)
+    expect(average_ratings_hash[milestone3.id]).to be_nil
+    expect(average_ratings_hash[:all]).to be_within(0.05).of(2.58)
   end
 end
