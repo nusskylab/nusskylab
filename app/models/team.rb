@@ -81,7 +81,7 @@ class Team < ActiveRecord::Base
   end
 
   # Get peer evaluations for self as hash, first level of keys are milestone_ids
-  #   second level of keys are evaluating_ids
+  #   second level of keys are evaluating_ids(for now, could be sym adviser for adviser evaluation)
   def get_peer_evaluations_for_self_team_as_hash
     peer_evaluations_hash = {}
     submissions_hash = self.get_own_submissions_as_hash
@@ -92,35 +92,52 @@ class Team < ActiveRecord::Base
         peer_evaluations_hash[milestone.id][evaluator.id] = PeerEvaluation.find_by(submission_id: submissions_hash[milestone.id],
                                                                                    team_id: evaluator.evaluator_id)
       end
+      if not self.adviser_id.blank?
+        peer_evaluations_hash[milestone.id][:adviser] = PeerEvaluation.find_by(submission_id: submissions_hash[milestone.id],
+                                                                               adviser_id: self.adviser_id)
+      end
     end
     return peer_evaluations_hash
   end
 
   # Get average rating for own team based on received evaluations, with milestone_ids are keys
+  #   overall evaluating score will be included under special sym :all
   def get_average_rating_for_self_team_as_hash
     ratings_hash = {}
     peer_evaluations_hash = self.get_peer_evaluations_for_self_team_as_hash
+    overall_ratings = []
     peer_evaluations_hash.each do |milestone_id, evaluations_hash|
       ratings = []
-      evaluations_hash.each do |_, evaluation|
+      evaluations_hash.each do |key, evaluation|
         if not evaluation.nil?
           private_parts = JSON.parse(evaluation.private_content)
-          ratings.append(private_parts[Milestone.find(milestone_id).get_overall_rating_question_id])
+          rating = private_parts[Milestone.find(milestone_id).get_overall_rating_question_id]
+          if key.is_a? Symbol  # TODO: a temporary solution for testing whether it is from adviser or not
+            ratings.append(rating)
+            overall_ratings.append(rating)
+          end
+          ratings.append(rating)
+          overall_ratings.append(rating)
         end
       end
-      sum = 0; numberOfRatings = 0
-      ratings.each do |rating|
-        if (not rating.nil?) and (rating_num = rating.to_i)
-          sum += rating_num; numberOfRatings += 1
-        end
-      end
-      if numberOfRatings == 0
-        ratings_hash[milestone_id] = nil
-      else
-        ratings_hash[milestone_id] = sum.to_f / numberOfRatings
+      ratings_hash[milestone_id] = get_average_for_ratings(ratings)
+    end
+    ratings_hash[:all] = get_average_for_ratings(overall_ratings)
+    return ratings_hash
+  end
+
+  def get_average_for_ratings(ratings)
+    sum = 0; numberOfRatings = 0
+    ratings.each do |rating|
+      if (not rating.nil?) and (rating_num = rating.to_i)
+        sum += rating_num; numberOfRatings += 1
       end
     end
-    return ratings_hash
+    if numberOfRatings == 0
+      return nil
+    else
+      return (sum.to_f / numberOfRatings)
+    end
   end
 
   # Get own feedbacks to evaluator teams as hash, first level of keys are milestone_ids,

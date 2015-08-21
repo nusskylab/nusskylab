@@ -1,8 +1,4 @@
 en:
-  float:
-    formats:
-      default: >
-        "%.2f"
   date:
     formats:
       default: >
