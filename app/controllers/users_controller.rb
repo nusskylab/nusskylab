@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     not check_access(true, true) and return
     @user = User.new(get_user_params)
     if @user.save
-      redirect_to users_path, flash: {success: t '.success_message'}
+      redirect_to users_path, flash: {success: t('.success_message')}
     else
       redirect_to users_path, flash: {danger: t('.failure_message',
                                                  error_message: @user.errors.full_messages.join(', '))}
@@ -52,7 +52,7 @@ class UsersController < ApplicationController
                        return current_user.id == @user.id
                          }) and return
     if @user and @user.update(get_user_params)
-      redirect_to @user, flash: {success: t '.success_message'}
+      redirect_to @user, flash: {success: t('.success_message')}
     else
       redirect_to @user, flash: {danger: t('.failure_message',
                                            error_message: @user.errors.full_messages.join(', '))}
