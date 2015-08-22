@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # homepage
   root 'home#index'
 
-  devise_for :users, path: "authentication",
+  devise_for :users, path: 'authentication',
              path_names: { sign_in: 'login', sign_out: 'logout' }, controllers: {
       sessions: 'auth/sessions',
       passwords: 'auth/passwords'

@@ -66,6 +66,15 @@ en:
         evaluations from other teams.
       submit_feedback_instruction: >
         You can submit your feedback here.
+  sessions:
+    sign_in_success_message: >
+      Welcome, %{user_name}
+    sign_in_failure_message: >
+      Sign-in not successful. You may need to contact admin for assistance
+    sign_in_authentication_error_message: >
+      Authentication error: %{auth_error}
+    sign_out_success_message: >
+      You have signed out of Skylab
   submissions:
     late_submission_tooltip: >
       Submission is submitted or modified after deadline.
@@ -91,3 +100,14 @@ en:
       more_info_instruction: >
         More information about the team, including calculated average peer evaluations from
         peer teams is listed here.
+  users:
+    create:
+      success_message: >
+        The user has been created successfully
+      failure_message: >
+        User information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
+    update:
+      success_message: >
+        The user information has been updated successfully
+      failure_message: >
+        User information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}

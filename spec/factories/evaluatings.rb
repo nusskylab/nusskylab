@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :evaluating do
-    evaluator
-    evaluated
+    evaluator nil
+    evaluated nil
   end
 end

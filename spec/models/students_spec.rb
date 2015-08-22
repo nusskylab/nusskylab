@@ -12,11 +12,11 @@ describe Student do
   end
 
   it 'should have student? class method' do
-    user1 = FactoryGirl.create(:user, email: 'student1@gmail.com',
+    user1 = FactoryGirl.create(:user, email: 'user1@student.model.spec',
                                uid: 'https://openid.nus.edu.sg/student1')
-    user2 = FactoryGirl.create(:user, email: 'student2@gmail.com',
+    user2 = FactoryGirl.create(:user, email: 'user2@student.model.spec',
                                uid: 'https://openid.nus.edu.sg/student2')
-    user3 = FactoryGirl.create(:user, email: 'student3@gmail.com',
+    user3 = FactoryGirl.create(:user, email: 'user3@student.model.spec',
                                uid: 'https://openid.nus.edu.sg/student3')
     expect(FactoryGirl.create(:student, user: user1, team: nil)).to be_valid
     expect(FactoryGirl.create(:student, user: user2, team: nil)).to be_valid
@@ -26,22 +26,25 @@ describe Student do
   end
 
   it 'should have get_teammates method' do
-    adviser_user = FactoryGirl.create(:user, email: 'adviser@gmail.com',
+    adviser_user = FactoryGirl.create(:user, email: 'adviser_user@student.model.spec',
                                       uid: 'https://openid.nus.edu.sg/adviser')
     adviser = FactoryGirl.create(:adviser, user: adviser_user)
     team = FactoryGirl.create(:team, adviser: adviser, mentor: nil)
-    user1 = FactoryGirl.create(:user, email: 'student1@gmail.com',
+    user1 = FactoryGirl.create(:user, email: 'user1@student.model.spec',
                                uid: 'https://openid.nus.edu.sg/student1')
-    user2 = FactoryGirl.create(:user, email: 'student2@gmail.com',
+    user2 = FactoryGirl.create(:user, email: 'user2@student.model.spec',
                                uid: 'https://openid.nus.edu.sg/student2')
-    user3 = FactoryGirl.create(:user, email: 'student3@gmail.com',
+    user3 = FactoryGirl.create(:user, email: 'user3@student.model.spec',
                                uid: 'https://openid.nus.edu.sg/student3')
     student1 = FactoryGirl.create(:student, user: user1, team: team)
     student2 = FactoryGirl.create(:student, user: user2, team: team)
     student3 = FactoryGirl.create(:student, user: user3, team: nil)
     teammates = student1.get_teammates()
+    expect(teammates.length).to eq 1
     expect(teammates).to include student2
     expect(teammates).not_to include student1
     expect(teammates).not_to include student3
+    teammates = student3.get_teammates()
+    expect(teammates.length).to eq 0
   end
 end

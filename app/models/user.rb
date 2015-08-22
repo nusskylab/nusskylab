@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  DEFAULT_USER_PASSWORD = 'nusskylab'
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable
@@ -26,8 +28,10 @@ class User < ActiveRecord::Base
     user.provider = auth.provider
     user.uid = auth.uid
     user.user_name = auth.info.name
-    user.save
-    user
+    if user.password.blank?
+      user.password = DEFAULT_USER_PASSWORD
+    end
+    user.save ? user : nil
   end
 
   def process_uid

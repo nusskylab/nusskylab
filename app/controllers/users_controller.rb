@@ -14,10 +14,11 @@ class UsersController < ApplicationController
   def create
     not check_access(true, true) and return
     @user = User.new(get_user_params)
-    flash = {}
     if @user.save
-      flash[:success] = 'The user has been successfully created'
-      redirect_to users_path, flash: flash
+      redirect_to users_path, flash: {success: t '.success_message'}
+    else
+      redirect_to users_path, flash: {danger: t('.failure_message',
+                                                 error_message: @user.errors.full_messages.join(', '))}
     end
   end
 
@@ -50,13 +51,11 @@ class UsersController < ApplicationController
     not check_access(true, false, lambda {
                        return current_user.id == @user.id
                          }) and return
-    flash = {}
     if @user and @user.update(get_user_params)
-      flash[:success] = 'The update is successfully saved'
-      redirect_to @user, flash: flash
+      redirect_to @user, flash: {success: t '.success_message'}
     else
-      flash[:danger] = 'The update is not successfully saved'
-      redirect_to @user, flash: flash
+      redirect_to @user, flash: {danger: t('.failure_message',
+                                           error_message: @user.errors.full_messages.join(', '))}
     end
   end
 
@@ -99,10 +98,10 @@ class UsersController < ApplicationController
   helper_method 'user_admin?'
 
   private
-    def get_user_params
-      user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
-      generated_password = Devise.friendly_token.first(8)
-      user_param[:password] = generated_password
-      user_param
-    end
+  def get_user_params
+    user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
+    generated_password = Devise.friendly_token.first(8)
+    user_param[:password] = generated_password
+    user_param
+  end
 end
