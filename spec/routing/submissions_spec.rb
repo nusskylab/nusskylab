@@ -1,12 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'routing to team submissions', :type => :routing do
-  it 'routes teams/:team_id/submissions to submissions#index' do
-    expect(get: 'teams/1/submissions').to route_to(controller: 'submissions',
-                                                   action: 'index',
-                                                   team_id: '1')
-  end
-
   it 'routes teams/:team_id/submissions/:id to submissions#show for id' do
     expect(get: 'teams/1/submissions/1').to route_to(controller: 'submissions',
                                                      action: 'show',

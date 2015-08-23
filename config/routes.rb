@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     end
   end
   resources :advisers do
-    resources :peer_evaluations
+    resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
     collection do
       post 'use_existing'
     end
@@ -43,8 +43,8 @@ Rails.application.routes.draw do
     end
   end
   resources :teams do
-    resources :submissions, only: [:index, :new, :create, :edit, :update, :show]
-    resources :peer_evaluations
+    resources :submissions, only: [:new, :create, :edit, :update, :show]
+    resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
     resources :feedbacks, only: [:new, :create, :edit, :update]
   end
   resources :evaluatings, only: [:index, :new, :create, :edit, :update, :destroy] do
