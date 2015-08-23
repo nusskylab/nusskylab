@@ -23,6 +23,11 @@ en:
         %Y-%m-%d %I:%M %p
       short: >
         %m-%d %I:%M %p
+  application:
+    not_enough_privilege_message: >
+      You are not allowed to do this, please contact admin for more information
+    path_not_found_message: >
+      The url you have entered does not exist
   advisers:
     show:
       view_teams_instruction: >
@@ -46,6 +51,16 @@ en:
         Feedback is saved successfully
       failure_message: >
         Feedback could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+  peer_evaluations:
+    new:
+      page_title: >
+        Create new peer evaluation
+    edit:
+      page_title: >
+        Edit a peer evaluation
+    show:
+      page_title: >
+        View a peer evaluation
   students:
     show:
       submit_submission_instruction: >
@@ -78,6 +93,15 @@ en:
   submissions:
     late_submission_tooltip: >
       Submission is submitted or modified after deadline.
+    new:
+      page_title: >
+        Create new submission
+    edit:
+      page_title: >
+        Edit a submission
+    show:
+      page_title: >
+        View a submission
   teams:
     has_dropped_tooltip: >
       This team has dropped out of Skylab :(
