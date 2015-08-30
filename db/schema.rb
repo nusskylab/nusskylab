@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830055926) do
+ActiveRecord::Schema.define(version: 20150830150856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,8 +137,8 @@ ActiveRecord::Schema.define(version: 20150830055926) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.string   "team_name"
-    t.string   "project_level"
     t.boolean  "has_dropped",   default: false
+    t.integer  "project_level", default: 0
   end
 
   add_index "teams", ["adviser_id"], name: "index_teams_on_adviser_id", using: :btree
