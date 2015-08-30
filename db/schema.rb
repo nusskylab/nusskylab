@@ -64,23 +64,23 @@ ActiveRecord::Schema.define(version: 20150809061721) do
   add_index "mentors", ["user_id"], name: "index_mentors_on_user_id", using: :btree
 
   create_table "milestones", force: :cascade do |t|
-    t.datetime "submission_deadline",      default: '2015-06-28 15:26:03', null: false
+    t.datetime "submission_deadline",      default: '2015-07-05 10:27:14', null: false
     t.string   "name"
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
-    t.datetime "peer_evaluation_deadline", default: '2015-06-28 15:26:03', null: false
+    t.datetime "peer_evaluation_deadline", default: '2015-07-05 10:27:14', null: false
   end
 
   create_table "peer_evaluations", force: :cascade do |t|
     t.text     "public_content"
     t.text     "private_content"
+    t.datetime "created_at",      default: '2015-06-24 14:47:50', null: false
     t.boolean  "published"
     t.integer  "team_id"
     t.integer  "submission_id"
     t.integer  "adviser_id"
     t.string   "owner_type",      default: "teams"
-    t.datetime "created_at",      default: '2015-06-22 16:15:36', null: false
-    t.datetime "updated_at",      default: '2015-06-22 16:15:36', null: false
+    t.datetime "updated_at",      default: '2015-06-24 14:47:50', null: false
   end
 
   add_index "peer_evaluations", ["adviser_id"], name: "index_peer_evaluations_on_adviser_id", using: :btree

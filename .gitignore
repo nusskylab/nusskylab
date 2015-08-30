@@ -11,6 +11,7 @@ pickle-email-*.html
 
 config/initializers/secret_token.rb
 config/secrets.yml
+.rbenv-vars
 
 ## Environment normalisation:
 /.bundle
@@ -24,9 +25,8 @@ config/secrets.yml
 # Gemfile.lock, .ruby-version, .ruby-gemset
 
 # if using bower-rails ignore default bower_components path bower.json files
+/lib/assets/bower_components
 /vendor/assets/bower_components
-*.bowerrc
-bower.json
 
 # Vagrant stuff
 acceptance_config.yml
@@ -57,9 +57,6 @@ doc/
 ## File-based project format:
 *.ipr
 *.iws
-
-# public content
-public/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

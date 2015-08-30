@@ -1,6 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require jquery.tablesorter
 //= require select2
 
 $(function () {
