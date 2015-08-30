@@ -13,8 +13,8 @@ describe User do
   end
 
   it 'is invalid with duplicated uid from one provider' do
-    expect(FactoryGirl.create(:user, email: 'user1@user.model.spec')).to be_valid
-    expect(FactoryGirl.build(:user, email: 'user1@user.model.spec')).not_to be_valid
+    expect(FactoryGirl.create(:user, email: 'user1@user.model.spec', provider: 1)).to be_valid
+    expect(FactoryGirl.build(:user, email: 'user1@user.model.spec', provider: 1)).not_to be_valid
   end
 
   it 'is invalid with wrong email format' do
@@ -28,11 +28,6 @@ describe User do
     user = FactoryGirl.build(:user, uid: 'https://openid.nus.edu.sg/A0000001')
     expect(user).to be_valid
     expect(user.uid).to eq 'https://openid.nus.edu.sg/a0000001'
-  end
-
-  it 'should only allow NUS as provider currently' do
-    expect(FactoryGirl.build(:user, provider: 'facebook')).not_to be_valid
-    expect(FactoryGirl.build(:user, provider: 'github')).not_to be_valid
   end
 
   it 'should have from_omniauth class method' do
@@ -58,5 +53,15 @@ describe User do
     expect(user_auth).not_to be_nil
     user1 = FactoryGirl.build(:user, email: 'user1@user.model.spec', uid: 'uid1@user.model.spec')
     expect(user1).not_to be_valid
+    expect(user1.provider_NUS?).to be true
+  end
+
+  it 'should have clean_user_provider method' do
+    user = FactoryGirl.build(:user, email: 'user1@user.model.spec', uid: 'uid1.user.mode.spec',
+                             provider: nil)
+    user.clean_user_provider('facebook')
+    expect(user.provider_nil?).to be true
+    user.clean_user_provider('NUS')
+    expect(user.provider_NUS?).to be true
   end
 end

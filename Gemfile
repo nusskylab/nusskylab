@@ -55,6 +55,8 @@ source 'https://rubygems.org' do
 	end
 
 	group :test do
+		# simplecov
+		gem 'simplecov', '~> 0.10.0'
 		# codeclimate coverage
 		gem 'codeclimate-test-reporter'
 	end
