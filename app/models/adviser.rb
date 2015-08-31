@@ -35,7 +35,8 @@ class Adviser < ActiveRecord::Base
     recv_feedbacks = self.feedbacks
     ratings = []
     recv_feedbacks.each do |feedback|
-      ratings.append(feedback.get_response_for_question(1).to_i)
+      response = feedback.get_response_for_question(1).nil? ? 0 : feedback.get_response_for_question(1).to_i
+      ratings.append(response)
     end
     get_average_of_ratings(ratings)
   end

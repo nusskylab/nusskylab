@@ -1,4 +1,4 @@
-<div class="form">
+<form class="form" action="#">
   <div class="form-group">
     <div class="text-muted"><%= locals[:feedback].survey_template.instruction.html_safe %></div>
   </div>
@@ -8,4 +8,4 @@
                  locals: {question: question,
                           question_response: locals[:feedback].get_response_for_question(question.id)} %>
   <% end %>
-</div>
+</form>
