@@ -7,8 +7,13 @@
       <div class="panel-body">
         <%= render 'teams_table', locals: { teams: @teams} %>
         <hr>
-        <div class="col-sm-2 col-sm-offset-5">
-          <a href="<%= new_team_path %>" class="btn btn-success">Create New Team</a>
+        <div class="col-sm-12">
+          <div class="col-sm-2 col-sm-offset-3">
+            <%= link_to 'Download CSV', teams_path(format: 'csv'), class: 'btn btn-primary' %>
+          </div>
+          <div class="col-sm-2 col-sm-offset-3">
+            <a href="<%= new_team_path %>" class="btn btn-success">Create New Team</a>
+          </div>
         </div>
       </div>
     </div>

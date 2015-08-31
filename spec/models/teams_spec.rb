@@ -5,6 +5,24 @@ describe Team do
     expect(FactoryGirl.build(:team, team_name: nil)).not_to be_valid
   end
 
+  it 'should have to_csv class method' do
+    adviser_user = FactoryGirl.create(:user, email: 'user1@team.model.spec', uid: 'uid1.team.model.spec')
+    mentor_user = FactoryGirl.create(:user, email: 'user2@team.model.spec', uid: 'uid2.team.model.spec')
+    adviser = FactoryGirl.create(:adviser, user: adviser_user)
+    mentor = FactoryGirl.create(:mentor, user: mentor_user)
+    team1 = FactoryGirl.create(:team, team_name: '1.team.model.spec', adviser: adviser, mentor: mentor)
+    student1_user = FactoryGirl.create(:user, email: 'user3@team.model.spec', uid: 'uid3.team.model.spec')
+    student2_user = FactoryGirl.create(:user, email: 'user4@team.model.spec', uid: 'uid4.team.model.spec')
+    FactoryGirl.create(:student, user: student1_user, team: team1)
+    FactoryGirl.create(:student, user: student2_user, team: team1)
+    require 'csv'
+    csv = CSV.parse(Team.to_csv)
+    expect(csv.first).to eql ['Team ID', 'Team Name', 'Project Level', 'Has Dropped', 'Student 1 UserID',
+                              'Student 1 Name', 'Student 1 Email', 'Student 2 UserID', 'Student 2 Name',
+                              'Student 2 Email', 'Adviser UserID', 'Adviser Name', 'Mentor UserID', 'Mentor Name',
+                              'Average PE Score']
+  end
+
   it 'should have set_project_level method' do
     team1 = FactoryGirl.build(:team)
     team1.set_project_level('vostok')

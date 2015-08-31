@@ -4,7 +4,10 @@ class TeamsController < ApplicationController
   def index
     not check_access(true, true) and return
     @teams = Team.order(:team_name).all
-    render layout: 'admins'
+    respond_to do |format|
+      format.html {render layout: 'admins'}
+      format.csv {send_data Team.to_csv}
+    end
   end
 
   def new

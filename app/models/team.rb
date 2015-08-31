@@ -16,6 +16,32 @@ class Team < ActiveRecord::Base
   APOLLO_11_REGEX = /\A(?:apollo 11)|(?:apollo)|(?:a)\z/
   enum project_level: [:vostok, :project_gemini, :apollo_11]
 
+  def self.to_csv(**options)
+    require 'csv'
+    CSV.generate(options) do |csv|
+      csv << ['Team ID', 'Team Name', 'Project Level', 'Has Dropped', 'Student 1 UserID',
+              'Student 1 Name', 'Student 1 Email', 'Student 2 UserID', 'Student 2 Name',
+              'Student 2 Email', 'Adviser UserID', 'Adviser Name', 'Mentor UserID', 'Mentor Name',
+              'Average PE Score']
+      all.each do |team|
+        csv_row = [team.id, team.team_name, team.project_level, team.has_dropped]
+        members = team.get_team_members
+        members.each do |member_user|
+          csv_row.concat([member_user.id, member_user.user_name, member_user.email])
+        end
+        if not team.adviser_id.blank?
+          csv_row.concat([team.adviser.user.id, team.adviser.user.user_name])
+        end
+        if not team.mentor_id.blank?
+          csv_row.concat([team.mentor.user.id, team.mentor.user.user_name])
+        end
+        ratings_hash = team.get_average_rating_for_self_team_as_hash
+        csv_row.append(ratings_hash[:all])
+        csv << csv_row
+      end
+    end
+  end
+
   def self.get_project_level_mapping_from_raw(project_level)
     project_level = project_level.downcase
     if project_level[VOSTOK_REGEX]

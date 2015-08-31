@@ -9,7 +9,7 @@ class Student < ActiveRecord::Base
   end
 
   def get_teammates
-    if self.team_id.nil?
+    if self.team_id.blank?
       return []
     end
     teammates = []
