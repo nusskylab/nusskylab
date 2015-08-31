@@ -18,7 +18,8 @@ class TeamsController < ApplicationController
 
   def create
     not check_access(true, true) and return
-    @team = Team.new(get_team_params)
+    team_params = get_team_params
+    @team = Team.new(team_params)
     if @team.save
       redirect_to teams_path, flash: {success: t('.success_message')}
     else
@@ -114,5 +115,7 @@ class TeamsController < ApplicationController
   def get_team_params
     team_params = params.require(:team).permit(:team_name, :project_level,
                                                :adviser_id, :mentor_id, :has_dropped)
+    team_params[:project_level] = Team.get_project_level_mapping_from_raw(team_params[:project_level])
+    team_params
   end
 end

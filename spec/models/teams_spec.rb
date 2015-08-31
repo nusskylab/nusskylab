@@ -5,26 +5,20 @@ describe Team do
     expect(FactoryGirl.build(:team, team_name: nil)).not_to be_valid
   end
 
-  it 'should have clean_project_level method' do
-    team1 = FactoryGirl.build(:team, project_level: 'Gemini')
-    expect(team1).to be_valid
-    expect(team1.project_level).to eq('Gemini')
-    team1 = FactoryGirl.build(:team, project_level: 'Vostok')
-    expect(team1).to be_valid
-    expect(team1.project_level).to eq('Vostok')
-    team1 = FactoryGirl.build(:team, project_level: 'Apollo 11')
-    expect(team1).to be_valid
-    expect(team1.project_level).to eq('Apollo 11')
-
-    team2 = FactoryGirl.build(:team, project_level: nil)
-    expect(team2).to be_valid
-    expect(team2.project_level).to eq('Vostok')
-    team3 = FactoryGirl.build(:team, project_level: 'Project Gemini')
-    expect(team3).to be_valid
-    expect(team3.project_level).to eq('Vostok')
-    team4 = FactoryGirl.build(:team, project_level: 'Random string')
-    expect(team4).to be_valid
-    expect(team4.project_level).to eq('Vostok')
+  it 'should have set_project_level method' do
+    team1 = FactoryGirl.build(:team)
+    team1.set_project_level('vostok')
+    expect(team1.vostok?).to be true
+    team1.set_project_level('project gemini')
+    expect(team1.project_gemini?).to be true
+    team1.set_project_level('apollo 11')
+    expect(team1.apollo_11?).to be true
+    team1.set_project_level('v')
+    expect(team1.vostok?).to be true
+    team1.set_project_level('gemini')
+    expect(team1.project_gemini?).to be true
+    team1.set_project_level('apollo')
+    expect(team1.apollo_11?).to be true
   end
 
   it 'should have get_relevant_users method' do

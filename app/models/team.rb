@@ -16,14 +16,19 @@ class Team < ActiveRecord::Base
   APOLLO_11_REGEX = /\A(?:apollo 11)|(?:apollo)|(?:a)\z/
   enum project_level: [:vostok, :project_gemini, :apollo_11]
 
-  def set_project_level(project_level)
+  def self.get_project_level_mapping_from_raw(project_level)
+    project_level = project_level.downcase
     if project_level[VOSTOK_REGEX]
-      self.project_level = Team.project_levels[:vostok]
+      Team.project_levels[:vostok]
     elsif project_level[PROJECT_GEMINI_REGEX]
-      self.project_level = Team.project_levels[:project_gemini]
+      Team.project_levels[:project_gemini]
     elsif project_level[APOLLO_11_REGEX]
-      self.project_level = Team.project_levels[:apollo_11]
+      Team.project_levels[:apollo_11]
     end
+  end
+
+  def set_project_level(project_level)
+    self.project_level = Team.get_project_level_mapping_from_raw(project_level)
   end
 
   # Get a team's students, adviser, mentor as user and if include_* is true,
