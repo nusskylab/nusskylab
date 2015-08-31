@@ -58,9 +58,4 @@ class ReceivedEvalsController < ApplicationController
                                                                       submission_id: team_submission.id)
     end
   end
-
-  def get_page_title
-    @page_title = @page_title || 'Received Evaluations | Orbital'
-    super
-  end
 end

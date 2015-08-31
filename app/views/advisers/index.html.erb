@@ -7,8 +7,13 @@
       <div class="panel-body">
         <%= render 'advisers_table', object: @advisers %>
         <hr>
-        <div class="col-sm-7 col-sm-offset-5">
-          <a href="<%= new_adviser_path %>" class="btn btn-success">Create New Adviser</a>
+        <div class="col-sm-12">
+          <div class="col-sm-2 col-sm-offset-3">
+            <%= link_to 'Download CSV', advisers_path(format: 'csv'), class: 'btn btn-primary' %>
+          </div>
+          <div class="col-sm-2 col-sm-offset-3">
+            <a href="<%= new_adviser_path %>" class="btn btn-success">Create New Adviser</a>
+          </div>
         </div>
       </div>
     </div>

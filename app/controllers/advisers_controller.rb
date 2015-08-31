@@ -4,7 +4,10 @@ class AdvisersController < ApplicationController
   def index
     not check_access(true, true) and return
     @advisers = Adviser.all
-    render layout: 'admins'
+    respond_to do |format|
+      format.html {render layout: 'admins'}
+      format.csv {send_data Adviser.to_csv}
+    end
   end
 
   def new

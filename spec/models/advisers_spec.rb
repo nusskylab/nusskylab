@@ -19,6 +19,27 @@ describe Adviser do
     expect(Adviser.adviser?(user2.id)).to be_nil
   end
 
+  it 'should have to_csv class method' do
+    user1 = FactoryGirl.create(:user, email: 'user1@adviser.model.spec', uid: 'uid1.adviser.model.spec')
+    FactoryGirl.create(:adviser, user: user1)
+    require 'csv'
+    csv = CSV.parse(Adviser.to_csv)
+    expect(csv.first).to eql ['Adviser UserID', 'Adviser Name', 'Adviser Email', 'Avg feedback rating']
+  end
+
+  it 'should have get_feedback_average_rating method' do
+    user1 = FactoryGirl.create(:user, email: 'user1@adviser.model.spec', uid: 'uid1.adviser.model.spec')
+    adviser = FactoryGirl.create(:adviser, user: user1)
+    team1 = FactoryGirl.create(:team, team_name: '1.adviser.model.spec')
+    team2 = FactoryGirl.create(:team, team_name: '2.adviser.model.spec')
+    survey_template1 = FactoryGirl.create(:survey_template, survey_type: 2)
+    FactoryGirl.create(:feedback, team: team1, adviser: adviser,
+                       survey_template: survey_template1, response_content: '{"1": "0"}')
+    FactoryGirl.create(:feedback, team: team2, adviser: adviser,
+                       survey_template: survey_template1, response_content: '{"1": "2"}')
+    expect(adviser.get_feedback_average_rating).to be_within(0.05).of(1.0)
+  end
+
   it 'should have get_advisee_users method' do
     user1 = FactoryGirl.create(:user, email: 'user1@adviser.model.spec', uid: 'uid1@adviser.model.spec')
     adviser1 = FactoryGirl.create(:adviser, user: user1)

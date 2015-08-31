@@ -1,0 +1,23 @@
+<% content_for :main_content do %>
+    <% javascript 'received_feedbacks.js' %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1>
+          All feedbacks for
+          <% if @team %>
+              <%= @team.team_name %>
+          <% elsif @adviser %>
+              <%= @adviser.user.user_name %>
+          <% end %>
+        </h1>
+      </div>
+      <div class="panel-body">
+        <% if @feedbacks.nil? or @feedbacks.length == 0 %>
+            No feedback available
+        <% end %>
+        <% @feedbacks.each do |feedback| %>
+            <%= render 'feedbacks/view_feedback', locals: {feedback: feedback} %>
+        <% end %>
+      </div>
+    </div>
+<% end %>
