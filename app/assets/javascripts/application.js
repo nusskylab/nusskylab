@@ -3,6 +3,7 @@
 //= require bootstrap
 //= require jquery.tablesorter
 //= require select2
+//= require jQuery.autolink
 
 $(function () {
   if ($('.table-sortable').length) {
@@ -74,4 +75,8 @@ $(function () {
 
     convertImageToBase64Str(this);
   });
+});
+
+$(function() {
+  $('.autolink').autolink();
 });

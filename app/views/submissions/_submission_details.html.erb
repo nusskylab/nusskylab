@@ -9,6 +9,18 @@
     </div>
     <br>
     <div class="form-group">
+      <label class="col-sm-2 control-label" for="submission_milestone_id">Milestone:</label>
+      <div class="well col-sm-12">
+        <%= locals[:submission].milestone.name %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="submission_video_link">Video Link:</label>
+      <div class="well col-sm-12">
+        <span class="autolink"><%= locals[:submission].video_link %></span>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-2 control-label">Project Readme:</label>
       <div class="well col-sm-12 submission-readme">
         <%= locals[:submission].read_me.html_safe %>
@@ -18,18 +30,6 @@
       <label class="col-sm-2 control-label">Project Log:</label>
       <div class="well col-sm-12 submission-project-log">
         <%= locals[:submission].project_log.html_safe %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="submission_video_link">Video Link:</label>
-      <div class="well col-sm-12">
-        <%= locals[:submission].video_link %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="submission_milestone_id">Milestone:</label>
-      <div class="well col-sm-12">
-        <%= locals[:submission].milestone.name %>
       </div>
     </div>
   </div>

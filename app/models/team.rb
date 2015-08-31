@@ -1,9 +1,6 @@
 class Team < ActiveRecord::Base
   validates :team_name, presence: true,
-            uniqueness: {message: 'Team name should be unique'}
-  validates :project_level, presence: true
-
-  before_validation :clean_project_level
+            uniqueness: {message: ': Team name should be unique'}
 
   has_many :students
   belongs_to :adviser
@@ -14,17 +11,24 @@ class Team < ActiveRecord::Base
   has_many :evaluateds, class_name: :Evaluating, foreign_key: :evaluator_id
   has_many :evaluators, class_name: :Evaluating, foreign_key: :evaluated_id
 
-  def clean_project_level
-    case self.project_level
-      when 'Vostok'
-        self.project_level = 'Vostok'
-      when 'Gemini'
-        self.project_level = 'Gemini'
-      when 'Apollo 11'
-        self.project_level = 'Apollo 11'
-      else
-        self.project_level = 'Vostok'
+  VOSTOK_REGEX = /\A(?:v)|(?:vostok)\z/
+  PROJECT_GEMINI_REGEX = /\A(?:project gemini)|(?:gemini)|(?:g)\z/
+  APOLLO_11_REGEX = /\A(?:apollo 11)|(?:apollo)|(?:a)\z/
+  enum project_level: [:vostok, :project_gemini, :apollo_11]
+
+  def self.get_project_level_mapping_from_raw(project_level)
+    project_level = project_level.downcase
+    if project_level[VOSTOK_REGEX]
+      Team.project_levels[:vostok]
+    elsif project_level[PROJECT_GEMINI_REGEX]
+      Team.project_levels[:project_gemini]
+    elsif project_level[APOLLO_11_REGEX]
+      Team.project_levels[:apollo_11]
     end
+  end
+
+  def set_project_level(project_level)
+    self.project_level = Team.get_project_level_mapping_from_raw(project_level)
   end
 
   # Get a team's students, adviser, mentor as user and if include_* is true,
