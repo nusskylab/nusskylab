@@ -61,6 +61,10 @@ en:
     show:
       page_title: >
         View a peer evaluation
+  received_feedbacks:
+    index:
+      page_title: >
+        View received feedbacks
   students:
     show:
       submit_submission_instruction: >

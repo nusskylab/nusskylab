@@ -1,0 +1,11 @@
+<div class="form">
+  <div class="form-group">
+    <div class="text-muted"><%= locals[:feedback].survey_template.instruction.html_safe %></div>
+  </div>
+  <br>
+  <% locals[:feedback].survey_template.questions.each do |question| %>
+      <%= render 'questions/question_template',
+                 locals: {question: question,
+                          question_response: locals[:feedback].get_response_for_question(question.id)} %>
+  <% end %>
+</div>
