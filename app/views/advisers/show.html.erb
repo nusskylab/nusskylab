@@ -24,7 +24,7 @@
             <li role="presentation">
               <a href="#evaluatings-panel" aria-controls="evaluatings-panel"
                  role="tab" data-toggle="tab">
-                View Evaluating relations
+                View Evaluating relations and more info
               </a>
             </li>
           </ul>
@@ -47,12 +47,18 @@
                                                         own_evaluations: own_evaluations} %>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="evaluatings-panel">
-              <h2 class="text-center">Evaluating relations</h2>
+              <h2 class="text-center">Evaluating relations and more info</h2>
               <div class="well">
                 <p class="small"><%= t '.evaluating_relation_instruction' %></p>
               </div>
               <div class="text-center">
-                You go view and manage relations <a href="<%= evaluatings_path %>" class="btn btn-success">here</a>
+                You can view and manage relations <a href="<%= evaluatings_path %>" class="btn btn-success">here</a>
+              </div>
+              <hr>
+              <div class="text-center">
+                You can view feedbacks for you
+                <a href="<%= milestone_adviser_received_feedbacks_path(1, @adviser.id) %>"
+                   class="btn btn-success">here</a>
               </div>
             </div>
           </div>

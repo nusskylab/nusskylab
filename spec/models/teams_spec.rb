@@ -200,7 +200,7 @@ describe Team do
     expect(peer_evals_hash[milestone3.id][:adviser]).to be_nil
   end
 
-  it 'should have get_average_rating_for_self_team_as_hash method' do
+  it 'should have get_average_eval_rating_as_hash method' do
     milestone1 = FactoryGirl.create(:milestone, name: 'Milestone 1')
     milestone2 = FactoryGirl.create(:milestone, name: 'Milestone 2')
     milestone3 = FactoryGirl.create(:milestone, name: 'Milestone 3')
@@ -225,7 +225,7 @@ describe Team do
                        submission: submission2, private_content: '{"q[6][1]":"2"}')
     FactoryGirl.create(:peer_evaluation, team: team_evaluator2,
                        submission: submission2, private_content: '{"q[6][1]":"3"}')
-    average_ratings_hash = team.get_average_rating_for_self_team_as_hash
+    average_ratings_hash = team.get_average_eval_rating_as_hash
     expect(average_ratings_hash.length).to eql 4
     expect(average_ratings_hash[milestone1.id]).to be_within(0.05).of(2.33)
     expect(average_ratings_hash[milestone2.id]).to be_within(0.05).of(2.5)
@@ -233,11 +233,32 @@ describe Team do
     expect(average_ratings_hash[:all]).to be_within(0.05).of(2.4)
     FactoryGirl.create(:peer_evaluation, adviser: adviser, owner_type: 1,
                        submission: submission2, private_content: '{"q[6][1]":"3"}')
-    average_ratings_hash = team.get_average_rating_for_self_team_as_hash
+    average_ratings_hash = team.get_average_eval_rating_as_hash
     expect(average_ratings_hash.length).to eql 4
     expect(average_ratings_hash[milestone1.id]).to be_within(0.05).of(2.33)
     expect(average_ratings_hash[milestone2.id]).to be_within(0.05).of(2.75)
     expect(average_ratings_hash[milestone3.id]).to be_nil
     expect(average_ratings_hash[:all]).to be_within(0.05).of(2.58)
+  end
+
+  it 'should have get_average_feedback_ratings_as_hash method' do
+    user_adviser = FactoryGirl.create(:user, email: 'user1@team.model.spec', uid: 'uid6@team.model.spec')
+    adviser = FactoryGirl.create(:adviser, user: user_adviser)
+    team = FactoryGirl.create(:team, team_name: '1.team.model.spec', adviser: adviser)
+    team_evaluated1 = FactoryGirl.create(:team, team_name: '2.team.model.spec')
+    team_evaluated2 = FactoryGirl.create(:team, team_name: '3.team.model.spec')
+    team_evaluated3 = FactoryGirl.create(:team, team_name: '4.team.model.spec')
+    FactoryGirl.create(:evaluating, evaluated: team_evaluated1, evaluator: team)
+    FactoryGirl.create(:evaluating, evaluated: team_evaluated2, evaluator: team)
+    FactoryGirl.create(:evaluating, evaluated: team_evaluated3, evaluator: team)
+    survey_template1 = FactoryGirl.create(:survey_template, survey_type: 2)
+    FactoryGirl.create(:feedback, team: team_evaluated1, target_team: team,
+                       survey_template: survey_template1, response_content: '{"1": "0"}')
+    FactoryGirl.create(:feedback, team: team_evaluated2, target_team: team,
+                       survey_template: survey_template1, response_content: '{"1": "2"}')
+    FactoryGirl.create(:feedback, team: team_evaluated3, target_team: team,
+                       survey_template: survey_template1, response_content: '{"1": "2"}')
+    feedback_ratings_hash = team.get_average_feedback_ratings_as_hash
+    expect(feedback_ratings_hash[:all]).to be_within(0.05).of(1.33)
   end
 end
