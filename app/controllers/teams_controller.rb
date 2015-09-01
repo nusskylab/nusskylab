@@ -45,10 +45,8 @@ class TeamsController < ApplicationController
       return can_access_team_page
     }
     not check_access(true, false, display_team_access_control_strategy) and return
-    ratings_hash = @team.get_average_rating_for_self_team_as_hash
     render locals: {
-             milestones: Milestone.all,
-             ratings_hash: ratings_hash
+             milestones: Milestone.all
            }
   end
 

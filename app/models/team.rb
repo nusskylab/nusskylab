@@ -35,7 +35,7 @@ class Team < ActiveRecord::Base
         if not team.mentor_id.blank?
           csv_row.concat([team.mentor.user.id, team.mentor.user.user_name])
         end
-        ratings_hash = team.get_average_rating_for_self_team_as_hash
+        ratings_hash = team.get_average_eval_rating_as_hash
         csv_row.append(ratings_hash[:all])
         csv << csv_row
       end
@@ -132,7 +132,7 @@ class Team < ActiveRecord::Base
 
   # Get average rating for own team based on received evaluations, with milestone_ids are keys
   #   overall evaluating score will be included under special sym :all
-  def get_average_rating_for_self_team_as_hash
+  def get_average_eval_rating_as_hash
     ratings_hash = {}
     peer_evaluations_hash = self.get_peer_evaluations_for_self_team_as_hash
     overall_ratings = []
@@ -156,6 +156,17 @@ class Team < ActiveRecord::Base
     return ratings_hash
   end
 
+  # Get average ratings for feedback. Currently there is only overall option
+  def get_average_feedback_ratings_as_hash
+    recv_feedbacks = Feedback.where(target_team_id: self.id)
+    ratings = []
+    recv_feedbacks.each do |feedback|
+      response = feedback.get_response_for_question(1).nil? ? 0 : feedback.get_response_for_question(1).to_i
+      ratings.append(response)
+    end
+    {:all => get_average_for_ratings(ratings)}
+  end
+
   def get_average_for_ratings(ratings)
     sum = 0; numberOfRatings = 0
     ratings.each do |rating|
@@ -169,13 +180,6 @@ class Team < ActiveRecord::Base
       return (sum.to_f / numberOfRatings)
     end
   end
-
-  # Get own feedbacks to evaluator teams as hash, first level of keys are milestone_ids,
-  #   second level of keys are evaluating_ids
-  # def get_feedbacks_for_evaluator_teams
-  #   feedbacks_hash = {}
-  #   # TODO: to be implemented
-  # end
 
   # Get a team's members as user
   def get_team_members

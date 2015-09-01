@@ -51,8 +51,10 @@
               <div class="well">
                 <p class="small"><%= t '.more_info_instruction' %></p>
               </div>
-              <%= render 'calculated_team_info', locals: {team: @team, milestones: milestones,
-                                                          ratings_hash: ratings_hash} %>
+              <%= render 'calculated_team_info',
+                         locals: {team: @team, milestones: milestones,
+                                  eval_ratings_hash: @team.get_average_eval_rating_as_hash,
+                                  feedback_ratings_hash: @team.get_average_feedback_ratings_as_hash} %>
             </div>
           </div>
         </div>
