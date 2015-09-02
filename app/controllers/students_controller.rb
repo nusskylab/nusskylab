@@ -5,13 +5,15 @@ class StudentsController < ApplicationController
   layout 'general_layout'
 
   def index
-    not check_access(true, true) and return
+    not authenticate_user(true, false, Adviser.all.map {|adviser| adviser.user}) and return
+    @page_title = t('.page_title')
     @students = Student.all
     render layout: 'admins'
   end
 
   def new
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
+    @page_title = t('.page_title')
     @student = Student.new
     render layout: 'admins', locals: {
                              users: User.all
@@ -19,7 +21,7 @@ class StudentsController < ApplicationController
   end
 
   def create
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     user_params = get_user_params
     user = User.new(user_params)
     if user.save
@@ -35,7 +37,7 @@ class StudentsController < ApplicationController
   end
 
   def batch_create
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     require 'csv'
     students_csv_file = params[:student][:batch_csv]
     file_rows = CSV.read(students_csv_file.path, headers: true)
@@ -46,7 +48,7 @@ class StudentsController < ApplicationController
   end
 
   def use_existing
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     user = User.find(params[:student][:user_id])
     if user
       create_student_for_user_and_respond(user)
@@ -56,8 +58,9 @@ class StudentsController < ApplicationController
   end
 
   def edit
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     @student = Student.find(params[:id])
+    @page_title = t('.page_title', user_name: @student.user.user_name)
     render layout: 'admins', locals: {
              teams: Team.all
                            }
@@ -65,22 +68,13 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
-    display_student_access_strategy = lambda {
-      can_access_student_page = false
-      loggedin_user = current_user
-      if @student.team_id.blank?
-        can_access_student_page = loggedin_user.id == @student.user_id
-      else
-        relevant_users = @student.team.get_relevant_users(false, false)
-        relevant_users.each do |user|
-          if user.id == loggedin_user.id
-            can_access_student_page = true and break
-          end
-        end
-      end
-      return can_access_student_page
-    }
-    not check_access(true, false, display_student_access_strategy) and return
+    if @student.team_id.blank?
+      relevant_users = [@student.user]
+    else
+      relevant_users = @student.team.get_relevant_users(false, false)
+    end
+    not authenticate_user(true, false, relevant_users) and return
+    @page_title = t('.page_title', user_name: @student.user.user_name)
     evaluateds, evaluators, milestones, team_evaluateds_submissions_table,
       team_evaluations_table, team_evaluators_evaluations_table,
       team_submissions_table, team_feedbacks = get_render_variable_for_student
@@ -97,7 +91,7 @@ class StudentsController < ApplicationController
   end
 
   def update
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     @student = Student.find(params[:id])
     student_params = params.require(:student).permit(:team_id)
     if @student.update(student_params)
@@ -110,15 +104,10 @@ class StudentsController < ApplicationController
   end
 
   def destroy
-    not check_access(true, false) and return
+    not authenticate_user(true, true) and return
     @student = Student.find(params[:id])
     @student.destroy
     redirect_to students_path
-  end
-
-  def get_page_title
-    @page_title = @page_title || 'Students | Orbital'
-    super
   end
 
   private

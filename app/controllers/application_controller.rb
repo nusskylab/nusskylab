@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
 
   # Used for checking access. allowed_users is an array of users that can access and options
   #   is a hash for specify additional information such as redirect_path and redirect_message
-  def authenticate_user(login_required = true, admin_only = false, allowed_users, **options)
+  def authenticate_user(login_required = true, admin_only = false, allowed_users = [], **options)
     logged_in_user = current_user
     if login_required and not logged_in_user
       redirect_user(options) and return false
