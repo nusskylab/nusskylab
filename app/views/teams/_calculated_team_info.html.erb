@@ -23,7 +23,7 @@
     <td><%= locals[:feedback_ratings_hash][:all].nil? ?
                     'Not available' : number_to_human(locals[:feedback_ratings_hash][:all]) %></td>
     <td>
-      <a href="<%= milestone_team_received_feedbacks_path(1, locals[:team].id) %>"
+      <a href="<%= milestone_team_received_feedbacks_path(3, locals[:team].id) %>"
          class="btn btn-success">View all feedbacks</a>
     </td>
   </tr>

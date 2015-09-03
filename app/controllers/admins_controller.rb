@@ -1,6 +1,4 @@
 class AdminsController < ApplicationController
-  layout 'admins'
-
   def index
     not check_access(true, true) and return
     @admins = Admin.all

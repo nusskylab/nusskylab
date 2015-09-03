@@ -1,6 +1,4 @@
 class ReceivedFeedbacksController < ApplicationController
-  layout 'general_layout'
-
   def index
     not can_view_received_feedbacks_page and return
     if params[:team_id]

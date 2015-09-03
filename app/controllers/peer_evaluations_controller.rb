@@ -1,6 +1,4 @@
 class PeerEvaluationsController < ApplicationController
-  layout 'general_layout'
-
   def new
     not can_access_peer_evaluation and return
     @page_title = t('.page_title')

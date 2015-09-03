@@ -1,6 +1,4 @@
 class ReceivedEvalsController < ApplicationController
-  layout 'general_layout'
-
   def index
     team = Team.find(params[:team_id])
     milestone = Milestone.find(params[:milestone_id])

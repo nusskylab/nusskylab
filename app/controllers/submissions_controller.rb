@@ -1,6 +1,4 @@
 class SubmissionsController < ApplicationController
-  layout 'general_layout'
-
   def new
     team = Team.find(params[:team_id]) or record_not_found
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return

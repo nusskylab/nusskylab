@@ -1,69 +1,48 @@
 class TeamsController < ApplicationController
-  layout 'general_layout'
-
   def index
-    not check_access(true, true) and return
+    not authenticate_user(true, false, Adviser.all.map {|adviser| adviser.user}) and return
     @teams = Team.order(:team_name).all
+    @page_title = t('.page_title')
     respond_to do |format|
-      format.html {render layout: 'admins'}
+      format.html {render}
       format.csv {send_data Team.to_csv}
     end
   end
 
   def new
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     @team = Team.new
-    render layout: 'admins', locals: {
-                             advisers: Adviser.all,
-                             mentors: Mentor.all
-                           }
+    @page_title = t('.page_title')
+    render locals: {advisers: Adviser.all,
+                    mentors: Mentor.all}
   end
 
   def create
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     team_params = get_team_params
     @team = Team.new(team_params)
+    @page_title = t('.page_title')
     if @team.save
-      redirect_to teams_path, flash: {success: t('.success_message')}
+      redirect_to teams_path, flash: {success: t('.success_message'), team_name: @team.team_name}
     else
       redirect_to new_team_path,
-                  flash: {success: t('.failure_message' + @team.errors.full_messages.join(', '))}
+                  flash: {success: t('.failure_message', error_messages: @team.errors.full_messages.join(', '))}
     end
   end
 
   def show
-    @team = Team.find(params[:id])
-    display_team_access_control_strategy = lambda {
-      can_access_team_page = false
-      loggedin_user = current_user
-      relevant_users = @team.get_relevant_users(true, true)
-      relevant_users.each do |user|
-        if user.id == loggedin_user.id
-          can_access_team_page = true and break
-        end
-      end
-      return can_access_team_page
-    }
-    not check_access(true, false, display_team_access_control_strategy) and return
+    @team = Team.find(params[:id]) or record_not_found
+    not authenticate_user(true, false, @team.get_relevant_users(true, true)) and return
+    @page_title = t('.page_title', team_name: @team.team_name)
     render locals: {
              milestones: Milestone.all
            }
   end
 
   def edit
-    @team = Team.find(params[:id])
-    edit_team_access_controll_strategy = lambda {
-      can_access_team_page = false
-      loggedin_user = current_user
-      relevant_users = @team.get_relevant_users
-      relevant_users.each do |user|
-        if user.id == loggedin_user.id
-          can_access_team_page = true and break
-        end
-      end
-      return can_access_team_page
-    }
-    not check_access(true, false, edit_team_access_controll_strategy) and return
+    @team = Team.find(params[:id]) or record_not_found
+    not authenticate_user(true, false, @team.get_relevant_users(false, false)) and return
+    @page_title = t('.page_title', team_name: @team.team_name)
     render locals: {
              advisers: Adviser.all,
              mentors: Mentor.all
@@ -71,40 +50,25 @@ class TeamsController < ApplicationController
   end
 
   def update
-    @team = Team.find(params[:id])
-    update_team_access_controll_strategy = lambda {
-      can_access_team_page = false
-      loggedin_user = current_user
-      relevant_users = @team.get_relevant_users
-      relevant_users.each do |user|
-        if user.id == loggedin_user.id
-          can_access_team_page = true and break
-        end
-      end
-      return can_access_team_page
-    }
-    not check_access(true, false, update_team_access_controll_strategy) and return
+    @team = Team.find(params[:id]) or record_not_found
+    not authenticate_user(true, false, @team.get_relevant_users(false, false)) and return
     if update_team
-      redirect_to team_path(@team.id), flash: {success: t('.success_message')}
+      redirect_to team_path(@team.id), flash: {success: t('.success_message'), team_name: @team.team_name}
     else
       redirect_to edit_team_path(params[:id]),
-                  flash: {success: t('.failure_message' + @team.errors.full_messages.join(', '))}
+                  flash: {danger: t('.failure_message', team_name: @team.team_name,
+                                    error_messages: @team.errors.full_messages.join(', '))}
     end
   end
 
   def destroy
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     @team = Team.find(params[:id])
     if @team.destroy
-      flash = {}
-      flash[:info] = 'The team is deleted successfully'
-      redirect_to teams_path, flash: flash
+      redirect_to teams_path, flash: {success: t('.success_message', team_name: @team.team_name)}
+    else
+      redirect_to teams_path, flash: {danger: t('.failure_message', team_name: @team.team_name)}
     end
-  end
-
-  def get_page_title
-    @page_title = @page_title || 'Teams | Orbital'
-    super
   end
 
   private

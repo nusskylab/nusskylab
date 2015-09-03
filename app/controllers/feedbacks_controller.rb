@@ -1,6 +1,4 @@
 class FeedbacksController < ApplicationController
-  layout 'general_layout'
-
   def new
     check_access(true, false)
     team = Team.find(params[:team_id])

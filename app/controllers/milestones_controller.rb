@@ -1,6 +1,4 @@
 class MilestonesController < ApplicationController
-  layout 'admins'
-
   def index
     not check_access(true, true) and return
     @milestones = Milestone.all

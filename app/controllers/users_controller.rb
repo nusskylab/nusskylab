@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  layout 'admins'
-
   def index
     not check_access(true, true) and return
     @users = User.order(:user_name).all
@@ -27,7 +25,7 @@ class UsersController < ApplicationController
     not check_access(true, false, lambda {
                        return current_user.id == @user.id
                          }) and return
-    render layout: 'general_layout'
+    render
   end
 
   def preview_as
@@ -43,7 +41,7 @@ class UsersController < ApplicationController
     not check_access(true, false, lambda {
                        return current_user.id == @user.id
                          }) and return
-    render layout: 'general_layout'
+    render
   end
 
   def update

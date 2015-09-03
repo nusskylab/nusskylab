@@ -1,11 +1,9 @@
 class AdvisersController < ApplicationController
-  layout 'general_layout'
-
   def index
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     @advisers = Adviser.all
     respond_to do |format|
-      format.html {render layout: 'admins'}
+      format.html {render}
       format.csv {send_data Adviser.to_csv}
     end
   end
@@ -13,10 +11,7 @@ class AdvisersController < ApplicationController
   def new
     not check_access(true, true) and return
     @adviser = Adviser.new
-    render layout: 'admins', locals: {
-                             users: User.all,
-                             user: User.new
-                           }
+    render locals: {users: User.all, user: User.new}
   end
 
   def create
@@ -62,7 +57,7 @@ class AdvisersController < ApplicationController
   def edit
     not check_access(true, true) and return
     @adviser = Adviser.find(params[:id])
-    render layout: get_layout_for_role
+    render
   end
 
   def update
@@ -75,7 +70,7 @@ class AdvisersController < ApplicationController
         redirect_to @adviser
       end
     else
-      render layout: get_layout_for_role, template: 'advisers/edit'
+      render template: 'advisers/edit'
     end
   end
 
@@ -135,7 +130,7 @@ class AdvisersController < ApplicationController
     end
 
     def render_new_template(user)
-      render layout: 'admins', template: 'advisers/new', locals: {
+      render template: 'advisers/new', locals: {
                     users: User.all,
                     user: user || User.new
                   }
