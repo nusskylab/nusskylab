@@ -13,8 +13,7 @@ class TeamsController < ApplicationController
     not authenticate_user(true, true) and return
     @team = Team.new
     @page_title = t('.page_title')
-    render locals: {advisers: Adviser.all,
-                    mentors: Mentor.all}
+    render locals: {advisers: Adviser.all, mentors: Mentor.all}
   end
 
   def create

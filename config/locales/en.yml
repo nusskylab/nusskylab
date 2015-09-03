@@ -36,10 +36,36 @@ en:
       evaluation_instruction: >
         Submissions from all of your teams are listed here. You can view their submissions
         and submit/edit your evaluation for one submission.
-      evaluating_relation_instruction: >
-        Temporarily you have to use evaluatings pages to manage evaluating relations.
-        Integrated functionality for adviser to manage those without being
-        redirected will come soon.
+      more_info_instruction: >
+        You can view more related information here.
+  evaluatings:
+    index:
+      page_title: >
+        View all evaluating relations
+    new:
+      page_title: >
+        Create a new evaluating relation
+    batch_update:
+      page_title: >
+        Create evaluating relations
+    create:
+      success_message: >
+        Evaluating of %{entity1_name} and %{entity2_name} is created successfully.
+      failure_message: >
+        Evaluating could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    edit:
+      page_title: >
+        Edit an evaluating relation
+    update:
+      success_message: >
+        Evaluating of %{entity1_name} and %{entity2_name} is created successfully.
+      failure_message: >
+        Evaluating could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    destroy:
+      success_message: >
+        Evaluating of %{entity1_name} and %{entity2_name} is deleted successfully.
+      failure_message: >
+        Evaluating could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   feedbacks:
     create:
       success_message: >

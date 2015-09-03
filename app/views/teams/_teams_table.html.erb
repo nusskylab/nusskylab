@@ -15,10 +15,17 @@
         <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
         <td><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
         <td>
-          <a class="btn btn-default btn-xs" href="<%=  team_path(team.id) %>">View</a>
-          <a class="btn btn-default btn-xs" href="<%= edit_team_path(team.id) %>">Edit</a>
-          <%= link_to 'Delete', team_path(team.id),
-                      :confirm => 'Are you sure to delete this team permanently?', :method => :delete, :class => 'btn btn-danger btn-xs' %>
+          <% if can_current_user_view_team(team) %>
+              <a class="btn btn-default btn-xs" href="<%=  team_path(team.id) %>">View</a>
+          <% end %>
+          <% if can_current_user_edit_team(team) %>
+              <a class="btn btn-default btn-xs" href="<%= edit_team_path(team.id) %>">Edit</a>
+          <% end %>
+          <% if can_current_user_delete_team(team) %>
+              <%= link_to 'Delete', team_path(team.id),
+                          :confirm => 'Are you sure to delete this team permanently?', :method => :delete,
+                          :class => 'btn btn-danger btn-xs' %>
+          <% end %>
         </td>
       </tr>
   <% end %>
