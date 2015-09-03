@@ -1,16 +1,15 @@
 class MentorsController < ApplicationController
-  layout 'general_layout'
 
   def index
     not check_access(true, true) and return
     @mentors = Mentor.all
-    render layout: 'admins'
+    render
   end
 
   def new
     not check_access(true, true) and return
     @mentor = Mentor.new
-    render layout: 'admins', locals: {
+    render locals: {
              user: User.new,
              users: User.all
            }
@@ -62,7 +61,7 @@ class MentorsController < ApplicationController
   def edit
     not check_access(true, true) and return
     @mentor = Mentor.find(params[:id])
-    render layout: get_layout_for_role
+    render
   end
 
   def update
@@ -76,7 +75,7 @@ class MentorsController < ApplicationController
         redirect_to @mentor
       end
     else
-      render layout: get_layout_for_role, template: 'edit'
+      render template: 'edit'
     end
   end
 
@@ -98,7 +97,7 @@ class MentorsController < ApplicationController
     end
 
     def render_new_template_with_err(user)
-      render layout: 'admins', template: 'mentors/new', locals: {
+      render template: 'mentors/new', locals: {
                                users: User.all,
                                user: user
                              }

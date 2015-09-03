@@ -2,11 +2,7 @@
   <% if current_user %>
       <li>
         <p class="navbar-text user-name-text">
-          Welcome,
-          <span data-toggle="tooltip"
-                data-placement="top" title="<%= get_current_role %>">
-            <%= current_user.user_name %>
-          </span>
+          Welcome, <%= current_user.user_name %>
         </p>
       </li>
       <li>

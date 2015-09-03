@@ -1,6 +1,4 @@
 class EvaluatingsController < ApplicationController
-  layout 'admins'
-
   def index
     display_all_evaluatings_strategy = lambda {
       if not Adviser.adviser?(current_user.id).nil?
@@ -23,7 +21,7 @@ class EvaluatingsController < ApplicationController
         end
       end
       @evaluatings = advisers_evaluatings
-      render layout: 'general_layout'
+      render
     end
   end
 
@@ -41,9 +39,7 @@ class EvaluatingsController < ApplicationController
                teams: Team.all
              }
     elsif adviser
-      render layout: 'general_layout', locals: {
-               teams: adviser.teams
-                                     }
+      render locals: {teams: adviser.teams}
     end
   end
 
@@ -96,9 +92,7 @@ class EvaluatingsController < ApplicationController
                teams: Team.all
              }
     elsif adviser
-      render layout: 'general_layout', locals: {
-                                       teams: adviser.teams
-                                     }
+      render locals: {teams: adviser.teams}
     end
   end
 

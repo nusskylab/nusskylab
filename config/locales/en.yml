@@ -51,6 +51,10 @@ en:
         Feedback is saved successfully
       failure_message: >
         Feedback could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+  home:
+    index:
+      page_title: >
+        Home | Orbital
   peer_evaluations:
     new:
       page_title: >

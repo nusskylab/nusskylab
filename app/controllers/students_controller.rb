@@ -2,22 +2,18 @@ class StudentsController < ApplicationController
   NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
   NUS_OPEN_ID_PROVIDER = 'NUS'
 
-  layout 'general_layout'
-
   def index
     not authenticate_user(true, false, Adviser.all.map {|adviser| adviser.user}) and return
     @page_title = t('.page_title')
     @students = Student.all
-    render layout: 'admins'
+    render
   end
 
   def new
     not authenticate_user(true, true) and return
     @page_title = t('.page_title')
     @student = Student.new
-    render layout: 'admins', locals: {
-                             users: User.all
-                           }
+    render locals: {users: User.all}
   end
 
   def create
@@ -61,7 +57,7 @@ class StudentsController < ApplicationController
     not authenticate_user(true, true) and return
     @student = Student.find(params[:id])
     @page_title = t('.page_title', user_name: @student.user.user_name)
-    render layout: 'admins', locals: {
+    render locals: {
              teams: Team.all
                            }
   end
@@ -97,7 +93,7 @@ class StudentsController < ApplicationController
     if @student.update(student_params)
       redirect_to @student
     else
-      render layout: 'admins', template: 'students/edit', locals: {
+      render template: 'students/edit', locals: {
                teams: Team.all
                              }
     end
@@ -289,7 +285,7 @@ class StudentsController < ApplicationController
     end
 
     def render_new_template
-      render layout: 'admins', template: 'students/new', locals: {
+      render template: 'students/new', locals: {
                     users: User.all
                   }
     end

@@ -1,12 +1,10 @@
 class TeamsController < ApplicationController
-  layout 'general_layout'
-
   def index
     not authenticate_user(true, false, Adviser.all.map {|adviser| adviser.user}) and return
     @teams = Team.order(:team_name).all
     @page_title = t('.page_title')
     respond_to do |format|
-      format.html {render layout: 'admins'}
+      format.html {render}
       format.csv {send_data Team.to_csv}
     end
   end
@@ -15,10 +13,8 @@ class TeamsController < ApplicationController
     not authenticate_user(true, true) and return
     @team = Team.new
     @page_title = t('.page_title')
-    render layout: 'admins', locals: {
-                             advisers: Adviser.all,
-                             mentors: Mentor.all
-                           }
+    render locals: {advisers: Adviser.all,
+                    mentors: Mentor.all}
   end
 
   def create
