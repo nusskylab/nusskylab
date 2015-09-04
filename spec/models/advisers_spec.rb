@@ -11,7 +11,7 @@ describe Adviser do
     expect(FactoryGirl.build(:adviser, user: user)).not_to be_valid
   end
 
-  it 'should have adviser? class method' do
+  it '.adviser?' do
     user1 = FactoryGirl.create(:user, email: 'user1@adviser.model.spec', uid: 'uid1@adviser.model.spec')
     user2 = FactoryGirl.create(:user, email: 'user2@adviser.model.spec', uid: 'uid2@adviser.model.spec')
     FactoryGirl.create(:adviser, user: user1)
@@ -19,7 +19,7 @@ describe Adviser do
     expect(Adviser.adviser?(user2.id)).to be_nil
   end
 
-  it 'should have to_csv class method' do
+  it '.to_csv' do
     user1 = FactoryGirl.create(:user, email: 'user1@adviser.model.spec', uid: 'uid1.adviser.model.spec')
     FactoryGirl.create(:adviser, user: user1)
     require 'csv'
@@ -27,7 +27,28 @@ describe Adviser do
     expect(csv.first).to eql ['Adviser UserID', 'Adviser Name', 'Adviser Email', 'Avg feedback rating']
   end
 
-  it 'should have get_feedback_average_rating method' do
+  it '#get_advised_teams_evaluatings' do
+    user1 = FactoryGirl.create(:user, email: 'user1@adviser.model.spec', uid: 'uid1@adviser.model.spec')
+    adviser1 = FactoryGirl.create(:adviser, user: user1)
+    user2 = FactoryGirl.create(:user, email: 'user2@adviser.model.spec', uid: 'uid2@adviser.model.spec')
+    adviser2 = FactoryGirl.create(:adviser, user: user2)
+    team1 = FactoryGirl.create(:team, team_name: '1.adviser.model.spec', adviser: adviser1)
+    team2 = FactoryGirl.create(:team, team_name: '2.adviser.model.spec', adviser: adviser1)
+    team3 = FactoryGirl.create(:team, team_name: '3.adviser.model.spec', adviser: adviser1)
+    team4 = FactoryGirl.create(:team, team_name: '4.adviser.model.spec', adviser: adviser2)
+    evaluating1 = FactoryGirl.create(:evaluating, evaluator: team1, evaluated: team2)
+    evaluating2 = FactoryGirl.create(:evaluating, evaluator: team2, evaluated: team3)
+    evaluating3 = FactoryGirl.create(:evaluating, evaluator: team3, evaluated: team1)
+    evaluating4 = FactoryGirl.create(:evaluating, evaluator: team1, evaluated: team4)
+    evaluatings_adviser = adviser1.get_advised_teams_evaluatings
+    expect(evaluatings_adviser.length).to eql 3
+    expect(evaluatings_adviser).to include evaluating1
+    expect(evaluatings_adviser).to include evaluating2
+    expect(evaluatings_adviser).to include evaluating3
+    expect(evaluatings_adviser).not_to include evaluating4
+  end
+
+  it '#get_feedback_average_rating' do
     user1 = FactoryGirl.create(:user, email: 'user1@adviser.model.spec', uid: 'uid1.adviser.model.spec')
     adviser = FactoryGirl.create(:adviser, user: user1)
     team1 = FactoryGirl.create(:team, team_name: '1.adviser.model.spec')
@@ -40,7 +61,7 @@ describe Adviser do
     expect(adviser.get_feedback_average_rating).to be_within(0.05).of(1.0)
   end
 
-  it 'should have get_advisee_users method' do
+  it '#get_advisee_users' do
     user1 = FactoryGirl.create(:user, email: 'user1@adviser.model.spec', uid: 'uid1@adviser.model.spec')
     adviser1 = FactoryGirl.create(:adviser, user: user1)
     expect(adviser1.get_advisee_users.length).to eql 0

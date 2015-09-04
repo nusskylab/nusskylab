@@ -79,7 +79,7 @@ class TeamsController < ApplicationController
   def get_team_params
     team_params = params.require(:team).permit(:team_name, :project_level,
                                                :adviser_id, :mentor_id, :has_dropped)
-    team_params[:project_level] = Team.get_project_level_mapping_from_raw(team_params[:project_level])
+    team_params[:project_level] = Team.get_project_level_from_raw(team_params[:project_level])
     team_params
   end
 end

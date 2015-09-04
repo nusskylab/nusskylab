@@ -200,6 +200,28 @@ describe Team do
     expect(peer_evals_hash[milestone3.id][:adviser]).to be_nil
   end
 
+  it '#get_feedbacks_for_others' do
+    user_adviser = FactoryGirl.create(:user, email: 'user1@team.model.spec', uid: 'uid6@team.model.spec')
+    adviser = FactoryGirl.create(:adviser, user: user_adviser)
+    team = FactoryGirl.create(:team, team_name: '1.team.model.spec', adviser: adviser)
+    team_evaluator1 = FactoryGirl.create(:team, team_name: '2.team.model.spec')
+    team_evaluator2 = FactoryGirl.create(:team, team_name: '3.team.model.spec')
+    team_evaluator3 = FactoryGirl.create(:team, team_name: '4.team.model.spec')
+    evaluating1 = FactoryGirl.create(:evaluating, evaluator: team_evaluator1, evaluated: team)
+    evaluating2 = FactoryGirl.create(:evaluating, evaluator: team_evaluator2, evaluated: team)
+    evaluating3 = FactoryGirl.create(:evaluating, evaluator: team_evaluator3, evaluated: team)
+    survey_template1 = FactoryGirl.create(:survey_template, survey_type: 2)
+    feedback1 = FactoryGirl.create(:feedback, team: team, target_team: team_evaluator1,
+                                   survey_template: survey_template1, response_content: '{"1": "0"}')
+    feedback2 = FactoryGirl.create(:feedback, team: team, target_team: team_evaluator2,
+                                   survey_template: survey_template1, response_content: '{"1": "2"}')
+    feedbacks = team.get_feedbacks_for_others
+    expect(feedbacks.length).to eql 3
+    expect(feedbacks[evaluating1.id]).to eql feedback1
+    expect(feedbacks[evaluating2.id]).to eql feedback2
+    expect(feedbacks[evaluating3.id]).to be_nil
+  end
+
   it '#get_average_evaluation_ratings' do
     milestone1 = FactoryGirl.create(:milestone, name: 'Milestone 1')
     milestone2 = FactoryGirl.create(:milestone, name: 'Milestone 2')

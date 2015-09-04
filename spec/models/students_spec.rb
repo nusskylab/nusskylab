@@ -11,7 +11,7 @@ describe Student do
     expect(FactoryGirl.build(:student, user: user, team: nil)).not_to be_valid
   end
 
-  it 'should have student? class method' do
+  it '.student?' do
     user1 = FactoryGirl.create(:user, email: 'user1@student.model.spec',
                                uid: 'https://openid.nus.edu.sg/student1')
     user2 = FactoryGirl.create(:user, email: 'user2@student.model.spec',
@@ -25,17 +25,13 @@ describe Student do
     expect(Student.student?(user3.id)).to be  nil
   end
 
-  it 'should have get_teammates method' do
-    adviser_user = FactoryGirl.create(:user, email: 'adviser_user@student.model.spec',
-                                      uid: 'https://openid.nus.edu.sg/adviser')
+  it '#get_teammates' do
+    adviser_user = FactoryGirl.create(:user, email: 'user0@student.model.spec', uid: 'uid0.student.model.spec')
     adviser = FactoryGirl.create(:adviser, user: adviser_user)
     team = FactoryGirl.create(:team, adviser: adviser, mentor: nil)
-    user1 = FactoryGirl.create(:user, email: 'user1@student.model.spec',
-                               uid: 'https://openid.nus.edu.sg/student1')
-    user2 = FactoryGirl.create(:user, email: 'user2@student.model.spec',
-                               uid: 'https://openid.nus.edu.sg/student2')
-    user3 = FactoryGirl.create(:user, email: 'user3@student.model.spec',
-                               uid: 'https://openid.nus.edu.sg/student3')
+    user1 = FactoryGirl.create(:user, email: 'user1@student.model.spec', uid: 'uid1.student.model.spec')
+    user2 = FactoryGirl.create(:user, email: 'user2@student.model.spec', uid: 'uid2.student.model.spec')
+    user3 = FactoryGirl.create(:user, email: 'user3@student.model.spec', uid: 'uid3.student.model.spec')
     student1 = FactoryGirl.create(:student, user: user1, team: team)
     student2 = FactoryGirl.create(:student, user: user2, team: team)
     student3 = FactoryGirl.create(:student, user: user3, team: nil)
@@ -46,5 +42,19 @@ describe Student do
     expect(teammates).not_to include student3
     teammates = student3.get_teammates()
     expect(teammates.length).to eq 0
+  end
+
+  it '#adviser' do
+    user1 = FactoryGirl.create(:user, email: 'user1@student.model.spec', uid: 'uid1.student.model.spec')
+    student = FactoryGirl.build(:student, user: user1, team: nil)
+    expect(student.adviser).to be_nil
+    team = FactoryGirl.build(:team, adviser: nil, mentor: nil)
+    student = FactoryGirl.build(:student, user: user1, team: team)
+    expect(student.adviser).to be_nil
+    adviser_user = FactoryGirl.create(:user, email: 'user0@student.model.spec', uid: 'uid0.student.model.spec')
+    adviser = FactoryGirl.create(:adviser, user: adviser_user)
+    team = FactoryGirl.create(:team, adviser: adviser, mentor: nil)
+    student = FactoryGirl.build(:student, user: user1, team: team)
+    expect(student.adviser).to eql adviser
   end
 end

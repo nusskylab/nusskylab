@@ -42,7 +42,7 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def self.get_project_level_mapping_from_raw(project_level)
+  def self.get_project_level_from_raw(project_level)
     project_level = project_level.downcase
     if project_level[VOSTOK_REGEX]
       Team.project_levels[:vostok]
@@ -54,7 +54,7 @@ class Team < ActiveRecord::Base
   end
 
   def set_project_level(project_level)
-    self.project_level = Team.get_project_level_mapping_from_raw(project_level)
+    self.project_level = Team.get_project_level_from_raw(project_level)
   end
 
   # Get a team's students, adviser, mentor as user and if include_* is true,
@@ -89,16 +89,16 @@ class Team < ActiveRecord::Base
   #   first level of keys are milestone_id
   #   second level of keys are evaluating_id
   def get_others_submissions
-    evaluated_submissions_hash = {}
+    evaluated_submissions = {}
     milestones = Milestone.all
     milestones.each do |milestone|
-      evaluated_submissions_hash[milestone.id] = {}
+      evaluated_submissions[milestone.id] = {}
       self.evaluateds.each do |evaluated|
-        evaluated_submissions_hash[milestone.id][evaluated.id] = Submission.find_by(team_id: evaluated.evaluated_id,
-                                                                                    milestone_id: milestone.id)
+        evaluated_submissions[milestone.id][evaluated.id] = Submission.find_by(team_id: evaluated.evaluated_id,
+                                                                               milestone_id: milestone.id)
       end
     end
-    return evaluated_submissions_hash
+    return evaluated_submissions
   end
 
   # Get own peer evaluations as hash with evaluated teams' submission ids as keys
