@@ -1,0 +1,22 @@
+<% content_for :main_content do %>
+    <% javascript 'students.js' %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1>
+          <% if (not @student) %>
+              <span class="text-danger">Not a student </span>
+          <% else %>
+              <span><%= @student.user.user_name %> </span>
+          <% end %>
+          <% if (not @student) %>
+              <span class="text-danger"> (Not a student)</span>
+          <% elsif @student and (not @student.team_id) %>
+              <span class="text-muted"> (Currently no team)</span>
+          <% end %>
+        </h1>
+      </div>
+      <div class="panel-body">
+        <%= t ('.no_team_instruction') %>
+      </div>
+    </div>
+<% end %>

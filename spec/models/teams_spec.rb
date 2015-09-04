@@ -5,7 +5,7 @@ describe Team do
     expect(FactoryGirl.build(:team, team_name: nil)).not_to be_valid
   end
 
-  it 'should have to_csv class method' do
+  it '.to_csv' do
     adviser_user = FactoryGirl.create(:user, email: 'user1@team.model.spec', uid: 'uid1.team.model.spec')
     mentor_user = FactoryGirl.create(:user, email: 'user2@team.model.spec', uid: 'uid2.team.model.spec')
     adviser = FactoryGirl.create(:adviser, user: adviser_user)
@@ -23,7 +23,7 @@ describe Team do
                               'Average PE Score']
   end
 
-  it 'should have set_project_level method' do
+  it '#set_project_level' do
     team1 = FactoryGirl.build(:team)
     team1.set_project_level('vostok')
     expect(team1.vostok?).to be true
@@ -39,7 +39,7 @@ describe Team do
     expect(team1.apollo_11?).to be true
   end
 
-  it 'should have get_relevant_users method' do
+  it '#get_relevant_users' do
     user1 = FactoryGirl.create(:user, email: 'user1@team.model.spec', uid: 'uid1@team.model.spec')
     user_not_related = FactoryGirl.create(:user, email: 'user2@team.model.spec', uid: 'uid2@team.model.spec')
     user_teammate = FactoryGirl.create(:user, email: 'user3@team.model.spec', uid: 'uid3@team.model.spec')
@@ -82,7 +82,7 @@ describe Team do
     expect(related).to include user_evaluated
   end
 
-  it 'should have get_own_submissions_as_hash method' do
+  it '#get_own_submissions' do
     milestone1 = FactoryGirl.create(:milestone, name: '1.team.model.spec')
     milestone2 = FactoryGirl.create(:milestone, name: '2.team.model.spec')
     milestone3 = FactoryGirl.create(:milestone, name: '3.team.model.spec')
@@ -90,17 +90,17 @@ describe Team do
     team_with_no_submissions = FactoryGirl.create(:team, team_name: '2.team.model.spec')
     submission1 = FactoryGirl.create(:submission, team: team, milestone: milestone1)
     submission2 = FactoryGirl.create(:submission, team: team, milestone: milestone2)
-    team_submissions = team.get_own_submissions_as_hash
+    team_submissions = team.get_own_submissions
     expect(team_submissions.length).to eql 2
     expect(team_submissions.keys).to include milestone1.id
     expect(team_submissions[milestone1.id]).to eql submission1
     expect(team_submissions.keys).to include milestone2.id
     expect(team_submissions[milestone2.id]).to eql submission2
     expect(team_submissions[milestone3.id]).to be_nil
-    expect(team_with_no_submissions.get_own_submissions_as_hash.length).to eql 0
+    expect(team_with_no_submissions.get_own_submissions.length).to eql 0
   end
 
-  it 'should have get_evaluated_submissions_as_hash method' do
+  it '#get_others_submissions' do
     milestone1 = FactoryGirl.create(:milestone, name: '1.team.model.spec')
     milestone2 = FactoryGirl.create(:milestone, name: '2.team.model.spec')
     milestone3 = FactoryGirl.create(:milestone, name: '3.team.model.spec')
@@ -114,7 +114,7 @@ describe Team do
     submission1 = FactoryGirl.create(:submission, team: team_evaluated1, milestone: milestone1)
     submission2 = FactoryGirl.create(:submission, team: team_evaluated1, milestone: milestone2)
     submission3 = FactoryGirl.create(:submission, team: team_evaluated2, milestone: milestone1)
-    evaluated_teams_submissions_hash = team.get_evaluated_submissions_as_hash
+    evaluated_teams_submissions_hash = team.get_others_submissions
     expect(evaluated_teams_submissions_hash.length).to eql 3
     expect(evaluated_teams_submissions_hash.keys).to include milestone1.id
     expect(evaluated_teams_submissions_hash[milestone1.id].length).to eql 3
@@ -133,7 +133,7 @@ describe Team do
     expect(evaluated_teams_submissions_hash[milestone3.id][evaluating3.id]).to be_nil
   end
 
-  it 'should have get_own_peer_evaluations_for_evaluated_teams_as_hash method' do
+  it '#get_own_evaluations_for_others' do
     milestone1 = FactoryGirl.create(:milestone, name: '1.team.model.spec')
     milestone2 = FactoryGirl.create(:milestone, name: '2.team.model.spec')
     milestone3 = FactoryGirl.create(:milestone, name: '3.team.model.spec')
@@ -152,7 +152,7 @@ describe Team do
     peer_eval2 = FactoryGirl.create(:peer_evaluation, team: team, submission: submission2)
     peer_eval3 = FactoryGirl.create(:peer_evaluation, team: team, submission: submission3)
     peer_eval4 = FactoryGirl.create(:peer_evaluation, team: team, submission: submission4)
-    own_peer_evals_hash = team.get_own_peer_evaluations_for_evaluated_teams_as_hash
+    own_peer_evals_hash = team.get_own_evaluations_for_others
     expect(own_peer_evals_hash.length).to eql 4
     expect(own_peer_evals_hash[submission1.id]).to eql peer_eval1
     expect(own_peer_evals_hash[submission2.id]).to eql peer_eval2
@@ -160,7 +160,7 @@ describe Team do
     expect(own_peer_evals_hash[submission4.id]).to eql peer_eval4
   end
 
-  it 'should have get_peer_evaluations_for_self_team_as_hash method' do
+  it '#get_evaluations_for_own_team' do
     milestone1 = FactoryGirl.create(:milestone, name: '1.team.model.spec')
     milestone2 = FactoryGirl.create(:milestone, name: '2.team.model.spec')
     milestone3 = FactoryGirl.create(:milestone, name: '3.team.model.spec')
@@ -182,7 +182,7 @@ describe Team do
     peer_eval5 = FactoryGirl.create(:peer_evaluation, team: team_evaluator2, submission: submission2)
     peer_eval6 = FactoryGirl.create(:peer_evaluation, adviser: adviser, submission: submission2)
 
-    peer_evals_hash = team.get_peer_evaluations_for_self_team_as_hash
+    peer_evals_hash = team.get_evaluations_for_own_team
     expect(peer_evals_hash.length).to eql 3
     expect(peer_evals_hash[milestone1.id][evaluating1.id]).to eql peer_eval1
     expect(peer_evals_hash[milestone1.id][evaluating2.id]).to eql peer_eval2
@@ -200,7 +200,7 @@ describe Team do
     expect(peer_evals_hash[milestone3.id][:adviser]).to be_nil
   end
 
-  it 'should have get_average_eval_rating_as_hash method' do
+  it '#get_average_evaluation_ratings' do
     milestone1 = FactoryGirl.create(:milestone, name: 'Milestone 1')
     milestone2 = FactoryGirl.create(:milestone, name: 'Milestone 2')
     milestone3 = FactoryGirl.create(:milestone, name: 'Milestone 3')
@@ -225,7 +225,7 @@ describe Team do
                        submission: submission2, private_content: '{"q[6][1]":"2"}')
     FactoryGirl.create(:peer_evaluation, team: team_evaluator2,
                        submission: submission2, private_content: '{"q[6][1]":"3"}')
-    average_ratings_hash = team.get_average_eval_rating_as_hash
+    average_ratings_hash = team.get_average_evaluation_ratings
     expect(average_ratings_hash.length).to eql 4
     expect(average_ratings_hash[milestone1.id]).to be_within(0.05).of(2.33)
     expect(average_ratings_hash[milestone2.id]).to be_within(0.05).of(2.5)
@@ -233,7 +233,7 @@ describe Team do
     expect(average_ratings_hash[:all]).to be_within(0.05).of(2.4)
     FactoryGirl.create(:peer_evaluation, adviser: adviser, owner_type: 1,
                        submission: submission2, private_content: '{"q[6][1]":"3"}')
-    average_ratings_hash = team.get_average_eval_rating_as_hash
+    average_ratings_hash = team.get_average_evaluation_ratings
     expect(average_ratings_hash.length).to eql 4
     expect(average_ratings_hash[milestone1.id]).to be_within(0.05).of(2.33)
     expect(average_ratings_hash[milestone2.id]).to be_within(0.05).of(2.75)
@@ -241,7 +241,7 @@ describe Team do
     expect(average_ratings_hash[:all]).to be_within(0.05).of(2.58)
   end
 
-  it 'should have get_average_feedback_ratings_as_hash method' do
+  it '#get_average_feedback_ratings' do
     user_adviser = FactoryGirl.create(:user, email: 'user1@team.model.spec', uid: 'uid6@team.model.spec')
     adviser = FactoryGirl.create(:adviser, user: user_adviser)
     team = FactoryGirl.create(:team, team_name: '1.team.model.spec', adviser: adviser)
@@ -258,7 +258,7 @@ describe Team do
                        survey_template: survey_template1, response_content: '{"1": "2"}')
     FactoryGirl.create(:feedback, team: team_evaluated3, target_team: team,
                        survey_template: survey_template1, response_content: '{"1": "2"}')
-    feedback_ratings_hash = team.get_average_feedback_ratings_as_hash
+    feedback_ratings_hash = team.get_average_feedback_ratings
     expect(feedback_ratings_hash[:all]).to be_within(0.05).of(1.33)
   end
 end

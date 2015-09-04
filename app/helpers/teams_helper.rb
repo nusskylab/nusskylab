@@ -3,7 +3,7 @@ module TeamsHelper
     if is_current_user_admin?
       return true
     end
-    is_current_user_contained?(Adviser.all.map{|adviser| adviser.user})
+    not Adviser.all.map{|adviser| adviser.user}.index {|user| user.id == current_user.id}.nil?
   end
 
   def can_current_user_create_new_team
@@ -26,12 +26,7 @@ module TeamsHelper
     if is_current_user_admin?
       return true
     end
-    if is_view
-      is_current_user_contained?(team.get_relevant_users(false, false))
-    else
-      is_current_user_contained?(team.get_relevant_users)
-    end
-    false
+    not team.get_relevant_users((not is_view), (not is_view)).index{|user| user.id == current_user.id}.nil?
   end
 
   def can_current_user_delete_team(team = nil)

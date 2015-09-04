@@ -96,6 +96,8 @@ en:
       page_title: >
         View received feedbacks
   students:
+    student_form_instruction: >
+      Select a user from the list and assign student role to him/her.
     index:
       page_title: >
         View all students
@@ -107,6 +109,8 @@ en:
         Student %{user_name} has been created successfully.
       failure_message: >
         Student could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_messages}
+      user_missing_message: >
+        User with specified ID could not be found. Please provide a valid user ID.
     edit:
       page_title: >
         Edit Student %{user_name}'s info
@@ -123,6 +127,8 @@ en:
     show:
       page_title: >
         View Student %{user_name}'s info
+      no_team_instruction: >
+        Currently you are not in another team so there is nothing to show. Get teamed up first :P
       submit_submission_instruction: >
         Submissions to milestones are listed here.
         You can submit for a milestone or edit a previously created submission.

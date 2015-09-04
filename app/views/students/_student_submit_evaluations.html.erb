@@ -11,7 +11,7 @@
         </thead>
         <tbody>
         <% locals[:evaluateds].each do |evaluated| %>
-            <% if (temp_evaluated_submission = locals[:team_evaluateds_submissions][milestone.id][evaluated.evaluated_id]) %>
+            <% if (temp_evaluated_submission = locals[:team_evaluateds_submissions][milestone.id][evaluated.id]) %>
                 <tr>
                   <td>
                     <%= render 'teams/team_name_representation', locals: {team: evaluated.evaluated} %>
@@ -31,7 +31,7 @@
                     <%= l temp_evaluated_submission.updated_at %>
                   </td>
                   <td>
-                    <% if (temp_evaluation = locals[:team_evaluations][milestone.id][evaluated.evaluated_id]) %>
+                    <% if (temp_evaluation = locals[:team_evaluations][temp_evaluated_submission.id]) %>
                         <a href="<%= edit_team_peer_evaluation_path(evaluated.evaluator_id, temp_evaluation.id) %>"
                            class="btn btn-success">
                           Edit Evaluation
