@@ -35,14 +35,14 @@ class Team < ActiveRecord::Base
         if not team.mentor_id.blank?
           csv_row.concat([team.mentor.user.id, team.mentor.user.user_name])
         end
-        ratings_hash = team.get_average_eval_rating_as_hash
+        ratings_hash = team.get_average_evaluation_ratings
         csv_row.append(ratings_hash[:all])
         csv << csv_row
       end
     end
   end
 
-  def self.get_project_level_mapping_from_raw(project_level)
+  def self.get_project_level_from_raw(project_level)
     project_level = project_level.downcase
     if project_level[VOSTOK_REGEX]
       Team.project_levels[:vostok]
@@ -54,7 +54,7 @@ class Team < ActiveRecord::Base
   end
 
   def set_project_level(project_level)
-    self.project_level = Team.get_project_level_mapping_from_raw(project_level)
+    self.project_level = Team.get_project_level_from_raw(project_level)
   end
 
   # Get a team's students, adviser, mentor as user and if include_* is true,
@@ -77,7 +77,7 @@ class Team < ActiveRecord::Base
   end
 
   # Get team's own submissions as hash with milestone_id as key
-  def get_own_submissions_as_hash
+  def get_own_submissions
     submissions_hash = {}
     self.submissions.each do |submission|
       submissions_hash[submission.milestone_id] = submission
@@ -88,33 +88,33 @@ class Team < ActiveRecord::Base
   # Get team's evaluated teams' submissions as hash,
   #   first level of keys are milestone_id
   #   second level of keys are evaluating_id
-  def get_evaluated_submissions_as_hash
-    evaluated_submissions_hash = {}
+  def get_others_submissions
+    evaluated_submissions = {}
     milestones = Milestone.all
     milestones.each do |milestone|
-      evaluated_submissions_hash[milestone.id] = {}
+      evaluated_submissions[milestone.id] = {}
       self.evaluateds.each do |evaluated|
-        evaluated_submissions_hash[milestone.id][evaluated.id] = Submission.find_by(team_id: evaluated.evaluated_id,
-                                                                                    milestone_id: milestone.id)
+        evaluated_submissions[milestone.id][evaluated.id] = Submission.find_by(team_id: evaluated.evaluated_id,
+                                                                               milestone_id: milestone.id)
       end
     end
-    return evaluated_submissions_hash
+    return evaluated_submissions
   end
 
   # Get own peer evaluations as hash with evaluated teams' submission ids as keys
-  def get_own_peer_evaluations_for_evaluated_teams_as_hash
-    own_peer_evaluations_hash = {}
-    self.peer_evaluations.each do |peer_evaluation|
-      own_peer_evaluations_hash[peer_evaluation.submission_id] = peer_evaluation
+  def get_own_evaluations_for_others
+    own_evaluations = {}
+    self.peer_evaluations.each do |evaluation|
+      own_evaluations[evaluation.submission_id] = evaluation
     end
-    return own_peer_evaluations_hash
+    own_evaluations
   end
 
   # Get peer evaluations for self as hash, first level of keys are milestone_ids
   #   second level of keys are evaluating_ids(for now, could be sym adviser for adviser evaluation)
-  def get_peer_evaluations_for_self_team_as_hash
+  def get_evaluations_for_own_team
     peer_evaluations_hash = {}
-    submissions_hash = self.get_own_submissions_as_hash
+    submissions_hash = self.get_own_submissions
     milestones = Milestone.all
     milestones.each do |milestone|
       peer_evaluations_hash[milestone.id] = {}
@@ -130,11 +130,19 @@ class Team < ActiveRecord::Base
     return peer_evaluations_hash
   end
 
+  def get_feedbacks_for_others
+    feedbacks_hash = {}
+    self.evaluators.each do |evaluator|
+      feedbacks_hash[evaluator.id] = Feedback.find_by(team_id: self.id, target_team_id: evaluator.evaluator_id)
+    end
+    feedbacks_hash
+  end
+
   # Get average rating for own team based on received evaluations, with milestone_ids are keys
   #   overall evaluating score will be included under special sym :all
-  def get_average_eval_rating_as_hash
+  def get_average_evaluation_ratings
     ratings_hash = {}
-    peer_evaluations_hash = self.get_peer_evaluations_for_self_team_as_hash
+    peer_evaluations_hash = self.get_evaluations_for_own_team
     overall_ratings = []
     peer_evaluations_hash.each do |milestone_id, evaluations_hash|
       ratings = []
@@ -157,7 +165,7 @@ class Team < ActiveRecord::Base
   end
 
   # Get average ratings for feedback. Currently there is only overall option
-  def get_average_feedback_ratings_as_hash
+  def get_average_feedback_ratings
     recv_feedbacks = Feedback.where(target_team_id: self.id)
     ratings = []
     recv_feedbacks.each do |feedback|

@@ -20,11 +20,10 @@ Rails.application.routes.draw do
     end
   end
   resources :students do
-    collection do
-      get 'batch_upload'
-      post 'batch_create'
-      post 'use_existing'
-    end
+    # collection do
+    #   get 'batch_upload'
+    #   post 'batch_create'
+    # end
   end
   resources :advisers do
     resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
@@ -48,10 +47,10 @@ Rails.application.routes.draw do
     resources :feedbacks, only: [:new, :create, :edit, :update]
   end
   resources :evaluatings, only: [:index, :new, :create, :edit, :update, :destroy] do
-    collection do
-      get 'batch_upload'
-      post 'batch_create'
-    end
+    # collection do
+    #   get 'batch_upload'
+    #   post 'batch_create'
+    # end
   end
   resources :milestones do
     resources :teams, only: [:show] do

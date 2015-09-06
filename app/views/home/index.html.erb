@@ -1,29 +1,6 @@
-<% content_for :content do %>
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-menu">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="collapse navbar-collapse" id="nav-menu">
-          <ul class="nav navbar-nav">
-            <li><a href="<%= get_home_link %>">Home</a></li>
-          </ul>
-          <%= render 'shared/user_nav_right_menu' %>
-        </div>
-      </div>
-    </nav>
+<% content_for :main_content do %>
     <div class="container" id="welcome-content">
-      <%= render 'shared/flash_messages' %>
       <div class="col-sm-8 col-sm-offset-2">
-        <%= image_tag 'poster.jpg', class: 'img-rounded', id: 'poster-img', width: '100%' %>
-        <div class="blank-spaces">
-          <br><br><br>
-        </div>
         <h1 class="text-center">What is Orbital?</h1>
         <div id="player" class="text-center">
           <iframe width="609" height="371" src="https://www.youtube.com/embed/y-dDF70qOe8"

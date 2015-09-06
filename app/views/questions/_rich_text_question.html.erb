@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body">
       <div class="help-block"><%= locals[:question].instruction %></div>
-      <textarea class="form-control tinymce" rows="7" name="<%= locals[:question].get_question_id_for_form %>"
+      <textarea class="form-control tinymce" rows="7" name="<%= get_question_name(locals[:question]) %>"
                 placeholder="<%= locals[:question].content %>"><%= locals[:question_response].nil? ? '' :
                                                                            locals[:question_response].html_safe %>
       </textarea>

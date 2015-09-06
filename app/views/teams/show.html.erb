@@ -4,7 +4,7 @@
       <div class="panel-heading">
         <h1>
           <%= render 'team_name_representation', locals: {team: @team} %>
-          <% if can_edit_team %>
+          <% if can_current_user_edit_team %>
               <a href="<%= edit_team_path(@team) %>" class="btn btn-info">Edit Team</a>
           <% end %>
         </h1>
@@ -53,8 +53,8 @@
               </div>
               <%= render 'calculated_team_info',
                          locals: {team: @team, milestones: milestones,
-                                  eval_ratings_hash: @team.get_average_eval_rating_as_hash,
-                                  feedback_ratings_hash: @team.get_average_feedback_ratings_as_hash} %>
+                                  eval_ratings_hash: @team.get_average_evaluation_ratings,
+                                  feedback_ratings_hash: @team.get_average_feedback_ratings} %>
             </div>
           </div>
         </div>

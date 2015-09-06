@@ -20,4 +20,15 @@ class Student < ActiveRecord::Base
     end
     teammates
   end
+
+  def adviser
+    if self.team_id.blank?
+      return nil
+    end
+    if self.team.adviser_id.blank?
+      nil
+    else
+      self.team.adviser
+    end
+  end
 end

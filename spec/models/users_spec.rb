@@ -30,7 +30,7 @@ describe User do
     expect(user.uid).to eq 'https://openid.nus.edu.sg/a0000001'
   end
 
-  it 'should have from_omniauth class method' do
+  it '.from_omniauth' do
     auth_info = {email: 'user1@user.model.spec', name: 'user 1'}
     auth_info.define_singleton_method(:email) do
       return self[:email]
@@ -38,8 +38,7 @@ describe User do
     auth_info.define_singleton_method(:name) do
       return self[:name]
     end
-    auth = {provider: 'NUS', uid: 'uid1@user.model.spec',
-            info: auth_info}
+    auth = {provider: 'NUS', uid: 'https://openid.nus.edu.sg/uid1.user.model.spec', info: auth_info}
     auth.define_singleton_method(:provider) do
       return self[:provider]
     end
@@ -51,12 +50,18 @@ describe User do
     end
     user_auth = User.from_omniauth(auth)
     expect(user_auth).not_to be_nil
+    testing_user_name = 'testing'
+    user_auth.user_name = testing_user_name
+    user_auth.save
     user1 = FactoryGirl.build(:user, email: 'user1@user.model.spec', uid: 'uid1@user.model.spec')
     expect(user1).not_to be_valid
     expect(user1.provider_NUS?).to be true
+    user_auth2 = User.from_omniauth(auth)
+    expect(user_auth2).not_to be_nil
+    expect(user_auth2.user_name).to eql testing_user_name
   end
 
-  it 'should have clean_user_provider method' do
+  it '#clean_user_provider' do
     user = FactoryGirl.build(:user, email: 'user1@user.model.spec', uid: 'uid1.user.mode.spec',
                              provider: nil)
     user.clean_user_provider('facebook')

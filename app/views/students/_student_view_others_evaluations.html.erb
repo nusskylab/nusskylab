@@ -7,7 +7,7 @@
         </thead>
         <tbody>
         <% locals[:evaluators].each do |evaluator| %>
-            <% if (temp_evaluator_evaluation = locals[:team_evaluators_evaluations][milestone.id][evaluator.evaluator_id]) %>
+            <% if (temp_evaluator_evaluation = locals[:team_evaluators_evaluations][milestone.id][evaluator.id]) %>
                 <tr>
                   <td>
                     <%= render 'teams/team_name_representation', locals: {team: evaluator.evaluator} %>

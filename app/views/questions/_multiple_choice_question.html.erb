@@ -8,7 +8,7 @@
       <div class="col-sm-12">
         <% options = JSON.parse(locals[:question].content); options.each_with_index do |itm, idx| %>
             <div class="radio">
-              <input type="radio" name="<%= locals[:question].get_question_id_for_form %>" value="<%= idx %>"
+              <input type="radio" name="<%= get_question_name(locals[:question]) %>" value="<%= idx %>"
                      <% if not locals[:question_response].nil? and locals[:question_response].to_s == idx.to_s %>
                      checked="checked"
                      <% end %>

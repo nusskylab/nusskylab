@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     user = User.from_omniauth(auth)
     if user
       sign_in(user)
-      redirect_user_after_sign_in
+      redirect_user_after_sign_in(true)
     else
       redirect_user_after_sign_in(false)
     end

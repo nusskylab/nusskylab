@@ -17,7 +17,7 @@
               <% end %>
             </td>
             <td>
-              <% if (team_feedback = locals[:team_feedbacks][evaluator.evaluator_id]) %>
+              <% if (team_feedback = locals[:team_feedbacks][evaluator.id]) %>
                   <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:student].team_id, team_feedback.id) %>">
                     Edit feedback</a>
               <% else %>

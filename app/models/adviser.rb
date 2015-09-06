@@ -26,7 +26,18 @@ class Adviser < ActiveRecord::Base
     self.teams.each do |team|
       advisee_users.concat(team.get_team_members)
     end
-    return advisee_users
+    advisee_users
+  end
+
+  def get_advised_teams_evaluatings
+    evaluatings = Evaluating.all
+    adviser_evaluatings = []
+    evaluatings.each do |evaluating|
+      if evaluating.evaluated.adviser_id == self.id and evaluating.evaluator.adviser_id == self.id
+        adviser_evaluatings.append(evaluating)
+      end
+    end
+    adviser_evaluatings
   end
 
   # Get the average rating of feedback received by adviser

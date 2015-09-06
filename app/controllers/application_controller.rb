@@ -15,13 +15,10 @@ class ApplicationController < ActionController::Base
     if admin_only and not is_current_user_admin?
       redirect_user(options) and return false
     end
-    is_user_allowed = is_current_user_admin?
-    allowed_users.each do |allowed_user|
-      if allowed_user.id == logged_in_user.id
-        is_user_allowed = true
-      end
+    if is_current_user_admin?
+      return true
     end
-    if not is_user_allowed
+    if not allowed_users.index {|user| user.id == current_user.id}
       redirect_user(options) and return false
     end
     true
