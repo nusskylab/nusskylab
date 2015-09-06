@@ -25,23 +25,26 @@ class User < ActiveRecord::Base
   enum provider: [:provider_nil, :provider_NUS]
 
   def self.from_omniauth(auth)
-    user = User.find_by(provider: auth.provider, uid: auth.uid) || User.new
-    user.email = auth.info.email
-    user.clean_user_provider(auth.provider)
-    user.uid = auth.uid
-    user.user_name = auth.info.name
-    if user.password.blank?
-      user.password = DEFAULT_USER_PASSWORD
+    user = User.find_by(provider: User.get_provider_from_raw(auth.provider), uid: auth.uid)
+    if not user.nil?
+      return user
     end
+    user = User.new(email: auth.info.email, uid: auth.uid, user_name: auth.info.name)
+    user.clean_user_provider(auth.provider)
+    user.password = DEFAULT_USER_PASSWORD
     user.save ? user : nil
   end
 
-  def clean_user_provider(provider)
+  def self.get_provider_from_raw(provider)
     if provider[NUS_PROVIDER_REGEX]
-      self.provider = User.providers[:provider_NUS]
+      self.providers[:provider_NUS]
     else
-      self.provider = User.providers[:provider_nil]
+      self.providers[:provider_nil]
     end
+  end
+
+  def clean_user_provider(provider)
+    self.provider = User.get_provider_from_raw(provider)
   end
 
   def process_uid
