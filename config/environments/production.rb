@@ -51,8 +51,7 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
-  # Use a different logger for distributed setups.
-  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  config.logger = ActiveSupport::Logger.new('log/production.log')
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -60,7 +59,7 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
 
-  config.action_mailer.default_url_options = { host: 'http://nusskylab-mht7cvdwt2.elasticbeanstalk.com/'}
+  config.action_mailer.default_url_options = { host: 'http://nusskylab-dev.comp.nus.edu.sg/'}
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -68,7 +67,7 @@ Rails.application.configure do
     :port => 587,
     :user_name => ENV['SENDGRID_USER_NAME'],
     :password => ENV['SENDDRID_USER_PASSWORD'],
-    :domain => 'nusskylab-mht7cvdwt2.elasticbeanstalk.com/',
+    :domain => 'nusskylab-dev.comp.nus.edu.sg/',
     :authentication => :plain,
     :enable_starttls_auto => true
   }
