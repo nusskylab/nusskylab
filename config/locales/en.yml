@@ -168,6 +168,31 @@ en:
     show:
       page_title: >
         View a submission
+  survey_templates:
+    index:
+      page_title: >
+        View all survey templates
+    new:
+      page_title: >
+        Create new survey template
+    created:
+      success_message: >
+        Survey template has been created successfully.
+      failure_message: >
+        Survey template cannot saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    edit:
+      page_title: >
+        Edit survey template
+    update:
+      success_message: >
+        Survey template has been edited successfully.
+      failure_message: >
+        Survey template cannot saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    destroy:
+      success_message: >
+        Survey template has been deleted successfully.
+      failure_message: >
+        Survey template cannot be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   teams:
     has_dropped_tooltip: >
       This team has dropped out of Skylab :(

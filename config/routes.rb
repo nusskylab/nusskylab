@@ -61,4 +61,6 @@ Rails.application.routes.draw do
       resources :received_feedbacks, only: [:index]
     end
   end
+  resources :survey_templates, except: [:destroy] do
+  end
 end
