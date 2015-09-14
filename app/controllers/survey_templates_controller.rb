@@ -5,6 +5,9 @@ class SurveyTemplatesController < ApplicationController
 
   def new
     @survey_template = SurveyTemplate.new
+    render locals: {
+             milestones: Milestone.all
+           }
   end
 
   def create

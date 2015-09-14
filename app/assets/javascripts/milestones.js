@@ -1,3 +1,8 @@
+//= require moment
+//= require bootstrap-datetimepicker
 'use strict';
-$(document).ready(function () {
+$(function () {
+  $('.datetime-picker').parent().css('position', 'relative');
+  $('.datetime-picker').datetimepicker({format: 'YYYY-MM-DD LT'});
 });
+
