@@ -1,10 +1,11 @@
 <table class="table-sortable table table-hover" id="students-table">
   <thead>
-  <tr><th>User Name</th><th>User Email</th><th class="unsortable">Actions</th></tr>
+  <tr><th class="unsortable sort-index">Index</th><th>User Name</th><th>User Email</th><th class="unsortable">Actions</th></tr>
   </thead>
   <tbody>
-  <% locals[:students].each do |student| %>
+  <% locals[:students].each_with_index do |student, idx| %>
       <tr>
+        <td><%= idx + 1 %></td>
         <td><%= student.user.user_name %></td>
         <td><%= student.user.email %></td>
         <td>

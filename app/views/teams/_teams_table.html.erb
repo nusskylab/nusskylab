@@ -1,12 +1,14 @@
 <table class="table table-hover table-sortable">
   <thead>
   <tr>
-    <th>Team Name</th><th>Project Level</th><th>Has dropped</th><th>Adviser</th><th>Mentor</th><th class="unsortable">Actions</th>
+    <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th>
+    <th>Adviser</th><th>Mentor</th><th class="unsortable">Actions</th>
   </tr>
   </thead>
   <tbody>
-  <% locals[:teams].each do |team| %>
+  <% locals[:teams].each_with_index do |team, idx| %>
       <tr>
+        <td><%= idx + 1 %></td>
         <td>
           <%= render 'team_name_representation', locals: {team: team} %>
         </td>

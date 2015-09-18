@@ -22,7 +22,7 @@ class TeamsController < ApplicationController
     @team = Team.new(team_params)
     @page_title = t('.page_title')
     if @team.save
-      redirect_to teams_path, flash: {success: t('.success_message'), team_name: @team.team_name}
+      redirect_to teams_path, flash: {success: t('.success_message', team_name: @team.team_name)}
     else
       redirect_to new_team_path,
                   flash: {success: t('.failure_message', error_messages: @team.errors.full_messages.join(', '))}
@@ -52,7 +52,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id]) or record_not_found
     not authenticate_user(true, false, @team.get_relevant_users(false, false)) and return
     if update_team
-      redirect_to team_path(@team.id), flash: {success: t('.success_message'), team_name: @team.team_name}
+      redirect_to team_path(@team.id), flash: {success: t('.success_message', team_name: @team.team_name)}
     else
       redirect_to edit_team_path(params[:id]),
                   flash: {danger: t('.failure_message', team_name: @team.team_name,
