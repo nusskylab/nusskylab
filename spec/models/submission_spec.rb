@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Submission do
+RSpec.describe Submission, type: :model do
   it 'is invalid with required field missing' do
     milestone = FactoryGirl.create(:milestone, name: 'Submission milestone 1')
     team = FactoryGirl.create(:team, team_name: 'Submission team 1', adviser: nil, mentor: nil)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Milestone do
+RSpec.describe Milestone, type: :model do
   it 'is invalid with required field missing' do
     expect(FactoryGirl.build(:milestone, name: nil)).not_to be_valid
     expect(FactoryGirl.build(:milestone, submission_deadline: nil)).not_to be_valid
