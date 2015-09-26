@@ -36,11 +36,7 @@ Rails.application.routes.draw do
       post 'use_existing'
     end
   end
-  resources :admins do
-    collection do
-      post 'use_existing'
-    end
-  end
+  resources :admins, only: [:index, :new, :create, :show, :destroy]
   resources :teams do
     resources :submissions, only: [:new, :create, :edit, :update, :show]
     resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]

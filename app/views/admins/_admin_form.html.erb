@@ -1,5 +1,5 @@
 <%= simple_form_for locals[:admin],
-                    url: {action: (locals[:is_new] ? 'use_existing' : 'update')},
+                    url: {action: (locals[:is_new] ? 'create' : 'update')},
                     html: {class: 'form-horizontal'} do |f| %>
     <%= render 'shared/error_messages', locals: {target_model: locals[:admin]} %>
     <div class="form-group">

@@ -28,6 +28,26 @@ en:
       You are not allowed to do this, please contact admin for more information
     path_not_found_message: >
       The url you have entered does not exist
+  admins:
+    index:
+      page_title: >
+        View all admins
+    new:
+      page_title: >
+        Create a new admin
+    create:
+      success_message: >
+        Admin %{user_name} has been successfully created
+      failure_message: >
+        Admin could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    show:
+      page_title: >
+        View admin %{user_name}' page
+    destroy:
+      success_message: >
+        Admin %{user_name} has been successfully deleted
+      failure_message: >
+        Admin could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   advisers:
     show:
       view_teams_instruction: >
@@ -242,3 +262,8 @@ en:
         The user information has been updated successfully
       failure_message: >
         User information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
+    destroy:
+      success_message: >
+        The user has been successfully deleted
+      failure_message: >
+        User cannot be deleted

@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     logged_in_user = current_user
     if logged_in_user.nil?
-      return '/'
+      return root_path
     end
     student = Student.student?(logged_in_user.id)
     adviser = Adviser.adviser?(logged_in_user.id)
@@ -96,11 +96,11 @@ class ApplicationController < ActionController::Base
   end
 
   def get_page_title
-    @page_title = @page_title || 'Orbital'
+    @page_title ||= 'Orbital'
   end
 
   def get_home_link
-    current_user ? after_sign_in_path_for(current_user) : '/'
+    current_user ? after_sign_in_path_for(current_user) : root_path
   end
 
   def record_not_found
