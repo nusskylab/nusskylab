@@ -19,7 +19,7 @@ class AdminsController < ApplicationController
     user = User.find(params[:admin][:user_id])
     @admin = Admin.new(user_id: user.id)
     if @admin.save
-      redirect_to admins_path, flash: {success: t('.success_message', user_name: @admin.user.user_name)}
+      redirect_to admins_path, flash: {success: t('.success_message', user_name: user.user_name)}
     else
       redirect_to new_admin_path, flash: {danger: t('.failure_message',
                                                      error_messages: @admin.errors.full_messages.join(' '))}

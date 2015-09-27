@@ -25,11 +25,8 @@ Rails.application.routes.draw do
     #   post 'batch_create'
     # end
   end
-  resources :advisers do
+  resources :advisers, only: [:index, :new, :create, :show, :destroy] do
     resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
-    collection do
-      post 'use_existing'
-    end
   end
   resources :mentors do
     collection do

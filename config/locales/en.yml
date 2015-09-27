@@ -42,7 +42,7 @@ en:
         Admin could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
     show:
       page_title: >
-        View admin %{user_name}' page
+        View admin %{user_name}'s page
     destroy:
       success_message: >
         Admin %{user_name} has been successfully deleted
@@ -51,7 +51,20 @@ en:
       failure_message: >
         Admin could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   advisers:
+    index:
+      page_title: >
+        View all advisers
+    new:
+      page_title: >
+        Create a new adviser
+    create:
+      success_message: >
+        Adviser %{user_name} has been successfully created
+      failure_message: >
+        Adviser could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
     show:
+      page_title: >
+        View adviser %{user_name}'s page
       view_teams_instruction: >
         All of your teams are listed below. You can edit any team's information
         or edit evaluation relation among them.
@@ -60,6 +73,11 @@ en:
         and submit/edit your evaluation for one submission.
       more_info_instruction: >
         You can view more related information here.
+    destroy:
+      success_message: >
+        Adviser %{user_name} has been successfully deleted
+      failure_message: >
+        Adviser could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   evaluatings:
     index:
       page_title: >
