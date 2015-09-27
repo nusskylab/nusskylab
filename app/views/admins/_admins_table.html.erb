@@ -9,7 +9,6 @@
         <td><%= admin.user.email %></td>
         <td>
           <a class="btn btn-default btn-xs" href="<%=  admin_path(admin.id) %>">View</a>
-          <a class="btn btn-default btn-xs" href="<%= edit_admin_path(admin.id) %>">Edit</a>
           <% if not (is_current_user_admin?.id == admin.id) %>
               <%= link_to 'Delete', admin_path(admin.id),
                           :confirm => 'Are you sure to delete this admin permanently?',

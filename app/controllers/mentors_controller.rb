@@ -1,55 +1,36 @@
 class MentorsController < ApplicationController
 
   def index
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
+    @page_title = t('.page_title')
     @mentors = Mentor.all
-    render
   end
 
   def new
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
+    @page_title = t('.page_title')
     @mentor = Mentor.new
     render locals: {
-             user: User.new,
              users: User.all
            }
   end
 
   def create
-    not check_access(true, true) and return
-    user = User.new(get_user_params)
-    flash = {}
-    if not user.save
-      render_new_template_with_err(user)
-    end
-    @mentor = Mentor.new(user_id: user.id)
-    if @mentor.save
-      flash[:success] = 'The mentor is successfully created'
-      redirect_to mentors_path, flash: flash
-    else
-      render_new_template_with_err(user)
-    end
-  end
-
-  def use_existing
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     user = User.find(params[:mentor][:user_id])
-    if not user
-      render_new_template_with_err(user) and return
-    end
     @mentor = Mentor.new(user_id: user.id)
     if @mentor.save
-      flash = {}
-      flash[:success] = 'The mentor is successfully created'
-      redirect_to mentors_path, flash: flash
+      redirect_to mentors_path, flash: {success: t('.success_message', user_name: user.user_name)}
     else
-      render_new_template_with_err(user)
+      redirect_to new_mentor_path, flash: {danger: t('.failure_message',
+                                           error_messages: @mentor.errors.full_messages.join(' '))}
     end
   end
 
   def show
-    not check_access(true, false) and return
     @mentor = Mentor.find(params[:id])
+    not authenticate_user(true, false, [@mentor.user]) and return
+    @page_title = t('.page_title', user_name: @mentor.user.user_name)
     milestones, teams_submissions, own_evaluations = get_data_for_mentor
     render locals: {
              milestones: milestones,
@@ -58,62 +39,29 @@ class MentorsController < ApplicationController
            }
   end
 
-  def edit
-    not check_access(true, true) and return
-    @mentor = Mentor.find(params[:id])
-    render
-  end
-
-  def update
-    not check_access(true, true) and return
-    @mentor = Mentor.find(params[:id])
-    user = @mentor.user
-    if user.update(get_user_params)
-      if admin?
-        redirect_to mentors_path
-      else
-        redirect_to @mentor
-      end
-    else
-      render template: 'edit'
-    end
-  end
-
   def destroy
-    not check_access(true, true) and return
+    not authenticate_user(true, true) and return
     @mentor = Mentor.find(params[:id])
-    @mentor.destroy
-    redirect_to mentors_path
-  end
-
-  def get_page_title
-    @page_title = @page_title || 'Mentors | Orbital'
-    super
+    if @mentor.destroy
+      redirect_to mentors_path, flash: {success: t('.success_message', user_name: @mentor.user.user_name)}
+    else
+      redirect_to mentors_path, flash: {danger: t('.failure_message',
+                                        error_messages: @mentor.errors.full_messages.join(' '))}
+    end
   end
 
   private
-    def get_user_params
-      user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
-    end
-
-    def render_new_template_with_err(user)
-      render template: 'mentors/new', locals: {
-                               users: User.all,
-                               user: user
-                             }
-    end
-
-    def get_data_for_mentor
-      milestones = Milestone.all
-      teams_submissions = {}
-      own_evaluations = {}
-      milestones.each do |milestone|
-        teams_submissions[milestone.id] = {}
-        @mentor.teams.each do |team|
-          teams_submissions[milestone.id][team.id] = Submission.find_by(milestone_id: milestone.id,
-                                                                        team_id: team.id)
-        end
+  def get_data_for_mentor
+    milestones = Milestone.all
+    teams_submissions = {}
+    own_evaluations = {}
+    milestones.each do |milestone|
+      teams_submissions[milestone.id] = {}
+      @mentor.teams.each do |team|
+        teams_submissions[milestone.id][team.id] = Submission.find_by(milestone_id: milestone.id,
+                                                                      team_id: team.id)
       end
-      return milestones, teams_submissions, own_evaluations
     end
+    return milestones, teams_submissions, own_evaluations
+  end
 end

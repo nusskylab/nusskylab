@@ -1,28 +1,33 @@
 <%- if controller_name != 'sessions' %>
-  <%= link_to "Log in", new_session_path(resource_name) %><br />
+    <div class="col-sm-4">
+      <%= link_to 'Log in', new_session_path(resource_name) %>
+    </div>
 <% end -%>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+  <%= link_to 'Sign up', new_registration_path(resource_name) %><br />
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+    <div class="col-sm-8 col-sm-offset-4">
+      <%= link_to 'Forgot your password?', new_password_path(resource_name) %>
+    </div>
 <% end -%>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+  <%= link_to 'Didn\'t receive confirmation instructions?', new_confirmation_path(resource_name) %><br />
 <% end -%>
 
 <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
+  <%= link_to 'Didn\'t receive unlock instructions?', new_unlock_path(resource_name) %><br />
 <% end -%>
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with #{provider.to_s.titleize}", user_omniauth_authorize_path(provider) %><br />
+    <%= link_to 'Sign in with #{provider.to_s.titleize}', user_omniauth_authorize_path(provider) %><br />
   <% end -%>
 <% end -%>
-<hr>
-Or you can
-  <%= link_to 'Sign in with NUS',  nus_openid_login_path, class: 'btn btn-info' %>
+<br><hr>
+<div class="col-sm-8 col-sm-offset-4">
+  Or you can <%= link_to 'Sign in with NUS',  nus_openid_login_path, class: 'btn btn-info' %>
+</div>

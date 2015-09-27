@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe PeerEvaluation do
+RSpec.describe PeerEvaluation, type: :model do
   it 'is invalid with required field missing' do
     milestone = FactoryGirl.create(:milestone, name: 'PeerEvaluation milestone 1')
     team1 = FactoryGirl.create(:team, team_name: 'PeerEvaluation team 1', adviser: nil, mentor: nil)

@@ -1,33 +1,8 @@
-<%= simple_form_for locals[:milestone], url: {action: (locals[:is_new] ? 'create' : 'update')},
-             html: {:class => 'form-horizontal'} do |f| %>
-    <%= render 'shared/error_messages', locals: {target_model: locals[:milestone]} %>
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="milestone-name">Milestone Name:</label>
-      <div class="col-sm-10">
-        <%= f.text_field :name, class: 'form-control', placeholder: 'Input milestone name', id: 'milestone-name',
-                         required: 'required' %>
-        <div class="help-block with-errors">Input milestone name</div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="milestone-submission-deadline">Submission Deadline:</label>
-      <div class="col-sm-10">
-        <%= f.datetime_select :submission_deadline, class: 'form-control',
-                              placeholder: 'Input milestone submission deadline', id: 'milestone-submission-deadline' %>
-        <div class="help-block with-errors">Input milestone submission deadline</div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="milestone-evaluation-deadline">Evaluation Deadline:</label>
-      <div class="col-sm-10">
-        <%= f.datetime_select :peer_evaluation_deadline, class: 'form-control',
-                              placeholder: 'Input milestone evaluation deadline', id: 'milestone-evaluation-deadline' %>
-        <div class="help-block with-errors">Input milestone evaluation deadline</div>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <%= f.submit 'Submit', class: 'btn btn-success' %>
-      </div>
-    </div>
+<%= simple_form_for(locals[:milestone], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+                    url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :name, input_html: {placeholder: 'input milestone name'}, required: true %>
+    <%= f.input :submission_deadline, as: :string, input_html: { value: (l(f.object.submission_deadline) if f.object.submission_deadline), class: 'datetime-picker' } %>
+    <%= f.input :peer_evaluation_deadline, as: :string, input_html: { value: (l(f.object.peer_evaluation_deadline) if f.object.peer_evaluation_deadline), class: 'datetime-picker' } %>
+    <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>

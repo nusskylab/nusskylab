@@ -28,8 +28,43 @@ en:
       You are not allowed to do this, please contact admin for more information
     path_not_found_message: >
       The url you have entered does not exist
-  advisers:
+  admins:
+    index:
+      page_title: >
+        View all admins
+    new:
+      page_title: >
+        Create a new admin
+    create:
+      success_message: >
+        Admin %{user_name} has been successfully created
+      failure_message: >
+        Admin could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
     show:
+      page_title: >
+        View admin %{user_name}'s page
+    destroy:
+      success_message: >
+        Admin %{user_name} has been successfully deleted
+      cannot_delete_self_error: >
+        Admin cannot delete own role
+      failure_message: >
+        Admin could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+  advisers:
+    index:
+      page_title: >
+        View all advisers
+    new:
+      page_title: >
+        Create a new adviser
+    create:
+      success_message: >
+        Adviser %{user_name} has been successfully created
+      failure_message: >
+        Adviser could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    show:
+      page_title: >
+        View adviser %{user_name}'s page
       view_teams_instruction: >
         All of your teams are listed below. You can edit any team's information
         or edit evaluation relation among them.
@@ -38,6 +73,11 @@ en:
         and submit/edit your evaluation for one submission.
       more_info_instruction: >
         You can view more related information here.
+    destroy:
+      success_message: >
+        Adviser %{user_name} has been successfully deleted
+      failure_message: >
+        Adviser could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   evaluatings:
     index:
       page_title: >
@@ -67,11 +107,17 @@ en:
       failure_message: >
         Evaluating could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   feedbacks:
+    new:
+      page_title: >
+        Create feedback
     create:
       success_message: >
         Feedback is saved successfully
       failure_message: >
         Feedback could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+    edit:
+      page_title: >
+        Edit feedback
     update:
       success_message: >
         Feedback is saved successfully
@@ -81,6 +127,26 @@ en:
     index:
       page_title: >
         Home | Orbital
+  mentors:
+    index:
+      page_title: >
+        View all mentors
+    new:
+      page_title: >
+        Create a new mentor
+    create:
+      success_message: >
+        Mentor %{user_name} has been successfully created
+      failure_message: >
+        Mentor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    show:
+      page_title: >
+        View mentor %{user_name}'s page
+    destroy:
+      success_message: >
+        Mentor %{user_name} has been successfully deleted
+      failure_message: >
+        Mentor could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   peer_evaluations:
     new:
       page_title: >
@@ -91,10 +157,14 @@ en:
     show:
       page_title: >
         View a peer evaluation
+  received_evals:
+    index:
+      page_title: >
+        View all received peer evaluations
   received_feedbacks:
     index:
       page_title: >
-        View received feedbacks
+        View all received feedback
   students:
     student_form_instruction: >
       Select a user from the list and assign student role to him/her.
@@ -168,6 +238,31 @@ en:
     show:
       page_title: >
         View a submission
+  survey_templates:
+    index:
+      page_title: >
+        View all survey templates
+    new:
+      page_title: >
+        Create new survey template
+    created:
+      success_message: >
+        Survey template has been created successfully.
+      failure_message: >
+        Survey template cannot saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    edit:
+      page_title: >
+        Edit survey template
+    update:
+      success_message: >
+        Survey template has been edited successfully.
+      failure_message: >
+        Survey template cannot saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    destroy:
+      success_message: >
+        Survey template has been deleted successfully.
+      failure_message: >
+        Survey template cannot be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   teams:
     has_dropped_tooltip: >
       This team has dropped out of Skylab :(
@@ -217,3 +312,8 @@ en:
         The user information has been updated successfully
       failure_message: >
         User information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
+    destroy:
+      success_message: >
+        The user has been successfully deleted
+      failure_message: >
+        User cannot be deleted

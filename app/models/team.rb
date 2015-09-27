@@ -25,16 +25,8 @@ class Team < ActiveRecord::Base
               'Average PE Score']
       all.each do |team|
         csv_row = [team.id, team.team_name, team.project_level, team.has_dropped]
-        members = team.get_team_members
-        members.each do |member_user|
-          csv_row.concat([member_user.id, member_user.user_name, member_user.email])
-        end
-        if not team.adviser_id.blank?
-          csv_row.concat([team.adviser.user.id, team.adviser.user.user_name])
-        end
-        if not team.mentor_id.blank?
-          csv_row.concat([team.mentor.user.id, team.mentor.user.user_name])
-        end
+        team.send :export_add_team_members, csv_row
+        team.send :export_adviser_and_mentor, csv_row
         ratings_hash = team.get_average_evaluation_ratings
         csv_row.append(ratings_hash[:all])
         csv << csv_row
@@ -214,5 +206,28 @@ class Team < ActiveRecord::Base
       evaluated_members.concat(evaluated.evaluated.get_team_members)
     end
     return evaluated_members
+  end
+
+  private
+  def export_add_team_members(csv_row)
+    members = self.get_team_members
+    members.each do |member_user|
+      csv_row.concat([member_user.id, member_user.user_name, member_user.email])
+    end
+    csv_row
+  end
+
+  def export_adviser_and_mentor(csv_row)
+    if not self.adviser_id.blank?
+      csv_row.concat([self.adviser.user.id, self.adviser.user.user_name])
+    else
+      csv_row.concat(%w(nil nil))
+    end
+    if not self.mentor_id.blank?
+      csv_row.concat([self.mentor.user.id, self.mentor.user.user_name])
+    else
+      csv_row.concat(%w(nil nil))
+    end
+    csv_row
   end
 end

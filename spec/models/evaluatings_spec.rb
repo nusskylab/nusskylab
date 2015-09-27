@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Evaluating do
+RSpec.describe Evaluating, type: :model do
   it 'is invalid with required field missing' do
     team1 = FactoryGirl.create(:team, team_name: 'Evaluating team 1', adviser: nil, mentor: nil)
     expect(FactoryGirl.build(:evaluating, evaluator: team1, evaluated: nil)).not_to be_valid

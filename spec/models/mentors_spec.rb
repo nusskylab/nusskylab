@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Mentor do
+RSpec.describe Mentor, type: :model do
   it 'is invalid with required field missing' do
     expect(FactoryGirl.build(:mentor, user: nil)).not_to be_valid
   end

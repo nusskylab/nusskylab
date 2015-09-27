@@ -38,7 +38,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.3)
-    autoprefixer-rails (5.2.1.3)
+    autoprefixer-rails (6.0.2)
       execjs
       json
     bcrypt (3.1.10)
@@ -47,9 +47,11 @@ GEM
     bootstrap-sass (3.3.5.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.3.0)
+    bootstrap3-datetimepicker-rails (4.15.35)
+      momentjs-rails (>= 2.8.1)
     bower-rails (0.10.0)
     builder (3.2.2)
-    codeclimate-test-reporter (0.4.7)
+    codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -58,7 +60,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
-    database_cleaner (1.4.1)
+    database_cleaner (1.5.0)
     debug_inspector (0.0.2)
     devise (3.5.2)
       bcrypt (~> 3.0)
@@ -83,7 +85,7 @@ GEM
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
-    jquery-rails (4.0.4)
+    jquery-rails (4.0.5)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
@@ -92,9 +94,11 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    mime-types (2.6.1)
+    mime-types (2.6.2)
     mini_portile (0.6.2)
     minitest (5.8.0)
+    momentjs-rails (2.10.3)
+      railties (>= 3.1)
     multi_json (1.11.2)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
@@ -105,7 +109,7 @@ GEM
       omniauth (~> 1.0)
       rack-openid (~> 1.3.1)
     orm_adapter (0.5.0)
-    pg (0.18.2)
+    pg (0.18.3)
     puma (2.11.3)
       rack (>= 1.1, < 2.0)
     rack (1.6.4)
@@ -126,7 +130,7 @@ GEM
       railties (= 4.2.0)
       sprockets-rails
     rails-assets-jquery (2.1.4)
-    rails-assets-jquery.tablesorter (2.23.2)
+    rails-assets-jquery.tablesorter (2.23.3)
       rails-assets-jquery (>= 1.2.6)
     rails-assets-select2 (4.0.0)
     rails-deprecated_sanitizer (1.0.3)
@@ -137,7 +141,7 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
-    rails-i18n (4.0.4)
+    rails-i18n (4.0.5)
       i18n (~> 0.6)
       railties (~> 4.0)
     railties (4.2.0)
@@ -168,16 +172,16 @@ GEM
     rspec-support (3.3.0)
     ruby-openid (2.7.0)
     sass (3.4.18)
-    sass-rails (5.0.3)
+    sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
-      tilt (~> 1.1)
+      tilt (>= 1.1, < 3)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    simple_form (3.1.0)
+    simple_form (3.1.1)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
     simplecov (0.10.0)
@@ -185,17 +189,17 @@ GEM
       json (~> 1.8)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
-    spring (1.3.6)
-    sprockets (3.3.3)
+    spring (1.4.0)
+    sprockets (3.3.4)
       rack (~> 1.0)
-    sprockets-rails (2.3.2)
+    sprockets-rails (2.3.3)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     thor (0.19.1)
     thread_safe (0.3.5)
-    tilt (1.4.1)
-    tinymce-rails (4.2.4)
+    tilt (2.0.1)
+    tinymce-rails (4.2.5)
       railties (>= 3.1.1)
     turbolinks (2.5.3)
       coffee-rails
@@ -217,6 +221,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 3.3.4)!
+  bootstrap3-datetimepicker-rails (~> 4.15.35)!
   bower-rails (~> 0.10.0)!
   codeclimate-test-reporter!
   coffee-rails (~> 4.1.0)!
@@ -225,6 +230,7 @@ DEPENDENCIES
   factory_girl_rails!
   jbuilder (~> 2.0)!
   jquery-rails!
+  momentjs-rails (>= 2.9.0)!
   omniauth!
   omniauth-openid!
   pg!
@@ -236,10 +242,10 @@ DEPENDENCIES
   rspec-rails!
   sass-rails (~> 5.0)!
   sdoc (~> 0.4.0)!
-  simple_form!
+  simple_form (~> 3.1.1)!
   simplecov (~> 0.10.0)!
   spring!
-  tinymce-rails!
+  tinymce-rails (~> 4.2.5)!
   turbolinks!
   uglifier (>= 1.3.0)!
   web-console (~> 2.0)!

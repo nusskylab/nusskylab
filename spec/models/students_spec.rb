@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Student do
+RSpec.describe Student, type: :model do
   it 'is invalid with required field missing' do
     expect(FactoryGirl.build(:student, user: nil, team: nil)).not_to be_valid
   end

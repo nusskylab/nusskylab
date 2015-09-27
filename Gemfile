@@ -32,11 +32,14 @@ source 'https://rubygems.org' do
 	# Use jquery as the JavaScript library
 	gem 'jquery-rails'
 	# simple_form for form validation
-	gem 'simple_form'
+	gem 'simple_form', '~> 3.1.1'
 	# tiny_mce for rails
-	gem 'tinymce-rails'
+	gem 'tinymce-rails', '~> 4.2.5'
 	# internalization
 	gem 'rails-i18n'
+	# datetime picker
+	gem 'momentjs-rails', '>= 2.9.0'
+	gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
 
 	# Use Capistrano for deployment
 	# gem 'capistrano-rails', group: :development

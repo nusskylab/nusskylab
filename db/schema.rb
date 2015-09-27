@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830150856) do
+ActiveRecord::Schema.define(version: 20150912080750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,10 +126,13 @@ ActiveRecord::Schema.define(version: 20150830150856) do
   create_table "survey_templates", force: :cascade do |t|
     t.text     "instruction"
     t.datetime "deadline"
-    t.integer  "survey_type", default: 0
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "survey_type",  default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "milestone_id"
   end
+
+  add_index "survey_templates", ["milestone_id"], name: "index_survey_templates_on_milestone_id", using: :btree
 
   create_table "teams", force: :cascade do |t|
     t.integer  "adviser_id"
@@ -181,6 +184,7 @@ ActiveRecord::Schema.define(version: 20150830150856) do
   add_foreign_key "students", "users"
   add_foreign_key "submissions", "milestones"
   add_foreign_key "submissions", "teams"
+  add_foreign_key "survey_templates", "milestones"
   add_foreign_key "teams", "advisers"
   add_foreign_key "teams", "mentors"
 end

@@ -1,19 +1,17 @@
 <table class="table table-hover table-sortable">
   <thead>
   <tr>
-    <th>User Name</th>
-    <th>User Email</th>
-    <th class="unsortable">Actions</th>
+    <th class="unsortable sort-index">Index</th><th>User Name</th><th>User Email</th><th class="unsortable">Actions</th>
   </tr>
   </thead>
   <tbody>
-  <% @advisers.each do |adviser| %>
+  <% locals[:advisers].each_with_index do |adviser, idx| %>
       <tr>
+        <td><%= idx + 1 %></td>
         <td><%= adviser.user.user_name %></td>
         <td><%= adviser.user.email %></td>
         <td>
           <a class="btn btn-default btn-xs" href="<%= adviser_path(adviser.id) %>">View</a>
-          <a class="btn btn-default btn-xs" href="<%= edit_adviser_path(adviser.id) %>">Edit</a>
           <%= link_to 'Delete', adviser_path(adviser.id),
                       :confirm => 'Are you sure to delete this adviser permanently?', :method => :delete, :class => 'btn btn-danger btn-xs' %>
         </td>

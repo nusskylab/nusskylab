@@ -11,18 +11,6 @@ RSpec.describe 'routing to mentors', :type => :routing do
                                             action: 'new')
   end
 
-  it 'routes /mentors/:id/edit to mentors#edit for id' do
-    expect(get: '/mentors/1/edit').to route_to(controller: 'mentors',
-                                               action: 'edit',
-                                               id: '1')
-  end
-
-  it 'routes /mentors/:id to mentors#update for id' do
-    expect(put: '/mentors/1').to route_to(controller: 'mentors',
-                                          action: 'update',
-                                          id: '1')
-  end
-
   it 'routes /mentors/:id to mentors#show for id' do
     expect(get: '/mentors/1').to route_to(controller: 'mentors',
                                           action: 'show',

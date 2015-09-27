@@ -17,7 +17,14 @@ $(function () {
           sorter: false
         }
       }
-    });
+    }).bind("sortEnd", function(e){
+      if ($('.table-sortable>thead>tr>th.sort-index').length <= 0) {
+        return ;
+      }
+      $('.table-sortable>tbody>tr').each(function (idx, val) {
+        $($(val).children('td')[0]).html((idx + 1));
+      });
+    });;
     var numberOfRows = $('.table-sortable tbody tr').length;
     $('<div></div>').html('Number of rows: ' + numberOfRows)
         .addClass('alert alert-info').prependTo($('.table-sortable').parent());
