@@ -28,11 +28,7 @@ Rails.application.routes.draw do
   resources :advisers, only: [:index, :new, :create, :show, :destroy] do
     resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
   end
-  resources :mentors do
-    collection do
-      post 'use_existing'
-    end
-  end
+  resources :mentors, only: [:index, :new, :create, :show, :destroy]
   resources :admins, only: [:index, :new, :create, :show, :destroy]
   resources :teams do
     resources :submissions, only: [:new, :create, :edit, :update, :show]

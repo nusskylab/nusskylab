@@ -9,7 +9,6 @@
         <td><%= mentor.user.email %></td>
         <td>
           <a class="btn btn-default btn-xs" href="<%=  mentor_path(mentor.id) %>">View</a>
-          <a class="btn btn-default btn-xs" href="<%= edit_mentor_path(mentor.id) %>">Edit</a>
           <%= link_to 'Delete', mentor_path(mentor.id),
                       :confirm => 'Are you sure to delete this mentor permanently?', :method => :delete, :class => 'btn btn-danger btn-xs' %>
         </td>

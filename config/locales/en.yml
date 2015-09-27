@@ -121,6 +121,26 @@ en:
     index:
       page_title: >
         Home | Orbital
+  mentors:
+    index:
+      page_title: >
+        View all mentors
+    new:
+      page_title: >
+        Create a new mentor
+    create:
+      success_message: >
+        Mentor %{user_name} has been successfully created
+      failure_message: >
+        Mentor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    show:
+      page_title: >
+        View mentor %{user_name}'s page
+    destroy:
+      success_message: >
+        Mentor %{user_name} has been successfully deleted
+      failure_message: >
+        Mentor could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   peer_evaluations:
     new:
       page_title: >
