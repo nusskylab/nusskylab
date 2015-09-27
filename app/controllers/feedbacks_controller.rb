@@ -1,7 +1,8 @@
 class FeedbacksController < ApplicationController
   def new
-    check_access(true, false)
     team = Team.find(params[:team_id])
+    not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
+    @page_title = t('.page_title')
     @feedback = Feedback.new
     evaluators = []
     team.evaluators.each do |evaluator|
@@ -17,7 +18,8 @@ class FeedbacksController < ApplicationController
   end
 
   def create
-    check_access(true, false)
+    team = Team.find(params[:team_id])
+    not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     if create_or_update_feedback_and_responses
       redirect_to get_home_link, flash: {success: t('.success_message')}
     else
@@ -27,8 +29,9 @@ class FeedbacksController < ApplicationController
   end
 
   def edit
-    check_access(true, false)
     team = Team.find(params[:team_id])
+    not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
+    @page_title = t('.page_title')
     @feedback = Feedback.find(params[:id])
     evaluators = []
     team.evaluators.each do |evaluator|
@@ -44,7 +47,8 @@ class FeedbacksController < ApplicationController
   end
 
   def update
-    check_access(true, false)
+    team = Team.find(params[:team_id])
+    not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     @feedback = Feedback.find(params[:id])
     if create_or_update_feedback_and_responses(@feedback)
       redirect_to get_home_link, flash: {success: t('.success_message')}

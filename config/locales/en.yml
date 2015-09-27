@@ -107,11 +107,17 @@ en:
       failure_message: >
         Evaluating could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   feedbacks:
+    new:
+      page_title: >
+        Create feedback
     create:
       success_message: >
         Feedback is saved successfully
       failure_message: >
         Feedback could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;
+    edit:
+      page_title: >
+        Edit feedback
     update:
       success_message: >
         Feedback is saved successfully
@@ -151,10 +157,14 @@ en:
     show:
       page_title: >
         View a peer evaluation
+  received_evals:
+    index:
+      page_title: >
+        View all received peer evaluations
   received_feedbacks:
     index:
       page_title: >
-        View received feedbacks
+        View all received feedback
   students:
     student_form_instruction: >
       Select a user from the list and assign student role to him/her.
