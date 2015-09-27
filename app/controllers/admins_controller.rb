@@ -35,7 +35,13 @@ class AdminsController < ApplicationController
   def destroy
     not check_access(true, true) and return
     @admin = Admin.find(params[:id])
-    if @admin.destroy
+    if @admin.user_id == current_user.id
+      @admin.errors.add(:user_id, t('.cannot_delete_self_error'))
+      is_error = true
+    else
+      is_error = false
+    end
+    if @admin.destroy and (not is_error)
       redirect_to admins_path, flash: {success: t('.success_message', user_name: @admin.user.user_name)}
     else
       redirect_to admins_path, flash: {danger: t('.failure_message',

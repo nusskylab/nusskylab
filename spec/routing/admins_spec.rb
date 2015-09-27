@@ -11,18 +11,6 @@ RSpec.describe 'routing to admins', :type => :routing do
                                            action: 'new')
   end
 
-  it 'routes /admins/:id/edit to admins#edit for id' do
-    expect(get: '/admins/1/edit').to route_to(controller: 'admins',
-                                              action: 'edit',
-                                              id: '1')
-  end
-
-  it 'routes /admins/:id to admins#update for id' do
-    expect(put: '/admins/1').to route_to(controller: 'admins',
-                                         action: 'update',
-                                         id: '1')
-  end
-
   it 'routes /admins/:id to admins#show for id' do
     expect(get: '/admins/1').to route_to(controller: 'admins',
                                          action: 'show',

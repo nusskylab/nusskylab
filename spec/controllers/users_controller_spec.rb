@@ -21,8 +21,7 @@ RSpec.describe UsersController, type: :controller do
       login_admin
       it 'should assign @users' do
         get :index
-        expect(assigns(:users).length).to eql 1
-        expect(assigns(:users)[0].id).to eql User.all[0].id
+        expect(assigns(:users).length).to eql User.all.length
       end
 
       it 'should render index for admin user' do

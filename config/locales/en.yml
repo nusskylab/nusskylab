@@ -46,6 +46,8 @@ en:
     destroy:
       success_message: >
         Admin %{user_name} has been successfully deleted
+      cannot_delete_self_error: >
+        Admin cannot delete own role
       failure_message: >
         Admin could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   advisers:

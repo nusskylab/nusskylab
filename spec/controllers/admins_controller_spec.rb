@@ -19,7 +19,7 @@ RSpec.describe AdminsController, type: :controller do
 
     context 'user logged in and admin' do
       login_admin
-      it 'should assign @users' do
+      it 'should assign @admins' do
         get :index
         expect(assigns(:admins).length).to eql 1
         expect(assigns(:admins)[0].id).to eql Admin.all[0].id
@@ -75,17 +75,25 @@ RSpec.describe AdminsController, type: :controller do
 
     context 'user logged in and admin' do
       login_admin
-      it 'should redirect to admins for admin user' do
-        post :create
+      it 'should redirect to admins with success for admin user' do
+        user = FactoryGirl.create(:user, email: '1@admin.controller.spec', uid: '1.admin.controller.spec')
+        post :create, admin: {user_id: user.id}
         expect(response).to redirect_to(admins_path)
+        expect(flash[:success]).not_to be_nil
+      end
+
+      it 'should redirect to admins with danger for admin user' do
+        post :create, admin: {user_id: subject.current_user.id}
+        expect(response).to redirect_to(new_admin_path)
+        expect(flash[:danger]).not_to be_nil
       end
     end
   end
 
-  describe 'POST #use_existing' do
+  describe 'GET #show' do
     context 'user not logged in' do
       it 'should redirect to root_path for non_user' do
-        post :use_existing
+        get :show, id: 1
         expect(response).to redirect_to(root_path)
       end
     end
@@ -93,16 +101,52 @@ RSpec.describe AdminsController, type: :controller do
     context 'user logged in but not admin' do
       login_user
       it 'should redirect to home_link for non_admin' do
-        post :use_existing
+        get :show, id: 1
         expect(response).to redirect_to(controller.get_home_link)
       end
     end
 
     context 'user logged in and admin' do
       login_admin
-      it 'should redirect_to admins for admin user' do
-        post :use_existing
+      it 'should render show for admin user' do
+        admin = Admin.find_by(user_id: subject.current_user.id)
+        get :show, id: admin.id
+        expect(response).to render_template(:show)
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        delete :destroy, id: 1
+        expect(response).to redirect_to(root_path)
+      end
+    end
+    
+    context 'user logged in but not admin' do
+      login_user
+      it 'should redirect to home_link for non_admin' do
+        delete :destroy, id: 1
+        expect(response).to redirect_to(controller.get_home_link)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should redirect with success for admin user' do
+        user = FactoryGirl.create(:user, email: '2@admin.controller.spec', uid: '2.admin.controller.spec')
+        admin = FactoryGirl.create(:admin, user_id: user.id)
+        delete :destroy, id: admin.id
         expect(response).to redirect_to(admins_path)
+        expect(flash[:success]).not_to be_nil
+      end
+
+      it 'should redirect with failure for admin user' do
+        admin = Admin.find_by(user_id: subject.current_user.id)
+        delete :destroy, id: admin.id
+        expect(response).to redirect_to(admins_path)
+        expect(flash[:danger]).not_to be_nil
       end
     end
   end
