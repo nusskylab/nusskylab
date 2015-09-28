@@ -15,8 +15,15 @@
         <% if @feedbacks.nil? or @feedbacks.length == 0 %>
             No feedback available
         <% end %>
-        <% @feedbacks.each do |feedback| %>
-            <%= render 'feedbacks/view_feedback', locals: {feedback: feedback} %>
+        <% @feedbacks.each_with_index do |feedback, idx| %>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <label>Feedback <%= idx + 1 %></label>
+              </div>
+              <div class="panel-body">
+                <%= render 'feedbacks/view_feedback', locals: {feedback: feedback} %>
+              </div>
+            </div>
         <% end %>
       </div>
     </div>

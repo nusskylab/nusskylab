@@ -107,6 +107,8 @@ en:
       failure_message: >
         Evaluating could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   feedbacks:
+    instruction_omitted_message: >
+      Instruction has been omitted for simplicity
     new:
       page_title: >
         Create feedback
