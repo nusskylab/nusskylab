@@ -6,7 +6,6 @@ class StudentsController < ApplicationController
     not authenticate_user(true, false, Adviser.all.map {|adviser| adviser.user}) and return
     @page_title = t('.page_title')
     @students = Student.all
-    render
   end
 
   def new
@@ -34,14 +33,14 @@ class StudentsController < ApplicationController
 
   def edit
     @student = Student.find(params[:id])
-    not authenticate_user(true, false, @student.adviser.nil? ? [] : [@student.adviser.user] ) and return
+    not authenticate_user(true, false, [@student.user] ) and return
     @page_title = t('.page_title', user_name: @student.user.user_name)
     render locals: {teams: Team.all}
   end
 
   def update
     @student = Student.find(params[:id])
-    not authenticate_user(true, false, @student.adviser.nil? ? [] : [@student.adviser.user] ) and return
+    not authenticate_user(true, false, [@student.user] ) and return
     student_params = params.require(:student).permit(:team_id)
     if @student.update(student_params)
       redirect_to student_path(@student),
