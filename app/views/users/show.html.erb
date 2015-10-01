@@ -4,17 +4,17 @@
       <h1 class="text-center">Welcome to Orbital</h1>
       <p>You can choose to view as one of the following roles:</p>
       <p>
-        <% if user_student? %>
-            <a href="<%= student_path(user_student?.id) %>" class="btn btn-primary btn-lg">View as a student</a>
+        <% if is_current_user_student? %>
+            <a href="<%= student_path(is_current_user_student?.id) %>" class="btn btn-primary btn-lg">View as a student</a>
         <% end %>
-        <% if user_adviser? %>
-            <a href="<%= adviser_path(user_adviser?.id) %>" class="btn btn-primary btn-lg">View as an adviser</a>
+        <% if is_current_user_adviser? %>
+            <a href="<%= adviser_path(is_current_user_adviser?.id) %>" class="btn btn-primary btn-lg">View as an adviser</a>
         <% end %>
-        <% if user_mentor? %>
-            <a href="<%= mentor_path(user_mentor?.id) %>" class="btn btn-primary btn-lg">View as a mentor</a>
+        <% if is_current_user_mentor? %>
+            <a href="<%= mentor_path(is_current_user_mentor?.id) %>" class="btn btn-primary btn-lg">View as a mentor</a>
         <% end %>
-        <% if user_admin? %>
-            <a href="<%= admin_path(user_admin?.id) %>" class="btn btn-primary btn-lg">View as an admin</a>
+        <% if is_current_user_admin? %>
+            <a href="<%= admin_path(is_current_user_admin?.id) %>" class="btn btn-primary btn-lg">View as an admin</a>
         <% end %>
       </p>
     </div>

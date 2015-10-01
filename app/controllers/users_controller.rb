@@ -1,11 +1,13 @@
 class UsersController < ApplicationController
   def index
     not authenticate_user(true, true) and return
+    @page_title = t('.page_title')
     @users = User.order(:user_name).all
   end
 
   def new
     not authenticate_user(true, true) and return
+    @page_title = t('.page_title')
     @user = User.new
   end
 
@@ -20,12 +22,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    @user = User.find(params[:id])
-    not authenticate_user(true, false, [@user]) and return
-    render
-  end
-
   def preview_as
     not authenticate_user(true, true) and return
     user = User.find(params[:id])
@@ -37,18 +33,26 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     not authenticate_user(true, false, [@user]) and return
-    render
+    @page_title = t('.page_title', user_name: @user.user_name)
   end
 
   def update
     @user = User.find(params[:id])
     not authenticate_user(true, false, [@user]) and return
-    if @user and @user.update(get_user_params)
+    user_params = get_user_params
+    user_params.except!(:provider)
+    if @user and @user.update(user_params)
       redirect_to @user, flash: {success: t('.success_message')}
     else
       redirect_to @user, flash: {danger: t('.failure_message',
                                            error_message: @user.errors.full_messages.join(', '))}
     end
+  end
+
+  def show
+    @user = User.find(params[:id])
+    not authenticate_user(true, false, [@user]) and return
+    @page_title = t('.page_title', user_name: @user.user_name)
   end
 
   def destroy
@@ -63,10 +67,10 @@ class UsersController < ApplicationController
 
   private
   def get_user_params
-    user_param = params.require(:user).permit(:user_name, :email, :uid, :provider)
+    user_params = params.require(:user).permit(:user_name, :email, :uid, :provider)
     generated_password = Devise.friendly_token.first(8)
-    user_param[:password] = generated_password
-    user_param[:provider] = User.get_provider_from_raw(user_param[:provider])
-    user_param
+    user_params[:password] = generated_password
+    user_params[:provider] = user_params[:provider].to_i
+    user_params
   end
 end
