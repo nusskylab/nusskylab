@@ -91,7 +91,7 @@ class PeerEvaluationsController < ApplicationController
     evaluateds.each do |evaluated|
       submissions += evaluated.evaluated.submissions
     end
-    submissions
+    submissions.select { |sub| sub.milestone_id.to_s == params[:milestone_id].to_s }
   end
 
   def get_submissions_for_adviser
@@ -101,12 +101,13 @@ class PeerEvaluationsController < ApplicationController
     teams.each do |team|
       submissions += team.submissions
     end
-    submissions
+    submissions.select { |sub| sub.milestone_id.to_s == params[:milestone_id].to_s }
   end
 
   def render_template(template_name)
     render template_name, locals: {
-             submissions: get_submissions_for_page
+             submissions: get_submissions_for_page,
+             milestone: Milestone.find(params[:milestone_id])
            }
   end
 
