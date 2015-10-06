@@ -1,8 +1,8 @@
 default: &default
   adapter: postgresql
   pool: 5
-  username: nusskylab
-  password: nusskylab
+  username: <%= ENV['POSTGRES_USERNAME'] || 'nusskylab' %>
+  password: <%= ENV['POSTGRES_PASSWORD'] || 'nusskylab' %>
   timeout: 5000
 
 development:
@@ -19,3 +19,15 @@ test:
 production:
   <<: *default
   database: nusskylab
+
+focus_grp1:
+  <<: *default
+  database: nusskylab_focus_grp1
+
+focus_grp2:
+  <<: *default
+  database: nusskylab_focus_grp2
+
+focus_grp3:
+  <<: *default
+  database: nusskylab_focus_grp3
