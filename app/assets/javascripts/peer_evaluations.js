@@ -10,8 +10,6 @@ $(document).ready(function () {
       fillInPrivatePartOfHtmlForm();
     }
     disableAllEvalFormInputs();
-  } else if (currentPageHeading === 'Create peer evaluation') {
-    setSubmissionForEval();
   }
 
   $('.new_peer_evaluation').on('submit', function () {
@@ -50,13 +48,6 @@ $(document).ready(function () {
       }
     });
     return isValid;
-  }
-
-  function setSubmissionForEval() {
-    var submission_id = getQueryParameterByName('target');
-    $('#peer_evaluation_submission_id option').filter(function () {
-      return $(this).val() === submission_id;
-    }).attr('selected', 'selected');
   }
 
   function getPublicPartValues() {

@@ -25,14 +25,11 @@ Rails.application.routes.draw do
     #   post 'batch_create'
     # end
   end
-  resources :advisers, only: [:index, :new, :create, :show, :destroy] do
-    resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
-  end
+  resources :advisers, only: [:index, :new, :create, :show, :destroy]
   resources :mentors, only: [:index, :new, :create, :show, :destroy]
   resources :admins, only: [:index, :new, :create, :show, :destroy]
   resources :teams do
     resources :submissions, only: [:new, :create, :edit, :update, :show]
-    resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
     resources :feedbacks, only: [:new, :create, :edit, :update]
   end
   resources :evaluatings, only: [:index, :new, :create, :edit, :update, :destroy] do
@@ -43,11 +40,13 @@ Rails.application.routes.draw do
   end
   resources :milestones do
     resources :teams, only: [:show] do
+      resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
       resources :received_evals, only: [:index]
       resources :received_feedbacks, only: [:index]
     end
     resources :advisers, only: [:show] do
       resources :received_feedbacks, only: [:index]
+      resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
     end
   end
   resources :survey_templates, except: [:destroy] do

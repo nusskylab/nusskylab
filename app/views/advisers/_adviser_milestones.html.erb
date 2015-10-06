@@ -30,12 +30,12 @@
                   </td>
                   <td>
                     <% if (eval = locals[:own_evaluations][milestone.id][team.id]) %>
-                        <a href="<%= edit_adviser_peer_evaluation_path(locals[:adviser].id, eval.id) %>"
+                        <a href="<%= edit_milestone_adviser_peer_evaluation_path(milestone.id, locals[:adviser].id, eval.id) %>"
                            class="btn btn-default">
                           Edit Evaluation
                         </a>
                     <% else %>
-                        <a href="<%= new_adviser_peer_evaluation_path(locals[:adviser].id, target: team_submission.id) %>"
+                        <a href="<%= new_milestone_adviser_peer_evaluation_path(milestone.id, locals[:adviser].id, target: team_submission.id) %>"
                            class="btn btn-default">
                           Start Evaluation
                         </a>
@@ -59,7 +59,7 @@
                     Not submitted yet
                   </td>
                   <td>
-                    <a href="<%= new_adviser_peer_evaluation_path(locals[:adviser].id) %>"
+                    <a href="<%= new_milestone_adviser_peer_evaluation_path(milestone.id, locals[:adviser].id) %>"
                        class="btn btn-default" disabled="disabled">
                       Start Evaluation
                     </a>

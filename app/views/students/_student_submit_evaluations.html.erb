@@ -32,12 +32,12 @@
                   </td>
                   <td>
                     <% if (temp_evaluation = locals[:team_evaluations][temp_evaluated_submission.id]) %>
-                        <a href="<%= edit_team_peer_evaluation_path(evaluated.evaluator_id, temp_evaluation.id) %>"
+                        <a href="<%= edit_milestone_team_peer_evaluation_path(milestone.id, evaluated.evaluator_id, temp_evaluation.id) %>"
                            class="btn btn-success">
                           Edit Evaluation
                         </a>
                     <% else %>
-                        <a href="<%= new_team_peer_evaluation_path(evaluated.evaluator_id, target: temp_evaluated_submission.id) %>"
+                        <a href="<%= new_milestone_team_peer_evaluation_path(milestone.id, evaluated.evaluator_id) %>"
                            class="btn btn-primary">
                           Start Evaluation
                         </a>
