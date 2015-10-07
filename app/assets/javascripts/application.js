@@ -4,6 +4,7 @@
 //= require jquery.tablesorter
 //= require select2
 //= require jQuery.autolink
+//= require autosize
 
 $(function () {
   if ($('.table-sortable').length) {
@@ -86,4 +87,8 @@ $(function () {
 
 $(function() {
   $('.autolink').autolink();
+});
+
+$(function() {
+  autosize($('textarea:not(.tinymce)'));
 });
