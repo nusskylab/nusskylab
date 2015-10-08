@@ -17,7 +17,7 @@ class MilestonesController < ApplicationController
     if @milestone.save
       redirect_to milestones_path, flash: {success: t('.success_message', milestone_name: @milestone.name)}
     else
-      redirect_to new_milestone_path, flash: {success: t('.failure_message', error_messages: @milestone.errors.full_messages.join(', '))}
+      redirect_to new_milestone_path, flash: {danger: t('.failure_message', error_messages: @milestone.errors.full_messages.join(', '))}
     end
   end
 
@@ -39,7 +39,7 @@ class MilestonesController < ApplicationController
     if @milestone.update(get_milestone_params)
       redirect_to milestones_path, flash: {success: t('.success_message', milestone_name: @milestone.name)}
     else
-      redirect_to edit_milestone_path(@milestone), flash: {success: t('.failure_message', error_messages: @milestone.errors.full_messages.join(', '))}
+      redirect_to edit_milestone_path(@milestone), flash: {danger: t('.failure_message', error_messages: @milestone.errors.full_messages.join(', '))}
     end
   end
 
@@ -49,7 +49,7 @@ class MilestonesController < ApplicationController
     if @milestone.destroy
       redirect_to milestones_path, flash: {success: t('.success_message', milestone_name: @milestone.name)}
     else
-      redirect_to milestone_path, flash: {success: t('.failure_message', error_messages: @milestone.errors.full_messages.join(', '))}
+      redirect_to milestone_path, flash: {danger: t('.failure_message', error_messages: @milestone.errors.full_messages.join(', '))}
     end
   end
 
