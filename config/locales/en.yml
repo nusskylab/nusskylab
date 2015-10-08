@@ -149,6 +149,34 @@ en:
         Mentor %{user_name} has been successfully deleted
       failure_message: >
         Mentor could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+  milestones:
+    index:
+      page_title: >
+        View all milestones
+    new:
+      page_title: >
+        Create new milestone
+    create:
+      success_message: >
+        Milestone %{milestone_name} has been successfully created
+      failure_message: >
+        Milestone could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    edit:
+      page_title: >
+        Edit milestone %{milestone_name}
+    update:
+      success_message: >
+        Milestone %{milestone_name} has been successfully saved
+      failure_message: >
+        Milestone could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    show:
+      page_title: >
+        View milestone %{milestone_name}
+    destroy:
+      success_message: >
+        Milestone %{milestone_name} has been successfully deleted
+      failure_message: >
+        Milestone could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   peer_evaluations:
     new:
       page_title: >
