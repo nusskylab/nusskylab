@@ -7,9 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="NUS Orbital official website--submissions, peer evaluations and feedback">
   <%= favicon_link_tag 'favicon.ico' %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= yield(:js_head) %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -40,6 +38,8 @@
       <p class="col-sm-4 text-center"><a href="https://github.com/nusskylab/nusskylab/issues">Report Issues</a></p>
     </div>
   </footer>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= yield(:js_head) %>
   <script>
     $(document).ready(function () {
       $('.dropdown-toggle').dropdown();
