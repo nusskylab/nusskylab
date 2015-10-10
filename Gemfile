@@ -55,6 +55,9 @@ source 'https://rubygems.org' do
 		gem 'rspec-rails'
 		gem 'database_cleaner'
 		gem 'factory_girl_rails'
+		gem 'capybara', '~> 2.5.0'
+		gem 'selenium-webdriver', '~> 2.48.0'
+		gem 'capybara-webkit', '~> 1.7.1'
 	end
 
 	group :test do
