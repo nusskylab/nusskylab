@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 feature 'user logs in' do
+  user_name = 'user_feature_spec'
   email = 'user1@feature.spec'
   uid = 'user1.feature.spec'
   admin_email = 'admin@feature.spec'
@@ -9,7 +10,7 @@ feature 'user logs in' do
   password = 'password'
 
   before(:all) do
-    User.find_by(email: email) || FactoryGirl.create(:user, email: email, uid: uid, password: password)
+    User.find_by(email: email) || FactoryGirl.create(:user, user_name: user_name,email: email, uid: uid, password: password)
     admin_user = User.find_by(email: admin_email) || FactoryGirl.create(:user, email: admin_email, uid: admin_uid, password: password)
     Admin.find_by(user_id: admin_user.id) || FactoryGirl.create(:admin, user_id: admin_user.id)
   end
@@ -20,7 +21,7 @@ feature 'user logs in' do
     fill_in 'Email', with: email
     fill_in 'Password', with: password
     click_button 'Log in'
-    expect(page).to have_content('Welcome to Orbital')
+    expect(page).to have_content('Welcome, user_feature_spec')
   end
 
   scenario 'admin user logs in' do
