@@ -16,4 +16,8 @@ module ApplicationHelper
   def get_question_name(question)
     return FORM_QUESTION_ID_PREFIX + question.id.to_s + FROM_QUESTION_ID_SUFFIX
   end
+
+  def get_current_cohort
+    Time.now.year
+  end
 end

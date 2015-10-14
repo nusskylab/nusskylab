@@ -1,0 +1,24 @@
+<table class="table table-hover table-sortable uncountable">
+  <thead>
+  <tr>
+    <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Adviser</th><th class="unsortable">Remarks</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @teams.each_with_index do |team, idx| %>
+      <% if not team.has_dropped %>
+          <tr>
+            <td><%= idx + 1 %></td>
+            <td>
+              <%= team.team_name %>
+            </td>
+            <td><%= render 'teams/team_project_level_img', locals: {team: team} %></td>
+            <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
+            <td>
+              None
+            </td>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>

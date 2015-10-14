@@ -51,4 +51,8 @@ Rails.application.routes.draw do
   end
   resources :survey_templates, except: [:destroy] do
   end
+  # scope '/:cohort' do
+
+  # end
+  resources :project_lists, only: [:index]
 end
