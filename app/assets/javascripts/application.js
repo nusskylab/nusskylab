@@ -96,7 +96,7 @@ $(function() {
 });
 
 $(window).scroll(function() {
-  if ($(this).scrollTop() >= 50) {
+  if ($(this).scrollTop() >= 100) {
     $('#return-to-top').fadeIn(200);
   } else {
     $('#return-to-top').fadeOut(200);

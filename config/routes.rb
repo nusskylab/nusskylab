@@ -54,5 +54,7 @@ Rails.application.routes.draw do
   # scope '/:cohort' do
 
   # end
-  resources :project_lists, only: [:index]
+  namespace 'public_views' do
+    resources :public_projects, only: [:index]
+  end
 end

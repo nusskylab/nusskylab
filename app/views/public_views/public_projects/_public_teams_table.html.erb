@@ -1,0 +1,45 @@
+<div class="col-sm-12">
+  <div class="col-sm-2">
+  <% if locals[:selected_type] == 'Vostok' %>
+      <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded', style: 'width: 80px;') %>
+  <% elsif locals[:selected_type] == 'Project Gemini' %>
+      <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded', style: 'width: 80px;') %>
+  <% elsif locals[:selected_type] == 'Apollo 11' %>
+      <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded', style: 'width: 80px;') %>
+  <% end %>
+  </div>
+  <div class="col-sm-8"><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</div>
+</div>
+<table class="table table-striped">
+  <col width="5%">
+  <col width="35%">
+  <col width="30%">
+  <col width="15%">
+  <col width="15%">
+  <thead>
+  <tr>
+    <th>Index</th><th>Team Name</th><th>Members</th><th>Adviser</th><th>Remarks</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% locals[:selected_teams].each_with_index do |team, idx| %>
+      <tr>
+        <td><%= idx + 1 %></td>
+        <td>
+          <%= team.team_name %>
+        </td>
+        <td>
+          <% team.students.each do |student| %>
+              <%= sn = student.user.user_name; "[#{sn}] " %>
+          <% end %>
+        </td>
+        <td>
+          <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %>
+        </td>
+        <td>
+          None
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

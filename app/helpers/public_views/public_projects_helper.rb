@@ -1,0 +1,2 @@
+module PublicViews::PublicProjectsHelper
+end

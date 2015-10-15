@@ -191,10 +191,11 @@ en:
     index:
       page_title: >
         View all received peer evaluations
-  project_lists:
-    index:
-      page_title: >
-        View all projects in Orbital
+  public_views:
+    public_projects:
+      index:
+        page_title: >
+          View all projects in Orbital
   received_feedbacks:
     index:
       page_title: >
