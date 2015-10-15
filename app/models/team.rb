@@ -49,6 +49,10 @@ class Team < ActiveRecord::Base
     self.project_level = Team.get_project_level_from_raw(project_level)
   end
 
+  def get_project_level
+    self.project_level.gsub(/_/, ' ').split(' ').map(&:capitalize).join(' ')
+  end
+
   # Get a team's students, adviser, mentor as user and if include_* is true,
   #   team's evaluator and evaluated teams' members will be included
   def get_relevant_users(include_evaluator = false, include_evaluated = false)

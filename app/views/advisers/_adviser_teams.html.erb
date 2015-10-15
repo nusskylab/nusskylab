@@ -20,7 +20,7 @@
             <a href="<%= team_path(team) %>" class="btn btn-info"><%= team.team_name %></a>
           </td>
           <td>
-            <%= team.project_level %>
+            <%= team.get_project_level %>
           </td>
           <td>
             <% team.evaluateds.each do |evaluated| %>
