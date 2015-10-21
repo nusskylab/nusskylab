@@ -8,38 +8,17 @@
       <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded', style: 'width: 80px;') %>
   <% end %>
   </div>
-  <div class="col-sm-8"><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</div>
+  <div class="col-sm-4"><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</div>
 </div>
-<table class="table table-striped">
-  <col width="5%">
-  <col width="35%">
-  <col width="30%">
-  <col width="15%">
-  <col width="15%">
-  <thead>
-  <tr>
-    <th>Index</th><th>Team Name</th><th>Members</th><th>Adviser</th><th>Remarks</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% locals[:selected_teams].each_with_index do |team, idx| %>
-      <tr>
-        <td><%= idx + 1 %></td>
-        <td>
-          <%= team.team_name %>
-        </td>
-        <td>
-          <% team.students.each do |student| %>
-              <%= sn = student.user.user_name; "[#{sn}] " %>
-          <% end %>
-        </td>
-        <td>
-          <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %>
-        </td>
-        <td>
-          None
-        </td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+<br><br><hr>
+<% locals[:selected_teams].each_with_index do |team, idx| %>
+    <div class="col-sm-12">
+      <%= idx + 1 %>. <strong><%= team.team_name %></strong>
+      <span class="text-muted">Students:</span>
+      <%= team.students.map{|student| student.user.user_name}.join(' & ') %>
+    </div>
+    <div class="col-sm-12">
+      <span class="text-muted">Advised by:</span> <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %>
+    </div>
+    <br><hr>
+<% end %>
