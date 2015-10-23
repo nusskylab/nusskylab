@@ -6,14 +6,13 @@ class StudentsController < ApplicationController
     not authenticate_user(true, false, Adviser.all.map {|adviser| adviser.user}) and return
     @page_title = t('.page_title')
     @students = Student.all
-    render
   end
 
   def new
     not authenticate_user(true, true) and return
     @page_title = t('.page_title')
     @student = Student.new
-    render locals: {users: User.all.filter {|user| not Student.student?(user.id)}}
+    render locals: {users: User.all.select {|user| not Student.student?(user.id)}}
   end
 
   def create

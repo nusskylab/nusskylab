@@ -2,7 +2,7 @@ source 'https://rubygems.org' do
 	# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 	gem 'rails', '4.2.0'
 	# Use postgres as the database for Active Record
-	gem 'pg'
+	gem 'pg', '~> 0.18.3'
 	# Use SCSS for stylesheets
 	gem 'sass-rails', '~> 5.0'
 	# Use Uglifier as compressor for JavaScript assets
@@ -15,13 +15,13 @@ source 'https://rubygems.org' do
 	gem 'puma', '~> 2.11.2'
 
 	# Use devise for email sign-up and sign-in
-	gem 'devise'
+	gem 'devise', '~> 3.5.2'
 	# Use omniauth for openid authentication
-	gem 'omniauth'
-	gem 'omniauth-openid'
+	gem 'omniauth', '~> 1.2.2'
+	gem 'omniauth-openid', '~> 1.0.1'
 
 	# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-	gem 'turbolinks'
+	gem 'turbolinks', '~> 2.5.3'
 	# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 	gem 'jbuilder', '~> 2.0'
 	# bundle exec rake doc:rails generates the API under doc/api.
@@ -30,13 +30,13 @@ source 'https://rubygems.org' do
 	# Use bootstrap for styling
 	gem 'bootstrap-sass', '~> 3.3.4'
 	# Use jquery as the JavaScript library
-	gem 'jquery-rails'
+	gem 'jquery-rails', '~> 4.0.5'
 	# simple_form for form validation
 	gem 'simple_form', '~> 3.1.1'
 	# tiny_mce for rails
 	gem 'tinymce-rails', '~> 4.2.5'
 	# internalization
-	gem 'rails-i18n'
+	gem 'rails-i18n', '~> 4.0.5'
 	# datetime picker
 	gem 'momentjs-rails', '>= 2.9.0'
 	gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
@@ -52,9 +52,9 @@ source 'https://rubygems.org' do
 		gem 'spring'
 
 		# rspec for test & dev
-		gem 'rspec-rails'
-		gem 'database_cleaner'
-		gem 'factory_girl_rails'
+		gem 'rspec-rails', '3.3.3'
+		gem 'database_cleaner', '~> 1.5.0'
+		gem 'factory_girl_rails', '~> 4.5.0'
 		gem 'capybara', '~> 2.5.0'
 		gem 'selenium-webdriver', '~> 2.48.0'
 		gem 'capybara-webkit', '~> 1.7.1'

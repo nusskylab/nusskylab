@@ -26,6 +26,8 @@ $(function () {
         $($(val).children('td')[0]).html((idx + 1));
       });
     });;
+  }
+  if ($('.table-sortable:not(.uncountable)').length) {
     var numberOfRows = $('.table-sortable tbody tr').length;
     $('<div></div>').html('Number of rows: ' + numberOfRows)
         .addClass('alert alert-info').insertBefore($('.table-sortable'));
@@ -94,7 +96,7 @@ $(function() {
 });
 
 $(window).scroll(function() {
-  if ($(this).scrollTop() >= 50) {
+  if ($(this).scrollTop() >= 100) {
     $('#return-to-top').fadeIn(200);
   } else {
     $('#return-to-top').fadeOut(200);

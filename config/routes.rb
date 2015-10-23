@@ -51,4 +51,10 @@ Rails.application.routes.draw do
   end
   resources :survey_templates, except: [:destroy] do
   end
+  # scope '/:cohort' do
+
+  # end
+  namespace 'public_views' do
+    resources :public_projects, only: [:index]
+  end
 end
