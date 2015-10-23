@@ -29,7 +29,6 @@ Rails.application.routes.draw do
   resources :mentors, only: [:index, :new, :create, :show, :destroy]
   resources :admins, only: [:index, :new, :create, :show, :destroy]
   resources :teams do
-    resources :submissions, only: [:new, :create, :edit, :update, :show]
     resources :feedbacks, only: [:new, :create, :edit, :update]
   end
   resources :evaluatings, only: [:index, :new, :create, :edit, :update, :destroy] do
@@ -40,6 +39,7 @@ Rails.application.routes.draw do
   end
   resources :milestones do
     resources :teams, only: [:show] do
+      resources :submissions, only: [:new, :create, :edit, :update, :show]
       resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
       resources :received_evals, only: [:index]
       resources :received_feedbacks, only: [:index]

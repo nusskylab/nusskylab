@@ -17,7 +17,7 @@
                     <%= render 'teams/team_name_representation', locals: {team: evaluated.evaluated} %>
                   </td>
                   <td>
-                    <a href="<%= team_submission_path(evaluated.evaluated_id, temp_evaluated_submission.id) %>"
+                    <a href="<%= milestone_team_submission_path(milestone.id, evaluated.evaluated_id, temp_evaluated_submission.id) %>"
                        class="btn btn-success">
                       View
                     </a>
@@ -58,7 +58,7 @@
                     Not submitted yet
                   </td>
                   <td>
-                    <a href="#" class="btn btn-default" disabled="disabled">
+                    <a href="#" class="btn btn-primary" disabled="disabled">
                       Start Evaluation
                     </a>
                   </td>

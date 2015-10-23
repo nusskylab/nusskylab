@@ -64,7 +64,7 @@ class StudentsController < ApplicationController
       render template: 'students/show_no_team' and return
     end
     render locals: {
-             milestones: Milestone.all,
+             milestones: Milestone.order(:id).all,
              evaluateds: @student.team.evaluateds,
              evaluators: @student.team.evaluators,
              team_submissions: @student.team.get_own_submissions,

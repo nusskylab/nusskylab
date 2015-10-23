@@ -7,7 +7,7 @@
       <% else %>
           <td>
             <a class="btn btn-primary"
-               href="<%= new_team_submission_path(locals[:team], target: locals[:milestone].name) %>">Create</a>
+               href="<%= new_milestone_team_submission_path(locals[:milestone].id, locals[:team], target: locals[:milestone].name) %>">Create</a>
           </td>
       <% end %>
     </tr>
@@ -22,7 +22,7 @@
       ><%= l submission.updated_at %></td>
       <td>
         <a class="btn btn-success"
-           href="<%= edit_team_submission_path(submission.team_id, submission.id) %>">Edit</a>
+           href="<%= edit_milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id) %>">Edit</a>
       </td>
     </tr>
 <% end %>

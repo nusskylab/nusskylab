@@ -26,7 +26,7 @@
                       <tr>
                         <td><%= team.team_name %></td>
                         <td>
-                          <a href="<%= team_submission_path(team.id, team_submission.id) %>"
+                          <a href="<%= milestone_team_submission_path(milestone.id, team.id, team_submission.id) %>"
                              class="btn btn-success">
                             View
                           </a>
