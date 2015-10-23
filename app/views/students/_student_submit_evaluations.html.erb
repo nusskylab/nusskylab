@@ -37,7 +37,7 @@
                           Edit Evaluation
                         </a>
                     <% else %>
-                        <a href="<%= new_milestone_team_peer_evaluation_path(milestone.id, evaluated.evaluator_id) %>"
+                        <a href="<%= new_milestone_team_peer_evaluation_path(milestone.id, evaluated.evaluator_id, target_evaluation_id: evaluated.id) %>"
                            class="btn btn-primary">
                           Start Evaluation
                         </a>

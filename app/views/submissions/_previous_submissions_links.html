@@ -1,4 +1,4 @@
-<% if locals[:submissions] %>
+<% if locals[:submissions] and locals[:submissions].length > 0 %>
     <p class="alert alert-info">You can view your previous submissions
       <% locals[:submissions].each do |sub| %>
             <a href="<%= milestone_team_submission_path(sub.milestone_id, sub.team_id, sub.id) %>"

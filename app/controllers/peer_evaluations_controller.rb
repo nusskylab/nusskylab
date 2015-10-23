@@ -1,9 +1,14 @@
 class PeerEvaluationsController < ApplicationController
   def new
+    evaluation = Evaluating.find(params[:target_evaluation_id]) or record_not_found
+    submission = Submission.find_by(team_id: evaluation.evaluated_id, milestone_id: params[:milestone_id]) or record_not_found
     not can_access_peer_evaluation and return
     @page_title = t('.page_title')
     @peer_evaluation = PeerEvaluation.new
-    render_template('new') and return
+    render locals: {
+             submission: submission,
+             milestone: Milestone.find(params[:milestone_id])
+           }
   end
 
   def create
@@ -23,7 +28,9 @@ class PeerEvaluationsController < ApplicationController
     not can_access_peer_evaluation and return
     @page_title = t('.page_title')
     @peer_evaluation = PeerEvaluation.find(params[:id])
-    render_template('edit') and return
+    render locals: {
+             milestone: Milestone.find(params[:milestone_id])
+           }
   end
 
   def update
