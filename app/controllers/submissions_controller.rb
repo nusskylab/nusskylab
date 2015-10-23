@@ -7,7 +7,9 @@ class SubmissionsController < ApplicationController
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     @page_title = t('.page_title')
     @submission = Submission.new(team_id: params[:team_id])
-    render locals: {team_id: params[:team_id], milestone: milestone}
+    render locals: {team_id: params[:team_id],
+                    milestone: milestone,
+                    submissions: Submission.where(team_id: team.id)}
   end
 
   def create
@@ -55,7 +57,7 @@ class SubmissionsController < ApplicationController
   def update_submission
     sub_params = get_submission_params
     sub_params[:milestone_id] = @submission.milestone_id
-    sub_params[:team_id] = @Submission.team_id
+    sub_params[:team_id] = @submission.team_id
     @submission.update(sub_params) ? @submission : nil
   end
 

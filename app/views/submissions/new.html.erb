@@ -6,6 +6,7 @@
         <h3 class="text-center">Create submission</h3>
       </div>
       <div class="panel-body">
+        <%= render 'previous_submissions_links', locals: {submissions: submissions} %>
         <%= render 'image_upload_modal' %>
         <%= render 'submission_form', locals: {submission: @submission,
                                                milestone: milestone,

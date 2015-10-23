@@ -7,7 +7,7 @@
       <% else %>
           <td>
             <a class="btn btn-primary"
-               href="<%= new_milestone_team_submission_path(locals[:milestone].id, locals[:team], target: locals[:milestone].name) %>">Create</a>
+               href="<%= new_milestone_team_submission_path(locals[:milestone].id, locals[:team]) %>">Create</a>
           </td>
       <% end %>
     </tr>
