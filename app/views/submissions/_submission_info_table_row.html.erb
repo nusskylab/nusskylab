@@ -3,11 +3,11 @@
       <td><%= locals[:milestone].name %></td>
       <td><%= l locals[:milestone].submission_deadline %></td>
       <% if locals[:team].nil? %>
-          <td>No actions</td>
+          <td>No information</td>
       <% else %>
           <td>
             <a class="btn btn-primary"
-               href="<%= new_team_submission_path(locals[:team], target: locals[:milestone].name) %>">Submit</a>
+               href="<%= new_milestone_team_submission_path(locals[:milestone].id, locals[:team]) %>">Create</a>
           </td>
       <% end %>
     </tr>
@@ -21,11 +21,8 @@
       <% end %>
       ><%= l submission.updated_at %></td>
       <td>
-        <a class="btn btn-default"
-           href="<%=  team_submission_path(submission.team_id, submission.id) %>">
-          View</a>
         <a class="btn btn-success"
-           href="<%= edit_team_submission_path(submission.team_id, submission.id) %>">Edit</a>
+           href="<%= edit_milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id) %>">Edit</a>
       </td>
     </tr>
 <% end %>

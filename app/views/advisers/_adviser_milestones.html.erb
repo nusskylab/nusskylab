@@ -20,7 +20,7 @@
                 <tr>
                   <td><a href="<%= team_path(team.id) %>" class="btn btn-default"><%= team.team_name %></a></td>
                   <td>
-                    <a href="<%= team_submission_path(team.id, team_submission.id) %>"
+                    <a href="<%= milestone_team_submission_path(milestone.id, team.id, team_submission.id) %>"
                        class="btn btn-success">
                       View
                     </a>

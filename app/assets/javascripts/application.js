@@ -27,11 +27,6 @@ $(function () {
       });
     });;
   }
-  if ($('.table-sortable:not(.uncountable)').length) {
-    var numberOfRows = $('.table-sortable tbody tr').length;
-    $('<div></div>').html('Number of rows: ' + numberOfRows)
-        .addClass('alert alert-info').insertBefore($('.table-sortable'));
-  }
 });
 
 $(function () {
