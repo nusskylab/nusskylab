@@ -24,7 +24,7 @@ class Team < ActiveRecord::Base
               'Student 2 Email', 'Adviser UserID', 'Adviser Name', 'Mentor UserID', 'Mentor Name',
               'Average PE Score']
       all.each do |team|
-        csv_row = [team.id, team.team_name, team.project_level, team.has_dropped]
+        csv_row = [team.id, team.team_name, team.get_project_level, team.has_dropped]
         team.send :export_add_team_members, csv_row
         team.send :export_adviser_and_mentor, csv_row
         ratings_hash = team.get_average_evaluation_ratings
@@ -214,10 +214,16 @@ class Team < ActiveRecord::Base
 
   private
   def export_add_team_members(csv_row)
+    members_data = []
     members = self.get_team_members
     members.each do |member_user|
-      csv_row.concat([member_user.id, member_user.user_name, member_user.email])
+      members_data.concat([member_user.id, member_user.user_name, member_user.email])
     end
+    # magic number for current number of students for most teams
+    if members_data.length < 6
+      members_data.concat(%w(nil nil nil))
+    end
+    csv_row.concat(members_data)
     csv_row
   end
 
