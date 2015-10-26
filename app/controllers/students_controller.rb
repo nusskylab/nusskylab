@@ -6,6 +6,10 @@ class StudentsController < ApplicationController
     not authenticate_user(true, false, Adviser.all.map {|adviser| adviser.user}) and return
     @page_title = t('.page_title')
     @students = Student.all
+    respond_to do |format|
+      format.html {render}
+      format.csv {send_data Student.to_csv}
+    end
   end
 
   def new
