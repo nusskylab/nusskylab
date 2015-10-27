@@ -3,7 +3,7 @@
     <div class="table-responsive">
       <table class="table">
         <thead>
-        <tr><th>Evaluator Name</th><th>Status</th><th>Last updated</th></tr>
+        <tr><th>Evaluator Name</th><th>Action</th><th>Last updated</th></tr>
         </thead>
         <tbody>
         <% locals[:evaluators].each do |evaluator| %>
@@ -18,7 +18,12 @@
                       View
                     </a>
                   </td>
-                  <td>
+                  <td
+                  <% if temp_evaluator_evaluation.submitted_late? %>
+                  class="late-submitted" data-toggle="tooltip" data-placement="top"
+                  title="<%= I18n.t('peer_evaluations.late_submission_tooltip') %>"
+                  <% end %>
+                  >
                     <%= l temp_evaluator_evaluation.updated_at %>
                   </td>
                 </tr>

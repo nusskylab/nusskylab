@@ -15,7 +15,7 @@
     <tr>
       <td><%= submission.milestone.name %></td>
       <td
-      <% if submission.updated_at > submission.milestone.submission_deadline %>
+      <% if submission.submitted_late? %>
       class="late-submitted" data-toggle="tooltip" data-placement="top"
       title="<%= I18n.t('submissions.late_submission_tooltip') %>"
       <% end %>

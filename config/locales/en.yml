@@ -178,6 +178,8 @@ en:
       failure_message: >
         Milestone could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   peer_evaluations:
+    late_submission_tooltip: >
+      Peer Evaluation is submitted or modified after deadline.
     new:
       page_title: >
         Create new peer evaluation
