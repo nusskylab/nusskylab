@@ -3,15 +3,9 @@
     <%= render 'shared/error_messages', locals: {target_model: locals[:peer_evaluation]} %>
     <div class="form-group">
       <label class="control-label" for="target-submission-id">Submission:</label>
-      <% if locals[:is_new] %>
-          <%= f.select :submission_id, locals[:submissions].map {|sub|
-                                       [sub.team.team_name + ' @ ' + sub.milestone.name, sub.id]},
-                       {}, {class: 'form-control'} %>
-      <% else %>
-          <%= f.select :submission_id, locals[:submissions].map {|sub|
-                                       [sub.team.team_name + ' @ ' + sub.milestone.name, sub.id]},
-                       {}, {class: 'form-control', disabled: 'disabled'} %>
-      <% end %>
+      <a href="<%= milestone_team_submission_path(locals[:submission].milestone_id, locals[:submission].team_id, locals[:submission].id) %>" class="btn btn-success">
+          <%= locals[:submission].team.team_name + ' @ ' + locals[:submission].milestone.name %>
+      </a>
     </div>
     <div class="form-group" style="display: none;">
       <label class="control-label" for="peer-evaluation-public-content">Public content:</label>
@@ -26,10 +20,10 @@
                       id: 'peer-evaluation-private-content', rows: '10', required: 'required' %>
     </div>
     <div id="eval-template">
-      <% if (not locals[:is_new]) and locals[:peer_evaluation].submission.milestone.name =='Milestone 1' %>
+      <% if locals[:milestone].name == 'Milestone 1' %>
           <%= render 'eval1_public_form_part' %>
           <%= render 'eval1_private_form_part' %>
-      <% elsif (not locals[:is_new]) and locals[:peer_evaluation].submission.milestone.name =='Milestone 2' %>
+      <% elsif locals[:milestone].name == 'Milestone 2' %>
           <%= render 'eval2_public_form_part' %>
           <%= render 'eval2_private_form_part' %>
       <% else %>

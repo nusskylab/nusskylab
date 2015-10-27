@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
   #   is a hash for specify additional information such as redirect_path and redirect_message
   def authenticate_user(login_required = true, admin_only = false, allowed_users = [], **options)
     logged_in_user = current_user
-    if login_required and not logged_in_user
+    if not login_required
+      return true
+    elsif login_required and not logged_in_user
       redirect_user(options) and return false
     end
     if admin_only and not is_current_user_admin?

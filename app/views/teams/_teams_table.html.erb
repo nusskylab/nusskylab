@@ -12,7 +12,7 @@
         <td>
           <%= render 'team_name_representation', locals: {team: team} %>
         </td>
-        <td><%= team.project_level %></td>
+        <td><%= team.get_project_level %></td>
         <td><%= team.has_dropped %></td>
         <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
         <td><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>

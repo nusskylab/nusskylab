@@ -17,7 +17,7 @@
                     <%= render 'teams/team_name_representation', locals: {team: evaluated.evaluated} %>
                   </td>
                   <td>
-                    <a href="<%= team_submission_path(evaluated.evaluated_id, temp_evaluated_submission.id) %>"
+                    <a href="<%= milestone_team_submission_path(milestone.id, evaluated.evaluated_id, temp_evaluated_submission.id) %>"
                        class="btn btn-success">
                       View
                     </a>
@@ -32,12 +32,12 @@
                   </td>
                   <td>
                     <% if (temp_evaluation = locals[:team_evaluations][temp_evaluated_submission.id]) %>
-                        <a href="<%= edit_team_peer_evaluation_path(evaluated.evaluator_id, temp_evaluation.id) %>"
+                        <a href="<%= edit_milestone_team_peer_evaluation_path(milestone.id, evaluated.evaluator_id, temp_evaluation.id) %>"
                            class="btn btn-success">
                           Edit Evaluation
                         </a>
                     <% else %>
-                        <a href="<%= new_team_peer_evaluation_path(evaluated.evaluator_id, target: temp_evaluated_submission.id) %>"
+                        <a href="<%= new_milestone_team_peer_evaluation_path(milestone.id, evaluated.evaluator_id, target_evaluation_id: evaluated.id) %>"
                            class="btn btn-primary">
                           Start Evaluation
                         </a>
@@ -58,7 +58,7 @@
                     Not submitted yet
                   </td>
                   <td>
-                    <a href="#" class="btn btn-default" disabled="disabled">
+                    <a href="#" class="btn btn-primary" disabled="disabled">
                       Start Evaluation
                     </a>
                   </td>

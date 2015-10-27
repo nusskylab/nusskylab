@@ -7,4 +7,9 @@ class Submission < ActiveRecord::Base
 
   belongs_to :milestone
   belongs_to :team
+
+  def submitted_late?
+    deadline = self.milestone.submission_deadline
+    self.updated_at > deadline
+  end
 end

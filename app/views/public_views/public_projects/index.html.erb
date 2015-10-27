@@ -1,0 +1,30 @@
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <% first_loop = true; @teams_table.each do | cohort, teams | %>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=cohort%>" aria-expanded="true" aria-controls="collapse<%=cohort%>">
+              Cohort <%=cohort%>
+            </a>
+          </h4>
+        </div>
+        <div id="collapse<%=cohort%>" class="panel-collapse collapse <% if first_loop %>in<% first_loop = false; end %>" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <% if teams.length > 0 %>
+                <%= render 'public_teams_table', locals: {teams: teams,
+                                                          selected_teams: teams.select{|team| team.apollo_11?},
+                                                          selected_type: 'Apollo 11'} %>
+                <%= render 'public_teams_table', locals: {teams: teams,
+                                                          selected_teams: teams.select{|team| team.project_gemini?},
+                                                          selected_type: 'Project Gemini'} %>
+                <%= render 'public_teams_table', locals: {teams: teams,
+                                                          selected_teams: teams.select{|team| team.vostok?},
+                                                          selected_type: 'Vostok'} %>
+            <% else %>
+                No Data Available
+            <% end %>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>

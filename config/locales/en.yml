@@ -149,7 +149,37 @@ en:
         Mentor %{user_name} has been successfully deleted
       failure_message: >
         Mentor could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+  milestones:
+    index:
+      page_title: >
+        View all milestones
+    new:
+      page_title: >
+        Create new milestone
+    create:
+      success_message: >
+        Milestone %{milestone_name} has been successfully created
+      failure_message: >
+        Milestone could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    edit:
+      page_title: >
+        Edit milestone %{milestone_name}
+    update:
+      success_message: >
+        Milestone %{milestone_name} has been successfully saved
+      failure_message: >
+        Milestone could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+    show:
+      page_title: >
+        View milestone %{milestone_name}
+    destroy:
+      success_message: >
+        Milestone %{milestone_name} has been successfully deleted
+      failure_message: >
+        Milestone could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
   peer_evaluations:
+    late_submission_tooltip: >
+      Peer Evaluation is submitted or modified after deadline.
     new:
       page_title: >
         Create new peer evaluation
@@ -163,6 +193,11 @@ en:
     index:
       page_title: >
         View all received peer evaluations
+  public_views:
+    public_projects:
+      index:
+        page_title: >
+          View all projects in Orbital
   received_feedbacks:
     index:
       page_title: >
@@ -234,9 +269,19 @@ en:
     new:
       page_title: >
         Create new submission
+    create:
+      success_message: >
+        Submission has been created successfully
+      failure_message: >
+        Submission could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_messages}
     edit:
       page_title: >
         Edit a submission
+    update:
+      success_message: >
+        Submission has been updated successfully
+      failure_message: >
+        Submission could not be updated: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_messages}
     show:
       page_title: >
         View a submission
@@ -304,16 +349,28 @@ en:
       failure_message: >
         Team %{team_name} could not be deleted :(
   users:
+    index:
+      page_title: >
+        View all users
+    new:
+      page_title: >
+        Create a new user
     create:
       success_message: >
         The user has been created successfully
       failure_message: >
         User information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
+    edit:
+      page_title: >
+        Edit %{user_name}'s info
     update:
       success_message: >
         The user information has been updated successfully
       failure_message: >
         User information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
+    show:
+      page_title: >
+        View %{user_name}'s info
     destroy:
       success_message: >
         The user has been successfully deleted

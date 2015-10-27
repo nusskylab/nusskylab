@@ -3,7 +3,7 @@
     <div class="table-responsive">
       <table class="table">
         <thead>
-        <tr><th>Evaluator Name</th><th>Status</th><th>Last updated</th></tr>
+        <tr><th>Evaluator Name</th><th>Action</th><th>Last updated</th></tr>
         </thead>
         <tbody>
         <% locals[:evaluators].each do |evaluator| %>
@@ -13,12 +13,17 @@
                     <%= render 'teams/team_name_representation', locals: {team: evaluator.evaluator} %>
                   </td>
                   <td>
-                    <a href="<%= team_peer_evaluation_path(evaluator.evaluator_id, temp_evaluator_evaluation.id) %>"
+                    <a href="<%= milestone_team_peer_evaluation_path(milestone.id, evaluator.evaluator_id, temp_evaluator_evaluation.id) %>"
                        class="btn btn-success">
                       View
                     </a>
                   </td>
-                  <td>
+                  <td
+                  <% if temp_evaluator_evaluation.submitted_late? %>
+                  class="late-submitted" data-toggle="tooltip" data-placement="top"
+                  title="<%= I18n.t('peer_evaluations.late_submission_tooltip') %>"
+                  <% end %>
+                  >
                     <%= l temp_evaluator_evaluation.updated_at %>
                   </td>
                 </tr>
@@ -44,7 +49,7 @@
             <tr>
               <td><%= locals[:student].team.adviser.user.user_name %></td>
               <td>
-                <a href="<%= adviser_peer_evaluation_path(locals[:student].team.adviser_id, adviser_evaluation.id) %>"
+                <a href="<%= milestone_adviser_peer_evaluation_path(milestone.id, locals[:student].team.adviser_id, adviser_evaluation.id) %>"
                    class="btn btn-success">
                   View
                 </a>
@@ -78,7 +83,7 @@
           <td colspan="3" class="text-center">
             <% if locals[:student].team %>
                 <a href="<%= milestone_team_received_evals_path(milestone.id, locals[:student].team.id) %>"
-                   class="btn btn-info">
+                   class="btn btn-success">
                   View all submitted evaluations
                 </a>
             <% end %>

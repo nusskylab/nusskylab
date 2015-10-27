@@ -1,17 +1,28 @@
 class SubmissionsController < ApplicationController
   def new
     team = Team.find(params[:team_id]) or record_not_found
+    milestone = Milestone.find_by(id: params[:milestone_id]) or record_not_found
+    submission = Submission.find_by(team_id: team.id, milestone_id: milestone.id)
+    redirect_to edit_milestone_team_submission_path(milestone, team, submission) and return if submission
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     @page_title = t('.page_title')
     @submission = Submission.new(team_id: params[:team_id])
-    render_new_action and return
+    render locals: {team_id: params[:team_id],
+                    milestone: milestone,
+                    submissions: Submission.where(team_id: team.id)}
   end
 
   def create
     team = Team.find(params[:team_id]) or record_not_found
+    milestone = Milestone.find_by(id: params[:milestone_id]) or record_not_found
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
-    sub = create_submission
-    render_or_redirect_for_submission(sub, true)
+    @submission = Submission.new(get_submission_params)
+    if @submission.save
+      redirect_to get_home_link, flash: {success: t('.success_message')}
+    else
+      redirect_to new_milestone_team_submission_path(milestone, team), flash: {danger: t('.failure_message',
+                                                                               error_messages: @submission.errors.full_messages.join(', '))}
+    end
   end
 
   def show
@@ -23,38 +34,30 @@ class SubmissionsController < ApplicationController
 
   def edit
     team = Team.find(params[:team_id]) or record_not_found
+    @submission = Submission.find(params[:id]) or record_not_found
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     @page_title = t('.page_title')
-    @submission = Submission.find(params[:id]) or record_not_found
-    render_edit_action and return
+    render locals: {team_id: params[:team_id]}
   end
 
   def update
     team = Team.find(params[:team_id]) or record_not_found
+    milestone = Milestone.find_by(id: params[:milestone_id]) or record_not_found
+    @submission = Submission.find(params[:id]) or record_not_found
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
-    sub = update_submission
-    render_or_redirect_for_submission(sub, false)
+    if update_submission
+      redirect_to get_home_link, flash: {success: t('.success_message')}
+    else
+      redirect_to edit_milestone_team_submission_path(milestone, team, @submission), flash: {danger: t('.failure_message',
+                                                                                             error_messages: @submission.errors.full_messages.join(', '))}
+    end
   end
 
   private
-  def create_submission
-    sub_params = get_submission_params
-    @submission = Submission.new(sub_params)
-    @submission.save ? @submission : nil
-  end
-
   def update_submission
     sub_params = get_submission_params
-    @submission = Submission.find(params[:id])
-    if not (@submission.milestone_id == sub_params[:milestone_id].to_i)
-      @submission.errors.add(:milestone_id,
-                             'You cannot change milestone id once submitted, use new instead')
-      return nil
-    elsif not (@submission.team_id == sub_params[:team_id].to_i)
-      @submission.errors.add(:team_id,
-                             'You cannot change team id once submitted, use new instead')
-      return nil
-    end
+    sub_params[:milestone_id] = @submission.milestone_id
+    sub_params[:team_id] = @submission.team_id
     @submission.update(sub_params) ? @submission : nil
   end
 
@@ -62,29 +65,7 @@ class SubmissionsController < ApplicationController
     submission_params = params.require(:submission).permit(:milestone_id, :read_me,
                                                            :project_log, :video_link)
     submission_params[:team_id] = params[:team_id]
+    submission_params[:milestone_id] = params[:milestone_id]
     submission_params
-  end
-
-  def render_or_redirect_for_submission(sub, is_create_action)
-    if sub
-      redirect_to team_submission_path(@submission.team_id, @submission.id)
-    elsif is_create_action
-      render_new_action
-    else
-      render_edit_action
-    end
-  end
-
-  def render_new_action
-    render 'new', locals: {
-                  team_id: params[:team_id],
-                  milestones: Milestone.all
-                }
-  end
-
-  def render_edit_action
-    render 'edit', locals: {
-             milestones: Milestone.all
-                 }
   end
 end

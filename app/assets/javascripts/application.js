@@ -4,6 +4,7 @@
 //= require jquery.tablesorter
 //= require select2
 //= require jQuery.autolink
+//= require autosize
 
 $(function () {
   if ($('.table-sortable').length) {
@@ -25,9 +26,6 @@ $(function () {
         $($(val).children('td')[0]).html((idx + 1));
       });
     });;
-    var numberOfRows = $('.table-sortable tbody tr').length;
-    $('<div></div>').html('Number of rows: ' + numberOfRows)
-        .addClass('alert alert-info').prependTo($('.table-sortable').parent());
   }
 });
 
@@ -86,4 +84,21 @@ $(function () {
 
 $(function() {
   $('.autolink').autolink();
+});
+
+$(function() {
+  autosize($('textarea:not(.tinymce)'));
+});
+
+$(window).scroll(function() {
+  if ($(this).scrollTop() >= 100) {
+    $('#return-to-top').fadeIn(200);
+  } else {
+    $('#return-to-top').fadeOut(200);
+  }
+});
+$('#return-to-top').click(function() {
+  $('body,html').animate({
+    scrollTop : 0
+  }, 500);
 });

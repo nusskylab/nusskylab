@@ -1,21 +1,59 @@
 <% content_for :main_content do %>
     <% javascript 'users.js' %>
-    <div class="jumbotron">
-      <h1 class="text-center">Welcome to Orbital</h1>
-      <p>You can choose to view as one of the following roles:</p>
-      <p>
-        <% if user_student? %>
-            <a href="<%= student_path(user_student?.id) %>" class="btn btn-primary btn-lg">View as a student</a>
-        <% end %>
-        <% if user_adviser? %>
-            <a href="<%= adviser_path(user_adviser?.id) %>" class="btn btn-primary btn-lg">View as an adviser</a>
-        <% end %>
-        <% if user_mentor? %>
-            <a href="<%= mentor_path(user_mentor?.id) %>" class="btn btn-primary btn-lg">View as a mentor</a>
-        <% end %>
-        <% if user_admin? %>
-            <a href="<%= admin_path(user_admin?.id) %>" class="btn btn-primary btn-lg">View as an admin</a>
-        <% end %>
-      </p>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2>
+          <span>Hi, <%= @user.user_name %> </span>
+        </h2>
+      </div>
+      <div class="panel-body">
+
+      <div role="tabpanel">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#user-details" aria-controls="user-details"
+                 role="tab" data-toggle="tab">
+                User details
+              </a>
+            </li>
+            <li role="presentation">
+              <a href="#user-roles" aria-controls="user-roles"
+                 role="tab" data-toggle="tab">
+                User roles
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="user-details">
+              <div class="col-sm-12">
+                <br>
+                <%= render 'user_details', locals: {user: @user} %>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="user-roles">
+              <div class="col-sm-12">
+                <br>
+                <div class="jumbotron">
+                  <p>You can choose to view as one of the following roles:</p>
+                  <p>
+                  <% if (adm = user_admin?) %>
+                        <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">View as an admin</a>
+                    <% end %>
+                    <% if (adv = user_adviser?) %>
+                        <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">View as an adviser</a>
+                    <% end %>
+                    <% if (men = user_mentor?) %>
+                        <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">View as a mentor</a>
+                    <% end %>
+                    <% if (stu = user_student?) %>
+                        <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">View as a student</a>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 <% end %>
