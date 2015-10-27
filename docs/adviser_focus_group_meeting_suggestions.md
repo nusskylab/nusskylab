@@ -51,16 +51,16 @@ Maybe, when creating submission guidelines for Milestone 1, a link to how to wri
   "Bonus point!" makes it difficult to tell exactly what score peer teams are giving to the group they are evaluating. Sometimes, teams may feel that the team has done good enough for Vostok, but not enough for Gemini. Yet at the same time, they feel that the work the team has put in is deserving of a bonus point. When teams select "bonus point" option, it is hard to tell if they mean "Apollo 11 work + 1 bonus point" or another achievement level with bonus point altogether. May want to separate the "bonus point" segment from the evaluation
 
 **Overall, what do you think of Skylab's usefulness and usability during the summer?**
-- Really helpful
-- Really helpful
+- [U1] Really helpful
+- [U2] Really helpful
 
 **Overall, what do you think of Skylab's user-friendliness during the summer?**
-- Can but hard to figure out how to do things
-- Fairly easy to figure out how to do things
+- [U1] Can but hard to figure out how to do things
+- [U2] Fairly easy to figure out how to do things
 
 **Any comments?**
-- See During&Post Meeting.
-- For Splashdown this Orbital, advisors did not get to vote. It was kind of assumed that we'd automatically be given voting IDs since we were involved in Orbital directly during the summer. As such, there was some confusion during Splashdown among advisors whether we had a voting ID to help vote as well.
+- [U1] See During&Post Meeting.
+- [U2] For Splashdown this Orbital, advisors did not get to vote. It was kind of assumed that we'd automatically be given voting IDs since we were involved in Orbital directly during the summer. As such, there was some confusion during Splashdown among advisors whether we had a voting ID to help vote as well.
   Also, this time around, there were no registration counters set up outside SR1 to carry out last-minute registrations compared to Orbital 2014. Not sure if this was intended, but the counter was a good way to give last-minute attendees a chance to vote, and at the same time, for Orbital teams to stash their posters there before they arrive.
   The switch around between session 1 and 2 was a lot smoother this time, and since talks were kept to post-session 2, it ensured that speakers would be listened to instead of having their voices drowned out in the chaos. Good to retain this format for future Orbital!
   Slack proved to be an excellent tool for sharing announcements and information to students. Would be great if Slack, or a similar tool, is used in future Orbital runs.
@@ -102,7 +102,7 @@ Maybe, when creating submission guidelines for Milestone 1, a link to how to wri
   Unsure of purpose of dropdown menu on top that states which team we're evaluating currently. I see that the dropdown is now disabled, but maybe instead of a dropdown menu (since we can't interact with it), just change it to a regular un-interactable text/input box with the team info? :)
 
 **How is viewing of feedback from your students? Anything to suggest for improvement?**
-- -
+- [U1] '''No response'''.
 - No issues here, very neatly organized currently.
 
 **Any features/extensions you would like to see? Any suggestions?**
