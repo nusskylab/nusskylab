@@ -1,12 +1,18 @@
 This is a Wiki guiding you through the process of setting up production server with stack: Nginx, puma, Postgres on CentOS.
 
+Please recall that the version requirements for the four software are:
+* Nginx
+* Puma
+* Postgres
+* CentOS 
+
 So first, install Nginx with the the following command:
 ```
 sudo yum update
 sudo yum install nginx
 ```
 
-Make sure other processes are not taking port 80(for example, Apache httpd) by turning them off or configure them to listen on other ports instead. Then start Nginx with:
+Make sure other processes are not taking port 80(for example, Apache httpd) by turning them off or configure them to listen on other ports instead. Note that the School of Computing requires virtual machines to only use the standard port 80 for http connections. Then start Nginx with:
 ```
 service nginx start
 service nginx status -l  # for checking status of the server
@@ -17,7 +23,7 @@ Clone the repo by
 git clone https://github.com/nusskylab/nusskylab.git
 ```
 
-So to run puma | rails application, you need Ruby interpreter installed and you should install it. The recommended way is to have a Ruby version manager like rvm or rbenv. The instruction for installing rbenv is as follows:
+So to run puma | rails application, you need a Ruby interpreter installed and you should install it. The recommended way is to have a Ruby version manager like rvm or rbenv. The instruction for installing rbenv is as follows:
 ```
 git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
@@ -53,7 +59,7 @@ bundle exec rake db:create
 bundle exec rake db:migrate
 ```
 
-Run <code>./server.sh</code> to start up the production server, which listens on port 9292. Then configure Nignx to forward requests to 9292. A sample of declaring server in /etc/nginx/nginx.conf
+Run <code>./server.sh</code> to start up the production server, which listens on port 9292. Then configure Nginx to forward requests to 9292. A sample forward declaration for the server in /etc/nginx/nginx.conf looks like:
 ```
 upstream my_app {
   server 127.0.0.1:9292;  # or the port you configured in puma configuration file
