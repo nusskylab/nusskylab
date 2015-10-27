@@ -13,9 +13,13 @@ class PeerEvaluationsController < ApplicationController
 
   def create
     not can_access_peer_evaluation and return
-    @page_title = t('.page_title')
-    create_peer_evaluation
-    response_to_user(true)
+    @peer_evaluation = PeerEvaluation.new(get_evaluation_params)
+    if @peer_evaluation.save
+      redirect_to get_home_link, flash: {success: t('.success_message')}
+    else
+      redirect_to get_home_link, flash: {danger: t('.failure_message',
+                                                   error_messages: @peer_evaluation.errors.full_messages.join(', '))}
+    end
   end
 
   def show
@@ -25,9 +29,9 @@ class PeerEvaluationsController < ApplicationController
   end
 
   def edit
+    @peer_evaluation = PeerEvaluation.find(params[:id]) or record_not_found
     not can_access_peer_evaluation and return
     @page_title = t('.page_title')
-    @peer_evaluation = PeerEvaluation.find(params[:id])
     render locals: {
              milestone: Milestone.find(params[:milestone_id])
            }
@@ -35,9 +39,12 @@ class PeerEvaluationsController < ApplicationController
 
   def update
     not can_access_peer_evaluation and return
-    @page_title = t('.page_title')
-    update_peer_evaluation
-    response_to_user(false)
+    if update_peer_evaluation
+      redirect_to get_home_link, flash: {success: t('.success_message')}
+    else
+      redirect_to get_home_link, flash: {danger: t('.failure_message',
+                                                   error_messages: @peer_evaluation.errors.full_messages.join(', '))}
+    end
   end
 
   private
@@ -58,11 +65,6 @@ class PeerEvaluationsController < ApplicationController
     return true
   end
 
-  def create_peer_evaluation
-    @peer_evaluation = PeerEvaluation.new(get_evaluation_params)
-    @peer_evaluation.save ? @peer_evaluation : nil
-  end
-
   def update_peer_evaluation
     @peer_evaluation = PeerEvaluation.find(params[:id])
     eval_params = get_evaluation_params
@@ -81,56 +83,5 @@ class PeerEvaluationsController < ApplicationController
       eval_params[:adviser_id] = params[:adviser_id]
     end
     eval_params
-  end
-
-  def get_submissions_for_page
-    if params[:team_id]
-      get_submissions_for_team
-    elsif params[:adviser_id]
-      get_submissions_for_adviser
-    end
-  end
-
-  def get_submissions_for_team
-    team = Team.find(params[:team_id])
-    evaluateds = team.evaluateds
-    submissions = []
-    evaluateds.each do |evaluated|
-      submissions += evaluated.evaluated.submissions
-    end
-    submissions.select { |sub| sub.milestone_id.to_s == params[:milestone_id].to_s }
-  end
-
-  def get_submissions_for_adviser
-    adviser = Adviser.find(params[:adviser_id])
-    teams = adviser.teams
-    submissions = []
-    teams.each do |team|
-      submissions += team.submissions
-    end
-    submissions.select { |sub| sub.milestone_id.to_s == params[:milestone_id].to_s }
-  end
-
-  def render_template(template_name)
-    render template_name, locals: {
-             submissions: get_submissions_for_page,
-             milestone: Milestone.find(params[:milestone_id])
-           }
-  end
-
-  def response_to_user(is_create_action = true)
-    if @peer_evaluation.errors.any?
-      if is_create_action
-        render_template('new')
-      else
-        render_template('edit')
-      end
-    else
-      if @peer_evaluation[:team_id]
-        redirect_to team_path(@peer_evaluation[:team_id])
-      elsif @peer_evaluation[:adviser_id]
-        redirect_to adviser_path(@peer_evaluation[:adviser_id])
-      end
-    end
   end
 end

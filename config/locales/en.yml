@@ -183,9 +183,19 @@ en:
     new:
       page_title: >
         Create new peer evaluation
+    create:
+      success_message: >
+        The peer evaluation has been successfully created
+      failure_message: >
+        The peer evaluation could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
     edit:
       page_title: >
         Edit a peer evaluation
+    update:
+      success_message: >
+        The peer evaluation has been successfully saved
+      failure_message: >
+        The peer evaluation could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
     show:
       page_title: >
         View a peer evaluation
