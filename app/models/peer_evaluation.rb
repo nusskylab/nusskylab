@@ -25,6 +25,11 @@ class PeerEvaluation < ActiveRecord::Base
     not self.adviser_id.blank?
   end
 
+  def submitted_late?
+    deadline = self.submission.milestone.peer_evaluation_deadline
+    self.updated_at > deadline
+  end
+
   # TODO: remove this matter later as it will be coupled with evaluating relation only
   def check_evaluation_owner_presence
     if self.adviser_id.blank? and self.team_id.blank?
