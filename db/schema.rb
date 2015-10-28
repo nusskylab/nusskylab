@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150912080750) do
+ActiveRecord::Schema.define(version: 20151028075801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,13 +74,13 @@ ActiveRecord::Schema.define(version: 20150912080750) do
   create_table "peer_evaluations", force: :cascade do |t|
     t.text     "public_content"
     t.text     "private_content"
-    t.datetime "created_at",      default: '2015-06-24 14:47:50', null: false
+    t.datetime "created_at",                        null: false
     t.boolean  "published"
     t.integer  "team_id"
     t.integer  "submission_id"
     t.integer  "adviser_id"
     t.string   "owner_type",      default: "teams"
-    t.datetime "updated_at",      default: '2015-06-24 14:47:50', null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "peer_evaluations", ["adviser_id"], name: "index_peer_evaluations_on_adviser_id", using: :btree
