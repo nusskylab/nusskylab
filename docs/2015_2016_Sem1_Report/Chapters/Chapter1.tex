@@ -1,28 +1,32 @@
 \chapter{Introduction}
 
-Orbital is the School of Computing’s self-driven programming summer experience. It is designed to give first-year students the opportunity to 1) self-learn and 2) build something useful. It is designed as a 4 modular credit (MC) module that is taken pass/fail (CS/CU) over the summer1.
+Orbital is the School of Computing’s self-driven programming summer experience. It is designed to give first-year students the opportunity to self-learn and build something useful. It is designed as a 4 modular credit (MC) module that is taken pass/fail (CS/CU) over the summer. With its focus on hands-on experience, it has been catching more and more attention and an increasing number of year-one students are joining the program to code something useful and interesting. During the academic year of 2015-2016, more than 250 students completed Orbital program.
 
-For the evaluation of Orbital program, students are supposed to submit to Milestones as a team, stating what they have done during that phase. And then assigned peer teams(each team will be assigned about 3 peer teams) will be giving feedback regarding the submission and the application built by the team of students. At the same time, there will be an adviser who will overlook the whole process and provide evaluation of a team's submission too. After 3 submissions and evaluations are done, a feedback is expected from a team to its peer teams and it adviser regarding the quality of evaluations received.
+For the evaluation of Orbital program, students are supposed to submit to Milestones as a team, stating what they have done during that phase. And then assigned peer teams(each team will be assigned for about 3 peer teams) will be giving feedback regarding the submission and the application built by the team of students. At the same time, there will be an adviser who will overlook the whole process and provide evaluation of a team's submission too. After 3 submissions and evaluations are done, a feedback is expected from a team to its peer teams and its adviser regarding the quality of evaluations received.
 
-The nature of Orbital defines the scope of Skylab — A development project built for peer evaluations. It also provides students with a real-life Software Engineering training ground to learn and sharpen coding and system designing skills. 
+The nature of Orbital defines the scope of Skylab —- A development project built for peer evaluations. It also provides students with a real-life Software Engineering training ground to learn and sharpen programming and system design skills. 
 
 \section{Challenges}
 
-System design:
-Evolving requirements:
-Data migration:
-Developing process:
-Coding quality/maintainability:
-System administration: 
-
-\subsection{A Subsection}
-
-Just leave it here
-
-\section{Importance of Work}
-
+\subsection{System design}
+Skylab is built on top of Ruby on Rails, a mature convention-over-configuration web framework. So the first challenge for me is to get familiar with the conventions and recommended ways of doing things in Rails community. Then I can design the web application on the top of main-stream philosophy in Rails community. Another issue with the design of Skylab is that this is the first time I have been designing such an application from ground up, without any guidance from any experienced Ruby on Rails developers. Therefore, it is all about try-and-error and explore my own way. Reading books and browsing on-line tutorials helped me a lot and luckily there are plenty of resources about Ruby on Rails development due to its popularity.
+\subsection{Evolving requirements}
+Although the scope of the project is very clear and well-defined, changes in requirements are expected and did happen a lot due to lack of consideration during initial system design phase, evolving features of Skylab project and Skylab users' feedback. The challenge is to cope with all changes and make necessary adjustments to the Skylab as new requirements are brought up. Therefore agility in development and adaptability of the system is expected.
+\subsection{Security}
+% Security is definitely a very important perspective in web development. Although Rails is handling security well by,
 To be continued
+\subsection{Data migration}
+Sometimes schema migration is required as a result of change in requirements. Therefore, dealing with old data and migration of data without affecting the use of application is another challenge during the development of Skylab. Extreme attention when migrating is required as data may not be clean enough and careless migration may even cause the system to be unusable for some users.
+\subsection{Coding quality/maintainability}
+Although currently there is only me constantly contributing to Skylab repository, a good development cycle which is agile enough is not only important for me to keep track of history and manage different issues but also convenient for developers who will join later to jump in and get started. Testing is also a very important factor when it is comes to long-term maintenance. A continuous integration would also help me in catching regression errors in development early and easily. Besides all mentioned above, refactoring is helping in the growth of the project.
+
 
 \section{Objectives}
 
 To be continued
+
+\section{Outline}
+
+In this report, I will discuss various accomplishments I have done in the development. Chapter 2 will be an overview of current architecture of Skylab, and methodologies I employed during the development. Then security related issues such as user authentication and access control will be discussed in Chapter 3. Chapter 4 is about problems in the implementation of submissions. Chapter 5 will be talking about design for peer evaluations. After then feedback related details will be discussed in Chapter 6. Chapter 7 is about adviser focus group meeting and its findings. Last but not least, a summary of work and an overlook of future development will come in Chapter 8.
+
+
