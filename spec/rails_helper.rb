@@ -5,6 +5,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'devise'
 require 'support/controller_macros'
+require 'support/helper_macros'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -31,6 +32,8 @@ RSpec.configure do |config|
   # for loading devise in test
   config.include Devise::TestHelpers, :type => :controller
   config.extend ControllerMacros, :type => :controller
+  config.include Devise::TestHelpers, :type => :helper
+  config.extend HelperMacros, :type => :helper
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
