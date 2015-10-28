@@ -1,7 +1,4 @@
 class StudentsController < ApplicationController
-  NUS_OPEN_ID_PREFIX = 'https://openid.nus.edu.sg/'
-  NUS_OPEN_ID_PROVIDER = 'NUS'
-
   def index
     not authenticate_user(true, false, Adviser.all.map {|adviser| adviser.user}) and return
     @page_title = t('.page_title')
