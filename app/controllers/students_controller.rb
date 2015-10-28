@@ -33,17 +33,16 @@ class StudentsController < ApplicationController
   end
 
   def edit
-    @student = Student.find(params[:id])
-    not authenticate_user(true, false, [@student.user] ) and return
+    @student = Student.find(params[:id]) or record_not_found
+    not authenticate_user(true, false, [@student.user]) and return
     @page_title = t('.page_title', user_name: @student.user.user_name)
     render locals: {teams: Team.all}
   end
 
   def update
-    @student = Student.find(params[:id])
-    not authenticate_user(true, false, [@student.user] ) and return
-    student_params = params.require(:student).permit(:team_id)
-    if @student.update(student_params)
+    @student = Student.find(params[:id]) or record_not_found
+    not authenticate_user(true, false, [@student.user]) and return
+    if @student.update(get_student_params)
       redirect_to student_path(@student),
                   flash: {success: t('.success_message', user_name: @student.user.user_name)}
     else
@@ -87,6 +86,10 @@ class StudentsController < ApplicationController
   end
 
   private
+  def get_student_params
+    params.require(:student).permit(:team_id)
+  end
+
   def create_student_for_user(user)
     @student = Student.new(user_id: user.id)
     @student.save ? @student : nil

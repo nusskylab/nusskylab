@@ -119,7 +119,7 @@ RSpec.describe StudentsController, type: :controller do
         Student.find_by(user_id: subject.current_user.id).destroy
       end
 
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_link for non_admin and non_current_user' do
         user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
         student = FactoryGirl.create(:student, user_id: user.id)
         get :show, id: student.id
@@ -134,6 +134,84 @@ RSpec.describe StudentsController, type: :controller do
         student = FactoryGirl.create(:student, user_id: user.id)
         get :show, id: student.id
         expect(response).to render_template(:show)
+      end
+    end
+  end
+
+  describe 'GET #edit' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
+        student = FactoryGirl.create(:student, user_id: user.id)
+        get :edit, id: student.id
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in but not admin' do
+      login_user
+      it 'should render edit for current student' do
+        student = FactoryGirl.create(:student, user_id: subject.current_user.id)
+        get :edit, id: student.id
+        expect(response).to render_template(:edit)
+        Student.find_by(user_id: subject.current_user.id).destroy
+      end
+
+      it 'should redirect to home_link for non_admin and non_current_user' do
+        user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
+        student = FactoryGirl.create(:student, user_id: user.id)
+        get :edit, id: student.id
+        expect(response).to redirect_to(controller.get_home_link)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should render edit for admin user' do
+        user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
+        student = FactoryGirl.create(:student, user_id: user.id)
+        get :edit, id: student.id
+        expect(response).to render_template(:edit)
+      end
+    end
+  end
+
+  describe 'PUT #update' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
+        student = FactoryGirl.create(:student, user_id: user.id)
+        put :update, id: student.id
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in but not admin' do
+      login_user
+      it 'should render edit for current student' do
+        student = FactoryGirl.create(:student, user_id: subject.current_user.id)
+        team = FactoryGirl.create(:team, team_name: '1.student.controller.spec')
+        put :update, id: student.id, student: {team_id: team.id}
+        expect(response).to redirect_to(student_path(student))
+        Student.find_by(user_id: subject.current_user.id).destroy
+      end
+
+      it 'should redirect to home_link for non_admin and non_current_user' do
+        user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
+        student = FactoryGirl.create(:student, user_id: user.id)
+        put :update, id: student.id
+        expect(response).to redirect_to(controller.get_home_link)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should render edit for admin user' do
+        user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
+        student = FactoryGirl.create(:student, user_id: user.id)
+        team = FactoryGirl.create(:team, team_name: '1.student.controller.spec')
+        put :update, id: student.id, student: {team_id: team.id}
+        expect(response).to redirect_to(student_path(student))
       end
     end
   end
