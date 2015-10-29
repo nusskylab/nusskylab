@@ -10,23 +10,34 @@ The nature of Orbital defines the scope of Skylab —- A development project bui
 
 \subsection{System design}
 Skylab is built on top of Ruby on Rails, a mature convention-over-configuration web framework. So the first challenge for me is to get familiar with the conventions and recommended ways of doing things in Rails community. Then I can design the web application on the top of main-stream philosophy in Rails community. Another issue with the design of Skylab is that this is the first time I have been designing such an application from ground up, without any guidance from any experienced Ruby on Rails developers. Therefore, it is all about try-and-error and explore my own way. Reading books and browsing on-line tutorials helped me a lot and luckily there are plenty of resources about Ruby on Rails development due to its popularity.
+
 \subsection{Evolving requirements}
-Although the scope of the project is very clear and well-defined, changes in requirements are expected and did happen a lot due to lack of consideration during initial system design phase, evolving features of Skylab project and Skylab users' feedback. The challenge is to cope with all changes and make necessary adjustments to the Skylab as new requirements are brought up. Therefore agility in development and adaptability of the system is expected.
-\subsection{Security}
-% Security is definitely a very important perspective in web development. Although Rails is handling security well by,
-To be continued
+Although the scope of the project is very clear and well-defined, changes in requirements are expected and did happen a lot due to evolving features of Skylab project and Skylab users' feedback. The challenge is to cope with all changes and sometimes adjustments to the design of system have to be made to accommodate for extensions. Therefore agility in development and adaptability of the system is expected.
+
 \subsection{Data migration}
 Sometimes schema migration is required as a result of change in requirements. Therefore, dealing with old data and migration of data without affecting the use of application is another challenge during the development of Skylab. Extreme attention when migrating is required as data may not be clean enough and careless migration may even cause the system to be unusable for some users.
+
+\subsection{Security}
+Security is definitely a very important perspective in web development. Although Rails is handling security well by taking measures against SQL injection, XSS attacks and CSRF attacks, there are still quite some vulnerabilities if not handled well. During development of Skylab, various techniques and practices are adopted to make Skylab more secure and trust-able. What is more, with different roles in Skylab, a role based access control system is in place for permitting users to carry out allowed actions only.
+
 \subsection{Coding quality/maintainability}
 Although currently there is only me constantly contributing to Skylab repository, a good development cycle which is agile enough is not only important for me to keep track of history and manage different issues but also convenient for developers who will join later to jump in and get started. Testing is also a very important factor when it is comes to long-term maintenance. A continuous integration would also help me in catching regression errors in development early and easily. Besides all mentioned above, refactoring is helping in the growth of the project.
 
-
 \section{Objectives}
 
-To be continued
+In this project, I need to:
+\begin{itemize}
+  \item Enable users to login via NUS OpenID if they have NUS Net IDs already.
+  \item Enable users to login via combination of email and password for those who do not have NUS Net IDs and also serve as a backup solution to NUS OpenID login.
+  \item Enable students to edit their own team's details including ``Team Name'' and ``Project Level''.
+  \item Enable students to submit for Milestones or edit their previous submissions. Besides, students in the same team should be able to see changes made by teammates.
+  \item Enable students to view submissions from teams that they should evaluate(For example, Team A is supposed to evaluate Team B and Team C; Then students in Team A should be able to view submissions from Team B and Team C).
+  \item Enable students to submit peer evaluations for submissions from teams that they are evaluating.
+  \item Enable students to view peer evaluations from teams that are evaluating their own teams and their adviser(For example, Team B is supposed to be evaluated by Team A and Team C; Then students in Team B should be able to view peer evaluations submitted by Team A and Team C for Team B). For public part of a peer evaluation, students can see response with name of the team that submitted that evaluation; As for private part, students can only see a compilation of all private part responses without team names.
+  \item Enable students to submit feedback to evaluate the evaluations received(For example, Team B is supposed to be evaluated by Team A and Team C; Then students in Team B should be able to submit feedback to Team A and Team C regarding peer evaluations received from each team).
+  \item Enable advisers to view a list of all teams under his/her supervision and edit any of these team's details including ``Team name'', ``Project Level'' and ``Has Dropped''.
+\end{itemize}
 
 \section{Outline}
 
-In this report, I will discuss various accomplishments I have done in the development. Chapter 2 will be an overview of current architecture of Skylab, and methodologies I employed during the development. Then security related issues such as user authentication and access control will be discussed in Chapter 3. Chapter 4 is about problems in the implementation of submissions. Chapter 5 will be talking about design for peer evaluations. After then feedback related details will be discussed in Chapter 6. Chapter 7 is about adviser focus group meeting and its findings. Last but not least, a summary of work and an overlook of future development will come in Chapter 8.
-
-
+In this report, I will discuss various accomplishments I have done in the development. Chapter 2 will be an overview of current architecture of Skylab, and methodologies I employed during the development. Chapter 3, 4 and 5 will be talking about problems in the implementation of submissions, peer evaluations and feedback. Then security related issues such as user authentication and access control will be discussed in Chapter 6. Chapter 7 is about adviser focus group meeting and its findings. Last but not least, a summary of work and an overlook of future development will come in Chapter 8.

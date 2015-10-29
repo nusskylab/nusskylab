@@ -133,6 +133,7 @@
 \newcommand*{\supervisor}[1]{\def\supname{#1}}
 \newcommand*{\examiner}[1]{\def\examname{#1}}
 \newcommand*{\degree}[1]{\def\degreename{#1}}
+\newcommand*{\projecttitle}[1]{\def\projtitle{#1}}
 \newcommand*{\authors}[1]{\def\authornames{#1}}
 \newcommand*{\addresses}[1]{\def\addressnames{#1}}
 \newcommand*{\university}[1]{\def\univname{#1}}
@@ -145,10 +146,18 @@
 \newcommand*{\FACULTY}[1]{\def\FACNAME{#1}}
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
-\supervisor  {}
-\examiner    {}
-\degree      {}
-\authors     {}
+
+\projecttitle{H0791220}
+\supervisor  {\texorpdfstring{\href{https://www.comp.nus.edu.sg/~kanmy/}
+		        {Dr. Min-Yen Kan}}
+	            {Dr. Min-Yen Kan}}
+\examiner    {\texorpdfstring{\href{https://www.comp.nus.edu.sg/~leews/}
+		{Dr. Lee Wee Sun}}
+	{Dr. Lee Wee Sun}}
+\degree      {Bachelor of Engineering}
+\authors     {\texorpdfstring
+	{\href{mailto:franklingujunchao@gmail.com}{Gu Junchao}}
+	{Gu Junchao}}
 \university  {\texorpdfstring{\href{http://nus.edu.sg/}
                 {National University of Singapore}}
                 {National University of Singapore}}
@@ -174,8 +183,8 @@
                 {FACULTY OF ENGINEERING}}
                 {FACULTY OF ENGINEERING}}
 \addresses   {}
-\subject     {}
-\keywords    {}
+\subject    {Software Engineering}
+\keywords   {Software Engineering, User Interface, Ruby on Rails, Security, Usability}
 \renewcommand\maketitle{
   \btypeout{Title Page}
   \hypersetup{pdftitle={\@title}}
@@ -201,7 +210,7 @@
       {\LARGE \authornames \par}
       \vfill
       {\large A thesis submitted in partial fulfillment for the \par}
-      {\large degree of Bachelor of Engineering \par}
+      {\large degree of \degreename \par}
       \bigskip
       \bigskip
       {\large in the \par}
@@ -244,7 +253,7 @@
     {\normalsize \facname \par}
     {\normalsize \deptname \par}
     \bigskip
-    {\normalsize Bachelor of Engineering\par}
+    {\normalsize \degreename \par}
     \bigskip
     {\normalsize\bf \@title \par}
     \medskip
