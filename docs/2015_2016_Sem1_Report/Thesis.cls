@@ -133,7 +133,6 @@
 \newcommand*{\supervisor}[1]{\def\supname{#1}}
 \newcommand*{\examiner}[1]{\def\examname{#1}}
 \newcommand*{\degree}[1]{\def\degreename{#1}}
-\newcommand*{\projecttitle}[1]{\def\projtitle{#1}}
 \newcommand*{\authors}[1]{\def\authornames{#1}}
 \newcommand*{\addresses}[1]{\def\addressnames{#1}}
 \newcommand*{\university}[1]{\def\univname{#1}}
@@ -146,8 +145,8 @@
 \newcommand*{\FACULTY}[1]{\def\FACNAME{#1}}
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
+\newcommand*{\projectnum}[1]{\def\projnum{#1}}
 
-\projecttitle{H0791220}
 \supervisor  {\texorpdfstring{\href{https://www.comp.nus.edu.sg/~kanmy/}
 		        {Dr. Min-Yen Kan}}
 	            {Dr. Min-Yen Kan}}
@@ -183,8 +182,14 @@
                 {FACULTY OF ENGINEERING}}
                 {FACULTY OF ENGINEERING}}
 \addresses   {}
-\subject    {Software Engineering}
-\keywords   {Software Engineering, User Interface, Ruby on Rails, Security, Usability}
+\subject     {D.2 Software Engineering\\
+              D.2.11 Software Architectures\\
+              D.2.5 Testing and Debugging\\
+              H.5.2 User Interfaces\\
+              K.6.5 Security and Protection}
+\keywords    {Software Engineering, User Interface, Security, Usability, Ruby on Rails}
+\projectnum  {H0791220}
+
 \renewcommand\maketitle{
   \btypeout{Title Page}
   \hypersetup{pdftitle={\@title}}
@@ -222,6 +227,12 @@
       {\Large \@date \par}
       \bigskip
     \end{center}
+    \begin{flushleft}
+      {\large Project No.: \projnum \par}
+      {\large Advisor: ~~~~~\supname \par}
+      {\large Deliverable: \par}
+      {\large ~~~~~~~~~~~~~~~~~Report: 1 Volume \par}
+    \end{flushleft}
     \par
     \@thanks
     \vfil\null
