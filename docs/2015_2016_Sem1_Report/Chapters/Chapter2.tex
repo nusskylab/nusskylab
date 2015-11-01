@@ -11,12 +11,55 @@ Nginx has grown in popularity since its release due to its light-weight resource
 \section{System design}
 
 The basic MVC structure of Rails is shown in the figure below:
+
 \begin{figure}[h]
-\caption{Illustration of how MCV works in Rails}
-\centering
-\includegraphics[width=0.7\textwidth]{MVC_Rails}
+	\centering
+	\includegraphics[width=0.85\textwidth]{Images/Rails_MVC.png}
+	\caption{Illustration of how MCV works in Rails}
 \end{figure}
+
+After receiving incoming an HTTP request, Nginx will forward the request to a Puma process, in which application code runs. After that router will look at the pattern of the requested URL path and send it to the corresponding method of the target controller class. Controller is supposed to query models and gather necessary information for rendering the view for user. Last but not least, the response will be sent back to user for viewing.
+
+So the most fundamental component in this whole process is model, which stores all the business data. A good design of model can in fact save a lot trouble when it comes to writing controller code. Here is the current schema of Skylab:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/Skylab_ER.png}
+    \caption{Current ER diagram for Skylab}
+\end{figure}
+
+As you can see from the entity relation diagram above, users' basic information is captured in the \textit{User} model and each user may have different roles such as \textit{Admin}, \textit{Student}, \textit{Adviser}, \textit{Mentor}. Each student has a \textit{Team} and a team has an \textit{Adviser} and a \textit{Mentor}. Each team will create \textit{Submissions} to \textit{Milestones} to report their progress and assigned evaluator teams will submit \textit{PeerEvaluations} to their \textit{Submissions}. A \textit{SurveyTemplate} contains \textit{Questions} for a \textit{Feedback}, which is for evaluated team to provide feedback to their evaluator teams.
+
+Controllers are the core of the powering a Rails application and in Skylab we have well-defined controllers to carry different tasks. A list of controllers is as follows:
+
+\begin{itemize}
+  \item \textbf{AdminsConroller}: handles listing of all Admins, display of an Admin, creation and update of an Admin as well as deletion of an Admin.
+  \item \textbf{AdvisersConroller}: handles listing of all Advisers, display of an Adviser, creation and update of an Adviser as well as deletion of an Adviser.
+  \item \textbf{EvaluatingsConroller}: handles listing of all evaluation relationships, creation and update of an evaluation relationship as well as deletion of evaluation relationship.
+  \item \textbf{FeedbacksConroller}: handles creation and update of a Feedback.
+  \item \textbf{HomeConroller}: handles serving of homepage.
+  \item \textbf{MentorsConroller}: handles listing of all Mentors, display of a Mentor, creation and update of a Mentor as well as deletion of a Mentor.
+  \item \textbf{MilestonesConroller}: handles listing of all Milestones, display of a Milestone, creation and update of a Milestone as well as deletion of a Milestone.
+  \item \textbf{PeerEvaluationsConroller}: handles creation and update of a PeerEvaluation.
+  \item \textbf{ReceivedEvalsConroller}: handles listing of all received peer evaluations by a team for one milestone.
+  \item \textbf{ReceivedFeedbacksConroller}: handles listing of all received feedbacks by a team for one milestone.
+  \item \textbf{StudentsConroller}: handles listing of all Students, display of a Student, creation and update of a Student as well as deletion of a Student.
+  \item \textbf{SubmissionsConroller}: handles display of a Submission, creation and update of a Submission.
+  \item \textbf{SurveyTemplatesConroller}: handles listing of all SurveyTemplates, creation and update of a SurveyTemplate as well as deletion of a SurveyTemplate.
+  \item \textbf{TeamsConroller}: handles listing of all Teams, display of a Team, creation and update of a Team as well as deletion of a Team.
+  \item \textbf{UsersConroller}: handles listing of all Users, display of a User, creation and update of a User as well as deletion of a User.
+  \item \textbf{auth}: handles authentication related to Devise and OpenID.
+  \item \textbf{public\_views}: handles serving of publicly available information.
+\end{itemize}
 
 \section{Development process}
 
-To be continued
+As Skylab is a web application for which version does not mean anything in particular, we have adopted GitHub flow in our development process\cite{citation8}. So the master branch always contains the latest stable and deployable code base. Each feature will be developed on a feature branch and once the feature is ready, a pull request is created against master. After code review and all tests passes, pull requests will be merged into master and ready for deployment. The following diagram illustrates the process as well:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/Github_Flow_Branching_Model.jpg}
+    \caption{Branching diagram for GitHub Flow}
+\end{figure}
+
+By using GitHub flow and services such as Travis as the continuous integration service, CodeClimate as the code quality monitoring service, we can keep the development of Skylab agile and fast. Besides GitHub flow has enabled Skylab to deployed regularly, which is essential for timely improvement of user experience\cite{citation9}.
