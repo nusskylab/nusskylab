@@ -84,6 +84,7 @@ website/www/Rakefile
 exec/
 
 # ignore for LaTeX
+*.pdf
 *.aux
 *.glo
 *.idx
