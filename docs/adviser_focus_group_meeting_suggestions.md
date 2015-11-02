@@ -67,8 +67,7 @@ Maybe, when creating submission guidelines for Milestone 1, a link to how to wri
   The tricky thing regarding Mission Control is that the later it is in the summer, the less likely students are keen to participate, because of how they probably cannot apply the knowledge to their own projects although it is an opportunity to learn something new. As such, I suggest having something like "Mission Control Days" similar to Liftoff -- optional attendance, with each workshop being held in 2 hr sprints across the entire day. Students can attend the ones they are interested in. This would probably be best held sometime between before Milestone 1 submission to before Milestone 2 submission so that students can try to apply what they've learned to their project. Unsure if this would be a good idea since it is condensing a lot of things into a single day, which may overwork students.
   Seems like students are not very keen in utilizing Python/GAE as their project, even if they're doing a website. Maybe a different development platform could be taught this time around? Not sure what platforms would be a good idea though.
 
-
-
+<br>
 ### Suggestions from responses of During&Post-meeting Questionnaire
 **How is the login screen and functionality? Are they working as expected?**
 - NUS login works fine.
