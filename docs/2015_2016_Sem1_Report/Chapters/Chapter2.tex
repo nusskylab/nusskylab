@@ -1,12 +1,21 @@
-\chapter{Background}
+\chapter{Background} \label{background}
 
-Skylab is built on top of Ruby on Rails, a well-known web development framework, with a great support from a large community, used widely in the industries by companies like Twitter, Groupon, Bloomberg, Airbnb and many more\cite{citation1}. There are many reasons why we have chosen Ruby on Rails. Firstly, Ruby is clean elegant and easy to read and this feature enables programmers to be more productive. Secondly, Ruby on Rails is adopting many advanced industrial conventions and this enables contributors to have good exposure to programming in the industry. What is more, scaffolding and many gems can significantly boost the productivity. Last but not least, Ruby on Rails community has a favor for open source contribution which aligns well with the open source nature of Skylab.
+Skylab is built using Ruby on Rails, a well-known web development framework with a great support from a large community, used widely in the industries by companies like Twitter, Groupon, Bloomberg, Airbnb and many more\cite{citation1}. There are many reasons why we have chosen Ruby on Rails. Firstly, Ruby is clean, elegant and easy to read and this feature enables programmers to be more productive. Secondly, Ruby on Rails is adopting many advanced industrial conventions and this enables contributors to have good exposure to programming in the industry. What is more, scaffolding and many gems can significantly boost the productivity. Last but not least, Ruby on Rails community has a favor for open source contribution which aligns well with the open source nature of Skylab.
 
-For the selection of database, we used PostgreSQL. Part of the reason is that it is open source and quite mature, with good drivers available in many languages\cite{citation2}. Besides, we need full ACID compliance for consistency of data and we do not need scalability in the foreseeable future. And PostgreSQL has recently added implementation for rich data structures such as JSON which would make development much easier\cite{citation3}.
+For the selection of database, we used PostgreSQL. Part of the reason is that it is open source and quite mature, with good drivers available in many languages\cite{citation2}. Besides, we need full ACID compliance for consistency of data and we do not need scalability to multiple servers in the foreseeable future. And PostgreSQL has recently added implementation for rich data structures such as JSON which would make development much easier\cite{citation3}.
 
-Puma is the web server we have chosen for Skylab. Among Passenger, Unicorn, Rainbows! and Puma, Puma is considered to be fast and memory friendly according to online benchmarking\cite{citation4}. Puma is built for high-concurrency and speed and more and more developers to switching in Rails community\cite{citation5}.
+Puma is the web server we have chosen for Skylab. Among Passenger, Unicorn, Rainbows! and Puma, Puma is considered to be fast and memory friendly according to online benchmarking\cite{citation4}. Puma is built for high-concurrency and speed and more and more developers to switching to Puma in Rails community\cite{citation5}.
 
 We have selected Nginx as our HTTP server. Nginx has grown in popularity since its release due to its light-weight resource utilization and its ability to scale easily with low memory usage. It excels at serving static content quickly and is designed to pass dynamic requests off to other software that is better suited for those purposes\cite{citation6}. There are also some benchmarking results that indicate the superiority in Nginx handling concurrent access and low memory usage of Nginx\cite{citation7}.
+
+A high-level overview of the architecture of Skylab is illustrated in Figure~\ref{fig:Skylabarch}. Incoming requests to server will first be forwarded to Puma worker processes by Nginx. After that the corresponding Skylab code in Ruby on Rails framework will be executed and when accessing database is required, PostgreSQL will come into picture and serve the data. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\textwidth]{Images/Skylab_arch.png}
+  \caption{Architecture of Skylab}
+  \label{fig:Skylabarch}
+\end{figure}
 
 \section{System design}
 
@@ -19,7 +28,7 @@ The basic MVC structure of Rails is shown in Figure~\ref{fig:RailsMVC}\cite{cita
   \label{fig:RailsMVC}
 \end{figure}
 
-After receiving incoming an HTTP request, Nginx will forward the request to a Puma process, in which application code runs. After that router will look at the pattern of the requested URL path and send it to the corresponding method of the target controller class. Controller is supposed to query models and gather necessary information for rendering the view for user. Last but not least, the response will be sent back to user for viewing.
+After request is received by Ruby on Rails framework, the router will look at the pattern of the requested URL path and send it to the corresponding method of the target controller class. The controller is supposed to query models and gather necessary information for rendering the view for user. Last but not least, the response will be sent back to user for viewing.
 
 So the most fundamental component in this whole process is model, which stores all the business data. A good design of model can in fact save a lot of trouble when it comes to writing controller code.
 
@@ -60,7 +69,7 @@ As Skylab is a web application for which version does not mean anything in parti
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.4\textwidth]{Images/Github_Flow_Branching_Model.jpg}
+  \includegraphics[width=0.7\textwidth]{Images/Github_Flow_Branching_Model.jpg}
   \caption{Branching diagram for GitHub Flow}
   \label{fig:GithubFlow}
 \end{figure}

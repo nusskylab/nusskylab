@@ -1,4 +1,4 @@
-\chapter{Submission}
+\chapter{Submission} \label{submission}
 
 Students in Orbital are supposed to report their progress regarding their project for each milestone via \textit{Submission}. Basically a submission contains 3 parts:
 
@@ -8,17 +8,16 @@ Students in Orbital are supposed to report their progress regarding their projec
   \item Video link: a link to a video introducing the project to evaluators.
 \end{itemize}
 
-As the structure of \textit{Read me} and \textit{Project Log} is free and we should allow creativity of students when it comes to describing their own projects, we decided to support rich text for submissions and there are some issues coming along this decision such SQL injection and XSS attacks. What is more, during use of Skylab, many good suggestions were brought up by students and advisers and this brings user experience issues like uploading of images and scrolling too much during editing.
+As the structure of \textit{Read me} and \textit{Project Log} is free and we should allow creativity of students when it comes to describing their own projects, we decided to support rich text for submissions and there are some issues coming along with this decision such as SQL injection and XSS attacks. What is more, during use of Skylab, many good suggestions regarding user experience were brought up by students and advisers user, like uploading of images and auto-expanding textareas during editing.
 
 \section{Handling of rich text}
-We used TinyMCE to support rich text editing feature in Skylab as it is a very popular WYSIWYG editor with a rich set of features\cite{citation10}. There are some libraries with markdown syntax supported such as EpicEditor, Vue.js and Hallo.js which are more lightweight. However, as Skylab is built for freshmen to get more hands-on experience with coding and we do not expect students to be equipped with much prior knowledge such as markdown syntax, markup based editors such as TinyMCE and CKEditor do not require any learning and are easily to get started with. What is more, the large community using TinyMCE has made various plug-ins available for different features. There are also quite resources online about integrating TinyMCE editor in a Rails project. Therefore, we decided to use TinyMCE for \textit{Submissions}' rich text support.
+We used TinyMCE to support rich text editing feature in Skylab as it is a very popular WYSIWYG editor with a rich set of features\cite{citation10}. There are some libraries with markdown syntax supported such as EpicEditor, Vue.js and Hallo.js which are more lightweight. However, as Skylab is built for freshmen to get more hands-on experience with coding, we do not expect students to be equipped with much prior knowledge such as markdown syntax. In the contrast, markup based editors such as TinyMCE and CKEditor do not require any learning and are easily to get started with. What is more, the large community using TinyMCE has made various plug-ins available for different features. There are also quite resources online about integrating TinyMCE editor in a Rails project. Therefore, we decided to use TinyMCE for \textit{Submissions}' rich text support.
 
 One particular disadvantage of using TinyMCE is that the size of this editor is pretty large and loading of the page will be slowed down because of it. Therefore, TinyMCE related resources is only loaded if the page is requiring rich text editing. This is done by configuration to disable auto loading of all JavaScript, which is the default behavior of Rails. In this way, most pages can stilled be loaded in a very short time.
 
-Rails has built-in checking against SQL injection attacks and therefore Skylab is safe from such attacks when storing submissions' contents\cite{citation11}. However, there is still currently a known bug in the implementation when it comes to viewing of submissions. As contents like \textit{Read me} and \textit{Project Log} should be rendered as rich text, it is possible for students to carry out XSS attacks by injecting executable JavaScript code in the submission. This sort of vulnerabilities will be fixed in the future.
+Rails has built-in checking against SQL injection attacks and therefore Skylab is safe from such attacks when storing submissions' contents\cite{citation11}. However, there is still currently a known bug in the implementation when it comes to viewing of submissions. As contents like \textit{Read me} and \textit{Project Log} should be rendered as rich text, it is possible for students to perform XSS attacks by injecting executable JavaScript code in the submission. This sort of vulnerabilities will be fixed in the future.
 
 \section{Usability}
-% target milestone selection: manual to js selection to auto selection; adjustment of field orders, auto expansion, auto linking of videos, back to top button
 
 Skylab is a software engineering project and therefore improvement in user experience is one key part when it comes to implementation. During the use of Skylab, many suggestions were brought up by students and advisers about usability. And by addressing these issues, Skylab is serving users better with a smoother user experience.
 
