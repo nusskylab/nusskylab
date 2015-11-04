@@ -1,0 +1,14 @@
+\chapter{Peer Evaluation} \label{peerevaluation}
+ 
+ After students have submitted to milestones, peer evaluation process can begin. Teams will look through evaluated teams' projects and submissions and evaluate their performance in \textit{Peer Evaluation}, which is a very important component in determining whether the evaluated teams can pass or not. Although there are different questions for each peer evaluation, all evaluations contains essentially 2 parts:
+
+ \begin{itemize}
+  \item Public: a section with general feedback on how well the evaluated team has done and the response will be viewed by target team with evaluator team name available.
+  \item Private: a section with critiques and overall rating and critiques will only be viewed by target team without any evaluator team information while overall rating is only for grading purpose and not viewable by target teams.
+\end{itemize}
+
+\section{Loading of Peer Evaluation templates}
+
+Currently, the public part of a \textit{Peer Evaluation} templates will be one html form and the private part is another one. This means all questions in the public part are coded in one predefined html template and same goes for questions in private part.
+
+This approach does not seem to have much problem at first and it really served Skylab's purpose well by delivering perfectly workable features in time. However, since questions are different for different \textit{Peer Evaluation} templates, separate templates have to be created for new \textit{Peer Evaluation} template. And when user wants to view/submit/edit a \textit{Peer Evaluation}, the corresponding templates will have to loaded based on properties of the evaluation. In this way, the system is not really open to extension and clearly it violates Open-Close principle. After realizing this, a system for dynamically creating questions has been implemented for \textit{Feedback} and migration of \textit{Peer Evaluations} will be done as future work, which will be described in more details in Chapter~\ref{conclusionandfuturework}.
