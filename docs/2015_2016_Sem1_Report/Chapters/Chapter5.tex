@@ -1,32 +1,23 @@
-\chapter{Feedback} \label{feedback}
+\chapter{Adviser focus group meeting} \label{focusgroupmeeting}
 
-\textit{Feedback} is for evaluated teams to evaluate the \textit{Peer Evaluations} they have received and it is also a very important component in determining whether the evaluator team can pass or not. After realizing the lack of extensibility in the design for \textit{PeerEvaluations} and with more time available for implementation of \textit{Feedback}, a Survey Template and question creation system has been set up, which made the system open for extensions for more questions and even question types.
+A focus group is a form of qualitative research in which a group of people are asked about their perceptions, opinions, beliefs, and attitudes towards a product, service, concept, advertisement, idea, or packaging\cite{citation15}. During middle of the semester a focus group meeting about Skylab with 2 advisers was conducted to get advisers' suggestions and feedback on experience with Skylab. The feedback is generally positive while there are indeed some useful suggestions and findings.
 
-\section{Survey Template and question creation system}
+\section{Focus group meeting}
 
-The basic flow when a request to create a \textit{Feedback} is illustrated in the Figure~\ref{fig:FeedbackFlow}:
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.5\textwidth]{Images/Skylab_Feedback_Flow.png}
-  \caption{Flow of a feedback creation process}
-  \label{fig:FeedbackFlow}
-\end{figure}
-
-So when a student clicks the button to create feedback, \textit{FeedbacksController}'s \textit{new} action will be invoked and inside the method, the corresponding \textit{SurveyTemplate} and all \textit{Questions} belonging to the SurveyTemplate will be sent to view. Then instruction for the \textit{Feedback} and all questions will be rendered as response to the student. After the student completed and pressed submit button, responses to all questions will be sent to server and a Feedback instance containing all submitted responses will be created.
-
-There currently 3 types of \textit{Questions} in the system:
+The focus group was conducted on 7th Oct 2015 and 3 questionnaires were designed beforehand to get advisers' opinions. During the meeting, discussions about the complete use case flow of Skylab were done and the whole meeting was recorded as well for later reference. Suggestions mentioned in the discussion and described in the responses to questionnaires are listed below, which are also documented in Skylab's repository:
 
 \begin{itemize}
-  \item \textbf{TextQuestion}: a text question which will be rendered in the format of textarea and text-based responses are expected. 
-  \item \textbf{RichTextQuestion}: a rich text question which will be rendered in the format of TinyMCE editable area and rich text is expected as response.
-  \item \textbf{MultipleChoiceQuestion}: a multiple choice question which will be rendered as checkboxes followed by option descriptions and one option value is expected.
+  \item Checking who had already evaluated / or sent feedback on an evaluation: we should have status columns(similar to ``dropped'' status) for submission status, peer evaluation status so that with just one glance adviser can figure out who have not submitted and remind them
+  \item Change tab order for adviser homepage: move the current first tab to last as advisers rarely use them
+  \item Forms too verbose Three radio fields take up more than one page. Suggested way of presenting options: Poor 1[?] 2[?] 3[?] 4[?] 5[?] Best(Question mark means only after the user hovers over the detailed explanation for the option will be given)
+  \item Hosting of videos
+  \item Auto expand text boxes when close to full
+  \item Dropdown for team selection not clear about whether the new team is being evaluation
+  \item Autosave text and input / prompt for leaving page
+  \item Summary composite page for the EG with respect to each evaluation question for Likert scale and textboxes / Quick Fix: use anchors to jump to a particular form on a concatenated page.
+  \item ``More info'' tab in adviser homepage is misleading
+  \item Enable users to view all past submissions, all past peer evaluations(by providing link to viewing them in some place) when you are editing/submitting a peer evaluation.
+  \item Evaluating relationship: explore use of D3(or similar stuff) to represent all relationships as graph
 \end{itemize}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.85\textwidth]{Images/Skylab_Questions.jpg}
-    \caption{3 types of questions in Skylab}
-\end{figure}
-
-All types of question will have \textit{title}, \textit{instruction}, \textit{content} and \textit{question\_type} and each type of question will have its own way of rendering and validation. In this way, adding new types of questions can simply be done via creating a new question model with its own rendering and validation methods.
+Besides these suggestions, some of our assumptions have been tested as well and therefore necessary adjustments to plan for future implementation were made according to some of the findings from the focus group meeting.

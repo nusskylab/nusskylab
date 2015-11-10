@@ -2,7 +2,7 @@
 
 Skylab is built using Ruby on Rails, a well-known web development framework with a great support from a large community, used widely in the industries by companies like Twitter, Groupon, Bloomberg, Airbnb and many more\cite{citation1}. There are many reasons why we have chosen Ruby on Rails. Firstly, Ruby is clean, elegant and easy to read and this feature enables programmers to be more productive. Secondly, Ruby on Rails is adopting many advanced industrial conventions and this enables contributors to have good exposure to programming in the industry. What is more, scaffolding and many gems can significantly boost the productivity. Last but not least, Ruby on Rails community has a favor for open source contribution which aligns well with the open source nature of Skylab.
 
-For the selection of database, we used PostgreSQL. Part of the reason is that it is open source and quite mature, with good drivers available in many languages\cite{citation2}. Besides, we need full ACID compliance for consistency of data and we do not need scalability to multiple servers in the foreseeable future. And PostgreSQL has recently added implementation for rich data structures such as JSON which would make development much easier\cite{citation3}.
+For the selection of database, we used PostgreSQL. Part of the reason is that it is open source and quite mature, with good drivers available in many languages\cite{citation2}. Besides, we need full ACID(atomicity, consistency, isolation and durability) compliance for consistency of data and we do not need scalability to multiple servers in the foreseeable future\cite{citationACID}. And PostgreSQL has recently added implementation for rich data structures such as JSON which would make development much easier\cite{citation3}.
 
 Puma is the web server we have chosen for Skylab. Among Passenger, Unicorn, Rainbows! and Puma, Puma is considered to be fast and memory friendly according to online benchmarking\cite{citation4}. Puma is built for high-concurrency and speed and more and more developers to switching to Puma in Rails community\cite{citation5}.
 
@@ -19,12 +19,12 @@ A high-level overview of the architecture of Skylab is illustrated in Figure~\re
 
 \section{System design}
 
-The basic MVC structure of Rails is shown in Figure~\ref{fig:RailsMVC}\cite{citationMVC}:
+The basic MVC structure of Rails is shown in Figure~\ref{fig:RailsMVC}:
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.85\textwidth]{Images/Rails_MVC.png}
-  \caption{Illustration of how MCV works in Rails}
+  \caption{Illustration of how MCV works in Rails. Excerpted from \cite{citationMVC}}
   \label{fig:RailsMVC}
 \end{figure}
 
@@ -39,7 +39,7 @@ So the most fundamental component in this whole process is model, which stores a
   \label{fig:SkylabER}
 \end{figure}
 
-As you can see from the entity relation diagram shown in Figure~\ref{fig:SkylabER}, users' basic information is captured in the \textit{User} model and each user may have different roles such as \textit{Admin}, \textit{Student}, \textit{Adviser}, \textit{Mentor}. Each student has a \textit{Team} and a team has an \textit{Adviser} and a \textit{Mentor}. Each team will create \textit{Submissions} to \textit{Milestones} to report their progress and assigned evaluator teams will submit \textit{PeerEvaluations} to their \textit{Submissions}. A \textit{SurveyTemplate} contains \textit{Questions} for a \textit{Feedback}, which is for evaluated team to provide feedback to their evaluator teams.
+As you can see from the entity relation diagram shown in Figure~\ref{fig:SkylabER}(source available at \cite{citationERSource}), users' basic information is captured in the \textit{User} model and each user may have different roles such as \textit{Admin}, \textit{Student}, \textit{Adviser}, \textit{Mentor}. Each student has a \textit{Team} and a team has an \textit{Adviser} and a \textit{Mentor}. Each team will create \textit{Submissions} to \textit{Milestones} to report their progress and assigned evaluator teams will submit \textit{PeerEvaluations} to their \textit{Submissions}. A \textit{SurveyTemplate} contains \textit{Questions} for a \textit{Feedback}, which is for evaluated team to provide feedback to their evaluator teams.
 
 Controllers are crucial in powering a Rails application and in Skylab we have well-defined controllers to carry different tasks. A list of controllers is as follows:
 
@@ -65,12 +65,12 @@ Controllers are crucial in powering a Rails application and in Skylab we have we
 
 \section{Development process}
 
-As Skylab is a web application for which version does not mean anything in particular, we have adopted GitHub flow in our development process\cite{citation8}. So the master branch always contains the latest stable and deployable code base. Each feature will be developed on a feature branch and once the feature is ready, a pull request is created against master. After code review and all tests passes, pull requests will be merged into master and ready for deployment. Figure~\ref{fig:GithubFlow} illustrates the process as well\cite{citation8}.
+As Skylab is a web application for which version does not mean anything in particular, we have adopted GitHub flow in our development process\cite{citation8}. So the master branch always contains the latest stable and deployable code base. Each feature will be developed on a feature branch and once the feature is ready, a pull request is created against master. After code review and all tests passes, pull requests will be merged into master and ready for deployment. Figure~\ref{fig:GithubFlow} illustrates the process as well.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.7\textwidth]{Images/Github_Flow_Branching_Model.jpg}
-  \caption{Branching diagram for GitHub Flow}
+  \includegraphics[width=0.85\textwidth]{Images/Github_Flow_Branching_Model.jpg}
+  \caption{Branching diagram for GitHub Flow. Excerpted from \cite{citation8}}
   \label{fig:GithubFlow}
 \end{figure}
 
