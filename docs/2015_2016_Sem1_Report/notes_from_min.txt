@@ -9,9 +9,9 @@ Give homepage/GitHub URLs for any software that you use/cite in your report.  Ad
 Try not to use compound verb phrases when a single verb will suffice.  E.g., is support to query -> queries.
 
 Would prefer you tack Ch 3, 4 and 5 together in one chapter as the Orbital workflow.
-Introduction needs to be more comprehensive about Orbital and it's requirements and to point forward to where the subsequent details is at.
+Introduction needs to be more comprehensive about Orbital and it's requirements and to point forward to where the subsequent details is at. (Clarification needed)
 
-At the beginning of Submissions (and perhaps elsewhere, e.g., Peer Evaluation) you should give an overview of what the process that you are trying to capture entails (e.g., role of the student, adviser, admin, mentor, etc.)
+At the beginning of Submissions (and perhaps elsewhere, e.g., Peer Evaluation) you should give an overview of what the process that you are trying to capture entails (e.g., role of the student, adviser, admin, mentor, etc.) (Clarification needed)
 
 Line by line comments
 x, y? = page # and line number, Sx stands for section x.
@@ -30,7 +30,7 @@ S1.1 - you should have highlighted that you had to build the system under produc
 
 15, enlarge figure, not readable.
 
-16 give examples of the types of questions and their appearance in the feedback.
+16 give examples of the types of questions and their appearance in the feedback. (Not done yet, needs clarification or further considering on this)
 
 17 open ID => OpenID
 
