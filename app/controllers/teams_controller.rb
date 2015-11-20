@@ -25,7 +25,7 @@ class TeamsController < ApplicationController
       redirect_to teams_path, flash: {success: t('.success_message', team_name: @team.team_name)}
     else
       redirect_to new_team_path,
-                  flash: {success: t('.failure_message', error_messages: @team.errors.full_messages.join(', '))}
+                  flash: {danger: t('.failure_message', error_messages: @team.errors.full_messages.join(', '))}
     end
   end
 
@@ -79,7 +79,7 @@ class TeamsController < ApplicationController
   def get_team_params
     team_params = params.require(:team).permit(:team_name, :project_level,
                                                :adviser_id, :mentor_id, :has_dropped)
-    team_params[:project_level] = Team.get_project_level_from_raw(team_params[:project_level])
+    team_params[:project_level] = Team.get_project_level_from_raw(team_params[:project_level]) if team_params[:project_level]
     team_params
   end
 end
