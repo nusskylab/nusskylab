@@ -116,7 +116,6 @@ RSpec.describe StudentsController, type: :controller do
         student = FactoryGirl.create(:student, user_id: subject.current_user.id)
         get :show, id: student.id
         expect(response).to render_template(:show)
-        Student.find_by(user_id: subject.current_user.id).destroy
       end
 
       it 'should redirect to home_link for non_admin and non_current_user' do
@@ -154,7 +153,6 @@ RSpec.describe StudentsController, type: :controller do
         student = FactoryGirl.create(:student, user_id: subject.current_user.id)
         get :edit, id: student.id
         expect(response).to render_template(:edit)
-        Student.find_by(user_id: subject.current_user.id).destroy
       end
 
       it 'should redirect to home_link for non_admin and non_current_user' do
@@ -188,12 +186,11 @@ RSpec.describe StudentsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should render edit for current student' do
+      it 'should update student for current student' do
         student = FactoryGirl.create(:student, user_id: subject.current_user.id)
         team = FactoryGirl.create(:team, team_name: '1.student.controller.spec')
         put :update, id: student.id, student: {team_id: team.id}
         expect(response).to redirect_to(student_path(student))
-        Student.find_by(user_id: subject.current_user.id).destroy
       end
 
       it 'should redirect to home_link for non_admin and non_current_user' do
@@ -206,7 +203,7 @@ RSpec.describe StudentsController, type: :controller do
 
     context 'user logged in and admin' do
       login_admin
-      it 'should render edit for admin user' do
+      it 'should update student for admin user' do
         user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
         student = FactoryGirl.create(:student, user_id: user.id)
         team = FactoryGirl.create(:team, team_name: '1.student.controller.spec')
