@@ -21,7 +21,7 @@ $(function () {
           sorter: false
         }
       }
-    }).bind("sortEnd", function(e){
+    }).bind('sortEnd', function(e){
       if ($('.table-sortable>thead>tr>th.sort-index').length <= 0) {
         return ;
       }
@@ -60,4 +60,26 @@ $('#return-to-top').click(function() {
   $('body,html').animate({
     scrollTop : 0
   }, 500);
+});
+
+/**
+ * Form change detection and warning before unload
+ */
+$(function () {
+  $('form.simple_form :input').change(function () {
+    $('form.simple_form').data('form-changed', true);
+  });
+  $('form.simple_form input:submit').click(function (){
+    $('form.simple_form').data('form-submitting', true);
+  });
+  window.addEventListener('beforeunload', function (e) {
+    if (!$('form.simple_form').data('form-changed') || $('form.simple_form').data('form-submitting')) {
+      $('form.simple_form').data('form-submitting', false);
+      return undefined;
+    }
+    var confirmationMessage = 'You have unsaved changes. Are you sure want to navigate away?';
+
+    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+  });
 });
