@@ -6,6 +6,10 @@
         <h3 class="text-center">Edit submission</h3>
       </div>
       <div class="panel-body">
+        <%= render 'submission_form_more_info', locals: {submission: @submission,
+                                                         milestone: @submission.milestone,
+                                                         submissions: submissions,
+                                                         is_new: false} %>
         <%= render 'submission_form', locals: {submission: @submission,
                                                milestone: @submission.milestone,
                                                is_new: false} %>
