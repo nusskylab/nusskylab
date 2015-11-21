@@ -1,12 +1,9 @@
 <%= simple_form_for locals[:submission], wrapper: :vertical_form,
                     url: {action: (locals[:is_new] ? 'create' : 'update')} do |f| %>
     <%= f.error_notification %>
-    <% if not locals[:is_new] %>
-        You can <a href="<%= milestone_team_submission_path(locals[:milestone].id, locals[:submission].team_id, locals[:submission].id) %>" class="btn btn-success btn-xs">see</a> the submission from a peer evaluator's perspective.
-    <% end %>
     <br><br>
     <div class="form-group submission_milestone_name">
-      <label class="control-label col-sm-2" for="submission_milestone_name">Milestone Name: </label>
+      <label class="control-label col-sm-2" for="submission_milestone_name" style="padding-left: 0;">Milestone Name: </label>
       <div class="col-sm-10">
         <p><strong class="form-control-static" id="submission_milestone_name"><%= locals[:milestone].name %></strong></p>
       </div>

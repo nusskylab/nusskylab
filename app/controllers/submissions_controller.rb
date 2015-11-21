@@ -37,7 +37,7 @@ class SubmissionsController < ApplicationController
     @submission = Submission.find(params[:id]) or record_not_found
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     @page_title = t('.page_title')
-    render locals: {team_id: params[:team_id]}
+    render locals: {team_id: params[:team_id], submissions: Submission.where(team_id: team.id)}
   end
 
   def update
