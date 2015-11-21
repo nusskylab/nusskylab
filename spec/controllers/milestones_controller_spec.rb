@@ -75,15 +75,15 @@ RSpec.describe MilestonesController, type: :controller do
     context 'user logged in and admin' do
       login_admin
       it 'should redirect to mentors with success for admin user' do
-        milestone = FactoryGirl.attributes_for(:milestone, name: 'milestone_1.milestone.model.spec')
+        milestone = FactoryGirl.attributes_for(:milestone, name: 'milestone_1.milestone.controller.spec')
         post :create, milestone: milestone
         expect(response).to redirect_to(milestones_path)
         expect(flash[:success]).not_to be_nil
       end
 
       it 'should redirect to admins with danger for admin user' do
-        FactoryGirl.create(:milestone, name: 'milestone_2.milestone.model.spec')
-        milestone = FactoryGirl.attributes_for(:milestone, name: 'milestone_2.milestone.model.spec')
+        FactoryGirl.create(:milestone, name: 'milestone_2.milestone.controller.spec')
+        milestone = FactoryGirl.attributes_for(:milestone, name: 'milestone_2.milestone.controller.spec')
         post :create, milestone: milestone
         expect(response).to redirect_to(new_milestone_path)
         expect(flash[:danger]).not_to be_nil
@@ -110,7 +110,7 @@ RSpec.describe MilestonesController, type: :controller do
     context 'user logged in and admin' do
       login_admin
       it 'should render new for admin user' do
-        milestone = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.model.spec')
+        milestone = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.controller.spec')
         get :edit, id: milestone.id
         expect(response).to render_template(:edit)
       end
@@ -136,17 +136,17 @@ RSpec.describe MilestonesController, type: :controller do
     context 'user logged in and admin' do
       login_admin
       it 'should redirect to mentors with success for admin user' do
-        m = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.model.spec')
-        milestone = FactoryGirl.attributes_for(:milestone, name: 'milestone_1.milestone.model.spec')
+        m = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.controller.spec')
+        milestone = FactoryGirl.attributes_for(:milestone, name: 'milestone_1.milestone.controller.spec')
         put :update, id: m.id, milestone: milestone
         expect(response).to redirect_to(milestones_path)
         expect(flash[:success]).not_to be_nil
       end
 
       it 'should redirect to admins with danger for admin user' do
-        m = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.model.spec')
-        FactoryGirl.create(:milestone, name: 'milestone_1.milestone.model.spec')
-        milestone = FactoryGirl.attributes_for(:milestone, name: 'milestone_1.milestone.model.spec')
+        m = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.controller.spec')
+        FactoryGirl.create(:milestone, name: 'milestone_1.milestone.controller.spec')
+        milestone = FactoryGirl.attributes_for(:milestone, name: 'milestone_1.milestone.controller.spec')
         put :update, id: m.id, milestone: milestone
         expect(response).to redirect_to(edit_milestone_path(m.id))
         expect(flash[:danger]).not_to be_nil
@@ -172,7 +172,7 @@ RSpec.describe MilestonesController, type: :controller do
     context 'user logged in and admin' do
       login_admin
       it 'should render show for admin user' do
-        milestone = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.model.spec')
+        milestone = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.controller.spec')
         get :show, id: milestone.id
         expect(response).to render_template(:show)
       end
@@ -198,7 +198,7 @@ RSpec.describe MilestonesController, type: :controller do
     context 'user logged in and admin' do
       login_admin
       it 'should redirect with success for admin user' do
-        milestone = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.model.spec')
+        milestone = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.controller.spec')
         delete :destroy, id: milestone.id
         expect(response).to redirect_to(milestones_path)
         expect(flash[:success]).not_to be_nil
