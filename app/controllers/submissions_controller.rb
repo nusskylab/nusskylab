@@ -27,9 +27,9 @@ class SubmissionsController < ApplicationController
 
   def show
     team = Team.find(params[:team_id]) or record_not_found
+    @submission = Submission.find(params[:id]) or record_not_found
     not authenticate_user(true, false, team.get_relevant_users(true, false)) and return
     @page_title = t('.page_title')
-    @submission = Submission.find(params[:id]) or record_not_found
   end
 
   def edit
