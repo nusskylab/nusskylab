@@ -1,7 +1,7 @@
 class SubmissionsController < ApplicationController
   def new
-    team = Team.find(params[:team_id]) or record_not_found
-    milestone = Milestone.find_by(id: params[:milestone_id]) or record_not_found
+    team = Team.find(params[:team_id]) or (record_not_found and return)
+    milestone = Milestone.find_by(id: params[:milestone_id]) or (record_not_found and return)
     submission = Submission.find_by(team_id: team.id, milestone_id: milestone.id)
     redirect_to edit_milestone_team_submission_path(milestone, team, submission) and return if submission
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
@@ -13,8 +13,8 @@ class SubmissionsController < ApplicationController
   end
 
   def create
-    team = Team.find(params[:team_id]) or record_not_found
-    milestone = Milestone.find_by(id: params[:milestone_id]) or record_not_found
+    team = Team.find(params[:team_id]) or (record_not_found and return)
+    milestone = Milestone.find_by(id: params[:milestone_id]) or (record_not_found and return)
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     @submission = Submission.new(get_submission_params)
     if @submission.save
@@ -26,24 +26,24 @@ class SubmissionsController < ApplicationController
   end
 
   def show
-    team = Team.find(params[:team_id]) or record_not_found
-    @submission = Submission.find(params[:id]) or record_not_found
+    team = Team.find(params[:team_id]) or (record_not_found and return)
+    @submission = Submission.find(params[:id]) or (record_not_found and return)
     not authenticate_user(true, false, team.get_relevant_users(true, false)) and return
     @page_title = t('.page_title')
   end
 
   def edit
-    team = Team.find(params[:team_id]) or record_not_found
-    @submission = Submission.find(params[:id]) or record_not_found
+    team = Team.find(params[:team_id]) or (record_not_found and return)
+    @submission = Submission.find(params[:id]) or (record_not_found and return)
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     @page_title = t('.page_title')
     render locals: {team_id: params[:team_id], submissions: Submission.where(team_id: team.id)}
   end
 
   def update
-    team = Team.find(params[:team_id]) or record_not_found
-    milestone = Milestone.find_by(id: params[:milestone_id]) or record_not_found
-    @submission = Submission.find(params[:id]) or record_not_found
+    team = Team.find(params[:team_id]) or (record_not_found and return)
+    milestone = Milestone.find_by(id: params[:milestone_id]) or (record_not_found and return)
+    @submission = Submission.find(params[:id]) or (record_not_found and return)
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     if update_submission
       redirect_to get_home_link, flash: {success: t('.success_message')}

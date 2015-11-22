@@ -33,14 +33,14 @@ class StudentsController < ApplicationController
   end
 
   def edit
-    @student = Student.find(params[:id]) or record_not_found
+    @student = Student.find(params[:id]) or (record_not_found and return)
     not authenticate_user(true, false, [@student.user]) and return
     @page_title = t('.page_title', user_name: @student.user.user_name)
     render locals: {teams: Team.all}
   end
 
   def update
-    @student = Student.find(params[:id]) or record_not_found
+    @student = Student.find(params[:id]) or (record_not_found and return)
     not authenticate_user(true, false, [@student.user]) and return
     if @student.update(get_student_params)
       redirect_to student_path(@student),
