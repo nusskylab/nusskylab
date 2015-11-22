@@ -26,8 +26,10 @@ en:
   application:
     not_enough_privilege_message: >
       You are not allowed to do this, please contact admin for more information
+    record_not_found_message: >
+      The record does not exist in the database
     path_not_found_message: >
-      The url you have entered does not exist
+      The url you have requested does not exist
   admins:
     index:
       page_title: >

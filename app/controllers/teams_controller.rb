@@ -30,7 +30,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.find(params[:id]) or record_not_found
+    @team = Team.find(params[:id]) or (record_not_found and return)
     not authenticate_user(true, false, @team.get_relevant_users(true, true)) and return
     @page_title = t('.page_title', team_name: @team.team_name)
     render locals: {
@@ -39,7 +39,7 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    @team = Team.find(params[:id]) or record_not_found
+    @team = Team.find(params[:id]) or (record_not_found and return)
     not authenticate_user(true, false, @team.get_relevant_users(false, false)) and return
     @page_title = t('.page_title', team_name: @team.team_name)
     render locals: {
@@ -49,7 +49,7 @@ class TeamsController < ApplicationController
   end
 
   def update
-    @team = Team.find(params[:id]) or record_not_found
+    @team = Team.find(params[:id]) or (record_not_found and return)
     not authenticate_user(true, false, @team.get_relevant_users(false, false)) and return
     if update_team
       redirect_to team_path(@team.id), flash: {success: t('.success_message', team_name: @team.team_name)}

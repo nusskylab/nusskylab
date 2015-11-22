@@ -12,7 +12,7 @@ class ReceivedFeedbacksController < ApplicationController
   private
   def can_view_received_feedbacks_page
     if params[:team_id]
-      @team = Team.find(params[:team_id]) or record_not_found
+      @team = Team.find(params[:team_id]) or (record_not_found and return)
       not authenticate_user(true, false, @team.get_relevant_users(false, false)) and return false
     elsif params[:adviser_id]
       @adviser = Adviser.find(params[:adviser_id]) or record_not_found
