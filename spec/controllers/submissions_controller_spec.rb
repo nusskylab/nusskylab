@@ -25,6 +25,18 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(response).to render_template(:new)
       end
 
+      it 'should redirect to home_link for non_admin and non_current_user' do
+        milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
+        user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
+        adviser = FactoryGirl.create(:adviser, user: user0)
+        team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.submission.controller.spec')
+        get :new, team_id: team.id, milestone_id: milestone.id
+        expect(response).to redirect_to(controller.get_home_link)
+      end
+    end
+
+    context 'user logged in and student' do
+      login_user
       it 'should redirect_to to edit submission page if submission existed' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
         user0 = FactoryGirl.create(:user, email: '2@submission.controller.spec', uid: '2.submission.controller.spec')
@@ -34,15 +46,6 @@ RSpec.describe SubmissionsController, type: :controller do
         submission = FactoryGirl.create(:submission, team: team, milestone: milestone)
         get :new, team_id: team.id, milestone_id: milestone.id
         expect(response).to redirect_to(edit_milestone_team_submission_path(milestone.id, team.id, submission.id))
-      end
-
-      it 'should redirect to home_link for non_admin and non_current_user' do
-        milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
-        user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
-        adviser = FactoryGirl.create(:adviser, user: user0)
-        team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.submission.controller.spec')
-        get :new, team_id: team.id, milestone_id: milestone.id
-        expect(response).to redirect_to(controller.get_home_link)
       end
     end
 
@@ -86,6 +89,19 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(flash[:success]).not_to be_nil
       end
 
+      it 'should redirect to home_link for non_admin and non_current_user' do
+        milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
+        user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
+        adviser = FactoryGirl.create(:adviser, user: user0)
+        team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.submission.controller.spec')
+        submisison_params = {read_me: 'This is read me', project_log: 'project_log', video_link: 'google.com'}
+        post :create, team_id: team.id, milestone_id: milestone.id, submission: submisison_params
+        expect(response).to redirect_to(controller.get_home_link)
+      end
+    end
+
+    context 'user logged in and student' do
+      login_user
       it 'should redirect to new_milestone_team_submission_path with danger for student' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
         user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
@@ -97,16 +113,6 @@ RSpec.describe SubmissionsController, type: :controller do
         post :create, team_id: team.id, milestone_id: milestone.id, submission: submisison_params
         expect(response).to redirect_to(new_milestone_team_submission_path(milestone, team))
         expect(flash[:danger]).not_to be_nil
-      end
-
-      it 'should redirect to home_link for non_admin and non_current_user' do
-        milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
-        user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
-        adviser = FactoryGirl.create(:adviser, user: user0)
-        team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.submission.controller.spec')
-        submisison_params = {read_me: 'This is read me', project_log: 'project_log', video_link: 'google.com'}
-        post :create, team_id: team.id, milestone_id: milestone.id, submission: submisison_params
-        expect(response).to redirect_to(controller.get_home_link)
       end
     end
 

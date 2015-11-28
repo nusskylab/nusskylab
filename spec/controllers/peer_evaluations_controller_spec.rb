@@ -31,6 +31,21 @@ RSpec.describe PeerEvaluationsController, type: :controller do
         expect(response).to render_template(:new)
       end
 
+      it 'should redirect to home_link for non_admin and non_current_user' do
+        milestone = FactoryGirl.create(:milestone, name: 'milestone_1.peerEvaluation.controller.spec')
+        user0 = FactoryGirl.create(:user, email: '1@peerEvaluation.controller.spec', uid: '1.peerEvaluation.controller.spec')
+        adviser = FactoryGirl.create(:adviser, user: user0)
+        team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.peerEvaluation.controller.spec')
+        evaluated_team = FactoryGirl.create(:team, adviser: adviser, team_name: '2.peerEvaluation.controller.spec')
+        evaluating = FactoryGirl.create(:evaluating, evaluator: team, evaluated: evaluated_team)
+        submission = FactoryGirl.create(:submission, team: evaluated_team, milestone: milestone)
+        get :new, milestone_id: milestone.id, team_id: team.id, target_evaluation_id: evaluating.id
+        expect(response).to redirect_to(controller.get_home_link)
+      end
+    end
+
+    context 'user logged in and student' do
+      login_user
       it 'should redirect_to to edit_peer_evaluation page if peer evaluation existed' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.peerEvaluation.controller.spec')
         user0 = FactoryGirl.create(:user, email: '1@peerEvaluation.controller.spec', uid: '1.peerEvaluation.controller.spec')
@@ -43,18 +58,6 @@ RSpec.describe PeerEvaluationsController, type: :controller do
         peer_evaluation = FactoryGirl.create(:peer_evaluation, team: team, submission: submission)
         get :new, milestone_id: milestone.id, team_id: team.id, target_evaluation_id: evaluating.id
         expect(response).to redirect_to(edit_milestone_team_peer_evaluation_path(milestone.id, team.id, peer_evaluation.id))
-      end
-
-      it 'should redirect to home_link for non_admin and non_current_user' do
-        milestone = FactoryGirl.create(:milestone, name: 'milestone_1.peerEvaluation.controller.spec')
-        user0 = FactoryGirl.create(:user, email: '1@peerEvaluation.controller.spec', uid: '1.peerEvaluation.controller.spec')
-        adviser = FactoryGirl.create(:adviser, user: user0)
-        team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.peerEvaluation.controller.spec')
-        evaluated_team = FactoryGirl.create(:team, adviser: adviser, team_name: '2.peerEvaluation.controller.spec')
-        evaluating = FactoryGirl.create(:evaluating, evaluator: team, evaluated: evaluated_team)
-        submission = FactoryGirl.create(:submission, team: evaluated_team, milestone: milestone)
-        get :new, milestone_id: milestone.id, team_id: team.id, target_evaluation_id: evaluating.id
-        expect(response).to redirect_to(controller.get_home_link)
       end
     end
 
@@ -107,6 +110,22 @@ RSpec.describe PeerEvaluationsController, type: :controller do
         expect(flash[:success]).not_to be_nil
       end
 
+      it 'should redirect to home_link for non_admin and non_current_user' do
+        milestone = FactoryGirl.create(:milestone, name: 'milestone_1.peerEvaluation.controller.spec')
+        user0 = FactoryGirl.create(:user, email: '1@peerEvaluation.controller.spec', uid: '1.peerEvaluation.controller.spec')
+        adviser = FactoryGirl.create(:adviser, user: user0)
+        team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.peerEvaluation.controller.spec')
+        evaluated_team = FactoryGirl.create(:team, adviser: adviser, team_name: '2.peerEvaluation.controller.spec')
+        evaluating = FactoryGirl.create(:evaluating, evaluator: team, evaluated: evaluated_team)
+        submission = FactoryGirl.create(:submission, team: evaluated_team, milestone: milestone)
+        peer_evaluation_params = FactoryGirl.attributes_for(:peer_evaluation, submission_id: submission.id, team_id: team.id)
+        post :create, team_id: team.id, milestone_id: milestone.id, peer_evaluation: peer_evaluation_params
+        expect(response).to redirect_to(controller.get_home_link)
+      end
+    end
+
+    context 'user logged in and student' do
+      login_user
       it 'should redirect to new_milestone_team_peer_evaluation_path with danger for student' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.peerEvaluation.controller.spec')
         user0 = FactoryGirl.create(:user, email: '1@peerEvaluation.controller.spec', uid: '1.peerEvaluation.controller.spec')
@@ -121,19 +140,6 @@ RSpec.describe PeerEvaluationsController, type: :controller do
         post :create, team_id: team.id, milestone_id: milestone.id, peer_evaluation: peer_evaluation_params
         expect(response).to redirect_to(new_milestone_team_peer_evaluation_path(milestone, team))
         expect(flash[:danger]).not_to be_nil
-      end
-
-      it 'should redirect to home_link for non_admin and non_current_user' do
-        milestone = FactoryGirl.create(:milestone, name: 'milestone_1.peerEvaluation.controller.spec')
-        user0 = FactoryGirl.create(:user, email: '1@peerEvaluation.controller.spec', uid: '1.peerEvaluation.controller.spec')
-        adviser = FactoryGirl.create(:adviser, user: user0)
-        team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.peerEvaluation.controller.spec')
-        evaluated_team = FactoryGirl.create(:team, adviser: adviser, team_name: '2.peerEvaluation.controller.spec')
-        evaluating = FactoryGirl.create(:evaluating, evaluator: team, evaluated: evaluated_team)
-        submission = FactoryGirl.create(:submission, team: evaluated_team, milestone: milestone)
-        peer_evaluation_params = FactoryGirl.attributes_for(:peer_evaluation, submission_id: submission.id, team_id: team.id)
-        post :create, team_id: team.id, milestone_id: milestone.id, peer_evaluation: peer_evaluation_params
-        expect(response).to redirect_to(controller.get_home_link)
       end
     end
 
