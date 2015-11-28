@@ -1,6 +1,6 @@
 source 'https://rubygems.org' do
 	# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-	gem 'rails', '4.2.0'
+	gem 'rails', '4.2.2'
 	# Use postgres as the database for Active Record
 	gem 'pg', '~> 0.18.3'
 	# Use SCSS for stylesheets
