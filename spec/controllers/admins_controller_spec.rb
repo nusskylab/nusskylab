@@ -8,7 +8,7 @@ RSpec.describe AdminsController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
       it 'should redirect to home_link for non_admin' do
@@ -38,7 +38,7 @@ RSpec.describe AdminsController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
       it 'should redirect to home_link for non_admin' do
@@ -63,7 +63,7 @@ RSpec.describe AdminsController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
       it 'should redirect to home_link for non_admin' do
@@ -96,7 +96,7 @@ RSpec.describe AdminsController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
       it 'should redirect to home_link for non_admin' do
@@ -122,7 +122,7 @@ RSpec.describe AdminsController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
       it 'should redirect to home_link for non_admin' do
