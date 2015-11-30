@@ -28,12 +28,12 @@ $(function () {
       $('.table-sortable>tbody>tr').each(function (idx, val) {
         $($(val).children('td')[0]).html((idx + 1));
       });
-    });;
+    });
   }
 });
 
 /**
- * Autolink links. Mainly for video links. 
+ * Autolink links. Mainly for video links.
  */
 $(function() {
   $('.autolink').autolink();
