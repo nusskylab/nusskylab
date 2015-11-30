@@ -18,7 +18,9 @@ class SubmissionsController < ApplicationController
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     @submission = Submission.new(get_submission_params)
     if @submission.save
-      redirect_to get_home_link, flash: {success: t('.success_message')}
+      redirect_to home_path, flash: {
+        success: t('.success_message')
+      }
     else
       redirect_to new_milestone_team_submission_path(milestone, team), flash: {danger: t('.failure_message',
                                                                                error_messages: @submission.errors.full_messages.join(', '))}
@@ -46,7 +48,9 @@ class SubmissionsController < ApplicationController
     @submission = Submission.find(params[:id]) or (record_not_found and return)
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     if update_submission
-      redirect_to get_home_link, flash: {success: t('.success_message')}
+      redirect_to home_path, flash: {
+        success: t('.success_message')
+      }
     else
       redirect_to edit_milestone_team_submission_path(milestone, team, @submission), flash: {danger: t('.failure_message',
                                                                                              error_messages: @submission.errors.full_messages.join(', '))}

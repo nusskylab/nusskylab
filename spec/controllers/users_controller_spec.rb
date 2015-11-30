@@ -8,12 +8,12 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         get :index
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -38,12 +38,12 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         get :new
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -63,12 +63,12 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         post :create
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -98,7 +98,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
       it 'should render show if accessing own page' do
@@ -106,10 +106,10 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to render_template(:show)
       end
 
-      it 'should redirect to home_link if accessing other\'s page' do
+      it 'should redirect to home_path if accessing other\'s page' do
         user = FactoryGirl.create(:user, email: '1@user.controller.spec', uid: '1.user.controller.spec')
         get :show, id: user.id
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -136,12 +136,12 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         post :preview_as, id: 1
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -169,7 +169,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
       it 'should render edit if accessing own page' do
@@ -177,10 +177,10 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to render_template(:edit)
       end
 
-      it 'should redirect to home_link if accessing other\'s page' do
+      it 'should redirect to home_path if accessing other\'s page' do
         user = FactoryGirl.create(:user, email: '1@user.controller.spec', uid: '1.user.controller.spec')
         get :edit, id: user.id
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -208,13 +208,13 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         user = FactoryGirl.create(:user, email: '1@user.controller.spec', uid: '1.user.controller.spec')
         put :update, id: user.id
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -249,12 +249,12 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         delete :destroy, id: 1
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 

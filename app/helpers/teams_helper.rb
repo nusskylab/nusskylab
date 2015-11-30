@@ -1,13 +1,13 @@
 module TeamsHelper
   def can_current_user_download_csv
-    if is_current_user_admin?
+    if current_user_admin?
       return true
     end
     not Adviser.all.map{|adviser| adviser.user}.index {|user| user.id == current_user.id}.nil?
   end
 
   def can_current_user_create_new_team
-    is_current_user_admin?
+    current_user_admin?
   end
 
   def can_current_user_view_team(team = nil)
@@ -23,7 +23,7 @@ module TeamsHelper
     if current_user.nil?
       return false
     end
-    if is_current_user_admin?
+    if current_user_admin?
       return true
     end
     not team.get_relevant_users((not is_view), (not is_view)).index{|user| user.id == current_user.id}.nil?
@@ -31,7 +31,7 @@ module TeamsHelper
 
   def can_current_user_delete_team(team = nil)
     team ||= @team
-    if is_current_user_admin?
+    if current_user_admin?
       return true
     end
     (not team.adviser_id.blank? and current_user and current_user.id == team.adviser.user_id)

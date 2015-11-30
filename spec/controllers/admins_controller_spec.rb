@@ -11,9 +11,9 @@ RSpec.describe AdminsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         get :index
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -41,9 +41,9 @@ RSpec.describe AdminsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         get :new
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -66,9 +66,9 @@ RSpec.describe AdminsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         post :create
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -99,9 +99,9 @@ RSpec.describe AdminsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         get :show, id: 1
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -125,9 +125,9 @@ RSpec.describe AdminsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         delete :destroy, id: 1
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 

@@ -18,7 +18,9 @@ class PeerEvaluationsController < ApplicationController
     not can_access_peer_evaluation and return
     @peer_evaluation = PeerEvaluation.new(get_evaluation_params)
     if @peer_evaluation.save
-      redirect_to get_home_link, flash: {success: t('.success_message')}
+      redirect_to home_path, flash: {
+        success: t('.success_message')
+      }
     else
       redirect_to new_milestone_team_peer_evaluation_path(params[:milestone_id],
                                                           params[:team_id]), flash: {danger: t('.failure_message',
@@ -44,7 +46,9 @@ class PeerEvaluationsController < ApplicationController
   def update
     not can_access_peer_evaluation and return
     if update_peer_evaluation
-      redirect_to get_home_link, flash: {success: t('.success_message')}
+      redirect_to home_path, flash: {
+        success: t('.success_message')
+      }
     else
       redirect_to edit_milestone_team_peer_evaluation_path(params[:milestone_id],
                                                            params[:team_id],

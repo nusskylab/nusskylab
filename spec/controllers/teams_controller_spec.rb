@@ -24,9 +24,9 @@ RSpec.describe TeamsController, type: :controller do
         expect(assigns(:teams).length).to eql Team.all.length
       end
 
-      it 'should redirect to home_link for non_admin and non_adviser' do
+      it 'should redirect to home_path for non_admin and non_adviser' do
         get :index
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -56,9 +56,9 @@ RSpec.describe TeamsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         get :new
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -81,9 +81,9 @@ RSpec.describe TeamsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         post :create
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -133,12 +133,12 @@ RSpec.describe TeamsController, type: :controller do
         expect(response).to render_template(:show)
       end
 
-      it 'should redirect to home_link for non_admin and non_current_user' do
+      it 'should redirect to home_path for non_admin and non_current_user' do
         user1 = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
         adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
         team = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
         get :show, id: team.id
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -176,12 +176,12 @@ RSpec.describe TeamsController, type: :controller do
         expect(response).to render_template(:edit)
       end
 
-      it 'should redirect to home_link for non_admin and non_current_user' do
+      it 'should redirect to home_path for non_admin and non_current_user' do
         user1 = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
         adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
         team = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
         get :edit, id: team.id
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -220,12 +220,12 @@ RSpec.describe TeamsController, type: :controller do
         expect(flash[:success]).not_to be_nil
       end
 
-      it 'should redirect to home_link for non_admin and non_current_user' do
+      it 'should redirect to home_path for non_admin and non_current_user' do
         user1 = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
         adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
         team = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
         put :update, id: team.id, team: {team_name: '2.team.controller.spec'}
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -254,12 +254,12 @@ RSpec.describe TeamsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link for non_admin' do
+      it 'should redirect to home_path for non_admin' do
         user1 = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
         adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
         team = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
         delete :destroy, id: team.id
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 

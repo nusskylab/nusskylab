@@ -1,9 +1,9 @@
 class EvaluatingsController < ApplicationController
   def index
     not authenticate_user(true, false, Adviser.all.map{|adviser| adviser.user}) and return
-    if is_current_user_admin?
+    if current_user_admin?
       @evaluatings = Evaluating.all
-    elsif is_current_user_adviser?
+    elsif current_user_adviser?
       @evaluatings = Adviser.adviser?(current_user.id).get_advised_teams_evaluatings
     else
       raise ActionController::RoutingError.new(t('application.path_not_found_message'))
@@ -15,7 +15,7 @@ class EvaluatingsController < ApplicationController
     not authenticate_user(true, false, Adviser.all.map{|adviser| adviser.user}) and return
     @evaluating = Evaluating.new
     adviser = Adviser.adviser?(current_user.id)
-    if is_current_user_admin?
+    if current_user_admin?
       teams = Team.all
     elsif adviser
       teams = adviser.teams
@@ -42,9 +42,9 @@ class EvaluatingsController < ApplicationController
   def edit
     @evaluating = Evaluating.find(params[:id])
     not authenticate_user(true, false, get_evaluating_permitted_users) and return
-    if is_current_user_admin?
+    if current_user_admin?
       teams = Team.all
-    elsif (adviser = is_current_user_adviser?)
+    elsif (adviser = current_user_adviser?)
       teams = adviser.teams
     end
     @page_title = t('.page_title')
@@ -98,7 +98,7 @@ class EvaluatingsController < ApplicationController
 
   def create_or_update_evaluation_relationship
     adviser = Adviser.adviser?(current_user.id)
-    if is_current_user_admin?
+    if current_user_admin?
       return @evaluating.save ? @evaluating : nil
     elsif not adviser.nil?
       if (@evaluating.evaluated and @evaluating.evaluated.adviser_id == adviser.id) and
