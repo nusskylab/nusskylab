@@ -27,7 +27,7 @@ RSpec.describe Adviser, type: :model do
     expect(csv.first).to eql ['Adviser UserID', 'Adviser Name', 'Adviser Email', 'Avg feedback rating']
   end
 
-  it '#get_advised_teams_evaluatings' do
+  it '#advised_teams_evaluatings' do
     user1 = FactoryGirl.create(:user, email: 'user4@adviser.model.spec', uid: 'uid4.adviser.model.spec')
     adviser1 = FactoryGirl.create(:adviser, user: user1)
     user2 = FactoryGirl.create(:user, email: 'user5@adviser.model.spec', uid: 'uid5.adviser.model.spec')
@@ -40,7 +40,7 @@ RSpec.describe Adviser, type: :model do
     evaluating2 = FactoryGirl.create(:evaluating, evaluator: team2, evaluated: team3)
     evaluating3 = FactoryGirl.create(:evaluating, evaluator: team3, evaluated: team1)
     evaluating4 = FactoryGirl.create(:evaluating, evaluator: team1, evaluated: team4)
-    evaluatings_adviser = adviser1.get_advised_teams_evaluatings
+    evaluatings_adviser = adviser1.advised_teams_evaluatings
     expect(evaluatings_adviser.length).to eql 3
     expect(evaluatings_adviser).to include evaluating1
     expect(evaluatings_adviser).to include evaluating2
@@ -48,7 +48,7 @@ RSpec.describe Adviser, type: :model do
     expect(evaluatings_adviser).not_to include evaluating4
   end
 
-  it '#get_feedback_average_rating' do
+  it '#feedback_average_rating' do
     user1 = FactoryGirl.create(:user, email: 'user6@adviser.model.spec', uid: 'uid6.adviser.model.spec')
     adviser = FactoryGirl.create(:adviser, user: user1)
     team1 = FactoryGirl.create(:team, team_name: '5.adviser.model.spec')
@@ -58,13 +58,13 @@ RSpec.describe Adviser, type: :model do
                        survey_template: survey_template1, response_content: '{"1": "0"}')
     FactoryGirl.create(:feedback, team: team2, adviser: adviser,
                        survey_template: survey_template1, response_content: '{"1": "2"}')
-    expect(adviser.get_feedback_average_rating).to be_within(0.05).of(1.0)
+    expect(adviser.feedback_average_rating).to be_within(0.05).of(1.0)
   end
 
-  it '#get_advisee_users' do
+  it '#advisee_users' do
     user1 = FactoryGirl.create(:user, email: 'user7@adviser.model.spec', uid: 'uid7.adviser.model.spec')
     adviser1 = FactoryGirl.create(:adviser, user: user1)
-    expect(adviser1.get_advisee_users.length).to eql 0
+    expect(adviser1.advisee_users.length).to eql 0
 
     user2 = FactoryGirl.create(:user, email: 'user8@adviser.model.spec', uid: 'uid8.adviser.model.spec')
     adviser2 = FactoryGirl.create(:adviser, user: user2)
@@ -76,7 +76,7 @@ RSpec.describe Adviser, type: :model do
     FactoryGirl.create(:student, user: student_user1, team: team1)
     FactoryGirl.create(:student, user: student_user2, team: team1)
     FactoryGirl.create(:student, user: student_user3, team: team2)
-    advisee_users = adviser2.get_advisee_users
+    advisee_users = adviser2.advisee_users
     expect(advisee_users.length).to eql 3
     expect(advisee_users).to include student_user1
     expect(advisee_users).to include student_user2

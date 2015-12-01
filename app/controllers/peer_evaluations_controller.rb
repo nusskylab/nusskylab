@@ -67,7 +67,7 @@ class PeerEvaluationsController < ApplicationController
       if not advisees
         not authenticate_user(true, false, [adviser.user]) and return false
       else
-        not authenticate_user(true, false, adviser.get_advisee_users.append(adviser.user)) and return false
+        not authenticate_user(true, false, adviser.advisee_users.append(adviser.user)) and return false
       end
     else
       raise ActionController::RoutingError.new(t('application.path_not_found_message'))
