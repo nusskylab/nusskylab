@@ -22,14 +22,14 @@ class MentorsController < ApplicationController
     !authenticate_user(true, true) && return
     user = User.find(params[:mentor][:user_id])
     @mentor = Mentor.new(user_id: user.id)
-    redirect_after_create_action
+    redirect_after_create_action(user.user_name)
   end
 
   def show
     @mentor = Mentor.find(params[:id])
     !authenticate_user(true, false, [@mentor.user]) && return
     @page_title = t('.page_title', user_name: @mentor.user.user_name)
-    milestones, teams_submissions, own_evaluations = get_data_for_mentor
+    milestones, teams_submissions, own_evaluations = data_for_mentor
     render locals: {
       milestones: milestones,
       teams_submissions: teams_submissions,
@@ -40,21 +40,12 @@ class MentorsController < ApplicationController
   def destroy
     !authenticate_user(true, true) && return
     @mentor = Mentor.find(params[:id])
-    if @mentor.destroy
-      redirect_to mentors_path, flash: {
-        success: t('.success_message', user_name: @mentor.user.user_name)
-      }
-    else
-      redirect_to mentors_path, flash: {
-        danger: t('.failure_message',
-                  error_messages: @mentor.errors.full_messages.join(' '))
-      }
-    end
+    redirect_after_destroy_action
   end
 
   private
 
-  def get_data_for_mentor
+  def data_for_mentor
     milestones = Milestone.all
     teams_submissions = {}
     own_evaluations = {}
@@ -69,13 +60,26 @@ class MentorsController < ApplicationController
     return milestones, teams_submissions, own_evaluations
   end
 
-  def redirect_after_create_action
+  def redirect_after_create_action(user_name)
     if @mentor.save
       redirect_to mentors_path, flash: {
-        success: t('.success_message', user_name: user.user_name)
+        success: t('.success_message', user_name: user_name)
       }
     else
       redirect_to new_mentor_path, flash: {
+        danger: t('.failure_message',
+                  error_messages: @mentor.errors.full_messages.join(' '))
+      }
+    end
+  end
+
+  def redirect_after_destroy_action
+    if @mentor.destroy
+      redirect_to mentors_path, flash: {
+        success: t('.success_message', user_name: @mentor.user.user_name)
+      }
+    else
+      redirect_to mentors_path, flash: {
         danger: t('.failure_message',
                   error_messages: @mentor.errors.full_messages.join(' '))
       }
