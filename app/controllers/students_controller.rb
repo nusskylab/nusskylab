@@ -1,53 +1,49 @@
+# StudentsController: manage actions related to students
+#   index:   list of students
+#   new:     view to create a student
+#   create:  create a student
+#   show:    view of a student
+#   edit:    view to update a student
+#   update:  update a student
+#   destroy: delete a student
 class StudentsController < ApplicationController
   def index
-    not authenticate_user(true, false, Adviser.all.map {|adviser| adviser.user}) and return
+    !authenticate_user(true, false, Adviser.all.map(&:user)) && return
     @page_title = t('.page_title')
     @students = Student.all
     respond_to do |format|
-      format.html {render}
-      format.csv {send_data Student.to_csv}
+      format.html { render }
+      format.csv { send_data Student.to_csv }
     end
   end
 
   def new
-    not authenticate_user(true, true) and return
+    !authenticate_user(true, true) && return
     @page_title = t('.page_title')
     @student = Student.new
-    render locals: {users: User.all.select {|user| not Student.student?(user.id)}}
+    render locals: {
+      users: User.all.select { |user| !Student.student?(user.id) }
+    }
   end
 
   def create
-    not authenticate_user(true, true) and return
+    !authenticate_user(true, true) && return
     user = User.find(params[:student][:user_id])
     if user
       if create_student_for_user(user)
-        redirect_to students_path, flash: {success: t('.success_message', user_name: user.user_name)}
+        redirect_to students_path, flash: {
+          success: t('.success_message', user_name: user.user_name)
+        }
       else
-        redirect_to new_student_path,
-                    flash: {danger: t('.failure_message',
-                                      error_messages: @student.errors.full_messages.join(', '))}
+        redirect_to new_student_path, flash: {
+          danger: t('.failure_message',
+                    error_messages: @student.errors.full_messages.join(', '))
+        }
       end
     else
-      redirect_to new_student_path, flash: {danger: t('.user_missing_message')}
-    end
-  end
-
-  def edit
-    @student = Student.find(params[:id]) or (record_not_found and return)
-    not authenticate_user(true, false, [@student.user]) and return
-    @page_title = t('.page_title', user_name: @student.user.user_name)
-    render locals: {teams: Team.all}
-  end
-
-  def update
-    @student = Student.find(params[:id]) or (record_not_found and return)
-    not authenticate_user(true, false, [@student.user]) and return
-    if @student.update(get_student_params)
-      redirect_to student_path(@student),
-                  flash: {success: t('.success_message', user_name: @student.user.user_name)}
-    else
-      redirect_to edit_student_path(@student),
-                  flash: {success: t('failure_message', error_messages: @student.errors.full_messages.join(', '))}
+      redirect_to new_student_path, flash: {
+        danger: t('.user_missing_message')
+      }
     end
   end
 
@@ -58,35 +54,62 @@ class StudentsController < ApplicationController
     else
       relevant_users = @student.team.get_relevant_users(false, false)
     end
-    not authenticate_user(true, false, relevant_users) and return
+    !authenticate_user(true, false, relevant_users) && return
     @page_title = t('.page_title', user_name: @student.user.user_name)
     if @student.team_id.blank?
-      render template: 'students/show_no_team' and return
+      render template: 'students/show_no_team' && return
     end
     render locals: {
-             milestones: Milestone.order(:id).all,
-             evaluateds: @student.team.evaluateds,
-             evaluators: @student.team.evaluators,
-             team_submissions: @student.team.get_own_submissions,
-             team_evaluateds_submissions: @student.team.get_others_submissions,
-             team_evaluations: @student.team.get_own_evaluations_for_others,
-             team_evaluators_evaluations: @student.team.get_evaluations_for_own_team,
-             team_feedbacks: @student.team.get_feedbacks_for_others
-           }
+      milestones: Milestone.order(:id).all,
+      evaluateds: @student.team.evaluateds,
+      evaluators: @student.team.evaluators,
+      team_submissions: @student.team.get_own_submissions,
+      team_evaluateds_submissions: @student.team.get_others_submissions,
+      team_evaluations: @student.team.get_own_evaluations_for_others,
+      team_evaluators_evaluations: @student.team.get_evaluations_for_own_team,
+      team_feedbacks: @student.team.get_feedbacks_for_others
+    }
+  end
+
+  def edit
+    @student = Student.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@student.user]) && return
+    @page_title = t('.page_title', user_name: @student.user.user_name)
+    render locals: { teams: Team.all }
+  end
+
+  def update
+    @student = Student.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@student.user]) && return
+    if @student.update(student_params)
+      redirect_to student_path(@student), flash: {
+        success: t('.success_message', user_name: @student.user.user_name)
+      }
+    else
+      redirect_to edit_student_path(@student), flash: {
+        success: t('failure_message',
+                   error_messages: @student.errors.full_messages.join(', '))
+      }
+    end
   end
 
   def destroy
-    not authenticate_user(true, true) and return
+    !authenticate_user(true, true) && return
     @student = Student.find(params[:id])
     if @student.destroy
-      redirect_to students_path, flash: {success: t('.success_message', user_name: @student.user.user_name)}
+      redirect_to students_path, flash: {
+        success: t('.success_message', user_name: @student.user.user_name)
+      }
     else
-      redirect_to students_path, flash: {danger: t('.failure_message', user_name: @student.user.user_name)}
+      redirect_to students_path, flash: {
+        danger: t('.failure_message', user_name: @student.user.user_name)
+      }
     end
   end
 
   private
-  def get_student_params
+
+  def student_params
     params.require(:student).permit(:team_id)
   end
 
