@@ -1,6 +1,8 @@
+# ReceivedFeedbacksController: manage actions related received_feedbacks
+#   index: list all received feedbacks
 class ReceivedFeedbacksController < ApplicationController
   def index
-    not can_view_received_feedbacks_page and return
+    !can_view_received_feedbacks_page && return
     if params[:team_id]
       @feedbacks = Feedback.where(target_team_id: params[:team_id])
     elsif params[:adviser_id]
@@ -10,16 +12,20 @@ class ReceivedFeedbacksController < ApplicationController
   end
 
   private
+
   def can_view_received_feedbacks_page
     if params[:team_id]
-      @team = Team.find(params[:team_id]) or (record_not_found and return)
-      not authenticate_user(true, false, @team.get_relevant_users(false, false)) and return false
+      @team = Team.find(params[:team_id]) ||
+              (record_not_found && return)
+      !authenticate_user(true, false, @team.get_relevant_users(false, false)) &&
+        (return false)
     elsif params[:adviser_id]
-      @adviser = Adviser.find(params[:adviser_id]) or record_not_found
-      not authenticate_user(true, false, [@adviser.user]) and return false
+      @adviser = Adviser.find(params[:adviser_id]) ||
+                 (record_not_found && return)
+      !authenticate_user(true, false, [@adviser.user]) && (return false)
     else
       raise ActionController::RoutingError.new(t('application.path_not_found_message'))
     end
-    return true
+    true
   end
 end
