@@ -87,7 +87,7 @@ class StudentsController < ApplicationController
       }
     else
       redirect_to edit_student_path(@student), flash: {
-        success: t('failure_message',
+        success: t('.failure_message',
                    error_messages: @student.errors.full_messages.join(', '))
       }
     end
