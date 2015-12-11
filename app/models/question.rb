@@ -1,3 +1,4 @@
+# Question: question modeling
 class Question < ActiveRecord::Base
   belongs_to :survey_template
 

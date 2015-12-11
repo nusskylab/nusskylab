@@ -1,6 +1,8 @@
+# Mentor: mentor modeling
 class Mentor < ActiveRecord::Base
-  validates :user_id, presence: true,
-            uniqueness: {message: 'can only have one admin role'}
+  validates :user_id, presence: true, uniqueness: {
+    message: 'can only have one mentor role'
+  }
 
   belongs_to :user
   has_many :teams

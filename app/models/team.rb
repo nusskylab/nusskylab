@@ -1,4 +1,4 @@
-# Team: model for Team entity
+# Team: team modeling
 class Team < ActiveRecord::Base
   validates :team_name, presence: true, uniqueness: {
     message: ': Team name should be unique'
@@ -82,33 +82,25 @@ class Team < ActiveRecord::Base
   end
 
   def set_project_level(project_level)
-    self.project_level = Team.get_project_level_from_raw(project_level)
+    project_level = Team.get_project_level_from_raw(project_level)
   end
 
   def get_project_level
-    self.project_level.gsub(/_/, ' ').split(' ').map(&:capitalize).join(' ')
+    project_level.gsub(/_/, ' ').split(' ').map(&:capitalize).join(' ')
   end
 
   def get_relevant_users(include_evaluator = false, include_evaluated = false)
-    relevant_users = self.get_team_members
-    if not self.adviser_id.blank?
-      relevant_users.append(self.adviser.user)
-    end
-    if not self.mentor_id.blank?
-      relevant_users.append(self.mentor.user)
-    end
-    if include_evaluator
-      relevant_users.concat(self.get_evaluator_teams_members)
-    end
-    if include_evaluated
-      relevant_users.concat(self.get_evaluated_teams_members)
-    end
+    relevant_users = get_team_members
+    relevant_users.append(adviser.user) unless adviser_id.blank?
+    relevant_users.append(mentor.user) unless mentor_id.blank?
+    relevant_users.concat(get_evaluator_teams_members) if include_evaluator
+    relevant_users.concat(get_evaluated_teams_members) if include_evaluated
     relevant_users
   end
 
   def get_own_submissions
     submissions_hash = {}
-    self.submissions.each do |submission|
+    submissions.each do |submission|
       submissions_hash[submission.milestone_id] = submission
     end
     submissions_hash
@@ -119,9 +111,10 @@ class Team < ActiveRecord::Base
     milestones = Milestone.all
     milestones.each do |milestone|
       evaluated_submissions[milestone.id] = {}
-      self.evaluateds.each do |evaluated|
-        evaluated_submissions[milestone.id][evaluated.id] = Submission.find_by(team_id: evaluated.evaluated_id,
-                                                                               milestone_id: milestone.id)
+      evaluateds.each do |evaluated|
+        evaluated_submissions[milestone.id][evaluated.id] = Submission.find_by(
+          team_id: evaluated.evaluated_id,
+          milestone_id: milestone.id)
       end
     end
     evaluated_submissions
@@ -129,49 +122,53 @@ class Team < ActiveRecord::Base
 
   def get_own_evaluations_for_others
     own_evaluations = {}
-    self.peer_evaluations.each do |evaluation|
+    peer_evaluations.each do |evaluation|
       own_evaluations[evaluation.submission_id] = evaluation
     end
     own_evaluations
   end
 
   def get_evaluations_for_own_team
-    peer_evaluations_hash = {}
-    submissions_hash = self.get_own_submissions
+    peer_evas = {}
+    submissions_hash = get_own_submissions
     milestones = Milestone.all
     milestones.each do |milestone|
-      peer_evaluations_hash[milestone.id] = {}
-      self.evaluators.each do |evaluator|
-        peer_evaluations_hash[milestone.id][evaluator.id] = PeerEvaluation.find_by(submission_id: submissions_hash[milestone.id],
-                                                                                   team_id: evaluator.evaluator_id)
+      peer_evas[milestone.id] = {}
+      evaluators.each do |evaluator|
+        peer_evas[milestone.id][evaluator.id] = PeerEvaluation.find_by(
+          submission_id: submissions_hash[milestone.id],
+          team_id: evaluator.evaluator_id)
       end
-      if not self.adviser_id.blank?
-        peer_evaluations_hash[milestone.id][:adviser] = PeerEvaluation.find_by(submission_id: submissions_hash[milestone.id],
-                                                                               adviser_id: self.adviser_id)
-      end
+      peer_evas[milestone.id][:adviser] = PeerEvaluation.find_by(
+        submission_id: submissions_hash[milestone.id],
+        adviser_id: adviser_id) unless adviser_id.blank?
     end
-    peer_evaluations_hash
+    peer_evas
   end
 
   def get_feedbacks_for_others
     feedbacks_hash = {}
-    self.evaluators.each do |evaluator|
-      feedbacks_hash[evaluator.id] = Feedback.find_by(team_id: self.id, target_team_id: evaluator.evaluator_id)
+    evaluators.each do |evaluator|
+      feedbacks_hash[evaluator.id] = Feedback.find_by(
+        team_id: id, target_team_id: evaluator.evaluator_id)
     end
     feedbacks_hash
   end
 
   def get_average_evaluation_ratings
     ratings_hash = {}
-    peer_evaluations_hash = self.get_evaluations_for_own_team
+    peer_evaluations_hash = get_evaluations_for_own_team
     overall_ratings = []
     peer_evaluations_hash.each do |milestone_id, evaluations_hash|
       ratings = []
       evaluations_hash.each do |key, evaluation|
-        if not evaluation.nil?
+        if !evaluation.nil?
           private_parts = JSON.parse(evaluation.private_content)
-          rating = private_parts[Milestone.find(milestone_id).get_overall_rating_question_id]
-          if key.is_a? Symbol  # TODO: a temporary solution for testing whether it is from adviser or not
+          rating = private_parts[Milestone.find(
+            milestone_id).get_overall_rating_question_id]
+          # TODO: a temporary solution for testing whether it is from adviser
+          #   or not
+          if key.is_a? Symbol
             ratings.append(rating)
             overall_ratings.append(rating)
           end
@@ -186,32 +183,22 @@ class Team < ActiveRecord::Base
   end
 
   def get_average_feedback_ratings
-    recv_feedbacks = Feedback.where(target_team_id: self.id)
+    recv_feedbacks = Feedback.where(target_team_id: id)
     ratings = []
     recv_feedbacks.each do |feedback|
-      response = feedback.get_response_for_question(1).nil? ? 0 : feedback.get_response_for_question(1).to_i
-      ratings.append(response)
+      ratings.append(feedback.get_response_for_question(1).to_i)
     end
-    {:all => get_average_for_ratings(ratings)}
+    { all: get_average_for_ratings(ratings) }
   end
 
   def get_average_for_ratings(ratings)
-    sum = 0; numberOfRatings = 0
-    ratings.each do |rating|
-      if (not rating.nil?) and (rating_num = rating.to_i)
-        sum += rating_num; numberOfRatings += 1
-      end
-    end
-    if numberOfRatings == 0
-      return nil
-    else
-      return (sum.to_f / numberOfRatings)
-    end
+    sum = ratings.reduce(:+)
+    (sum.to_f / ratings.length) if ratings.length > 0
   end
 
   def get_team_members
     team_members = []
-    self.students.each do |student|
+    students.each do |student|
       team_members.append(student.user)
     end
     team_members
@@ -219,7 +206,7 @@ class Team < ActiveRecord::Base
 
   def get_evaluator_teams_members
     evaluator_members = []
-    self.evaluators.each do |evaluator|
+    evaluators.each do |evaluator|
       evaluator_members.concat(evaluator.evaluator.get_team_members)
     end
     evaluator_members
@@ -227,7 +214,7 @@ class Team < ActiveRecord::Base
 
   def get_evaluated_teams_members
     evaluated_members = []
-    self.evaluateds.each do |evaluated|
+    evaluateds.each do |evaluated|
       evaluated_members.concat(evaluated.evaluated.get_team_members)
     end
     evaluated_members
