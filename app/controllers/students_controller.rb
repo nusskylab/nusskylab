@@ -96,15 +96,7 @@ class StudentsController < ApplicationController
   def destroy
     !authenticate_user(true, true) && return
     @student = Student.find(params[:id])
-    if @student.destroy
-      redirect_to students_path, flash: {
-        success: t('.success_message', user_name: @student.user.user_name)
-      }
-    else
-      redirect_to students_path, flash: {
-        danger: t('.failure_message', user_name: @student.user.user_name)
-      }
-    end
+    redirect_after_destroy
   end
 
   private
@@ -116,5 +108,18 @@ class StudentsController < ApplicationController
   def create_student_for_user(user)
     @student = Student.new(user_id: user.id)
     @student.save ? @student : nil
+  end
+
+  def redirect_after_destroy
+    if @student.destroy
+      @student.team.destroy if @student.team.get_team_members.blank?
+      redirect_to students_path, flash: {
+        success: t('.success_message', user_name: @student.user.user_name)
+      }
+    else
+      redirect_to students_path, flash: {
+        danger: t('.failure_message', user_name: @student.user.user_name)
+      }
+    end
   end
 end

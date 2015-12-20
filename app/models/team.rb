@@ -70,8 +70,8 @@ class Team < ActiveRecord::Base
     csv_row
   end
 
-  def self.get_project_level_from_raw(project_level)
-    project_level = project_level.downcase
+  def self.get_project_level_from_raw(plevel)
+    project_level = plevel.downcase
     if project_level[VOSTOK_REGEX]
       Team.project_levels[:vostok]
     elsif project_level[PROJECT_GEMINI_REGEX]
@@ -81,8 +81,8 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def set_project_level(project_level)
-    project_level = Team.get_project_level_from_raw(project_level)
+  def set_project_level(plevel)
+    self.project_level = Team.get_project_level_from_raw(plevel)
   end
 
   def get_project_level
@@ -165,7 +165,7 @@ class Team < ActiveRecord::Base
         if !evaluation.nil?
           private_parts = JSON.parse(evaluation.private_content)
           rating = private_parts[Milestone.find(
-            milestone_id).get_overall_rating_question_id]
+            milestone_id).get_overall_rating_question_id].to_i
           # TODO: a temporary solution for testing whether it is from adviser
           #   or not
           if key.is_a? Symbol
@@ -197,11 +197,7 @@ class Team < ActiveRecord::Base
   end
 
   def get_team_members
-    team_members = []
-    students.each do |student|
-      team_members.append(student.user)
-    end
-    team_members
+    students.map(&:user)
   end
 
   def get_evaluator_teams_members
