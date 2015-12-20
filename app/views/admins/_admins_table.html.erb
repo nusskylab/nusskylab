@@ -10,9 +10,8 @@
         <td>
           <a class="btn btn-default btn-xs" href="<%=  admin_path(admin.id) %>">View</a>
           <% if not (current_user_admin?.id == admin.id) %>
-              <%= link_to 'Delete', admin_path(admin.id),
-                          :confirm => 'Are you sure to delete this admin permanently?',
-                          :method => :delete, :class => 'btn btn-danger btn-xs' %>
+              <%= link_to 'Delete', admin_path(admin.id), method: :delete, class: 'btn btn-danger btn-xs',
+                data: { confirm: 'Are you sure you want to delete this admin?' } %>
           <% end %>
         </td>
       </tr>

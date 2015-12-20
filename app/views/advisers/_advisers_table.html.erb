@@ -12,8 +12,8 @@
         <td><%= adviser.user.email %></td>
         <td>
           <a class="btn btn-default btn-xs" href="<%= adviser_path(adviser.id) %>">View</a>
-          <%= link_to 'Delete', adviser_path(adviser.id),
-                      :confirm => 'Are you sure to delete this adviser permanently?', :method => :delete, :class => 'btn btn-danger btn-xs' %>
+          <%= link_to 'Delete', adviser_path(adviser.id), method: :delete, class: 'btn btn-danger btn-xs',
+            data: { confirm: 'Are you sure you want to delete this adviser?' } %>
         </td>
       </tr>
   <% end %>
