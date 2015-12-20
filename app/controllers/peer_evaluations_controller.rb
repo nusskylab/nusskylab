@@ -6,9 +6,9 @@
 #   update: update a peer_evaluation
 class PeerEvaluationsController < ApplicationController
   def new
-    evaluation = Evaluating.find(params[:target_evaluation_id]) ||
+    evaluating = Evaluating.find(params[:target_evaluation_id]) ||
                  (record_not_found && return)
-    submission = Submission.find_by(team_id: evaluation.evaluated_id,
+    submission = Submission.find_by(team_id: evaluating.evaluated_id,
                                     milestone_id: params[:milestone_id]) ||
                  (record_not_found && return)
     peer_evaluation = PeerEvaluation.find_by(team_id: params[:team_id],
@@ -21,9 +21,13 @@ class PeerEvaluationsController < ApplicationController
     !can_access_peer_evaluation && return
     @page_title = t('.page_title')
     @peer_evaluation = PeerEvaluation.new
+    (submissions, peer_evaluations) = team_submissions_and_own_evaluations(
+      evaluating.evaluated_id, params[:team_id])
     render locals: {
       submission: submission,
-      milestone: Milestone.find(params[:milestone_id])
+      milestone: Milestone.find(params[:milestone_id]),
+      submissions: submissions,
+      peer_evaluations: peer_evaluations
     }
   end
 
@@ -56,8 +60,12 @@ class PeerEvaluationsController < ApplicationController
                        (record_not_found && return)
     !can_access_peer_evaluation && return
     @page_title = t('.page_title')
+    (submissions, peer_evaluations) = team_submissions_and_own_evaluations(
+      @peer_evaluation.submission.team_id, params[:team_id])
     render locals: {
-      milestone: Milestone.find(params[:milestone_id])
+      milestone: Milestone.find(params[:milestone_id]),
+      submissions: submissions,
+      peer_evaluations: peer_evaluations
     }
   end
 
@@ -105,6 +113,14 @@ class PeerEvaluationsController < ApplicationController
     true
   end
 
+  def team_submissions_and_own_evaluations(evaluated_id, team_id)
+    submissions = Submission.where(team_id: evaluated_id)
+    peer_evaluations = submissions.map do |sub|
+      PeerEvaluation.find_by(team_id: team_id, submission_id: sub.id)
+    end
+    return submissions, peer_evaluations
+  end
+
   def update_peer_evaluation
     @peer_evaluation = PeerEvaluation.find(params[:id])
     eval_params = evaluation_params
@@ -113,10 +129,8 @@ class PeerEvaluationsController < ApplicationController
   end
 
   def evaluation_params
-    eval_params = params.require(:peer_evaluation).permit(:public_content,
-                                                          :private_content,
-                                                          :submission_id,
-                                                          :published)
+    eval_params = params.require(:peer_evaluation).permit(
+      :public_content, :private_content, :submission_id, :published)
     if params[:team_id]
       eval_params[:team_id] = params[:team_id]
     elsif params[:adviser_id]
