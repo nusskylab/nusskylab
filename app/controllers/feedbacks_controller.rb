@@ -21,16 +21,20 @@ class FeedbacksController < ApplicationController
     team = Team.find(params[:team_id])
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     if create_or_update_feedback_and_responses
-      redirect_to get_home_link, flash: {success: t('.success_message')}
+      redirect_to home_path, flash: {
+        success: t('.success_message')
+      }
     else
-      redirect_to get_home_link,
-                  flash: {danger: t('.failure_message') + @feedback.errors.full_messages.join(', ')}
+      redirect_to home_path, flash: {
+        danger: t('.failure_message',
+                  error_messages: @feedback.errors.full_messages.join(', '))
+      }
     end
   end
 
   def edit
     team = Team.find(params[:team_id])
-    not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
+    !authenticate_user(true, false, team.get_relevant_users(false, false)) && return
     @page_title = t('.page_title')
     @feedback = Feedback.find(params[:id])
     evaluators = []
@@ -40,10 +44,10 @@ class FeedbacksController < ApplicationController
     # TODO: need to properly handle this!!!
     feedback_template = SurveyTemplate.all()[0]
     render locals: {
-             advisers: [team.adviser],
-             evaluators: evaluators,
-             feedback_template: feedback_template
-           }
+      advisers: [team.adviser],
+      evaluators: evaluators,
+      feedback_template: feedback_template
+    }
   end
 
   def update
@@ -51,14 +55,19 @@ class FeedbacksController < ApplicationController
     not authenticate_user(true, false, team.get_relevant_users(false, false)) and return
     @feedback = Feedback.find(params[:id])
     if create_or_update_feedback_and_responses(@feedback)
-      redirect_to get_home_link, flash: {success: t('.success_message')}
+      redirect_to home_path, flash: {
+        success: t('.success_message')
+      }
     else
-      redirect_to get_home_link,
-                  flash: {danger: t('.failure_message') + @feedback.errors.full_messages.join(', ')}
+      redirect_to home_path, flash: {
+        danger: t('.failure_message',
+                  error_messages: @feedback.errors.full_messages.join(', '))
+      }
     end
   end
 
   private
+
   def get_feedback_params
     feedback_params = params.require(:feedback).permit!
     feedback_params[:team_id] = params[:team_id]

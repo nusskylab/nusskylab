@@ -1,15 +1,14 @@
+# PeerEvaluation: peer_evaluation modeling
 class PeerEvaluation < ActiveRecord::Base
   validates :submission_id, presence: true
-  validates :submission_id,
-            uniqueness: {
-              scope: :team_id,
-              message: 'A team can only evaluate a submission once'},
-            :if => :evaluated_by_team
-  validates :submission_id,
-            uniqueness: {
-              scope: :adviser_id,
-              message: 'An adviser can only evaluate a submission once'},
-            :if => :evaluated_by_adviser
+  validates :submission_id, uniqueness: {
+    scope: :team_id,
+    message: 'A team can only evaluate a submission once'
+  }, if: :evaluated_by_team
+  validates :submission_id, uniqueness: {
+    scope: :adviser_id,
+    message: 'An adviser can only evaluate a submission once'
+  }, if: :evaluated_by_adviser
 
   validate :check_evaluation_owner_presence
 
@@ -18,23 +17,26 @@ class PeerEvaluation < ActiveRecord::Base
   belongs_to :submission
 
   def evaluated_by_team
-    not self.team_id.blank?
+    !team_id.blank?
   end
 
   def evaluated_by_adviser
-    not self.adviser_id.blank?
+    !adviser_id.blank?
   end
 
   def submitted_late?
-    deadline = self.submission.milestone.peer_evaluation_deadline
-    self.updated_at > deadline
+    deadline = submission.milestone.peer_evaluation_deadline
+    updated_at > deadline
   end
 
-  # TODO: remove this matter later as it will be coupled with evaluating relation only
+  # TODO: remove this matter later as it will be coupled with
+  #   evaluating relation only
   def check_evaluation_owner_presence
-    if self.adviser_id.blank? and self.team_id.blank?
-      errors.add(:adviser_id, 'cannot be blank if evaluation is not owned by a team')
-      errors.add(:team_id, 'cannot be blank if evaluation is not owned by an adviser')
+    if adviser_id.blank? && team_id.blank?
+      errors.add(:adviser_id,
+                 'cannot be blank if evaluation is not owned by a team')
+      errors.add(:team_id,
+                 'cannot be blank if evaluation is not owned by an adviser')
     end
   end
 end

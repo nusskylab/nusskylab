@@ -1,0 +1,22 @@
+engines:
+  rubocop:
+    enabled: true
+  bundler-audit:
+    enabled: true
+  brakeman:
+    enabled: true
+  fixme:
+    enabled: true
+  eslint:
+    enabled: true
+  csslint:
+    enabled: true
+ratings:
+   paths:
+   - app/**
+   - lib/**
+   - "**.rb"
+   - "**.js"
+exclude_paths:
+- spec/**/*
+- vendor/**/*

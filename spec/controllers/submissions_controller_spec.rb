@@ -12,7 +12,7 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
       it 'should render new template for student with access privilege' do
@@ -25,13 +25,13 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(response).to render_template(:new)
       end
 
-      it 'should redirect to home_link for non_admin and non_current_user' do
+      it 'should redirect to home_path for non_admin and non_current_user' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
         user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
         adviser = FactoryGirl.create(:adviser, user: user0)
         team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.submission.controller.spec')
         get :new, team_id: team.id, milestone_id: milestone.id
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -74,10 +74,10 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link with success for student' do
+      it 'should redirect to home_path with success for student' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
         user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
         adviser = FactoryGirl.create(:adviser, user: user0)
@@ -85,18 +85,18 @@ RSpec.describe SubmissionsController, type: :controller do
         student = FactoryGirl.create(:student, team: team, user_id: subject.current_user.id)
         submisison_params = {read_me: 'This is read me', project_log: 'project_log', video_link: 'google.com'}
         post :create, team_id: team.id, milestone_id: milestone.id, submission: submisison_params
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
         expect(flash[:success]).not_to be_nil
       end
 
-      it 'should redirect to home_link for non_admin and non_current_user' do
+      it 'should redirect to home_path for non_admin and non_current_user' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
         user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
         adviser = FactoryGirl.create(:adviser, user: user0)
         team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.submission.controller.spec')
         submisison_params = {read_me: 'This is read me', project_log: 'project_log', video_link: 'google.com'}
         post :create, team_id: team.id, milestone_id: milestone.id, submission: submisison_params
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -125,7 +125,7 @@ RSpec.describe SubmissionsController, type: :controller do
         team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.submission.controller.spec')
         submisison_params = {read_me: 'This is read me', project_log: 'project_log', video_link: 'google.com'}
         post :create, team_id: team.id, milestone_id: milestone.id, submission: submisison_params
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
         expect(flash[:success]).not_to be_nil
       end
     end
@@ -143,7 +143,7 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
       it 'should render edit template for student with access privilege' do
@@ -157,14 +157,14 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(response).to render_template(:edit)
       end
 
-      it 'should redirect to home_link for non_admin and non_current_user' do
+      it 'should redirect to home_path for non_admin and non_current_user' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
         user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
         adviser = FactoryGirl.create(:adviser, user: user0)
         team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.submission.controller.spec')
         submission = FactoryGirl.create(:submission, team: team, milestone: milestone)
         get :edit, id: submission.id ,team_id: team.id, milestone_id: milestone.id
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -195,10 +195,10 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
-      it 'should redirect to home_link with success for student' do
+      it 'should redirect to home_path with success for student' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
         user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
         adviser = FactoryGirl.create(:adviser, user: user0)
@@ -207,11 +207,11 @@ RSpec.describe SubmissionsController, type: :controller do
         submission = FactoryGirl.create(:submission, team: team, milestone: milestone)
         submisison_params = {read_me: 'This is read me', project_log: 'project_log', video_link: 'google.com'}
         put :update, id: submission.id, team_id: team.id, milestone_id: milestone.id, submission: submisison_params
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
         expect(flash[:success]).not_to be_nil
       end
 
-      it 'should redirect to home_link for non_admin and non_current_user' do
+      it 'should redirect to home_path for non_admin and non_current_user' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
         user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
         adviser = FactoryGirl.create(:adviser, user: user0)
@@ -219,7 +219,7 @@ RSpec.describe SubmissionsController, type: :controller do
         submission = FactoryGirl.create(:submission, team: team, milestone: milestone)
         submisison_params = {read_me: 'This is read me', project_log: 'project_log', video_link: 'google.com'}
         put :update, id: submission.id, team_id: team.id, milestone_id: milestone.id, submission: submisison_params
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
@@ -233,7 +233,7 @@ RSpec.describe SubmissionsController, type: :controller do
         submission = FactoryGirl.create(:submission, team: team, milestone: milestone)
         submisison_params = {read_me: 'This is read me', project_log: 'project_log', video_link: 'google.com'}
         put :update, id: submission.id, team_id: team.id, milestone_id: milestone.id, submission: submisison_params
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
         expect(flash[:success]).not_to be_nil
       end
     end
@@ -251,7 +251,7 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context 'user logged in but not admin' do
       login_user
       it 'should render show template for student with access privilege' do
@@ -265,14 +265,14 @@ RSpec.describe SubmissionsController, type: :controller do
         expect(response).to render_template(:show)
       end
 
-      it 'should redirect to home_link for non_admin and non_current_user' do
+      it 'should redirect to home_path for non_admin and non_current_user' do
         milestone = FactoryGirl.create(:milestone, name: 'milestone_1.submission.controller.spec')
         user0 = FactoryGirl.create(:user, email: '1@submission.controller.spec', uid: '1.submission.controller.spec')
         adviser = FactoryGirl.create(:adviser, user: user0)
         team = FactoryGirl.create(:team, adviser: adviser, team_name: '1.submission.controller.spec')
         submission = FactoryGirl.create(:submission, team: team, milestone: milestone)
         get :show, id: submission.id ,team_id: team.id, milestone_id: milestone.id
-        expect(response).to redirect_to(controller.get_home_link)
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 

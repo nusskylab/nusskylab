@@ -1,6 +1,8 @@
+# Admin: admin modeling
 class Admin < ActiveRecord::Base
-  validates :user_id, presence: true,
-            uniqueness: {message: 'can only have one admin role'}
+  validates :user_id, presence: true, uniqueness: {
+    message: 'can only have one admin role'
+  }
 
   belongs_to :user
 

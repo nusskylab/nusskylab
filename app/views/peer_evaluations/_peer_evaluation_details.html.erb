@@ -1,17 +1,17 @@
 <div id="eval-display">
   <% if locals[:eval].submission.milestone.name =='Milestone 1' %>
       <%= render 'eval1_public_form_part' %>
-      <% if (is_current_user_student? and is_current_user_student?.team and is_current_user_student?.team_id == locals[:eval].team_id) %>
+      <% if (current_user_student? and current_user_student?.team and current_user_student?.team_id == locals[:eval].team_id) %>
           <%= render 'eval1_private_form_part' %>
       <% end %>
   <% elsif locals[:eval].submission.milestone.name =='Milestone 2' %>
       <%= render 'eval2_public_form_part' %>
-      <% if (is_current_user_student? and is_current_user_student?.team and is_current_user_student?.team_id == locals[:eval].team_id) %>
+      <% if (current_user_student? and current_user_student?.team and current_user_student?.team_id == locals[:eval].team_id) %>
           <%= render 'eval2_private_form_part' %>
       <% end %>
   <% else %>
       <%= render 'eval3_public_form_part' %>
-      <% if (is_current_user_student? and is_current_user_student?.team and is_current_user_student?.team_id == locals[:eval].team_id) %>
+      <% if (current_user_student? and current_user_student?.team and current_user_student?.team_id == locals[:eval].team_id) %>
           <%= render 'eval3_private_form_part' %>
       <% end %>
   <% end %>
@@ -20,7 +20,7 @@
   <label class="control-label" for="peer-evaluation-public-content">Public content:</label>
   <input type="text" readonly="readonly" id="peer-evaluation-public-content" value="<%= locals[:eval].public_content %>">
 </div>
-<% if (is_current_user_student? and is_current_user_student?.team and is_current_user_student?.team_id == locals[:eval].team_id) %>
+<% if (current_user_student? and current_user_student?.team and current_user_student?.team_id == locals[:eval].team_id) %>
     <div class="form-group" style="display: none;">
       <label class="control-label" for="peer-evaluation-private-content">Private content:</label>
       <input type="text" readonly="readonly" id="peer-evaluation-private-content" value="<%= locals[:eval].private_content %>">
