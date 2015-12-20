@@ -31,7 +31,7 @@ class Student < ActiveRecord::Base
 
   def adviser
     return nil if team_id.blank?
-    team.adviser if team.adviser_id.blank?
+    team.adviser unless team.adviser_id.blank?
   end
 
   def team_adviser_info

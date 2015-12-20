@@ -11,9 +11,11 @@ class SubmissionsController < ApplicationController
                 (record_not_found && return)
     submission = Submission.find_by(team_id: team.id,
                                     milestone_id: milestone.id)
-    edit_submission_path = edit_milestone_team_submission_path(milestone, team,
-                                                               submission)
-    redirect_to edit_submission_path && return if submission
+    if submission
+      edit_submission_path = edit_milestone_team_submission_path(
+        milestone, team, submission)
+      redirect_to(edit_submission_path) && return
+    end
     !authenticate_user(true, false,
                        team.get_relevant_users(false, false)) && return
     @page_title = t('.page_title')

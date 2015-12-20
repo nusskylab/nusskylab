@@ -13,10 +13,11 @@ class PeerEvaluationsController < ApplicationController
                  (record_not_found && return)
     peer_evaluation = PeerEvaluation.find_by(team_id: params[:team_id],
                                              submission_id: submission.id)
-    redirect_to edit_milestone_team_peer_evaluation_path(params[:milestone_id],
-                                                         params[:team_id],
-                                                         peer_evaluation.id) &&
-      (return if peer_evaluation)
+    if peer_evaluation
+      edit_eval_path = edit_milestone_team_peer_evaluation_path(
+        params[:milestone_id], params[:team_id], peer_evaluation.id)
+      redirect_to(edit_eval_path) && return
+    end
     !can_access_peer_evaluation && return
     @page_title = t('.page_title')
     @peer_evaluation = PeerEvaluation.new
