@@ -41,7 +41,7 @@ class SubmissionsController < ApplicationController
     else
       redirect_to new_milestone_team_submission_path(milestone, team), flash: {
         danger: t('.failure_message',
-                  error_messages: @submission.errors.full_messages.join(', '))
+                  error_message: @submission.errors.full_messages.join(', '))
       }
     end
   end
@@ -83,7 +83,7 @@ class SubmissionsController < ApplicationController
                                                                  @submission)
       redirect_to edit_submission_path, flash: {
         danger: t('.failure_message',
-                  error_messages: @submission.errors.full_messages.join(', '))
+                  error_message: @submission.errors.full_messages.join(', '))
       }
     end
   end

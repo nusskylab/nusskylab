@@ -11,7 +11,7 @@
         <td><%= st.survey_type %></td>
         <td>
           <a class="btn btn-default btn-xs" href="<%=  survey_template_path(st.id) %>">View</a>
-          <a class="btn btn-default btn-xs" href="<%= survey_template_path(st.id) %>">Edit</a>
+          <a class="btn btn-default btn-xs" href="<%= edit_survey_template_path(st.id) %>">Edit</a>
         </td>
       </tr>
   <% end %>

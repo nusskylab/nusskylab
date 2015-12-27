@@ -3,13 +3,15 @@ Rails.application.routes.draw do
   root 'home#index'
 
   devise_for :users, path: 'authentication',
-             path_names: { sign_in: 'login', sign_out: 'logout' }, controllers: {
-      sessions: 'auth/sessions',
-      passwords: 'auth/passwords'
-    }
+                     path_names: {
+                       sign_in: 'login', sign_out: 'logout'
+                     }, controllers: {
+                       sessions: 'auth/sessions',
+                       passwords: 'auth/passwords'
+                     }
 
   # oauth handling
-  post '/auth/:provider/callback' => 'sessions#create', :as => :nus_openid_callback
+  post '/auth/:provider/callback' => 'sessions#create', as: :nus_openid_callback
   get '/nus/login' => 'sessions#new', :as => :nus_openid_login
   get '/nus/logout' => 'sessions#destroy', :as => :nus_openid_logout
   get '/auth/failure' => 'sessions#failure', :as => :nus_openid_login_failure
@@ -31,12 +33,8 @@ Rails.application.routes.draw do
   resources :teams do
     resources :feedbacks, only: [:new, :create, :edit, :update]
   end
-  resources :evaluatings, only: [:index, :new, :create, :edit, :update, :destroy] do
-    # collection do
-    #   get 'batch_upload'
-    #   post 'batch_create'
-    # end
-  end
+  resources :evaluatings, only: [:index, :new, :create,
+                                 :edit, :update, :destroy]
   resources :milestones do
     resources :teams, only: [:show] do
       resources :submissions, only: [:new, :create, :edit, :update, :show]
@@ -49,8 +47,7 @@ Rails.application.routes.draw do
       resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
     end
   end
-  resources :survey_templates, except: [:destroy] do
-  end
+  resources :survey_templates, except: [:destroy]
   # scope '/:cohort' do
 
   # end

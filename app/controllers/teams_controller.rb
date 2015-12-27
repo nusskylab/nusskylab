@@ -37,7 +37,7 @@ class TeamsController < ApplicationController
     else
       redirect_to new_team_path, flash: {
         danger: t('.failure_message',
-                  error_messages: @team.errors.full_messages.join(', '))
+                  error_message: @team.errors.full_messages.join(', '))
       }
     end
   end
@@ -75,7 +75,7 @@ class TeamsController < ApplicationController
       redirect_to edit_team_path(params[:id]), flash: {
         danger: t('.failure_message',
                   team_name: @team.team_name,
-                  error_messages: @team.errors.full_messages.join(', '))
+                  error_message: @team.errors.full_messages.join(', '))
       }
     end
   end

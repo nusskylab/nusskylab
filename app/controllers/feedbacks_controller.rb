@@ -27,7 +27,7 @@ class FeedbacksController < ApplicationController
     else
       redirect_to home_path, flash: {
         danger: t('.failure_message',
-                  error_messages: @feedback.errors.full_messages.join(', '))
+                  error_message: @feedback.errors.full_messages.join(', '))
       }
     end
   end
@@ -61,7 +61,7 @@ class FeedbacksController < ApplicationController
     else
       redirect_to home_path, flash: {
         danger: t('.failure_message',
-                  error_messages: @feedback.errors.full_messages.join(', '))
+                  error_message: @feedback.errors.full_messages.join(', '))
       }
     end
   end

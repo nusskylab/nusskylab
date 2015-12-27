@@ -69,7 +69,7 @@ class MilestonesController < ApplicationController
     else
       redirect_to failure_path, flash: {
         danger: t('.failure_message',
-                  error_messages: @milestone.errors.full_messages.join(', '))
+                  error_message: @milestone.errors.full_messages.join(', '))
       }
     end
   end

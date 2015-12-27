@@ -58,7 +58,7 @@ class AdvisersController < ApplicationController
     else
       redirect_to new_adviser_path, flash: {
         danger: t('.failure_message',
-                  error_messages: @adviser.errors.full_messages.join(' '))
+                  error_message: @adviser.errors.full_messages.join(' '))
       }
     end
   end
@@ -71,7 +71,7 @@ class AdvisersController < ApplicationController
     else
       redirect_to advisers_path, flash: {
         danger: t('.failure_message',
-                  error_messages: @adviser.errors.full_messages.join(' '))
+                  error_message: @adviser.errors.full_messages.join(' '))
       }
     end
   end

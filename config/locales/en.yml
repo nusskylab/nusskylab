@@ -41,7 +41,7 @@ en:
       success_message: >
         Admin %{user_name} has been successfully created
       failure_message: >
-        Admin could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Admin could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     show:
       page_title: >
         View admin %{user_name}'s page
@@ -51,7 +51,7 @@ en:
       cannot_delete_self_error: >
         Admin cannot delete own role
       failure_message: >
-        Admin could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Admin could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   advisers:
     index:
       page_title: >
@@ -63,7 +63,7 @@ en:
       success_message: >
         Adviser %{user_name} has been successfully created
       failure_message: >
-        Adviser could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Adviser could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     show:
       page_title: >
         View adviser %{user_name}'s page
@@ -79,7 +79,7 @@ en:
       success_message: >
         Adviser %{user_name} has been successfully deleted
       failure_message: >
-        Adviser could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Adviser could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   evaluatings:
     index:
       page_title: >
@@ -94,7 +94,7 @@ en:
       success_message: >
         Evaluating of %{entity1_name} and %{entity2_name} is created successfully.
       failure_message: >
-        Evaluating could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Evaluating could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     edit:
       page_title: >
         Edit an evaluating relation
@@ -102,12 +102,12 @@ en:
       success_message: >
         Evaluating of %{entity1_name} and %{entity2_name} is created successfully.
       failure_message: >
-        Evaluating could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Evaluating could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     destroy:
       success_message: >
         Evaluating of %{entity1_name} and %{entity2_name} is deleted successfully.
       failure_message: >
-        Evaluating could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Evaluating could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   feedbacks:
     instruction_omitted_message: >
       Instruction has been omitted for simplicity
@@ -142,7 +142,7 @@ en:
       success_message: >
         Mentor %{user_name} has been successfully created
       failure_message: >
-        Mentor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Mentor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     show:
       page_title: >
         View mentor %{user_name}'s page
@@ -150,7 +150,7 @@ en:
       success_message: >
         Mentor %{user_name} has been successfully deleted
       failure_message: >
-        Mentor could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Mentor could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   milestones:
     index:
       page_title: >
@@ -162,7 +162,7 @@ en:
       success_message: >
         Milestone %{milestone_name} has been successfully created
       failure_message: >
-        Milestone could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Milestone could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     edit:
       page_title: >
         Edit milestone %{milestone_name}
@@ -170,7 +170,7 @@ en:
       success_message: >
         Milestone %{milestone_name} has been successfully saved
       failure_message: >
-        Milestone could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Milestone could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     show:
       page_title: >
         View milestone %{milestone_name}
@@ -178,7 +178,7 @@ en:
       success_message: >
         Milestone %{milestone_name} has been successfully deleted
       failure_message: >
-        Milestone could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Milestone could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   peer_evaluations:
     late_submission_tooltip: >
       Peer Evaluation is submitted or modified after deadline.
@@ -189,7 +189,7 @@ en:
       success_message: >
         The peer evaluation has been successfully created
       failure_message: >
-        The peer evaluation could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        The peer evaluation could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     edit:
       page_title: >
         Edit a peer evaluation
@@ -197,7 +197,7 @@ en:
       success_message: >
         The peer evaluation has been successfully saved
       failure_message: >
-        The peer evaluation could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        The peer evaluation could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     show:
       page_title: >
         View a peer evaluation
@@ -227,7 +227,7 @@ en:
       success_message: >
         Student %{user_name} has been created successfully.
       failure_message: >
-        Student could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_messages}
+        Student could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
     edit:
@@ -237,7 +237,7 @@ en:
       success_message: >
         Student %{user_name} has been updated successfully.
       failure_message: >
-        Student %{user_name}'s info could not be update: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_messages}
+        Student %{user_name}'s info could not be update: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
     destroy:
       success_message: >
         Student %{user_name} has been deleted successfully.
@@ -285,7 +285,7 @@ en:
       success_message: >
         Submission has been created successfully
       failure_message: >
-        Submission could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_messages}
+        Submission could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
     edit:
       page_title: >
         Edit a submission
@@ -293,7 +293,7 @@ en:
       success_message: >
         Submission has been updated successfully
       failure_message: >
-        Submission could not be updated: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_messages}
+        Submission could not be updated: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
     show:
       page_title: >
         View a submission
@@ -304,11 +304,11 @@ en:
     new:
       page_title: >
         Create new survey template
-    created:
+    create:
       success_message: >
         Survey template has been created successfully.
       failure_message: >
-        Survey template cannot saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Survey template cannot saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     edit:
       page_title: >
         Edit survey template
@@ -316,12 +316,7 @@ en:
       success_message: >
         Survey template has been edited successfully.
       failure_message: >
-        Survey template cannot saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
-    destroy:
-      success_message: >
-        Survey template has been deleted successfully.
-      failure_message: >
-        Survey template cannot be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Survey template cannot saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   teams:
     has_dropped_tooltip: >
       This team has dropped out of Skylab :(
@@ -335,7 +330,7 @@ en:
       success_message: >
         Team %{team_name}'s information is saved successfully
       failure_message: >
-        Team information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Team information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     edit:
       page_title: >
         Edit Team %{team_name}'s info
@@ -343,7 +338,7 @@ en:
       success_message: >
         Team %{team_name}'s information is saved successfully
       failure_message: >
-        Team %{team_name}'s information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_messages}
+        Team %{team_name}'s information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     show:
       page_title: >
         View Team %{team_name}'s info

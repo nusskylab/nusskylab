@@ -68,7 +68,7 @@ class MentorsController < ApplicationController
     else
       redirect_to new_mentor_path, flash: {
         danger: t('.failure_message',
-                  error_messages: @mentor.errors.full_messages.join(' '))
+                  error_message: @mentor.errors.full_messages.join(' '))
       }
     end
   end
@@ -81,7 +81,7 @@ class MentorsController < ApplicationController
     else
       redirect_to mentors_path, flash: {
         danger: t('.failure_message',
-                  error_messages: @mentor.errors.full_messages.join(' '))
+                  error_message: @mentor.errors.full_messages.join(' '))
       }
     end
   end

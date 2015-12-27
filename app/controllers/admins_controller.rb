@@ -25,10 +25,10 @@ class AdminsController < ApplicationController
     user = User.find(params[:admin][:user_id])
     @admin = Admin.new(user_id: user.id)
     is_saved = @admin.save
-    error_messages = @admin.errors.full_messages.join(' ')
+    error_message = @admin.errors.full_messages.join(' ')
     redirect_after_create_action(is_saved,
                                  user.user_name,
-                                 error_messages) && return
+                                 error_message) && return
   end
 
   def show
@@ -41,20 +41,20 @@ class AdminsController < ApplicationController
     !check_access(true, true) && return
     @admin = Admin.find(params[:id])
     is_error = check_for_delete_self
-    error_messages = @admin.errors.full_messages.join(' ')
-    redirect_after_destroy_action(is_error, error_messages)
+    error_message = @admin.errors.full_messages.join(' ')
+    redirect_after_destroy_action(is_error, error_message)
   end
 
   private
 
-  def redirect_after_create_action(is_saved, user_name, error_messages)
+  def redirect_after_create_action(is_saved, user_name, error_message)
     if is_saved
       redirect_to admins_path, flash: {
         success: t('.success_message', user_name: user_name)
       }
     else
       redirect_to new_admin_path, flash: {
-        danger: t('.failure_message', error_messages: error_messages)
+        danger: t('.failure_message', error_message: error_message)
       }
     end
   end
@@ -65,14 +65,14 @@ class AdminsController < ApplicationController
     is_error
   end
 
-  def redirect_after_destroy_action(is_error, error_messages)
+  def redirect_after_destroy_action(is_error, error_message)
     if @admin.destroy && (!is_error)
       redirect_to admins_path, flash: {
         success: t('.success_message', user_name: @admin.user.user_name)
       }
     else
       redirect_to admins_path, flash: {
-        danger: t('.failure_message', error_messages: error_messages)
+        danger: t('.failure_message', error_message: error_message)
       }
     end
   end

@@ -41,7 +41,7 @@ class EvaluatingsController < ApplicationController
     else
       redirect_to new_evaluating_path,
                   flash: {danger: t('.failure_message',
-                                    error_messages: @evaluating.errors.full_messages.join(', '))}
+                                    error_message: @evaluating.errors.full_messages.join(', '))}
     end
   end
 
@@ -69,7 +69,7 @@ class EvaluatingsController < ApplicationController
     else
       redirect_to edit_evaluating_path(@evaluating),
                   flash: {danger: t('.failure_message',
-                                    error_messages: @evaluating.errors.full_messages.join(', '))}
+                                    error_message: @evaluating.errors.full_messages.join(', '))}
     end
   end
 
@@ -84,7 +84,7 @@ class EvaluatingsController < ApplicationController
     else
       redirect_to evaluatings_path,
                   flash: {danger: t('.failure_message',
-                                    error_messages: @evaluating.errors.full_messages.join(', '))}
+                                    error_message: @evaluating.errors.full_messages.join(', '))}
     end
   end
 

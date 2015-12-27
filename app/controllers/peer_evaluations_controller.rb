@@ -43,7 +43,7 @@ class PeerEvaluationsController < ApplicationController
                                                           params[:team_id]),
                   flash: {
                     danger: t('.failure_message',
-                              error_messages:
+                              error_message:
                               @peer_evaluation.errors.full_messages.join(', '))
                   })
     end
@@ -81,7 +81,7 @@ class PeerEvaluationsController < ApplicationController
                                                       @peer_evaluation.id)
       redirect_to dest, flash: {
         danger: t('.failure_message',
-                  error_messages:
+                  error_message:
                   @peer_evaluation.errors.full_messages.join(', '))
       }
     end
