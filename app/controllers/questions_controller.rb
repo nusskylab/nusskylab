@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
     puts params
     @question = Question.new(question_params)
     if @question.save
-      render json: @question, status: :created, location: @question
+      render 'question_response', layout: false, status: :created
     else
       render json: @question.errors, status: :unprocessable_entity
     end
@@ -17,7 +17,7 @@ class QuestionsController < ApplicationController
     q_params = question_params
     q_params.except!(:survey_template_id)
     if @question.update(q_params)
-      render json: @question, status: :ok, location: @question
+      render 'question_response', layout: false, status: :ok
     else
       render json: @question.errors, status: :unprocessable_entity
     end
