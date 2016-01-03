@@ -43,3 +43,8 @@ $(function () {
     }
   });
 });
+$(function () {
+  $('#survey-template-questions').on('ajax:success', 'a.question-delete-link[data-remote]', function (e) {
+    $(e.target).parent().parent().parent().remove();
+  });
+});

@@ -25,7 +25,12 @@ class QuestionsController < ApplicationController
 
   def destroy
     !authenticate_user(true, true) && return
-    puts params
+    @question = Question.find(params[:id])
+    if @question.destroy
+      render json: @question, status: :ok
+    else
+      render json: @question.errors, status: :unprocessable_entity
+    end
   end
 
   private

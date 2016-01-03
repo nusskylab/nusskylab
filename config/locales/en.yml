@@ -317,6 +317,9 @@ en:
         Survey template has been edited successfully.
       failure_message: >
         Survey template cannot saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+    show:
+      page_title: >
+        View survey template and questions
   teams:
     has_dropped_tooltip: >
       This team has dropped out of Skylab :(
