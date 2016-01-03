@@ -6,8 +6,8 @@ $(function () {
   $('.datetime-picker').datetimepicker({format: 'YYYY-MM-DD LT'});
 });
 function disableViewTemplateInputs() {
-  $('.view-question-template input').prop('disabled', true);
-  $('.view-question-template textarea').prop('disabled', true);
+  $('.view-question-template input').attr('disabled', true);
+  $('.view-question-template textarea').attr('disabled', true);
 }
 $(function () {
   $('#new_question').on('ajax:success', function (e, data, status, xhr) {
