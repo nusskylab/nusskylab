@@ -65,6 +65,9 @@ class SurveyTemplatesController < ApplicationController
   def show
     !authenticate_user(true, true) && return
     @survey_template = SurveyTemplate.find(params[:id])
+    render locals: {
+      new_question: Question.new(survey_template_id: @survey_template.id)
+    }
   end
 
   private

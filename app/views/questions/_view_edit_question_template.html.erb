@@ -1,0 +1,14 @@
+<div class="well">
+  <div class="view-question-template">
+    <%= render 'questions/question_template', locals: {
+      question: locals[:question],
+      question_response: locals[:question_response]
+    } %>
+  </div>
+  <div class="edit-question-template" style="display: none;">
+    <%= render 'questions/question_template_form', locals: {
+      question: locals[:question], is_new: false
+    } %>
+  </div>
+  <a class="btn btn-primary toggle-view-edit-question-link" role="button">Edit-question Form</a>
+</div>
