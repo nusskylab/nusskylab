@@ -19,10 +19,10 @@ class User < ActiveRecord::Base
   }
   validates :user_name, presence: true
   validates :provider, presence: true
-  validates :uid, presence: true, uniqueness: {
+  validates :uid, uniqueness: {
     scope: :provider,
     message: ': An OpenID account can only be used for creating one account'
-  }
+  }, if: 'uid.present?'
 
   enum provider: [:provider_nil, :provider_NUS]
 

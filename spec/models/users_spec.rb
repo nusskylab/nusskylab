@@ -4,7 +4,6 @@ RSpec.describe User, type: :model do
   it 'is invalid with required params missing' do
     expect(FactoryGirl.build(:user, email: nil)).not_to be_valid
     expect(FactoryGirl.build(:user, user_name: nil)).not_to be_valid
-    expect(FactoryGirl.build(:user, uid: nil)).not_to be_valid
   end
 
   it 'is invalid with duplicated email' do
