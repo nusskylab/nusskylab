@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105150742) do
+ActiveRecord::Schema.define(version: 20160105153942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,13 +88,14 @@ ActiveRecord::Schema.define(version: 20160105150742) do
   add_index "peer_evaluations", ["team_id"], name: "index_peer_evaluations_on_team_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.text     "title"
     t.text     "content"
     t.text     "instruction"
     t.integer  "question_type",      default: 0
-    t.integer  "survey_template_id",             null: false
+    t.integer  "survey_template_id",                null: false
+    t.boolean  "is_public",          default: true
   end
 
   add_index "questions", ["survey_template_id"], name: "index_questions_on_survey_template_id", using: :btree
