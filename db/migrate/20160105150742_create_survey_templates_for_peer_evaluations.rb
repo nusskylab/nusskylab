@@ -15,7 +15,16 @@ class CreateSurveyTemplatesForPeerEvaluations < ActiveRecord::Migration
     )
     survey_template2.save
     survey_template3 = SurveyTemplate.new(
-      instruction: 'Answer all questions below as evaluation for peer team',
+      instruction: 'Note while the Orbital course is not officially finished
+                    until Splashdown, whether the target team passes Orbital and
+                    what level of achievement they will receive is based solely
+                    on the project\'s status at this (Evaluation 3) milestone;
+                    you should not credit or factor in any promise of improved
+                    functionality between Evaluation 3 and the Splashdown
+                    showcase. Teams are encouraged to continue working on their
+                    projects all the way up to and beyond Splashdown, but thes
+                    modifications will not affect the team\'s achievement level
+                    or S/U mark.',
       survey_type: 1,
       deadline: DateTime.new(2015, 8, 10, 24, 0, 0, '+8'),
       milestone_id: 3
