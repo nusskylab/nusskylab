@@ -1,16 +1,16 @@
 'use strict';
 $(document).ready(function () {
   var currentPageHeading = $('#main-content > div > div.panel-heading > h3').html();
-  if (currentPageHeading === 'Edit peer evaluation') {
-    fillInPublicPartOfHtmlForm();
-    fillInPrivatePartOfHtmlForm();
-  } else if (currentPageHeading === 'View peer evaluation') {
-    fillInPublicPartOfHtmlForm();
-    if ($('#peer-evaluation-private-content').length) {
-      fillInPrivatePartOfHtmlForm();
-    }
-    disableAllEvalFormInputs();
-  }
+  // if (currentPageHeading === 'Edit peer evaluation') {
+  //   fillInPublicPartOfHtmlForm();
+  //   fillInPrivatePartOfHtmlForm();
+  // } else if (currentPageHeading === 'View peer evaluation') {
+  //   fillInPublicPartOfHtmlForm();
+  //   if ($('#peer-evaluation-private-content').length) {
+  //     fillInPrivatePartOfHtmlForm();
+  //   }
+  //   disableAllEvalFormInputs();
+  // }
 
   $('.new_peer_evaluation').on('submit', function () {
     $('#peer-evaluation-public-content').val(getPublicPartValues());
