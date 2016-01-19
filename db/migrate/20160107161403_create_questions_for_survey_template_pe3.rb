@@ -49,19 +49,19 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
         artwork, interaction design). Please rate this on a scale of 0 (none),
         1 (little effort) to 5 (many obvious good design choices and
         implementation).',
-      content: '[\"0. Not adequate.\",' \
-               '\"1. Neutral. Suitable for projects where interaction is not a
-               part (i.e., user is not an end user).\",' \
-               '\"2. Marginally agree. UX was definitely considered, but not
+      content: '["0. Not adequate.",' \
+               '"1. Neutral. Suitable for projects where interaction is not a
+               part (i.e., user is not an end user).",' \
+               '"2. Marginally agree. UX was definitely considered, but not
                 really customized in any way beyond standard practices (e.g.,
-                application of Bootstrap).\",' \
-               '\"3. Agree. The design of key parts of the UX is solidly
-                implemented.\",' \
-               '\"4. Strongly agree. The design of all functionality (both
+                application of Bootstrap).",' \
+               '"3. Agree. The design of key parts of the UX is solidly
+                implemented.",' \
+               '"4. Strongly agree. The design of all functionality (both
                 commonly used and occasional used functions) is considered
-                well.\",'\
-               '\"5. Excellent. I enjoy the project enough to recommend it to
-                 others.\"]',
+                well.",'\
+               '"5. Excellent. I enjoy the project enough to recommend it to
+                 others."]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -84,8 +84,8 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
     question = Question.new(
       title: 'What types of methods did the team use to evaluate the suitability of their solution (if any)?
               Did they use Expert / Self evaluation?',
-      content: '[\"Yes\",' \
-               '\"No\"]',
+      content: '["Yes",' \
+               '"No"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -96,8 +96,8 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
     question = Question.new(
       title: 'What types of methods did the team use to evaluate the suitability of their solution (if any)?
               Did they use Cognitive Walk through / Heuristic Evaluation / User stories?',
-      content: '[\"Yes\",' \
-               '\"No\"]',
+      content: '["Yes",' \
+               '"No"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -108,8 +108,8 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
     question = Question.new(
       title: 'What types of methods did the team use to evaluate the suitability of their solution (if any)?
               Did they use Simulated User Focus Group?',
-      content: '[\"Yes\",' \
-               '\"No\"]',
+      content: '["Yes",' \
+               '"No"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -120,8 +120,8 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
     question = Question.new(
       title: 'What types of methods did the team use to evaluate the suitability of their solution (if any)?
               Did they use Actual User Focus Group / Interview?',
-      content: '[\"Yes\",' \
-               '\"No\"]',
+      content: '["Yes",' \
+               '"No"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -132,8 +132,8 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
     question = Question.new(
       title: 'What types of methods did the team use to evaluate the suitability of their solution (if any)?
               Did they use Usability Testing with Potential Users on Low-Fidelity artefacts (e.g., Powerpoint mockup)?',
-      content: '[\"Yes\",' \
-               '\"No\"]',
+      content: '["Yes",' \
+               '"No"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -144,8 +144,8 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
     question = Question.new(
       title: 'What types of methods did the team use to evaluate the suitability of their solution (if any)?
               Did they use Survey of Potential Users?',
-      content: '[\"Yes\",' \
-               '\"No\"]',
+      content: '["Yes",' \
+               '"No"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -157,8 +157,8 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
       title: 'What types of methods did the team use to evaluate the suitability of their solution (if any)?
               Did they use Usability Testing with Potential Users with High-Fidelity artefacts
               (e.g., working prototype, App Engine prototype)?',
-      content: '[\"Yes\",' \
-               '\"No\"]',
+      content: '["Yes",' \
+               '"No"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -172,17 +172,17 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
        in terms of it being able to 1) influence their project outcome, 2)
        convince users or evaluators of the design or implementation of their
        project.',
-      content: '[\"0. No testing done (suitable for Vostok).\",' \
-               '\"1. Little effort. Self-testing or thought walkthroughs only
-                -- but not convincingly done.\",' \
-               '\"2. Getting there. Almost convincing at least on some key
-                aspects (suitable for Project Gemini).\",' \
-               '\"3. Adequate. Evaluation is useful and convincing for at least
-                some aspects of the system.\",' \
-               '\"4. Very good. Evaluation definitely shows the quality of the
-                project, in design, implementation and/or outcome.\",'\
-               '\"5. Excellent. Multi-pronged evaluations done, convincing and
-                affected project outcome.\"]',
+      content: '["0. No testing done (suitable for Vostok).",' \
+               '"1. Little effort. Self-testing or thought walkthroughs only
+                -- but not convincingly done.",' \
+               '"2. Getting there. Almost convincing at least on some key
+                aspects (suitable for Project Gemini).",' \
+               '"3. Adequate. Evaluation is useful and convincing for at least
+                some aspects of the system.",' \
+               '"4. Very good. Evaluation definitely shows the quality of the
+                project, in design, implementation and/or outcome.",'\
+               '"5. Excellent. Multi-pronged evaluations done, convincing and
+                affected project outcome."]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -209,12 +209,12 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
        satisfy an average user from a utilitarian perspective? Does it contain
        adequate error messages and error prevention mechanisms and documentation
        to help the user achieve the user stories\' objective?',
-      content: '[\"Insufficient. A user may get lost and be unable to figure out
-                how to use the functions.\",' \
-               '\"Adequate. An average user would be able to figure out how to
-                use the functions.\",'\
-               '\"Excellent. Almost all users will be able to figure out how to
-                use the functions.\"]',
+      content: '["Insufficient. A user may get lost and be unable to figure out
+                how to use the functions.",' \
+               '"Adequate. An average user would be able to figure out how to
+                use the functions.",'\
+               '"Excellent. Almost all users will be able to figure out how to
+                use the functions."]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -230,19 +230,19 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
        use the video as a means of understanding the key parts of the project
        before consulting the final README and log for details. The video may
        also be shown at the Splashdown session.',
-      content: '[\"I couldn\'t view the video, or there were too many problems
-                with the submitted video.<br />(0 out of 3)\",' \
-               '\"The video makes minimal effort to document their project\'s
+      content: '["I couldn\'t view the video, or there were too many problems
+                with the submitted video.<br />(0 out of 3)",' \
+               '"The video makes minimal effort to document their project\'s
                 work and features, and/or just repeats information from the
-                README and log.<br />(1 out of 3)\",' \
-               '\"The video is mostly complete.&nbsp; I have some sense of the
+                README and log.<br />(1 out of 3)",' \
+               '"The video is mostly complete.&nbsp; I have some sense of the
                 purpose, scope and features of the project, but some aspects are
-                not clear.<br />(2 out of 3)\",' \
-               '\"The video was complete and I have a good sense of the goals,
-                scope and features of the project.<br /> (3 out of 3)\",' \
-               '\"Excellent! The video was as complete as could be given the
+                not clear.<br />(2 out of 3)",' \
+               '"The video was complete and I have a good sense of the goals,
+                scope and features of the project.<br /> (3 out of 3)",' \
+               '"Excellent! The video was as complete as could be given the
                 time limit. It was well-produced and I also learned from it how
-                to improve my own work.&nbsp; <br />(bonus point)\"]',
+                to improve my own work.&nbsp; <br />(bonus point)"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -255,11 +255,11 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
        project executed including the specification of the features, the user
        stories, and the list of technologies learned and/or applied in the
        project.',
-      content: '[\"Strongly Disagree\",' \
-               '\"Disagree\",' \
-               '\"Neutral\",' \
-               '\"Agree\",' \
-               '\"Strongly Agree\"]',
+      content: '["Strongly Disagree",' \
+               '"Disagree",' \
+               '"Neutral",' \
+               '"Agree",' \
+               '"Strongly Agree"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -271,18 +271,18 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
       title: 'The log (appended at the end of the README) should clearly
        document how much time the team (and its individual students, where
        applicable) have spent on their Orbital work so far.',
-      content: '[\"I still have no idea of how much time the team members have
-                invested in their project.\",' \
-               '\"I have a reasonable idea of how much time the team members
+      content: '["I still have no idea of how much time the team members have
+                invested in their project.",' \
+               '"I have a reasonable idea of how much time the team members
                 have invested in their project and some vague notion of what
-                they have spent it on.\",' \
-               '\"I have a reasonable idea of both how much time the team
+                they have spent it on.",' \
+               '"I have a reasonable idea of both how much time the team
                 members have invested in their project and what they have spent
-                it on.\",' \
-               '\"I have a good idea of how much time the team members have
-                invested in their project and what they have spent it on.\",' \
-               '\"Excellent! I learned from this group\'s log and what I can do
-                in my own project for logging.\"]',
+                it on.",' \
+               '"I have a good idea of how much time the team members have
+                invested in their project and what they have spent it on.",' \
+               '"Excellent! I learned from this group\'s log and what I can do
+                in my own project for logging."]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
@@ -311,20 +311,7 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
       instruction: 'Fill in the blank',
       question_type: 0,
       survey_template_id: survey_template.id,
-      is_public: true
-    )
-    question.save
-
-    question = Question.new(
-      title: 'Please give your overall rating for the project submission this
-       iteration. This will be used to help us eventually decide whether the
-       team passes and what level of achievement is obtained. This section <em>
-       will only</em> be viewed by the advisors and not by the target group.',
-      content: '',
-      instruction: 'Fill in the blank',
-      question_type: 0,
-      survey_template_id: survey_template.id,
-      is_public: true
+      is_public: false
     )
     question.save
 
@@ -334,17 +321,17 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
               the team passes and what level of achievement is obtained.
               This section <em>will only</em> be viewed by the advisors and not
               by the target group.',
-      content: '[\"1 of 4 stars. Likely to fail Orbital\",' \
-               '\"2 of 4 stars. Sufficient to pass the beginner level (Vostok),
-                  maybe good enough for intermediate level (Gemini)\",' \
-               '\"3 of 4 stars. Definitely intermediate level (Gemini). Maybe
-                  good enough for advanced level (Apollo 11)\",' \
-               '\"4 of 4 stars. Definitely good enough for advanced level (Apollo 11).\",' \
-               '\"5. Wow! (Bonus point)\"]',
+      content: '["1 of 4 stars. Likely to fail Orbital",' \
+               '"2 of 4 stars. Sufficient to pass the beginner level (Vostok),
+                  maybe good enough for intermediate level (Gemini)",' \
+               '"3 of 4 stars. Definitely intermediate level (Gemini). Maybe
+                  good enough for advanced level (Apollo 11)",' \
+               '"4 of 4 stars. Definitely good enough for advanced level (Apollo 11).",' \
+               '"5. Wow! (Bonus point)"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,
-      is_public: true
+      is_public: false
     )
     question.save
 
@@ -355,7 +342,7 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
       instruction: 'Fill in the blank',
       question_type: 0,
       survey_template_id: survey_template.id,
-      is_public: true
+      is_public: false
     )
     question.save
   end
