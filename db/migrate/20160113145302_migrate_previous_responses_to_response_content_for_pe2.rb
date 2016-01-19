@@ -11,11 +11,21 @@ class MigratePreviousResponsesToResponseContentForPe2 < ActiveRecord::Migration
           response_content = {}
           question_idx = 0
           pub.keys.sort.each do |pub_key|
-            response_content[survey_template.questions[question_idx].id.to_s] = pub[pub_key]
+            q = survey_template.questions[question_idx]
+            if q.question_type == 'question_type_multiple_choice'
+              response_content[q.id.to_s] = (pub[pub_key].to_i - 1).to_s
+            else
+              response_content[q.id.to_s] = pub[pub_key]
+            end
             question_idx = question_idx + 1
           end
           pri.keys.sort.each do |pri_key|
-            response_content[survey_template.questions[question_idx].id.to_s] = pri[pri_key]
+            q = survey_template.questions[question_idx]
+            if q.question_type == 'question_type_multiple_choice'
+              response_content[q.id.to_s] = (pri[pri_key].to_i - 1).to_s
+            else
+              response_content[q.id.to_s] = pri[pri_key]
+            end
             question_idx = question_idx + 1
           end
           peer_evaluation.response_content = response_content.to_json
