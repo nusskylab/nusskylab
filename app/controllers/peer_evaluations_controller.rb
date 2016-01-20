@@ -27,7 +27,9 @@ class PeerEvaluationsController < ApplicationController
       submission: submission,
       milestone: Milestone.find(params[:milestone_id]),
       submissions: submissions,
-      peer_evaluations: peer_evaluations
+      peer_evaluations: peer_evaluations,
+      survey_template: SurveyTemplate.find_by(
+        milestone_id: params[:milestone_id], survey_type: 1)
     }
   end
 
@@ -53,6 +55,9 @@ class PeerEvaluationsController < ApplicationController
     !can_access_peer_evaluation(true, true, true) && return
     @page_title = t('.page_title')
     @peer_evaluation = PeerEvaluation.find(params[:id])
+    render locals: {
+      survey_template: @peer_evaluation.survey_template
+    }
   end
 
   def edit
@@ -65,7 +70,8 @@ class PeerEvaluationsController < ApplicationController
     render locals: {
       milestone: Milestone.find(params[:milestone_id]),
       submissions: submissions,
-      peer_evaluations: peer_evaluations
+      peer_evaluations: peer_evaluations,
+      survey_template: @peer_evaluation.survey_template
     }
   end
 

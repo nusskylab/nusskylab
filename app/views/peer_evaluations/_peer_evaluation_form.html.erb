@@ -10,30 +10,15 @@
         <input type="hidden" name="peer_evaluation[submission_id]" value="<%= locals[:submission].id %>">
       </div>
     </div>
-    <div class="form-group" style="display: none;">
-      <label class="control-label" for="peer-evaluation-public-content">Public content:</label>
-      <%= f.text_area :public_content, class: 'form-control',
-                      placeholder: 'Input evaluation public content',
-                      id: 'peer-evaluation-public-content', rows: '10', required: 'required' %>
-    </div>
-    <div class="form-group" style="display: none;">
-      <label class="control-label" for="peer-evaluation-private-content">Private content:</label>
-      <%= f.text_area :private_content, class: 'form-control',
-                      placeholder: 'Input evaluation private content',
-                      id: 'peer-evaluation-private-content', rows: '10', required: 'required' %>
-    </div>
     <div id="eval-template">
-      <% if locals[:milestone].name == 'Milestone 1' %>
-          <%= render 'eval1_public_form_part' %>
-          <%= render 'eval1_private_form_part' %>
-      <% elsif locals[:milestone].name == 'Milestone 2' %>
-          <%= render 'eval2_public_form_part' %>
-          <%= render 'eval2_private_form_part' %>
-      <% else %>
-          <%= render 'eval3_public_form_part' %>
-          <%= render 'eval3_private_form_part' %>
+      <div class="form-group">
+        <div class="text-muted"><%= locals[:survey_template].instruction.html_safe %></div>
+      </div>
+      <% locals[:survey_template].questions.each do |question| %>
+        <%= render 'questions/question_template',
+                   locals: {question: question,
+                            question_response: locals[:peer_evaluation].get_response_for_question(question.id)} %>
       <% end %>
-      <div id="eval-template-error" class="alert alert-danger" style="display: none;">
       </div>
     </div>
     <br>

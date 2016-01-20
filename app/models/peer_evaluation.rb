@@ -16,6 +16,15 @@ class PeerEvaluation < ActiveRecord::Base
   belongs_to :adviser
   belongs_to :submission
 
+  def survey_template
+    SurveyTemplate.find_by(milestone_id: submission.milestone_id,
+                           survey_type: 1)
+  end
+
+  def get_response_for_question(question_id)
+    response_content[question_id.to_s] unless response_content.blank?
+  end
+
   def evaluated_by_team
     !team_id.blank?
   end
