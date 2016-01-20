@@ -19,6 +19,8 @@ class ReceivedEvalsController < ApplicationController
       evaluators: evaluators,
       evaluator_names: evaluator_names,
       milestone: milestone,
+      survey_template: SurveyTemplate.find_by(
+        milestone_id: params[:milestone_id], survey_type: 1),
       team_evaluations_table: team_evaluations_table
     }
   end

@@ -7,17 +7,14 @@
     <% end %>
     <h3>From <%= locals[:evaluator_name] %></h3>
   </div>
-  <form class="eval-public-part well">
-    <% if locals[:eval].submission.milestone.name == 'Milestone 1' %>
-        <%= render 'peer_evaluations/eval1_public_form_part' %>
-    <% elsif locals[:eval].submission.milestone.name == 'Milestone 2' %>
-        <%= render 'peer_evaluations/eval2_public_form_part' %>
-    <% else %>
-        <%= render 'peer_evaluations/eval3_public_form_part' %>
+  <div class="eval-public-part">
+    <% locals[:survey_template].questions.each do |question| %>
+      <% if question.is_public %>
+        <%= render 'questions/question_template',
+                   locals: {question: question, view_template: true,
+                            question_response: locals[:eval].get_response_for_question(question.id)} %>
+      <% end %>
     <% end %>
-  </form>
-  <div class="eval-public-value" style="display: none;">
-    <%= locals[:eval].public_content %>
   </div>
 </div>
 <br>
