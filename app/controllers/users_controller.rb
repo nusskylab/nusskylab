@@ -44,6 +44,10 @@ class UsersController < ApplicationController
 
   def register_as_student
     @user = User.find(params[:id])
+    render locals: {
+      survey_template: SurveyTemplate.find_by(milestone_id: 1, survey_type: 3),
+      registration: Registration.new
+    }
   end
 
   def register
