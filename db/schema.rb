@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160124152604) do
+ActiveRecord::Schema.define(version: 20160127150353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,17 @@ ActiveRecord::Schema.define(version: 20160124152604) do
 
   add_index "questions", ["survey_template_id"], name: "index_questions_on_survey_template_id", using: :btree
 
+  create_table "registrations", force: :cascade do |t|
+    t.json     "response_content"
+    t.integer  "user_id"
+    t.integer  "survey_template_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "registrations", ["survey_template_id"], name: "index_registrations_on_survey_template_id", using: :btree
+  add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
+
   create_table "students", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "created_at", null: false
@@ -187,6 +198,8 @@ ActiveRecord::Schema.define(version: 20160124152604) do
   add_foreign_key "peer_evaluations", "submissions"
   add_foreign_key "peer_evaluations", "teams"
   add_foreign_key "questions", "survey_templates"
+  add_foreign_key "registrations", "survey_templates"
+  add_foreign_key "registrations", "users"
   add_foreign_key "students", "teams"
   add_foreign_key "students", "users"
   add_foreign_key "submissions", "milestones"

@@ -4,5 +4,5 @@ class SurveyTemplate < ActiveRecord::Base
   belongs_to :milestone
 
   enum survey_type: [:survey_type_submission, :survey_type_peer_evaluation,
-                     :survey_type_feedback]
+                     :survey_type_feedback, :survey_type_registration]
 end
