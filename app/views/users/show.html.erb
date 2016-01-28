@@ -34,21 +34,25 @@
               <div class="col-sm-12">
                 <br>
                 <div class="jumbotron">
-                  <p>You can choose to view as one of the following roles:</p>
-                  <p>
-                  <% if (adm = user_admin?) %>
-                        <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">View as an admin</a>
-                    <% end %>
-                    <% if (adv = user_adviser?) %>
-                        <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">View as an adviser</a>
-                    <% end %>
-                    <% if (men = user_mentor?) %>
-                        <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">View as a mentor</a>
-                    <% end %>
-                    <% if (stu = user_student?) %>
-                        <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">View as a student</a>
-                    <% end %>
-                  </p>
+                  <% if (adm = user_admin?) or (adv = user_adviser?) or  (men = user_mentor?) or (stu = user_student?) %>
+                    <p>You can choose to view as one of the following roles:</p>
+                    <p>
+                    <% if adm %>
+                          <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">View as an admin</a>
+                      <% end %>
+                      <% if adv %>
+                          <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">View as an adviser</a>
+                      <% end %>
+                      <% if men %>
+                          <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">View as a mentor</a>
+                      <% end %>
+                      <% if stu %>
+                          <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">View as a student</a>
+                      <% end %>
+                    </p>
+                  <% else %>
+                    <p>You can register as a student via <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> Registration Portal </a></p>
+                  <% end %>
                 </div>
               </div>
             </div>

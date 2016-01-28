@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   resources :users do
     member do
       post 'preview_as'
+      get 'register_as_student'
+      post 'register'
     end
   end
   resources :students do

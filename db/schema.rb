@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113154058) do
+ActiveRecord::Schema.define(version: 20160127160006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,12 @@ ActiveRecord::Schema.define(version: 20160113154058) do
   add_index "feedbacks", ["adviser_id"], name: "index_feedbacks_on_adviser_id", using: :btree
   add_index "feedbacks", ["survey_template_id"], name: "index_feedbacks_on_survey_template_id", using: :btree
   add_index "feedbacks", ["team_id"], name: "index_feedbacks_on_team_id", using: :btree
+
+  create_table "hash_tags", force: :cascade do |t|
+    t.string   "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "mentors", force: :cascade do |t|
     t.integer  "user_id"
@@ -100,6 +106,17 @@ ActiveRecord::Schema.define(version: 20160113154058) do
   end
 
   add_index "questions", ["survey_template_id"], name: "index_questions_on_survey_template_id", using: :btree
+
+  create_table "registrations", force: :cascade do |t|
+    t.json     "response_content"
+    t.integer  "user_id"
+    t.integer  "survey_template_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "registrations", ["survey_template_id"], name: "index_registrations_on_survey_template_id", using: :btree
+  add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
   create_table "students", force: :cascade do |t|
     t.integer  "user_id"
@@ -151,7 +168,7 @@ ActiveRecord::Schema.define(version: 20160113154058) do
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
-    t.string   "uid",                                 null: false
+    t.string   "uid"
     t.string   "user_name",                           null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -165,6 +182,11 @@ ActiveRecord::Schema.define(version: 20160113154058) do
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
     t.integer  "provider",               default: 0
+    t.string   "github_link",            default: ""
+    t.string   "linkedin_link",          default: ""
+    t.string   "blog_link",              default: ""
+    t.integer  "program_of_study",       default: 0
+    t.text     "self_introduction",      default: ""
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
@@ -182,6 +204,8 @@ ActiveRecord::Schema.define(version: 20160113154058) do
   add_foreign_key "peer_evaluations", "submissions"
   add_foreign_key "peer_evaluations", "teams"
   add_foreign_key "questions", "survey_templates"
+  add_foreign_key "registrations", "survey_templates"
+  add_foreign_key "registrations", "users"
   add_foreign_key "students", "teams"
   add_foreign_key "students", "users"
   add_foreign_key "submissions", "milestones"
