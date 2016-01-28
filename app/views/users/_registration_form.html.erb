@@ -3,10 +3,10 @@
     <div class="form-group">
       <div class="text-muted"><%= locals[:survey_template].instruction.html_safe %></div>
     </div>
-    <% locals[:survey_template].questions.each do |question| %>
+    <% locals[:questions].each do |question| %>
       <%= render 'questions/question_template',
                  locals: {question: question,
-                          question_response: nil} %>
+                          question_response: locals[:registration].get_response_for_question(question.id)} %>
     <% end %>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

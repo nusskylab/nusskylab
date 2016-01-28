@@ -44,14 +44,27 @@ class UsersController < ApplicationController
 
   def register_as_student
     @user = User.find(params[:id])
+    survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 3)
+    registration = Registration.find_by(
+      survey_template_id: survey_template.id, user_id: @user.id) ||
+                   Registration.new(survey_template_id: survey_template.id,
+                                    user_id: @user.id)
     render locals: {
-      survey_template: SurveyTemplate.find_by(milestone_id: 1, survey_type: 3),
-      registration: Registration.new
+      survey_template: survey_template,
+      questions: survey_template.questions.order('questions.id ASC'),
+      registration: registration
     }
   end
 
   def register
     @user = User.find(params[:id])
+    survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 3)
+    registration = Registration.find_by(
+      survey_template_id: survey_template.id, user_id: @user.id) ||
+                   Registration.new(survey_template_id: survey_template.id,
+                                    user_id: @user.id)
+    registration.response_content = registration_params.to_json
+    registration.save
     redirect_to user_path(@user.id)
   end
 
@@ -109,5 +122,9 @@ class UsersController < ApplicationController
     user_ps[:provider] = user_ps[:provider].to_i
     user_ps[:program_of_study] = user_ps[:program_of_study].to_i
     user_ps
+  end
+
+  def registration_params
+    params.require(:questions).permit!
   end
 end
