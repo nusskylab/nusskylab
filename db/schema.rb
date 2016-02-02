@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127160006) do
+ActiveRecord::Schema.define(version: 20160202151805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,9 +57,13 @@ ActiveRecord::Schema.define(version: 20160127160006) do
 
   create_table "hash_tags", force: :cascade do |t|
     t.string   "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "label",      default: "default"
   end
+
+  add_index "hash_tags", ["content"], name: "index_hash_tags_on_content", using: :btree
+  add_index "hash_tags", ["label"], name: "index_hash_tags_on_label", using: :btree
 
   create_table "mentors", force: :cascade do |t|
     t.integer  "user_id"
