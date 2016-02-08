@@ -21,6 +21,12 @@ Rails.application.routes.draw do
       post 'preview_as'
       get 'register_as_student'
       post 'register'
+      patch 'register'
+      get 'register_as_team'
+      post 'register_team'
+      patch 'register_team'
+      post 'confirm_team'
+      patch 'confirm_team'
     end
   end
   resources :students do

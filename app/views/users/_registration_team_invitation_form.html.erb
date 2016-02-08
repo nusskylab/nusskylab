@@ -1,0 +1,17 @@
+<%= simple_form_for locals[:student_team], url: register_team_user_path(locals[:user]) do |f| %>
+    <%= render 'shared/error_messages', locals: {target_model: locals[:student_team]} %>
+    <div class="form-group">
+      <label class="string required col-sm-3 control-label" for="teammate_email">
+        <abbr title="required">*</abbr> Teammate Email
+      </label>
+      <div class="col-sm-9">
+        <input placeholder="Teammate email" class="string required form-control" type="email" name="team[email]" id="teammate_email">
+      </div>
+    </div>
+    <br><br>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-9">
+        <%= f.submit 'Submit', class: 'btn btn-success' %>
+      </div>
+    </div>
+<% end %>

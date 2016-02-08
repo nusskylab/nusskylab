@@ -73,7 +73,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user_student?
-    Student.student?(current_user.id) if current_user
+    return unless current_user
+    stu = Student.student?(current_user.id)
+    stu if stu && !stu.is_pending
   end
 
   def current_user_adviser?

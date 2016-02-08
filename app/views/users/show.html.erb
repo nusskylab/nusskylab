@@ -7,16 +7,15 @@
         </h2>
       </div>
       <div class="panel-body">
-
-      <div role="tabpanel">
+        <div role="tabpanel">
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
+            <li role="presentation">
               <a href="#user-details" aria-controls="user-details"
                  role="tab" data-toggle="tab">
                 User details
               </a>
             </li>
-            <li role="presentation">
+            <li role="presentation" class="active">
               <a href="#user-roles" aria-controls="user-roles"
                  role="tab" data-toggle="tab">
                 User roles
@@ -24,13 +23,13 @@
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="user-details">
+            <div role="tabpanel" class="tab-pane fade" id="user-details">
               <div class="col-sm-12">
                 <br>
                 <%= render 'user_details', locals: {user: @user} %>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane fade" id="user-roles">
+            <div role="tabpanel" class="tab-pane fade in active" id="user-roles">
               <div class="col-sm-12">
                 <br>
                 <div class="jumbotron">
@@ -52,6 +51,13 @@
                     </p>
                   <% else %>
                     <p>You can register as a student via <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> Registration Portal </a></p>
+                    <% if (pending_stu = (user_pending_student?)) %>
+                      <% if pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id != pending_stu.id %>
+                        <p>You can answer to Team invitation via <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> Team Registration Portal </a></p>
+                      <% elsif !pending_stu.team %>
+                        <p>You can choose your teammate via <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> Team Registration Portal </a></p>
+                      <% end %>
+                    <% end %>
                   <% end %>
                 </div>
               </div>
