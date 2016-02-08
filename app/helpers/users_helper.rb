@@ -12,6 +12,14 @@ module UsersHelper
   end
 
   def user_student?
-    Student.student?(@user.id) if @user
+    return unless @user
+    stu = Student.student?(@user.id)
+    stu if stu && !stu.is_pending
+  end
+
+  def user_pending_student?
+    return unless @user
+    stu = Student.student?(@user.id)
+    stu if stu && stu.is_pending
   end
 end

@@ -44,6 +44,7 @@ class UsersController < ApplicationController
 
   def register_as_student
     @user = User.find(params[:id])
+    !authenticate_user(true, false, [@user]) && return
     survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 3)
     registration = Registration.find_by(
       survey_template_id: survey_template.id, user_id: @user.id) ||
@@ -58,6 +59,7 @@ class UsersController < ApplicationController
 
   def register
     @user = User.find(params[:id])
+    !authenticate_user(true, false, [@user]) && return
     survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 3)
     registration = Registration.find_by(
       survey_template_id: survey_template.id, user_id: @user.id) ||
@@ -65,6 +67,31 @@ class UsersController < ApplicationController
                                     user_id: @user.id)
     registration.response_content = registration_params.to_json
     registration.save
+    student = Student.student?(@user.id) || Student.new(user_id: @user.id,
+                                                        is_pending: true)
+    student.save
+    redirect_to user_path(@user.id)
+  end
+
+  def register_as_team
+    # TODO: move flash to locale
+    @user = User.find(params[:id])
+    !authenticate_user(true, false, [@user]) && return
+    student = Student.student?(@user.id)
+    return redirect_to user_path(@user.id), flash: {
+      danger: 'You must register as a student first'
+    } unless student
+    return redirect_to student_path(student) unless student.is_pending
+    student_team = student.team || Team.new
+    render locals: {
+      student: student,
+      student_team: student_team
+    }
+  end
+
+  def register_team
+    @user = User.find(params[:id])
+    !authenticate_user(true, false, [@user]) && return
     redirect_to user_path(@user.id)
   end
 
@@ -100,16 +127,9 @@ class UsersController < ApplicationController
   def destroy
     !authenticate_user(true, true) && return
     @user = User.find(params[:id])
-    if @user.destroy
-      redirect_to users_path, flash: {
-        success: t('.success_message')
-      }
-    else
-      redirect_to users_path, flash: {
-        danger: t('.failure_message',
-                  error_message: @user.errors.full_messages.join(', '))
-      }
-    end
+    redirect_to users_path, flash: {
+      success: t('.success_message')
+    }
   end
 
   private

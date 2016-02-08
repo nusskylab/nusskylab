@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208132110) do
+ActiveRecord::Schema.define(version: 20160208140442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,12 +161,13 @@ ActiveRecord::Schema.define(version: 20160208132110) do
   create_table "teams", force: :cascade do |t|
     t.integer  "adviser_id"
     t.integer  "mentor_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "team_name"
-    t.boolean  "has_dropped",   default: false
-    t.integer  "project_level", default: 0
-    t.boolean  "is_pending",    default: false
+    t.boolean  "has_dropped",        default: false
+    t.integer  "project_level",      default: 0
+    t.boolean  "is_pending",         default: false
+    t.integer  "invitor_student_id"
   end
 
   add_index "teams", ["adviser_id"], name: "index_teams_on_adviser_id", using: :btree
