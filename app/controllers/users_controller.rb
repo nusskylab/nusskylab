@@ -74,12 +74,11 @@ class UsersController < ApplicationController
   end
 
   def register_as_team
-    # TODO: move flash to locale
     @user = User.find(params[:id])
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id)
     return redirect_to user_path(@user.id), flash: {
-      danger: 'You must register as a student first'
+      danger: t('.register_as_student_message')
     } unless student
     return redirect_to student_path(student) unless student.is_pending
     student_team = student.team || Team.new
@@ -95,18 +94,18 @@ class UsersController < ApplicationController
     team_params = params.require(:team).permit(:email)
     user = User.find_by(email: team_params[:email])
     return redirect_to user_path(@user.id), flash: {
-      danger: 'No user found with specified email'
+      danger: t('.no_user_found_message')
     } unless user
     student = Student.student?(user.id)
     return redirect_to user_path(@user.id), flash: {
-      danger: 'No currently registered student with specified email'
+      danger: t('.no_registered_student_found_message')
     } if !student || !student.is_pending
     return redirect_to user_path(@user.id), flash: {
-      danger: 'Student with specified email has found a team'
+      danger: t('.student_found_team_message')
     } if student.team
     student_user = Student.student?(@user.id)
     return redirect_to user_path(@user.id), flash: {
-      danger: 'Seems you cannot register a team any more'
+      danger: t('.cannot_register_team_message')
     } if !student_user || !student_user.is_pending || student_user.team
     team = Team.new(
       team_name: (Team.order('id').last.id + 1), is_pending: true,
@@ -117,7 +116,7 @@ class UsersController < ApplicationController
     student_user.team_id = team.id
     student_user.save
     redirect_to user_path(@user.id), flash: {
-      success: 'Team invitation sent successfully'
+      success: t('.team_invitation_success_message')
     }
   end
 
@@ -127,17 +126,19 @@ class UsersController < ApplicationController
     team_params = params.require(:team).permit(:confirm)
     student_user = Student.student?(@user.id)
     return redirect_to user_path(@user.id), flash: {
-      danger: 'Seems you cannot confirm a team invitation any more'
+      danger: t('.cannot_confirm_team_message')
     } if !student_user || !student_user.is_pending || !student_user.team
     team = student_user.team
     if team_params[:confirm] == 'true'
       team.is_pending = false
       team.save
+      flash_message = t('.team_invitation_accepted_message')
     else
       team.destroy
+      flash_message = t('.team_invitation_rejected_message')
     end
     redirect_to user_path(@user.id), flash: {
-      success: 'Team confirmation has been completed'
+      success: flash_message
     }
   end
 

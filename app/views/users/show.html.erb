@@ -51,8 +51,12 @@
                     </p>
                   <% else %>
                     <p>You can register as a student via <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> Registration Portal </a></p>
-                    <% if (user_pending_student?) %>
-                      <p>You can register as a student via <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> Team Registration Portal </a></p>
+                    <% if (pending_stu = (user_pending_student?)) %>
+                      <% if pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id != pending_stu.id %>
+                        <p>You can answer to Team invitation via <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> Team Registration Portal </a></p>
+                      <% elsif !pending_stu.team %>
+                        <p>You can choose your teammate via <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> Team Registration Portal </a></p>
+                      <% end %>
                     <% end %>
                   <% end %>
                 </div>
