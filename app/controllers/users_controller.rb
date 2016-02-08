@@ -116,7 +116,29 @@ class UsersController < ApplicationController
     student.save
     student_user.team_id = team.id
     student_user.save
-    redirect_to user_path(@user.id)
+    redirect_to user_path(@user.id), flash: {
+      success: 'Team invitation sent successfully'
+    }
+  end
+
+  def confirm_team
+    @user = User.find(params[:id])
+    !authenticate_user(true, false, [@user]) && return
+    team_params = params.require(:team).permit(:confirm)
+    student_user = Student.student?(@user.id)
+    return redirect_to user_path(@user.id), flash: {
+      danger: 'Seems you cannot confirm a team invitation any more'
+    } if !student_user || !student_user.is_pending || !student_user.team
+    team = student_user.team
+    if team_params[:confirm] == 'true'
+      team.is_pending = false
+      team.save
+    else
+      team.destroy
+    end
+    redirect_to user_path(@user.id), flash: {
+      success: 'Team confirmation has been completed'
+    }
   end
 
   def show

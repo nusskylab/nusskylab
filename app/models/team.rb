@@ -6,7 +6,7 @@ class Team < ActiveRecord::Base
 
   belongs_to :adviser
   belongs_to :mentor
-  has_many :students, dependent: :destroy
+  has_many :students, dependent: :nullify
   has_many :submissions, dependent: :destroy
   has_many :peer_evaluations, dependent: :destroy
   has_many :feedbacks, dependent: :destroy

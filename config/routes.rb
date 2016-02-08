@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       get 'register_as_team'
       post 'register_team'
       patch 'register_team'
+      post 'confirm_team'
+      patch 'confirm_team'
     end
   end
   resources :students do
