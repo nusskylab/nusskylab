@@ -92,6 +92,30 @@ class UsersController < ApplicationController
   def register_team
     @user = User.find(params[:id])
     !authenticate_user(true, false, [@user]) && return
+    team_params = params.require(:team).permit(:email)
+    user = User.find_by(email: team_params[:email])
+    return redirect_to user_path(@user.id), flash: {
+      danger: 'No user found with specified email'
+    } unless user
+    student = Student.student?(user.id)
+    return redirect_to user_path(@user.id), flash: {
+      danger: 'No currently registered student with specified email'
+    } if !student || !student.is_pending
+    return redirect_to user_path(@user.id), flash: {
+      danger: 'Student with specified email has found a team'
+    } if student.team
+    student_user = Student.student?(@user.id)
+    return redirect_to user_path(@user.id), flash: {
+      danger: 'Seems you cannot register a team any more'
+    } if !student_user || !student_user.is_pending || student_user.team
+    team = Team.new(
+      team_name: (Team.order('id').last.id + 1), is_pending: true,
+      invitor_student_id: student_user.id)
+    team.save
+    student.team_id = team.id
+    student.save
+    student_user.team_id = team.id
+    student_user.save
     redirect_to user_path(@user.id)
   end
 
