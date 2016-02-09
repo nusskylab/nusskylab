@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208140442) do
+ActiveRecord::Schema.define(version: 20160209154659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,8 @@ ActiveRecord::Schema.define(version: 20160208140442) do
     t.integer  "question_type",      default: 0
     t.integer  "survey_template_id",                null: false
     t.boolean  "is_public",          default: true
+    t.json     "extras"
+    t.integer  "order"
   end
 
   add_index "questions", ["survey_template_id"], name: "index_questions_on_survey_template_id", using: :btree
