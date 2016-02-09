@@ -16,7 +16,7 @@ $(function () {
     $('#new-template-toggle').click();
     $('#survey-template-questions').append(data);
   }).on('ajax:error', function (e, data, status, xhr) {
-    alert(xhr.responseText);
+    alert('Server error');
   });
 });
 $(function () {
@@ -25,7 +25,7 @@ $(function () {
     $(e.target).parent().parent().html($(data).children());
     disableViewTemplateInputs();
   }).on('ajax:error', '.edit_question', function (e, data, status, xhr) {
-    alert(xhr.responseText);
+    alert('Server error');
   });
 });
 $(function () {

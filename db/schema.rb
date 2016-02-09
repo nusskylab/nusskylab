@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 20160209154659) do
     t.integer  "question_type",      default: 0
     t.integer  "survey_template_id",                null: false
     t.boolean  "is_public",          default: true
-    t.json     "extras"
+    t.text     "extras"
     t.integer  "order"
   end
 
