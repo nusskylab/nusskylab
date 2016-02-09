@@ -4,6 +4,8 @@
     <%= render 'questions/rich_text_question', locals: locals %>
 <% elsif locals[:question].question_type_multiple_choice? %>
     <%= render 'questions/multiple_choice_question', locals: locals %>
+<% elsif locals[:question].question_type_multiple_select? %>
+    <%= render 'questions/multiple_select_question', locals: locals %>
 <% else %>
     <%= render 'questions/other_question' %>
 <% end %>
