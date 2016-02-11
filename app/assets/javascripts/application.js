@@ -83,3 +83,31 @@ $(function () {
     return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
   });
 });
+
+$(function () {
+  $('*[data-remote=true]').each(function (idx, elem) {
+    var remoteApi = $(elem).data('remote-api');
+    var dataValues = $(elem).data('values');
+    $.ajax({
+      type: 'GET',
+      url: remoteApi,
+      dataType: 'json',
+      success: function (res) {
+        console.log(res);
+        $.each(res, function (idx, val) {
+          if (dataValues.indexOf(val.id.toString()) != -1) {
+            $(elem).append($('<option></option>', {value: val.id, text: val.content}).prop('selected', true));
+          } else {
+            $(elem).append($('<option></option>', {value: val.id, text: val.content}));
+          }
+        });
+        $(elem).select2({
+          width: '100%'
+        });
+      },
+      error: function (err) {
+        console.log(err);
+      }
+    });
+  });
+});

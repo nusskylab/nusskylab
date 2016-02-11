@@ -37,7 +37,7 @@ class QuestionsController < ApplicationController
 
   def question_params
     q_params = params.require(:question).permit(:question_type, :title,
-                                                :instruction, :content,
+                                                :instruction, :content, :extras,
                                                 :survey_template_id)
     q_params[:question_type] = q_params[:question_type].to_i
     q_params
