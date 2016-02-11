@@ -104,6 +104,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_cohort
+    Time.now.year
+  end
+
   helper_method :home_path
   helper_method :page_title
   helper_method :current_user_admin?

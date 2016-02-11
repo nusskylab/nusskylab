@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209154659) do
+ActiveRecord::Schema.define(version: 20160211060122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20160209154659) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "cohort"
   end
 
   add_index "admins", ["user_id"], name: "index_admins_on_user_id", using: :btree
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 20160209154659) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "cohort"
   end
 
   add_index "advisers", ["user_id"], name: "index_advisers_on_user_id", using: :btree
@@ -39,6 +41,15 @@ ActiveRecord::Schema.define(version: 20160209154659) do
 
   add_index "evaluatings", ["evaluated_id"], name: "index_evaluatings_on_evaluated_id", using: :btree
   add_index "evaluatings", ["evaluator_id"], name: "index_evaluatings_on_evaluator_id", using: :btree
+
+  create_table "facilitators", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "cohort"
+  end
+
+  add_index "facilitators", ["user_id"], name: "index_facilitators_on_user_id", using: :btree
 
   create_table "feedbacks", force: :cascade do |t|
     t.integer  "team_id"
@@ -69,6 +80,7 @@ ActiveRecord::Schema.define(version: 20160209154659) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "cohort"
   end
 
   add_index "mentors", ["user_id"], name: "index_mentors_on_user_id", using: :btree
@@ -79,6 +91,7 @@ ActiveRecord::Schema.define(version: 20160209154659) do
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
     t.datetime "peer_evaluation_deadline", default: '2015-07-05 10:27:14', null: false
+    t.integer  "cohort"
   end
 
   create_table "peer_evaluations", force: :cascade do |t|
@@ -130,6 +143,7 @@ ActiveRecord::Schema.define(version: 20160209154659) do
     t.datetime "updated_at",                 null: false
     t.integer  "team_id"
     t.boolean  "is_pending", default: false
+    t.integer  "cohort"
   end
 
   add_index "students", ["team_id"], name: "index_students_on_team_id", using: :btree
@@ -175,6 +189,15 @@ ActiveRecord::Schema.define(version: 20160209154659) do
   add_index "teams", ["adviser_id"], name: "index_teams_on_adviser_id", using: :btree
   add_index "teams", ["mentor_id"], name: "index_teams_on_mentor_id", using: :btree
 
+  create_table "tutors", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "cohort"
+  end
+
+  add_index "tutors", ["user_id"], name: "index_tutors_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "uid"
@@ -204,6 +227,7 @@ ActiveRecord::Schema.define(version: 20160209154659) do
   add_foreign_key "advisers", "users"
   add_foreign_key "evaluatings", "teams", column: "evaluated_id"
   add_foreign_key "evaluatings", "teams", column: "evaluator_id"
+  add_foreign_key "facilitators", "users"
   add_foreign_key "feedbacks", "advisers"
   add_foreign_key "feedbacks", "survey_templates"
   add_foreign_key "feedbacks", "teams"
@@ -222,4 +246,5 @@ ActiveRecord::Schema.define(version: 20160209154659) do
   add_foreign_key "survey_templates", "milestones"
   add_foreign_key "teams", "advisers"
   add_foreign_key "teams", "mentors"
+  add_foreign_key "tutors", "users"
 end
