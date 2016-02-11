@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   end
   resources :survey_templates, except: [:destroy]
   resources :questions, only: [:create, :update, :destroy]
+  resources :tags, only: [:index]
   # scope '/:cohort' do
 
   # end
