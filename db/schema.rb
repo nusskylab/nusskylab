@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 20160211060122) do
     t.integer  "project_level",      default: 0
     t.boolean  "is_pending",         default: false
     t.integer  "invitor_student_id"
+    t.integer  "cohort"
   end
 
   add_index "teams", ["adviser_id"], name: "index_teams_on_adviser_id", using: :btree

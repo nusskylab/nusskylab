@@ -3,6 +3,7 @@ class AddCohortToPatchedEntities < ActiveRecord::Migration
     add_column :admins, :cohort, :integer
     add_column :advisers, :cohort, :integer
     add_column :students, :cohort, :integer
+    add_column :teams, :cohort, :integer
     add_column :mentors, :cohort, :integer
     add_column :tutors, :cohort, :integer
     add_column :facilitators, :cohort, :integer
@@ -13,6 +14,7 @@ class AddCohortToPatchedEntities < ActiveRecord::Migration
     remove_column :admins, :cohort, :integer
     remove_column :advisers, :cohort, :integer
     remove_column :students, :cohort, :integer
+    remove_column :teams, :cohort, :integer
     remove_column :mentors, :cohort, :integer
     remove_column :tutors, :cohort, :integer
     remove_column :facilitators, :cohort, :integer
