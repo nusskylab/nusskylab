@@ -1,8 +1,6 @@
 # Milestone: milestone modeling
 class Milestone < ActiveRecord::Base
-  validates :name, presence: true, uniqueness: {
-    message: 'should be unique'
-  }
+  validates :name, presence: true
   validates :submission_deadline, presence: true
   validates :peer_evaluation_deadline, presence: true
 

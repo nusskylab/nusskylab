@@ -80,14 +80,6 @@ RSpec.describe MilestonesController, type: :controller do
         expect(response).to redirect_to(milestones_path)
         expect(flash[:success]).not_to be_nil
       end
-
-      it 'should redirect to admins with danger for admin user' do
-        FactoryGirl.create(:milestone, name: 'milestone_2.milestone.controller.spec')
-        milestone = FactoryGirl.attributes_for(:milestone, name: 'milestone_2.milestone.controller.spec')
-        post :create, milestone: milestone
-        expect(response).to redirect_to(new_milestone_path)
-        expect(flash[:danger]).not_to be_nil
-      end
     end
   end
 
@@ -141,15 +133,6 @@ RSpec.describe MilestonesController, type: :controller do
         put :update, id: m.id, milestone: milestone
         expect(response).to redirect_to(milestones_path)
         expect(flash[:success]).not_to be_nil
-      end
-
-      it 'should redirect to admins with danger for admin user' do
-        m = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.controller.spec')
-        FactoryGirl.create(:milestone, name: 'milestone_1.milestone.controller.spec')
-        milestone = FactoryGirl.attributes_for(:milestone, name: 'milestone_1.milestone.controller.spec')
-        put :update, id: m.id, milestone: milestone
-        expect(response).to redirect_to(edit_milestone_path(m.id))
-        expect(flash[:danger]).not_to be_nil
       end
     end
   end

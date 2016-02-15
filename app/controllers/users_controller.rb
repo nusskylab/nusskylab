@@ -45,7 +45,10 @@ class UsersController < ApplicationController
   def register_as_student
     @user = User.find(params[:id])
     !authenticate_user(true, false, [@user]) && return
-    survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 3)
+    milestone = Milestone.find_by(name: 'Milestone 1', cohort: current_cohort)
+    survey_template = SurveyTemplate.find_by(
+      milestone_id: milestone.id,
+      survey_type: SurveyTemplate.survey_types[:survey_type_registration])
     registration = Registration.find_by(
       survey_template_id: survey_template.id, user_id: @user.id) ||
                    Registration.new(survey_template_id: survey_template.id,
@@ -60,7 +63,10 @@ class UsersController < ApplicationController
   def register
     @user = User.find(params[:id])
     !authenticate_user(true, false, [@user]) && return
-    survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 3)
+    milestone = Milestone.find_by(name: 'Milestone 1', cohort: current_cohort)
+    survey_template = SurveyTemplate.find_by(
+      milestone_id: milestone.id,
+      survey_type: SurveyTemplate.survey_types[:survey_type_registration])
     registration = Registration.find_by(
       survey_template_id: survey_template.id, user_id: @user.id) ||
                    Registration.new(survey_template_id: survey_template.id,
