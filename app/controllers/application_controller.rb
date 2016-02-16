@@ -55,10 +55,10 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(_resource)
     return root_path if current_user.nil?
-    student = Student.student?(current_user.id)
-    adviser = Adviser.adviser?(current_user.id)
-    mentor = Mentor.mentor?(current_user.id)
-    admin = Admin.admin?(current_user.id)
+    student = Student.student?(current_user.id, cohort: current_cohort)
+    adviser = Adviser.adviser?(current_user.id, cohort: current_cohort)
+    mentor = Mentor.mentor?(current_user.id, cohort: current_cohort)
+    admin = Admin.admin?(current_user.id, cohort: current_cohort)
     if student && adviser.nil? && mentor.nil? && admin.nil?
       student_path(student.id)
     elsif student.nil? && adviser && mentor.nil? && admin.nil?

@@ -372,9 +372,14 @@ en:
         The user has been created successfully
       failure_message: >
         User information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
+    register_as_student:
+      page_title: >
+        Register as student
     register_as_team:
       register_as_student_message: >
         You must register as student first
+      page_title: >
+        Register a team
     register_team:
       no_user_found_message: >
         No user found with specified email
