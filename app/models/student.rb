@@ -1,14 +1,20 @@
 # Student: student modeling
 class Student < ActiveRecord::Base
   validates :user_id, presence: true, uniqueness: {
-    message: 'can have only one student role'
+    scope: :cohort,
+    message: 'can have only one student role for each cohort'
   }
 
   belongs_to :user
   belongs_to :team
 
-  def self.student?(user_id)
-    Student.find_by(user_id: user_id)
+  def self.student?(user_id, extra = nil)
+    if extra
+      extra[:user_id] = user_id
+      Student.find_by(extra)
+    else
+      Student.find_by(user_id: user_id)
+    end
   end
 
   def self.to_csv(**options)

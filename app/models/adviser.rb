@@ -1,15 +1,21 @@
 # Adviser: model of adviser role
 class Adviser < ActiveRecord::Base
   validates :user_id, presence: true, uniqueness: {
-    message: 'can only have one adviser role'
+    scope: :cohort,
+    message: 'can only have one adviser role for each cohort'
   }
 
   belongs_to :user
   has_many :teams
   has_many :feedbacks
 
-  def self.adviser?(user_id)
-    Adviser.find_by(user_id: user_id)
+  def self.adviser?(user_id, extra = nil)
+    if extra
+      extra[:user_id] = user_id
+      Adviser.find_by(extra)
+    else
+      Adviser.find_by(user_id: user_id)
+    end
   end
 
   def self.to_csv(**options)
