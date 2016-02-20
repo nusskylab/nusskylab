@@ -1,9 +1,11 @@
 # Admin: admin modeling
 class Admin < ActiveRecord::Base
+  include ModelHelper
   validates :user_id, presence: true, uniqueness: {
     scope: :cohort,
     message: 'can only have one admin role for each cohort'
   }
+  before_validation :fill_current_cohort
 
   belongs_to :user
 

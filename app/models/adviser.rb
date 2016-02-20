@@ -1,9 +1,11 @@
 # Adviser: model of adviser role
 class Adviser < ActiveRecord::Base
+  include ModelHelper
   validates :user_id, presence: true, uniqueness: {
     scope: :cohort,
     message: 'can only have one adviser role for each cohort'
   }
+  before_validation :fill_current_cohort
 
   belongs_to :user
   has_many :teams

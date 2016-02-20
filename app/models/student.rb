@@ -1,9 +1,11 @@
 # Student: student modeling
 class Student < ActiveRecord::Base
+  include ModelHelper
   validates :user_id, presence: true, uniqueness: {
     scope: :cohort,
     message: 'can have only one student role for each cohort'
   }
+  before_validation :fill_current_cohort
 
   belongs_to :user
   belongs_to :team

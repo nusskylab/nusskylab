@@ -1,9 +1,11 @@
 # Mentor: mentor modeling
 class Mentor < ActiveRecord::Base
+  include ModelHelper
   validates :user_id, presence: true, uniqueness: {
     scope: :cohort,
     message: 'can only have one mentor role for each cohort'
   }
+  before_validation :fill_current_cohort
 
   belongs_to :user
   has_many :teams
