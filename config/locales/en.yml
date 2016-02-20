@@ -216,6 +216,15 @@ en:
     index:
       page_title: >
         View all received feedback
+  sessions:
+    sign_in_success_message: >
+      Welcome, %{user_name}
+    sign_in_failure_message: >
+      Sign-in not successful. You may need to contact admin for assistance
+    sign_in_authentication_error_message: >
+      Authentication error: %{auth_error}
+    sign_out_success_message: >
+      You have signed out of Skylab
   students:
     student_form_instruction: >
       Select a user from the list and assign student role to him/her.
@@ -248,8 +257,10 @@ en:
     show:
       page_title: >
         View Student %{user_name}'s info
+      pending_instruction: >
+        You registration as a student is currently still pending. Be patient for the great to come :)
       no_team_instruction: >
-        Currently you are not in another team so there is nothing to show. Get teamed up first :P
+        Currently you are not in any team so there is nothing to show. Get teamed up first :P
       submit_submission_instruction: >
         Submissions to milestones are listed here.
         You can submit for a milestone or edit a previously created submission.
@@ -268,15 +279,6 @@ en:
         evaluations from other teams.
       submit_feedback_instruction: >
         You can submit your feedback here.
-  sessions:
-    sign_in_success_message: >
-      Welcome, %{user_name}
-    sign_in_failure_message: >
-      Sign-in not successful. You may need to contact admin for assistance
-    sign_in_authentication_error_message: >
-      Authentication error: %{auth_error}
-    sign_out_success_message: >
-      You have signed out of Skylab
   submissions:
     late_submission_tooltip: >
       Submission is submitted or modified after deadline.
