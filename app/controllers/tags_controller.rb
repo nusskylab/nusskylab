@@ -2,8 +2,11 @@
 class TagsController < ApplicationController
   def index
     label = params[:label]
+    labels = params[:labels].split(',') if params[:labels]
     if label
       @tags = HashTag.where(label: label)
+    elsif labels
+      @tags = HashTag.where(label: labels)
     else
       @tags = HashTag.all
     end
