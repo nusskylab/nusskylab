@@ -1,12 +1,13 @@
 <table class="table table-hover">
   <thead>
-  <tr><th>User Name</th><th>User Email</th><th>Actions</th></tr>
+  <tr><th>User Name</th><th>User Email</th><th class="unsortable">Cohort</th><th class="unsortable">Actions</th></tr>
   </thead>
   <tbody>
   <% locals[:mentors].each do |mentor| %>
       <tr>
         <td><%= mentor.user.user_name %></td>
         <td><%= mentor.user.email %></td>
+        <td><%= mentor.cohort %></td>
         <td>
           <a class="btn btn-default btn-xs" href="<%=  mentor_path(mentor.id) %>">View</a>
           <%= link_to 'Delete', mentor_path(mentor.id), method: :delete, class: 'btn btn-danger btn-xs',

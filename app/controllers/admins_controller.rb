@@ -8,7 +8,7 @@ class AdminsController < ApplicationController
   def index
     !check_access(true, true) && return
     @page_title = t('.page_title')
-    @admins = Admin.all
+    @admins = Admin.where(cohort: current_cohort)
   end
 
   def new

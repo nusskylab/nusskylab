@@ -2,7 +2,7 @@
   <thead>
   <tr>
     <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th>
-    <th>Adviser</th><th>Mentor</th><th class="unsortable">Actions</th>
+    <th>Adviser</th><th>Mentor</th><th class="unsortable">Cohort</th><th class="unsortable">Actions</th>
   </tr>
   </thead>
   <tbody>
@@ -16,6 +16,7 @@
         <td><%= team.has_dropped %></td>
         <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
         <td><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
+        <td><%= team.cohort %></td>
         <td>
           <% if can_current_user_view_team(team) %>
               <a class="btn btn-default btn-xs" href="<%=  team_path(team.id) %>">View</a>

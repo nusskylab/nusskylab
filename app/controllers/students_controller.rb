@@ -9,8 +9,9 @@
 class StudentsController < ApplicationController
   def index
     !authenticate_user(true, false, Adviser.all.map(&:user)) && return
+    cohort = params[:cohort] || current_cohort
     @page_title = t('.page_title')
-    @students = Student.all
+    @students = Student.where(cohort: cohort)
     respond_to do |format|
       format.html { render }
       format.csv { send_data Student.to_csv }

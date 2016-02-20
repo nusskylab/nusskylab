@@ -7,8 +7,9 @@
 class MentorsController < ApplicationController
   def index
     !authenticate_user(true, true) && return
+    cohort = params[:cohort] || current_cohort
     @page_title = t('.page_title')
-    @mentors = Mentor.all
+    @mentors = Mentor.where(cohort: cohort)
   end
 
   def new
