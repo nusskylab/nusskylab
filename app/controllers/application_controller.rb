@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  include CohortHelper
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
@@ -55,11 +56,12 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(_resource)
     return root_path if current_user.nil?
-    student = Student.student?(current_user.id)
-    adviser = Adviser.adviser?(current_user.id)
-    mentor = Mentor.mentor?(current_user.id)
-    admin = Admin.admin?(current_user.id)
-    if student && adviser.nil? && mentor.nil? && admin.nil?
+    student = Student.student?(current_user.id, cohort: current_cohort)
+    adviser = Adviser.adviser?(current_user.id, cohort: current_cohort)
+    mentor = Mentor.mentor?(current_user.id, cohort: current_cohort)
+    admin = Admin.admin?(current_user.id, cohort: current_cohort)
+    if student && !student.is_pending && adviser.nil? && mentor.nil? &&
+       admin.nil?
       student_path(student.id)
     elsif student.nil? && adviser && mentor.nil? && admin.nil?
       adviser_path(adviser.id)
@@ -72,26 +74,30 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_user_student?
+  def current_user_student?(cohort = nil)
+    cohort ||= current_cohort
     return unless current_user
-    stu = Student.student?(current_user.id)
+    stu = Student.student?(current_user.id, cohort: cohort)
     stu if stu && !stu.is_pending
   end
 
-  def current_user_adviser?
-    Adviser.adviser?(current_user.id) if current_user
+  def current_user_adviser?(cohort = nil)
+    cohort ||= current_cohort
+    Adviser.adviser?(current_user.id, cohort: cohort) if current_user
   end
 
-  def current_user_mentor?
-    Mentor.mentor?(current_user.id) if current_user
+  def current_user_mentor?(cohort = nil)
+    cohort ||= current_cohort
+    Mentor.mentor?(current_user.id, cohort: cohort) if current_user
   end
 
-  def current_user_admin?
-    Admin.admin?(current_user.id) if current_user
+  def current_user_admin?(cohort = nil)
+    cohort ||= current_cohort
+    Admin.admin?(current_user.id, cohort: cohort) if current_user
   end
 
   def page_title
-    @page_title ||= 'Orbital'
+    @page_title ||= t('application.default_page_title')
   end
 
   def home_path

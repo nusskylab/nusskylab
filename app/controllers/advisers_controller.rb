@@ -7,10 +7,15 @@
 class AdvisersController < ApplicationController
   def index
     !authenticate_user(true, true) && return
+    cohort = params[:cohort] || current_cohort
     @page_title = t('.page_title')
-    @advisers = Adviser.all
+    @advisers = Adviser.where(cohort: cohort)
     respond_to do |format|
-      format.html { render }
+      format.html do
+        render locals: {
+          all_cohorts: all_cohorts
+        }
+      end
       format.csv { send_data Adviser.to_csv }
     end
   end

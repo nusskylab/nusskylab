@@ -1,8 +1,11 @@
 # Team: team modeling
 class Team < ActiveRecord::Base
+  include ModelHelper
   validates :team_name, presence: true, uniqueness: {
+    scope: :cohort,
     message: ': Team name should be unique'
   }
+  before_validation :fill_current_cohort
 
   belongs_to :adviser
   belongs_to :mentor

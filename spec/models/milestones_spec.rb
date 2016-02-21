@@ -7,11 +7,6 @@ RSpec.describe Milestone, type: :model do
     expect(FactoryGirl.build(:milestone, peer_evaluation_deadline: nil)).not_to be_valid
   end
 
-  it 'is invalid with name taken by another milestone' do
-    expect(FactoryGirl.create(:milestone)).to be_valid
-    expect(FactoryGirl.build(:milestone)).not_to be_valid
-  end
-
   it 'should have get_prev_milestone method' do
     milestone1 = FactoryGirl.create(:milestone, name: 'milestone_1.milestone.model.spec')
     milestone2 = FactoryGirl.create(:milestone, name: 'milestone_2.milestone.model.spec')

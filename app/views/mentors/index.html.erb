@@ -10,6 +10,14 @@
         <div class="col-sm-2 col-sm-offset-5">
           <a href="<%= new_mentor_path %>" class="btn btn-success">Create New Mentor</a>
         </div>
+        <br><br><hr>
+        <div class="col-sm-12">
+          <% all_cohorts.each do |cohort| %>
+          <div class="col-sm-2">
+            <%= link_to cohort, mentors_path(cohort: cohort), class: 'btn btn-info' %>
+          </div>
+          <% end %>
+        </div>
       </div>
     </div>
 <% end %>

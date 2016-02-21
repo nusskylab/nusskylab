@@ -10,7 +10,7 @@ class MilestonesController < ApplicationController
   def index
     !authenticate_user(true, true) && return
     @page_title = t('.page_title')
-    @milestones = Milestone.all
+    @milestones = Milestone.where(cohort: current_cohort)
   end
 
   def new

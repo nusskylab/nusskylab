@@ -1,10 +1,10 @@
 # Milestone: milestone modeling
 class Milestone < ActiveRecord::Base
-  validates :name, presence: true, uniqueness: {
-    message: 'should be unique'
-  }
+  include ModelHelper
+  validates :name, presence: true
   validates :submission_deadline, presence: true
   validates :peer_evaluation_deadline, presence: true
+  before_validation :fill_current_cohort
 
   def get_prev_milestone
     milestones = Milestone.order(:created_at).all

@@ -8,10 +8,15 @@
 class TeamsController < ApplicationController
   def index
     !authenticate_user(true, false, Adviser.all.map(&:user)) && return
-    @teams = Team.order(:team_name).all
+    cohort = params[:cohort] || current_cohort
+    @teams = Team.order(:team_name).where(cohort: cohort)
     @page_title = t('.page_title')
     respond_to do |format|
-      format.html { render }
+      format.html do
+        render locals: {
+          all_cohorts: all_cohorts
+        }
+      end
       format.csv { send_data Team.to_csv }
     end
   end

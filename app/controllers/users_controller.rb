@@ -45,11 +45,15 @@ class UsersController < ApplicationController
   def register_as_student
     @user = User.find(params[:id])
     !authenticate_user(true, false, [@user]) && return
-    survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 3)
+    milestone = Milestone.find_by(name: 'Milestone 1', cohort: current_cohort)
+    survey_template = SurveyTemplate.find_by(
+      milestone_id: milestone.id,
+      survey_type: SurveyTemplate.survey_types[:survey_type_registration])
     registration = Registration.find_by(
       survey_template_id: survey_template.id, user_id: @user.id) ||
                    Registration.new(survey_template_id: survey_template.id,
                                     user_id: @user.id)
+    @page_title = t('.page_title')
     render locals: {
       survey_template: survey_template,
       questions: survey_template.questions.order('questions.id ASC'),
@@ -60,15 +64,19 @@ class UsersController < ApplicationController
   def register
     @user = User.find(params[:id])
     !authenticate_user(true, false, [@user]) && return
-    survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 3)
+    milestone = Milestone.find_by(name: 'Milestone 1', cohort: current_cohort)
+    survey_template = SurveyTemplate.find_by(
+      milestone_id: milestone.id,
+      survey_type: SurveyTemplate.survey_types[:survey_type_registration])
     registration = Registration.find_by(
       survey_template_id: survey_template.id, user_id: @user.id) ||
                    Registration.new(survey_template_id: survey_template.id,
                                     user_id: @user.id)
     registration.response_content = registration_params.to_json
     registration.save
-    student = Student.student?(@user.id) || Student.new(user_id: @user.id,
-                                                        is_pending: true)
+    student = Student.student?(@user.id, cohort: current_cohort) ||
+              Student.new(user_id: @user.id, cohort: current_cohort,
+                          is_pending: true)
     student.save
     redirect_to user_path(@user.id)
   end
@@ -76,12 +84,13 @@ class UsersController < ApplicationController
   def register_as_team
     @user = User.find(params[:id])
     !authenticate_user(true, false, [@user]) && return
-    student = Student.student?(@user.id)
+    student = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.register_as_student_message')
     } unless student
     return redirect_to student_path(student) unless student.is_pending
     student_team = student.team || Team.new
+    @page_title = t('.page_title')
     render locals: {
       student: student,
       student_team: student_team
@@ -96,20 +105,20 @@ class UsersController < ApplicationController
     return redirect_to user_path(@user.id), flash: {
       danger: t('.no_user_found_message')
     } unless user
-    student = Student.student?(user.id)
+    student = Student.student?(user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.no_registered_student_found_message')
     } if !student || !student.is_pending
     return redirect_to user_path(@user.id), flash: {
       danger: t('.student_found_team_message')
     } if student.team
-    student_user = Student.student?(@user.id)
+    student_user = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.cannot_register_team_message')
     } if !student_user || !student_user.is_pending || student_user.team
     team = Team.new(
       team_name: (Team.order('id').last.id + 1), is_pending: true,
-      invitor_student_id: student_user.id)
+      cohort: current_cohort, invitor_student_id: student_user.id)
     team.save
     student.team_id = team.id
     student.save
@@ -124,7 +133,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     !authenticate_user(true, false, [@user]) && return
     team_params = params.require(:team).permit(:confirm)
-    student_user = Student.student?(@user.id)
+    student_user = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.cannot_confirm_team_message')
     } if !student_user || !student_user.is_pending || !student_user.team

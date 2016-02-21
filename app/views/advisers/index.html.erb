@@ -10,19 +10,18 @@
             <%= link_to 'Download CSV', advisers_path(format: 'csv'), class: 'btn btn-primary' %>
           </div>
           <div class="col-sm-2 col-sm-offset-3">
-            <a href="<%= new_adviser_path %>" class="btn btn-success">Create New Adviser</a>
+            <%= link_to 'Create New Adviser', new_adviser_path, class: 'btn btn-success' %>
           </div>
         </div>
         <br><hr>
         <%= render 'advisers_table', locals: {advisers: @advisers} %>
         <hr>
         <div class="col-sm-12">
-          <div class="col-sm-2 col-sm-offset-3">
-            <%= link_to 'Download CSV', advisers_path(format: 'csv'), class: 'btn btn-primary' %>
+          <% all_cohorts.each do |cohort| %>
+          <div class="col-sm-2">
+            <%= link_to cohort, advisers_path(cohort: cohort), class: 'btn btn-info' %>
           </div>
-          <div class="col-sm-2 col-sm-offset-3">
-            <a href="<%= new_adviser_path %>" class="btn btn-success">Create New Adviser</a>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>
