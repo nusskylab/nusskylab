@@ -13,7 +13,11 @@ class StudentsController < ApplicationController
     @page_title = t('.page_title')
     @students = Student.where(cohort: cohort)
     respond_to do |format|
-      format.html { render }
+      format.html do
+        render locals: {
+          all_cohorts: all_cohorts
+        }
+      end
       format.csv { send_data Student.to_csv }
     end
   end

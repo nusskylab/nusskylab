@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  include CohortHelper
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
@@ -59,7 +60,8 @@ class ApplicationController < ActionController::Base
     adviser = Adviser.adviser?(current_user.id, cohort: current_cohort)
     mentor = Mentor.mentor?(current_user.id, cohort: current_cohort)
     admin = Admin.admin?(current_user.id, cohort: current_cohort)
-    if student && adviser.nil? && mentor.nil? && admin.nil?
+    if student && !student.is_pending && adviser.nil? && mentor.nil? &&
+       admin.nil?
       student_path(student.id)
     elsif student.nil? && adviser && mentor.nil? && admin.nil?
       adviser_path(adviser.id)
@@ -106,10 +108,6 @@ class ApplicationController < ActionController::Base
     respond_to do |f|
       f.html { render file: "#{Rails.root}/public/404.html", status: 404 }
     end
-  end
-
-  def current_cohort
-    Time.now.year
   end
 
   helper_method :home_path

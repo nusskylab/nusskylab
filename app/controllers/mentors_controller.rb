@@ -10,6 +10,9 @@ class MentorsController < ApplicationController
     cohort = params[:cohort] || current_cohort
     @page_title = t('.page_title')
     @mentors = Mentor.where(cohort: cohort)
+    render locals: {
+      all_cohorts: all_cohorts
+    }
   end
 
   def new
