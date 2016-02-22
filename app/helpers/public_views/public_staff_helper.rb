@@ -1,0 +1,2 @@
+module PublicViews::PublicStaffHelper
+end
