@@ -2,7 +2,6 @@
 class QuestionsController < ApplicationController
   def create
     !authenticate_user(true, true) && return
-    puts params
     @question = Question.new(question_params)
     if @question.save
       render 'question_response', layout: false, status: :created
