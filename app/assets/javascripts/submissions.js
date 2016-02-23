@@ -14,7 +14,7 @@ $(document).ready(function () {
 });
 
 /**
- * Image uploading service via Imgur
+ * Image uploading service via Imgur.com
  */
 $(function () {
   $('input.imgur-upload').change(function () {
@@ -66,5 +66,13 @@ $(function () {
     }
 
     convertImageToBase64Str(this);
+  });
+});
+
+$(function () {
+  tinyMCE.init({
+    selector: 'textarea.tinymce',
+    toolbar: 'undo redo | styleselect | fontselect fontsizeselect | forecolor backcolor | bold italic | bullist numlist outdent indent | link image | emoticons',
+    plugins: 'autolink link image table autosave paste textcolor emoticons autoresize'
   });
 });
