@@ -212,6 +212,10 @@ en:
       index:
         page_title: >
           View all projects in Orbital
+    public_staff:
+      index:
+        page_title: >
+          View all staff in Orbital
   received_feedbacks:
     index:
       page_title: >

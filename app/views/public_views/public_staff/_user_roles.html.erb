@@ -1,0 +1,27 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="text-center"><%= locals[:selected_type] %></h3>
+  </div>
+  <div class="panel-body">
+    <% if locals[:roles] && locals[:roles].length %>
+      <% locals[:roles].each do |role| %>
+      <div class="row">
+        <div class="col-sm-2">
+          <img src="http://placehold.it/150x150">
+        </div>
+        <div class="col-sm-10">
+          <div>Name: <strong><%= role.user.user_name %></strong></div>
+          <div>Email: <%= role.user.email %></div>
+          <div>GitHub: <%= role.user.github_link %></div>
+          <div>LinkedIn: <%= role.user.linkedin_link %></div>
+          <div>Personal website: <%= role.user.blog_link %></div>
+          <div>Self Introduction: <%= role.user.self_introduction %></div>
+        </div>
+      </div>
+      <br><hr><br>
+      <% end %>
+    <% else %>
+      No data to show
+    <% end %>
+  </div>
+</div>

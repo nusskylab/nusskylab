@@ -29,12 +29,7 @@ Rails.application.routes.draw do
       patch 'confirm_team'
     end
   end
-  resources :students do
-    # collection do
-    #   get 'batch_upload'
-    #   post 'batch_create'
-    # end
-  end
+  resources :students
   resources :advisers, only: [:index, :new, :create, :show, :destroy]
   resources :mentors, only: [:index, :new, :create, :show, :destroy]
   resources :admins, only: [:index, :new, :create, :show, :destroy]
@@ -60,5 +55,6 @@ Rails.application.routes.draw do
   resources :tags, only: [:index]
   namespace 'public_views' do
     resources :public_projects, only: [:index]
+    resources :public_staff, only: [:index]
   end
 end
