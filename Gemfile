@@ -9,8 +9,6 @@ source 'https://rubygems.org' do
   gem 'uglifier', '>= 1.3.0'
   # Use CoffeeScript for .coffee assets and views
   gem 'coffee-rails', '~> 4.1.0'
-  # Use bower-rails for some front-end dependency management
-  gem 'bower-rails', '~> 0.10.0'
   # Use Puma as the app server
   gem 'puma', '~> 2.11.2'
 

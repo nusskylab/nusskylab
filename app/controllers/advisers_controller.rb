@@ -83,7 +83,7 @@ class AdvisersController < ApplicationController
 
   # TODO: refactor this method to shorten this
   def data_for_adviser
-    milestones = Milestone.all
+    milestones = Milestone.order(:id).where(cohort: @adviser.cohort)
     teams_submissions = {}
     own_evaluations = {}
     milestones.each do |milestone|

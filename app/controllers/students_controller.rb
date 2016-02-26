@@ -63,7 +63,7 @@ class StudentsController < ApplicationController
     @page_title = t('.page_title', user_name: @student.user.user_name)
     return if !check_student_show_rendering
     render locals: {
-      milestones: Milestone.order(:id).all,
+      milestones: Milestone.order(:id).where(cohort: @student.cohort),
       evaluateds: @student.team.evaluateds,
       evaluators: @student.team.evaluators,
       team_submissions: @student.team.get_own_submissions,

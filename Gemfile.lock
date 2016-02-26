@@ -49,7 +49,6 @@ GEM
       sass (>= 3.3.4)
     bootstrap3-datetimepicker-rails (4.15.35)
       momentjs-rails (>= 2.8.1)
-    bower-rails (0.10.0)
     builder (3.2.2)
     capybara (2.5.0)
       mime-types (>= 1.16)
@@ -244,7 +243,6 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.3.4)!
   bootstrap3-datetimepicker-rails (~> 4.15.35)!
-  bower-rails (~> 0.10.0)!
   capybara (~> 2.5.0)!
   capybara-webkit (~> 1.7.1)!
   codeclimate-test-reporter!
