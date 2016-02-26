@@ -203,6 +203,18 @@ class Team < ActiveRecord::Base
     students.map(&:user)
   end
 
+  def invitor_student
+    students.each do |stu|
+      return stu if stu.id == invitor_student_id
+    end
+  end
+
+  def invitee_student
+    students.each do |stu|
+      return stu if stu.id != invitor_student_id
+    end
+  end
+
   def get_evaluator_teams_members
     evaluator_members = []
     evaluators.each do |evaluator|
