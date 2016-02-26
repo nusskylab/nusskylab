@@ -115,7 +115,7 @@ class StudentsController < ApplicationController
 
   def redirect_after_destroy
     if @student.destroy
-      @student.team.destroy if @student.team.get_team_members.blank?
+      @student.team.destroy if @student.team_id && @student.team.get_team_members.blank?
       redirect_to students_path, flash: {
         success: t('.success_message', user_name: @student.user.user_name)
       }
