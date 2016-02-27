@@ -39,6 +39,8 @@ source 'https://rubygems.org' do
   # datetime picker
   gem 'momentjs-rails', '>= 2.9.0'
   gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
+  # Gravatar
+  gem 'gravtastic', '~> 3.2.6'
 
   # Use Capistrano for deployment
   # gem 'capistrano-rails', group: :development
