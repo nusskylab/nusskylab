@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable
   devise :recoverable, :rememberable, :trackable, :validatable
+  # for Gravatar
+  include Gravtastic
+  gravtastic
 
   NUS_PROVIDER_REGEX = /\ANUS\z/
   NUS_OPEN_ID_PREFIX_REGEX = %r{\Ahttps:\/\/openid.nus.edu.sg\/}

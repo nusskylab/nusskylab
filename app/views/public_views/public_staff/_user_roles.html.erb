@@ -7,7 +7,7 @@
       <% locals[:roles].each do |role| %>
       <div class="row">
         <div class="col-sm-2">
-          <img src="http://placehold.it/150x150">
+          <%= image_tag role.user.gravatar_url(size: 150) %>
         </div>
         <div class="col-sm-10">
           <div>Name: <strong><%= role.user.user_name %></strong></div>
