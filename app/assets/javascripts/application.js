@@ -37,6 +37,7 @@ $(function () {
  */
 $(function() {
   $('.autolink').autolink();
+  $('.automail').automail();
 });
 
 /**
