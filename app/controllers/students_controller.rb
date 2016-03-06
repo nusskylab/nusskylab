@@ -62,8 +62,14 @@ class StudentsController < ApplicationController
     !authenticate_user(true, false, relevant_users) && return
     @page_title = t('.page_title', user_name: @student.user.user_name)
     return if !check_student_show_rendering
+    milestones = Milestone.order(:id).where(cohort: @student.cohort)
+    survey_templates = []
+    milestones.each do |milestone|
+      survey_templates = survey_templates.concat(milestone.survey_templates)
+    end
     render locals: {
-      milestones: Milestone.order(:id).where(cohort: @student.cohort),
+      milestones: milestones,
+      survey_templates: survey_templates,
       evaluateds: @student.team.evaluateds,
       evaluators: @student.team.evaluators,
       team_submissions: @student.team.get_own_submissions,

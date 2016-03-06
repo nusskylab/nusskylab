@@ -6,6 +6,8 @@ class Milestone < ActiveRecord::Base
   validates :peer_evaluation_deadline, presence: true
   before_validation :fill_current_cohort
 
+  has_many :survey_templates
+
   def get_prev_milestone
     milestones = Milestone.order(:created_at).all
     milestone_idx = milestones.index { |itm| itm.id == id }

@@ -71,6 +71,15 @@ class SurveyTemplatesController < ApplicationController
     }
   end
 
+  def preview
+    !authenticate_user(true, false, [current_user]) && return
+    @survey_template = SurveyTemplate.find(params[:id])
+    @page_title = t('.page_title')
+    render locals: {
+      new_question: Question.new(survey_template_id: @survey_template.id)
+    }
+  end
+
   private
 
   def survey_template_params

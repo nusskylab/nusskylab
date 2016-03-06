@@ -20,4 +20,8 @@ module ApplicationHelper
   def get_current_cohort
     Time.now.year
   end
+
+  def survey_template_type_to_human(survey_template_type)
+    survey_template_type.split('_')[2..-1].map(&:capitalize!).join(' ')
+  end
 end
