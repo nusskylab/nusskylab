@@ -46,9 +46,6 @@ source 'https://rubygems.org' do
   # gem 'capistrano-rails', group: :development
 
   group :development, :test do
-    # Access an IRB console on exception pages or by using
-    # <%= console %> in views
-    gem 'web-console', '~> 2.0'
 
     # Spring speeds up development by keeping your application
     # running in the background.
@@ -62,6 +59,12 @@ source 'https://rubygems.org' do
     gem 'capybara', '~> 2.5.0'
     gem 'selenium-webdriver', '~> 2.48.0'
     gem 'capybara-webkit', '~> 1.7.1'
+  end
+
+  group :development do
+    # Access an IRB console on exception pages or by using
+    # <%= console %> in views
+    gem 'web-console', '~> 2.0'
   end
 
   group :test do
