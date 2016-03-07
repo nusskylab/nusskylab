@@ -42,6 +42,12 @@
                 Submit feedback
               </a>
             </li>
+            <li role="presentation">
+              <a href="#preview-survey-template-panel" aria-controls="preview-survey-template-panel"
+                 role="tab" data-toggle="tab">
+                Preview Forms
+              </a>
+            </li>
           </ul>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="project-panel">
@@ -49,39 +55,52 @@
               <div class="well">
                 <p class="small"><%= t '.submit_submission_instruction' %></p>
               </div>
-              <%= render 'student_submissions', locals: {student: @student,
-                                                         milestones: milestones,
-                                                         team_submissions: team_submissions} %>
+              <%= render 'student_submissions', locals: {
+                student: @student, milestones: milestones,
+                team_submissions: team_submissions
+              } %>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
               <h2 class="text-center">Evaluations</h2>
               <div class="well">
                 <p class="small"><%= t '.submit_evaluation_instruction' %></p>
               </div>
-              <%= render 'student_submit_evaluations', locals: {student: @student,
-                                                         milestones: milestones,
-                                                         evaluateds: evaluateds,
-                                                         team_evaluateds_submissions: team_evaluateds_submissions,
-                                                         team_evaluations: team_evaluations} %>
+              <%= render 'student_submit_evaluations', locals: {
+                student: @student, milestones: milestones, evaluateds: evaluateds,
+                team_evaluateds_submissions: team_evaluateds_submissions,
+                team_evaluations: team_evaluations
+              } %>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="view-evaluation-panel">
               <h2 class="text-center">View all evaluations</h2>
               <div class="well">
                 <p class="small"><%= t '.view_evaluation_instruction' %></p>
               </div>
-              <%= render 'student_view_others_evaluations', locals: {student: @student,
-                                                       milestones: milestones,
-                                                       evaluators: evaluators,
-                                                       team_evaluators_evaluations: team_evaluators_evaluations} %>
+              <%= render 'student_view_others_evaluations', locals: {
+                student: @student, milestones: milestones,
+                evaluators: evaluators,
+                team_evaluators_evaluations: team_evaluators_evaluations
+              } %>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="submit-feedback-panel">
               <h2 class="text-center">Submit feedback</h2>
               <div class="well">
                 <p class="small"><%= t '.submit_feedback_instruction' %></p>
               </div>
-              <%= render 'student_submit_feedbacks', locals: {student: @student,
-                                                              evaluators: evaluators,
-                                                              team_feedbacks: team_feedbacks} %>
+              <%= render 'student_submit_feedbacks', locals: {
+                student: @student, milestones: milestones,
+                evaluators: evaluators,
+                team_feedbacks: team_feedbacks
+              } %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="preview-survey-template-panel">
+              <h2 class="text-center">Preview Peer Evaluations and Feedback Forms</h2>
+              <div class="well">
+                <p class="small"><%= t '.preview_survey_template_instruction' %></p>
+              </div>
+              <%= render 'student_preview_survey_template', locals: {
+                student: @student, milestones: milestones, survey_templates: survey_templates
+              } %>
             </div>
           </div>
         </div>

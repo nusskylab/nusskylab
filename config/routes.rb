@@ -50,7 +50,11 @@ Rails.application.routes.draw do
       resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
     end
   end
-  resources :survey_templates, except: [:destroy]
+  resources :survey_templates, except: [:destroy] do
+    member do
+      get 'preview'
+    end
+  end
   resources :questions, only: [:create, :update, :destroy]
   resources :tags, only: [:index]
   namespace 'public_views' do

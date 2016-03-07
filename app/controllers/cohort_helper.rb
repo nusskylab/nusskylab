@@ -5,6 +5,6 @@ module CohortHelper
   end
 
   def all_cohorts
-    [2015, 2016]
+    [2016, 2015]
   end
 end

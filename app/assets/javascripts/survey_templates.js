@@ -48,3 +48,8 @@ $(function () {
     $(e.target).parent().parent().parent().remove();
   });
 });
+$(function () {
+  if ($('.preview-survey-template')) {
+    $('input,textarea').prop('disabled', true);
+  }
+});

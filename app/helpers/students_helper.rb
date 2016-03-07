@@ -12,6 +12,6 @@ module StudentsHelper
   end
 
   def get_student_team_adviser_name(student)
-    (student.team and student.team.adviser) ? student.team.adviser.user.user_name : 'Nil'
+    (student.team && student.team.adviser) ? student.team.adviser.user.user_name : 'Nil'
   end
 end

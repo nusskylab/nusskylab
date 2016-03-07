@@ -1,0 +1,20 @@
+<% content_for :main_content do %>
+  <% javascript 'survey_templates.js' %>
+  <div class="panel panel-info preview-survey-template">
+    <div class="panel-heading">
+      <h3 class="text-center">Preview Survey Template</h3>
+    </div>
+    <div class="panel-body">
+      <div id="survey_template_view" class="well">
+        <%= render 'survey_template_view', locals: {survey_template: @survey_template} %>
+      </div>
+      <div id="survey-template-questions">
+        <% @survey_template.questions.each do |question| %>
+            <%= render 'questions/question_template', locals: {
+              question: question,
+              question_response: nil
+            } %>
+        <% end %>
+      </div>
+  </div>
+<% end %>

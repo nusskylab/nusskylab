@@ -283,6 +283,9 @@ en:
         evaluations from other teams.
       submit_feedback_instruction: >
         You can submit your feedback here.
+      preview_survey_template_instruction: >
+        You can preview peer evaluation and feedback forms. These forms will be used to
+        evaluate your team's performance.
   submissions:
     late_submission_tooltip: >
       Submission is submitted or modified after deadline.
@@ -328,6 +331,9 @@ en:
     show:
       page_title: >
         View survey template and questions
+    preview:
+      page_title: >
+        Preview survey template and questions
   teams:
     has_dropped_tooltip: >
       This team has dropped out of Skylab :(
