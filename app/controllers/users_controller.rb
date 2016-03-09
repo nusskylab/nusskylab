@@ -23,6 +23,7 @@ class UsersController < ApplicationController
     !authenticate_user(true, true) && return
     @user = User.new(user_params(true))
     if @user.save
+      UserMailer.welcome_email(@user, user_params[:password]).deliver_later
       redirect_to users_path, flash: {
         success: t('.success_message')
       }
