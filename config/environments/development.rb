@@ -20,7 +20,7 @@ Rails.application.configure do
     :address => 'smtp.sendgrid.net',
     :port => 587,
     :user_name => ENV['SENDGRID_USER_NAME'],
-    :password => ENV['SENDDRID_USER_PASSWORD'],
+    :password => ENV['SENDGRID_USER_PASSWORD'],
     :domain => 'nusskylab-dev.comp.nus.edu.sg/',
     :authentication => :plain,
     :enable_starttls_auto => true
