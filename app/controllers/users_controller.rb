@@ -21,9 +21,10 @@ class UsersController < ApplicationController
 
   def create
     !authenticate_user(true, true) && return
-    @user = User.new(user_params(true))
+    user_ps = user_params(true)
+    @user = User.new(user_ps)
     if @user.save
-      UserMailer.welcome_email(@user, user_params[:password]).deliver_later
+      UserMailer.welcome_email(@user, user_ps[:password]).deliver_now
       redirect_to users_path, flash: {
         success: t('.success_message')
       }
@@ -184,6 +185,7 @@ class UsersController < ApplicationController
   def destroy
     !authenticate_user(true, true) && return
     @user = User.find(params[:id])
+    @user.destroy
     redirect_to users_path, flash: {
       success: t('.success_message')
     }
