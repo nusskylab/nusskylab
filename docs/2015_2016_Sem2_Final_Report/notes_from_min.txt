@@ -1,0 +1,38 @@
+General Comments
+
+Give a sense of the scale of Orbital.  How many students, TAs, etc.
+
+You need to quickly give an overview of Ruby, Rails and MVC at the beginning.  Not all of the acronyms you use will be understandable to all who read your thesis (e.g., ACID).
+
+Give homepage/GitHub URLs for any software that you use/cite in your report.  Add date timestamp for when last accessed.  Define the service for the reader in case they are unfamiliar with it.
+
+Try not to use compound verb phrases when a single verb will suffice.  E.g., is support to query -> queries.
+
+Would prefer you tack Ch 3, 4 and 5 together in one chapter as the Orbital workflow.
+Introduction needs to be more comprehensive about Orbital and it's requirements and to point forward to where the subsequent details is at. (Clarification needed)
+
+At the beginning of Submissions (and perhaps elsewhere, e.g., Peer Evaluation) you should give an overview of what the process that you are trying to capture entails (e.g., role of the student, adviser, admin, mentor, etc.) (Clarification needed)
+
+Line by line comments
+x, y? = page # and line number, Sx stands for section x.
+
+S1.1 - you should have highlighted that you had to build the system under production use during Summer 2015.
+
+7, F 2.3 is not readable.  Please give highlights or add additional figures to highlight portions of the overview figure.
+
+9, F 2.4 is not your figure.  Give credit by citing the original source in the figure caption.  "Taken from " or "Excerpted from "
+
+10, Read me => README (global: and elsewhere)
+
+11, can stilled be loaded in => are loaded within 
+
+13, html => HTML (global: and elsewhere)
+
+15, enlarge figure, not readable.
+
+16 give examples of the types of questions and their appearance in the feedback. (Not done yet, needs clarification or further considering on this)
+
+17 open ID => OpenID
+
+19 Mid of the semester => middle of the semester
+

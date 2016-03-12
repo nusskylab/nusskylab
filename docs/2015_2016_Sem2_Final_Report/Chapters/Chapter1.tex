@@ -1,0 +1,53 @@
+\chapter{Introduction} \label{introduction}
+
+Orbital is the School of Computing`s self-driven programming summer experience. It is designed to give first-year students the opportunity to self-learn and build something useful. It is designed as a 4 modular credit (MC) module that is taken pass/fail (CS/CU) over the summer\cite{citation0}. With its focus on hands-on experience, it has been catching more and more attention and an increasing number of first-year students are joining the program to code something useful and interesting. During the academic year of 2015-2016, more than 250 students completed Orbital program with 20 advisers evaluating these teams.
+
+For the evaluation of Orbital program, students are supposed to submit to Milestones as a team, stating what they have done during that phase. And then assigned peer teams(each team will be assigned about 3 peer teams) will be giving feedback regarding the submission and the application built by the team of students. At the same time, there will be an adviser who will overlook the whole process and provide evaluation of a team's submission too. After the submissions and evaluations are done, a feedback is expected from a team to its peer teams and its adviser regarding the quality of evaluations received.
+
+The nature of Orbital defines the scope of Skylab —-- a development project built for peer evaluations. It also provides students with a real-life Software Engineering training ground to learn and sharpen programming and system design skills. 
+
+\section{Challenges}
+
+\subsection{Tight deadlines}
+As I started Skylab only at March of 2015 and students started using the system at May of 2015, there is not much time for development. In fact, many features could only be delivered and put into production right before students are using. Chasing deadlines and fixing urgent issues during implementation, especially in the summer when students were still using Skylab, not only brought a lot of pressure to me but also led to difficulties in system design. Some decisions were made with compromise to deadlines, leaving potential problems for later implementation of Skylab.
+
+\subsection{System design}
+Skylab is built built using Ruby on Rails, a mature convention-over-configuration web framework. So the first challenge for me is to get familiar with the conventions and recommended ways of doing things in Rails community. Then I can design the web application on the top of main-stream philosophy in Rails community. Another issue with the design of Skylab is that this is the first time I have been designing such an application from ground up, without any guidance from any experienced Ruby on Rails developers. Therefore, it is all about trial-and-error and explore my own way. Reading books and browsing online tutorials helped me a lot and luckily there are plenty of resources about Ruby on Rails development due to its popularity.
+
+\subsection{Evolving requirements}
+Although the scope of the project is very clear and well-defined, changes in requirements are expected and did happen a lot due to evolving features of Skylab project and Skylab users' feedback. The challenge is to cope with all changes and sometimes adjustments to the design of system have to be made to accommodate for extensions. Therefore agility in development and adaptability of the system is expected.
+
+\subsection{Data migration}
+Sometimes schema migration is required as a result of change in requirements. Therefore, dealing with old data and migration of data without affecting the use of application is another challenge during the development of Skylab. Extreme attention when migrating is required as data may not be clean enough and careless migration may even cause the system to be unusable for some users.
+
+\subsection{Security}
+Security is definitely a very important perspective in web development. Although Rails is handling security well by taking measures against SQL injection, XSS attacks and CSRF attacks, there are still quite some vulnerabilities if not handled well. During development of Skylab, various techniques and practices are adopted to make Skylab more secure and trust-able. What is more, with different roles in Skylab, a role based access control system is in place to permit users to carry out allowed actions only.
+
+\subsection{Coding quality/maintainability}
+Although currently there is only me constantly contributing to Skylab repository, a good development cycle which is agile enough is not only important for me to keep track of history and manage different issues but also convenient for developers who will join later to jump in and get started. Testing is also a very important factor when it is comes to long-term maintenance. A continuous integration would also help me in catching regression errors in development early and easily. Besides all mentioned above, refactoring is helpful to the growth of Skylab.
+
+\section{Objectives}
+
+In this project, I need to:
+\begin{itemize}
+  \item Enable users to login via NUS OpenID if they have NUS Net IDs already.
+  \item Enable users to login via combination of email and password for those who do not have NUS Net IDs and also serve as a backup solution to NUS OpenID login.
+  \item Enable students to edit their own team's details including ``Team Name'' and ``Project Level''.
+  \item Enable students to submit for Milestones or edit their previous submissions. Besides, students in the same team should be able to see changes made by teammates(For example, Team A is supped to be evaluated by Team B, Team C and Team D. Then Team B, Team C and Team D are evaluator teams to Team A and Team A is the evaluated Team to all 3 teams).
+  \item Enable assignment of evaluation relationship among teams. Each team will be assigned 3 teams as evaluators.
+  \item Enable students to view submissions from teams that they should evaluate(For example, Team A is supposed to evaluate Team B and Team C; Then students in Team A should be able to view submissions from Team B and Team C).
+  \item Enable students to evaluate submissions from teams that they are evaluating.
+  \item Enable students to view peer evaluations from peer teams and their adviser(For example, Team B is supposed to be evaluated by Team A and Team C; Then students in Team B should be able to view peer evaluations submitted by Team A and Team C for Team B). For public part of a peer evaluation, students can see response with name of the team that submitted that evaluation; As for private part, students can only see a compilation of all private-part responses without team names.
+  \item Enable students to submit feedback regarding the evaluations received(For example, Team B is supposed to be evaluated by Team A and Team C; Then students in Team B should be able to submit feedback to Team A and Team C regarding peer evaluations received from each team).
+  \item Enable advisers to view a list of all teams under his/her supervision and edit any of these team's details including ``Team name'', ``Project Level'' and ``Has Dropped''.
+  \item Enable advisers to submit evaluations to submissions from teams he/she supervises.
+  \item Enable advisers to view feedback from his/her teams.
+  \item Enable advisers to view a list of all teams and students in the current cohort.
+  \item Enable advisers to view, edit and delete evaluation relationships among teams he/she supervises.
+  \item Enable administrators to view, edit and delete any users, students, advisers, mentors, administrators, milestones and evaluation relationships.
+  \item Enable administrators to login as any user into the system to debug and oversee things.
+\end{itemize}
+
+\section{Outline}
+
+In this report, I will discuss various accomplishments I have done in the development. Chapter~\ref{background} will be an overview of current architecture of Skylab, and methodologies I employed during the development. Chapter~\ref{workflow} will be talking about problems in the implementation of submissions, peer evaluations and feedback. Then security related issues such as user authentication and access control will be discussed in Chapter~\ref{security}. Chapter~\ref{focusgroupmeeting} is about adviser focus group meeting and its findings. Last but not least, a summary of work and an overlook of future development will come in Chapter~\ref{conclusionandfuturework}.
