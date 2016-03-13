@@ -1,6 +1,6 @@
 <table class="table-sortable table table-hover" id="students-table">
   <thead>
-  <tr><th class="unsortable sort-index">Index</th><th>User Name</th><th>User Email</th><th>Team Name</th><th>Project Level</th><th>Adviser</th><th class="unsortable">Cohort</th><th class="unsortable">Actions</th></tr>
+  <tr><th class="unsortable sort-index">Index</th><th>User Name</th><th>User Email</th><th>Team Name</th><th>Project Level</th><th>Adviser</th><th>Pending?</th><th class="unsortable">Actions</th></tr>
   </thead>
   <tbody>
   <% locals[:students].each_with_index do |student, idx| %>
@@ -11,7 +11,7 @@
       <td><%= get_student_team_name(student) %></td>
       <td><%= get_student_team_project_level(student) %></td>
       <td><%= get_student_team_adviser_name(student) %></td>
-      <td><%= student.cohort %></td>
+      <td><%= student.is_pending %></td>
       <td>
         <a class="btn btn-primary btn-xs" href="<%=  student_path(student.id) %>">View</a>
         <a class="btn btn-default btn-xs" href="<%= edit_student_path(student.id) %>">Edit</a>
