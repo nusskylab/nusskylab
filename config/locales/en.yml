@@ -392,6 +392,26 @@ en:
         Team %{team_name} has been deleted successfully.
       failure_message: >
         Team %{team_name} could not be deleted :(
+  tutors:
+    index:
+      page_title: >
+        View all tutors
+    new:
+      page_title: >
+        Create a new tutor
+    create:
+      success_message: >
+        Tutor %{user_name} has been successfully created
+      failure_message: >
+        Tutor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+    show:
+      page_title: >
+        View tutor %{user_name}'s page
+    destroy:
+      success_message: >
+        Tutor %{user_name} has been successfully deleted
+      failure_message: >
+        Tutor could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   users:
     index:
       page_title: >

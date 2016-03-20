@@ -41,20 +41,21 @@ class RolesController < ApplicationController
     !authenticate_user(true, true) && return
     post_params = role_params
     user = User.find(post_params[:user_id])
+    cohort = post_params[:cohort] || current_cohort
     if user
       @role = role_cls.new(post_params)
       if @role.save
-        redirect_to path_for_index, flash: {
+        redirect_to path_for_index(cohort: cohort), flash: {
           success: t('.success_message', user_name: user.user_name)
         }
       else
-        redirect_to path_for_new, flash: {
+        redirect_to path_for_new(cohort: cohort), flash: {
           danger: t('.failure_message',
                     error_message: @role.errors.full_messages.join(', '))
         }
       end
     else
-      redirect_to path_for_new, flash: {
+      redirect_to path_for_new(cohort: cohort), flash: {
         danger: t('.user_missing_message')
       }
     end
@@ -81,8 +82,9 @@ class RolesController < ApplicationController
   def update
     !authenticate_user(true, true) && return
     @role = role_cls.find(params[:id])
+    cohort = @role.cohort
     if @role.update(role_params)
-      redirect_to path_for_index, flash: {
+      redirect_to path_for_index(cohort: cohort), flash: {
         success: t('.success_message', user_name: @role.user.user_name)
       }
     else
@@ -96,17 +98,18 @@ class RolesController < ApplicationController
   def destroy
     !authenticate_user(true, true) && return
     @role = role_cls.find(params[:id])
+    cohort = @role.cohort
     if @role.destroy
       if handles_for_actions[:destroy] &&
          handles_for_actions[:destroy][:success]
         handle_fn = handles_for_actions[:destroy][:success]
         handle_fn(@role)
       end
-      redirect_to path_for_index, flash: {
+      redirect_to path_for_index(cohort: cohort), flash: {
         success: t('.success_message', user_name: @role.user.user_name)
       }
     else
-      redirect_to path_for_index, flash: {
+      redirect_to path_for_index(cohort: cohort), flash: {
         success: t('.failure_message',
                    error_message: @role.errors.full_messages.join(', '))
       }
@@ -115,35 +118,41 @@ class RolesController < ApplicationController
 
   # Returns the Model class
   def role_cls
+    User
   end
 
   # Returns params needed for creating/updating role
   def role_params
+    {}
   end
 
   # Returns data for role's index
   def data_for_role_index
+    {}
   end
 
   # Returns data for role's new
   def data_for_role_new
+    {}
   end
 
   # Returns data for role's show
   def data_for_role_show
+    {}
   end
 
   # Returns data for role's edit
   def data_for_role_edit
+    {}
   end
 
   # Returns paths: index for current controller
-  def path_for_index
+  def path_for_index(ps = {})
     home_path
   end
 
   # Returns paths: new for current controller
-  def path_for_new
+  def path_for_new(ps = {})
     home_path
   end
 

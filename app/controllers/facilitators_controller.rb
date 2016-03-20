@@ -8,12 +8,12 @@ class FacilitatorsController < RolesController
     params.require(:facilitator).permit(:user_id, :cohort)
   end
 
-  def path_for_index
-    facilitators_path
+  def path_for_index(ps = {})
+    facilitators_path(ps)
   end
 
-  def path_for_new
-    new_facilitator_path
+  def path_for_new(ps = {})
+    new_facilitator_path(ps)
   end
 
   def path_for_edit(role_id)
