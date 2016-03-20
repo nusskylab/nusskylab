@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   resources :advisers, only: [:index, :new, :create, :show, :destroy]
   resources :mentors, only: [:index, :new, :create, :show, :destroy]
   resources :admins, only: [:index, :new, :create, :show, :destroy]
+  resources :facilitators, only: [:index, :new, :create, :show, :destroy]
+  resources :tutors, only: [:index, :new, :create, :show, :destroy]
   resources :teams do
     resources :feedbacks, only: [:new, :create, :edit, :update]
   end

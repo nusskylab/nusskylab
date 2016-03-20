@@ -110,6 +110,26 @@ en:
         Evaluating of %{entity1_name} and %{entity2_name} is deleted successfully.
       failure_message: >
         Evaluating could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+  facilitators:
+    index:
+      page_title: >
+        View all facilitators
+    new:
+      page_title: >
+        Create a new facilitator
+    create:
+      success_message: >
+        Facilitator %{user_name} has been successfully created
+      failure_message: >
+        Facilitator could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+    show:
+      page_title: >
+        View facilitator %{user_name}'s page
+    destroy:
+      success_message: >
+        Facilitator %{user_name} has been successfully deleted
+      failure_message: >
+        Facilitator could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   feedbacks:
     instruction_omitted_message: >
       Instruction has been omitted for simplicity
