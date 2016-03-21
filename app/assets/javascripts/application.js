@@ -93,24 +93,24 @@ $(function () {
     $.ajax({
       type: 'GET',
       url: remoteApi,
-      dataType: 'json',
-      success: function (res) {
-        if ($(elem).hasClass('question-multiple-select')) {
-          $.each(res, function (idx, val) {
-            if (dataValues.indexOf(val.id.toString()) != -1) {
-              $(elem).append($('<option></option>', {value: val.id, text: val.content}).prop('selected', true));
-            } else {
-              $(elem).append($('<option></option>', {value: val.id, text: val.content}));
-            }
-          });
-        }
-        if (callbackAction === 'select2') {
-          $(elem).select2({
-            width: '100%'
-          });
-        }
-      },
-      error: function (err) {
+      dataType: 'json'
+    }).done(function (res) {
+      if ($(elem).hasClass('question-multiple-select')) {
+        $.each(res, function (idx, val) {
+          if (dataValues.indexOf(val.id.toString()) != -1) {
+            $(elem).append($('<option></option>', {value: val.id, text: val.content}).prop('selected', true));
+          } else {
+            $(elem).append($('<option></option>', {value: val.id, text: val.content}));
+          }
+        });
+      }
+      if (callbackAction === 'select2') {
+        $(elem).select2({
+          width: '100%'
+        });
+      }
+    }).fail(function (err) {
+      if (err.status != 200) {
         console.log(err);
       }
     });

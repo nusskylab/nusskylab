@@ -26,12 +26,12 @@ namespace :registration do
       end
     end
     all_registrations.each do |registration|
-      response = JSON.parse(registration.response_content)
+      response = registration.response_content
       response.each do |key, val|
         if questions[key.to_i] && questions[key.to_i].extras
-          if JSON.parse(questions[key.to_i].extras)[:for_registration]
+          if JSON.parse(questions[key.to_i].extras)['for_registration']
             val.each do |tag_idx|
-              tag_freq_table[tag_idx.to_i] = tag_freq_table[tag_idx.to_i] + 1 if !tag_freq_table[tag_idx.to_i].nil?
+              tag_freq_table[tag_idx.to_i] += 1 if !tag_freq_table[tag_idx.to_i].nil?
             end
           end
         end
@@ -39,10 +39,10 @@ namespace :registration do
     end
     all_registrations.each do |registration|
       students_vectors[registration.user_id] = {}
-      response = JSON.parse(registration.response_content)
+      response = registration.response_content
       response.each do |key, val|
         if questions[key.to_i] && questions[key.to_i].extras
-          if JSON.parse(questions[key.to_i].extras)[:for_registration]
+          if JSON.parse(questions[key.to_i].extras)['for_registration']
             val.each do |tag_idx|
               students_vectors[registration.user_id][tag_idx.to_i] = 1.0 * all_registrations.length / tag_freq_table[tag_idx.to_i]
             end
@@ -58,7 +58,18 @@ namespace :registration do
         similarity_table[stu1_user_id][stu2_user_id] = compute_vector_cosine(vec1, vec2) if stu2_user_id != stu1_user_id
       end
     end
-    puts similarity_table
+    puts similarity_table[691]
+    potential_teammates = {}
+    similarity_table.each do |user_id, similarity_tbl|
+      other_users = []
+      similarity_tbl.each do |other_user_id, similarity|
+        similarity = 0.0 if similarity.nan?
+        other_users.append([other_user_id, similarity])
+      end
+      other_users.sort! { |a, b| a[1] <=> b[1] }
+      potential_teammates[user_id] = other_users.last(3).reverse
+    end
+    puts potential_teammates[691]
   end
 
   def compute_vector_cosine(vec1, vec2)
