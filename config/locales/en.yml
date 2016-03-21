@@ -110,6 +110,26 @@ en:
         Evaluating of %{entity1_name} and %{entity2_name} is deleted successfully.
       failure_message: >
         Evaluating could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+  facilitators:
+    index:
+      page_title: >
+        View all facilitators
+    new:
+      page_title: >
+        Create a new facilitator
+    create:
+      success_message: >
+        Facilitator %{user_name} has been successfully created
+      failure_message: >
+        Facilitator could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+    show:
+      page_title: >
+        View facilitator %{user_name}'s page
+    destroy:
+      success_message: >
+        Facilitator %{user_name} has been successfully deleted
+      failure_message: >
+        Facilitator could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   feedbacks:
     instruction_omitted_message: >
       Instruction has been omitted for simplicity
@@ -372,6 +392,26 @@ en:
         Team %{team_name} has been deleted successfully.
       failure_message: >
         Team %{team_name} could not be deleted :(
+  tutors:
+    index:
+      page_title: >
+        View all tutors
+    new:
+      page_title: >
+        Create a new tutor
+    create:
+      success_message: >
+        Tutor %{user_name} has been successfully created
+      failure_message: >
+        Tutor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+    show:
+      page_title: >
+        View tutor %{user_name}'s page
+    destroy:
+      success_message: >
+        Tutor %{user_name} has been successfully deleted
+      failure_message: >
+        Tutor could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   users:
     index:
       page_title: >

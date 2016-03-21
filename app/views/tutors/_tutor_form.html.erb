@@ -1,0 +1,9 @@
+<%= simple_form_for(locals[:tutor], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+                    url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :user_id, collection: locals[:users].map {|user| [user.user_name, user.id]}, include_blank: false, required: true %>
+  <% if locals[:is_new] %>
+    <input type="hidden" name="tutor[cohort]" value="<%= locals[:cohort] %>">
+  <% end %>
+  <%= f.button :submit_centred, class: 'btn-success' %>
+<% end %>

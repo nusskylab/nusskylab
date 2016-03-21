@@ -3,15 +3,28 @@ class PublicViews::PublicStaffController < ApplicationController
   def index
     !authenticate_user(false, false) && return
     @page_title = t('.page_title')
-    @staff_table = {}
-    all_cohorts.each do |cohort|
-      facilitators = Facilitator.where(cohort: cohort)
-      advisers = Adviser.where(cohort: cohort)
-      tutors = Tutor.where(cohort: cohort)
-      @staff_table[cohort] = {}
-      @staff_table[cohort][:facilitators] = facilitators
-      @staff_table[cohort][:advisers] = advisers
-      @staff_table[cohort][:tutor] = tutors
-    end
+    cohort = params[:cohort] || current_cohort
+    facilitators = Facilitator.where(
+      cohort: cohort
+    ).joins(:user).order('user_name')
+    advisers = Adviser.where(
+      cohort: cohort
+    ).joins(:user).order('user_name')
+    tutors = Tutor.where(
+      cohort: cohort
+    ).joins(:user).order('user_name')
+    mentors = Mentor.where(
+      cohort: cohort
+    ).joins(:user).order('user_name')
+    staff_table = {}
+    staff_table[:facilitators] = facilitators
+    staff_table[:advisers] = advisers
+    staff_table[:mentors] = mentors
+    staff_table[:tutor] = tutors
+    render locals: {
+      staff: staff_table,
+      cohort: cohort,
+      all_cohorts: all_cohorts
+    }
   end
 end

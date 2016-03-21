@@ -49,7 +49,7 @@ $(function () {
   });
 });
 $(function () {
-  if ($('.preview-survey-template')) {
+  if ($('.preview-survey-template').length) {
     $('input,textarea').prop('disabled', true);
   }
 });

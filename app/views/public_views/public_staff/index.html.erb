@@ -1,24 +1,24 @@
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <% first_loop = true; @staff_table.each do | cohort, staff | %>
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-          <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=cohort%>" aria-expanded="true" aria-controls="collapse<%=cohort%>">
-              Cohort <%=cohort%>
-            </a>
-          </h4>
-        </div>
-        <div id="collapse<%=cohort%>" class="panel-collapse collapse <% if first_loop %>in<% first_loop = false; end %>" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            <% if staff %>
-                <%= render 'user_roles', locals: {roles: staff[:facilitators], selected_type: 'Facilitators'} %>
-                <%= render 'user_roles', locals: {roles: staff[:advisers], selected_type: 'Advisers'} %>
-                <%= render 'user_roles', locals: {roles: staff[:tutors], selected_type: 'Tutors'} %>
-            <% else %>
-                No Data Available
-            <% end %>
-          </div>
-        </div>
-      </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="text-center">
+      Staff in Cohort <%= cohort %>
+    </h2>
+  </div>
+  <div class="panel-body">
+    <% if staff %>
+      <%= render 'user_roles', locals: {roles: staff[:facilitators], selected_type: 'Facilitators'} %>
+      <%= render 'user_roles', locals: {roles: staff[:advisers], selected_type: 'Advisers'} %>
+      <%= render 'user_roles', locals: {roles: staff[:mentors], selected_type: 'Mentors'} %>
+      <%= render 'user_roles', locals: {roles: staff[:tutors], selected_type: 'Tutors'} %>
+    <% else %>
+      No Data Available
+    <% end %>
+  </div>
+</div>
+<div class="col-sm-12">
+  <% all_cohorts.each do |cohort| %>
+  <div class="col-sm-2">
+    <%= link_to cohort, public_views_public_staff_index_path(cohort: cohort), class: 'btn btn-info' %>
+  </div>
   <% end %>
 </div>

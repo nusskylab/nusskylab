@@ -111,7 +111,9 @@ class StudentsController < ApplicationController
   private
 
   def student_params
-    params.require(:student).permit(:team_id)
+    stu = params.require(:student).permit(:team_id, :is_pending)
+    stu.delete(:is_pending) unless @student.is_pending
+    stu
   end
 
   def create_student_for_user(user)
