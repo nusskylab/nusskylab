@@ -11,7 +11,7 @@ namespace :registration do
   desc 'Match students without teams yet'
   task match_students_without_teams: :environment do
     current_cohort = Time.now.year
-    pending_students = Student.where(cohort: current_cohort, is_pending: true)
+    pending_students = Student.where(cohort: current_cohort, is_pending: true, team_id: nil)
     students_vectors = {}
     tag_freq_table = {}
     HashTag.all.each do |tag|
@@ -58,7 +58,6 @@ namespace :registration do
         similarity_table[stu1_user_id][stu2_user_id] = compute_vector_cosine(vec1, vec2) if stu2_user_id != stu1_user_id
       end
     end
-    puts similarity_table[691]
     potential_teammates = {}
     similarity_table.each do |user_id, similarity_tbl|
       other_users = []
@@ -69,7 +68,15 @@ namespace :registration do
       other_users.sort! { |a, b| a[1] <=> b[1] }
       potential_teammates[user_id] = other_users.last(3).reverse
     end
-    puts potential_teammates[691]
+    require 'csv'
+    CSV.open('matches.csv', 'wb') do |csv|
+      csv << ['Student User ID', 'Match 1', 'Match 2', 'Match 3']
+      potential_teammates.each do |user_id, matches|
+        row = [user_id]
+        row.concat(matches)
+        csv << row
+      end
+    end
   end
 
   def compute_vector_cosine(vec1, vec2)
