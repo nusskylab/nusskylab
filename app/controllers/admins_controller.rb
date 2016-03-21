@@ -1,79 +1,32 @@
-# AdminsController: manage actions related to Admin model/role.
-#   index:   list all admins
-#   new:     view to create a new admin for non-admin user
-#   create:  create a new admin for non-admin user
-#   show:    view and homepage for and admin
-#   destroy: delete an admin
-class AdminsController < ApplicationController
-  def index
-    !check_access(true, true) && return
-    @page_title = t('.page_title')
-    @admins = Admin.where(cohort: current_cohort)
+# AdminsController
+class AdminsController < RolesController
+  def role_cls
+    Admin
   end
 
-  def new
-    !check_access(true, true) && return
-    @page_title = t('.page_title')
-    @admin = Admin.new
-    render locals: {
-      users: User.all
-    }
+  def role_params
+    params.require(:admin).permit(:user_id, :cohort)
   end
 
-  def create
-    !check_access(true, true) && return
-    user = User.find(params[:admin][:user_id])
-    @admin = Admin.new(user_id: user.id)
-    is_saved = @admin.save
-    error_message = @admin.errors.full_messages.join(' ')
-    redirect_after_create_action(is_saved,
-                                 user.user_name,
-                                 error_message) && return
+  def path_for_index(ps = {})
+    admins_path(ps)
   end
 
-  def show
-    !check_access(true, true) && return
-    @admin = Admin.find(params[:id])
-    @page_title = t('.page_title', user_name: @admin.user.user_name)
+  def path_for_new(ps = {})
+    new_admin_path(ps)
   end
 
-  def destroy
-    !check_access(true, true) && return
-    @admin = Admin.find(params[:id])
-    is_error = check_for_delete_self
-    error_message = @admin.errors.full_messages.join(' ')
-    redirect_after_destroy_action(is_error, error_message)
+  def path_for_edit(role_id)
+    edit_admin_path(role_id)
   end
 
-  private
-
-  def redirect_after_create_action(is_saved, user_name, error_message)
-    if is_saved
-      redirect_to admins_path, flash: {
-        success: t('.success_message', user_name: user_name)
-      }
-    else
-      redirect_to new_admin_path, flash: {
-        danger: t('.failure_message', error_message: error_message)
-      }
-    end
+  def path_for_show(role_id)
+    admin_path(role_id)
   end
 
-  def check_for_delete_self
-    is_error = (@admin.user_id == current_user.id)
-    @admin.errors.add(:user_id, t('.cannot_delete_self_error')) if is_error
-    is_error
-  end
-
-  def redirect_after_destroy_action(is_error, error_message)
-    if @admin.destroy && (!is_error)
-      redirect_to admins_path, flash: {
-        success: t('.success_message', user_name: @admin.user.user_name)
-      }
-    else
-      redirect_to admins_path, flash: {
-        danger: t('.failure_message', error_message: error_message)
-      }
-    end
+  def can_destroy_role?
+    is_error = (@role.user_id == current_user.id)
+    @role.errors.add(:user_id, t('.cannot_delete_self_error')) if is_error
+    !is_error
   end
 end

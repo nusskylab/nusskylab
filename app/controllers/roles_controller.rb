@@ -99,7 +99,7 @@ class RolesController < ApplicationController
     !authenticate_user(true, true) && return
     @role = role_cls.find(params[:id])
     cohort = @role.cohort
-    if @role.destroy
+    if @role.destroy && can_destroy_role?
       if handles_for_actions[:destroy] &&
          handles_for_actions[:destroy][:success]
         handle_fn = handles_for_actions[:destroy][:success]
@@ -168,5 +168,9 @@ class RolesController < ApplicationController
 
   def handles_for_actions
     {}
+  end
+
+  def can_destroy_role?
+    true
   end
 end
