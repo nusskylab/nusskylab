@@ -1,15 +1,15 @@
 <% content_for :main_content do %>
-    <% javascript 'mentors.js' %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2>
-          Create an mentor
-        </h2>
-      </div>
-      <div class="panel-body">
-        <%= render 'mentor_form', locals: {mentor: @mentor || Mentor.new,
-                                           users: users,
-                                           is_new: true} %>
-      </div>
+  <% javascript 'mentors.js' %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>
+        Create a mentor in cohort <%= cohort %>
+      </h2>
     </div>
+    <div class="panel-body">
+      <%= render 'mentor_form', locals: {
+        mentor: @role, users: users, cohort: cohort, is_new: true
+      } %>
+    </div>
+  </div>
 <% end %>

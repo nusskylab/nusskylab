@@ -21,7 +21,7 @@ RSpec.describe AdminsController, type: :controller do
       login_admin
       it 'should assign @admins' do
         get :index
-        expect(assigns(:admins).length).to eql Admin.all.length
+        expect(assigns(:roles).length).to eql Admin.all.length
       end
 
       it 'should render index for admin user' do
@@ -77,13 +77,13 @@ RSpec.describe AdminsController, type: :controller do
       it 'should redirect to admins with success for admin user' do
         user = FactoryGirl.create(:user, email: '1@admin.controller.spec', uid: '1.admin.controller.spec')
         post :create, admin: {user_id: user.id}
-        expect(response).to redirect_to(admins_path)
+        expect(response).to redirect_to(admins_path(cohort: controller.current_cohort))
         expect(flash[:success]).not_to be_nil
       end
 
       it 'should redirect to new admin with danger for admin user' do
         post :create, admin: {user_id: subject.current_user.id}
-        expect(response).to redirect_to(new_admin_path)
+        expect(response).to redirect_to(new_admin_path(cohort: controller.current_cohort))
         expect(flash[:danger]).not_to be_nil
       end
     end
@@ -92,7 +92,9 @@ RSpec.describe AdminsController, type: :controller do
   describe 'GET #show' do
     context 'user not logged in' do
       it 'should redirect to root_path for non_user' do
-        get :show, id: 1
+        user = FactoryGirl.create(:user, email: '2@admin.controller.spec', uid: '2.admin.controller.spec')
+        admin = FactoryGirl.create(:admin, user_id: user.id)
+        get :show, id: admin.id
         expect(response).to redirect_to(root_path)
       end
     end
@@ -100,7 +102,9 @@ RSpec.describe AdminsController, type: :controller do
     context 'user logged in but not admin' do
       login_user
       it 'should redirect to home_path for non_admin' do
-        get :show, id: 1
+        user = FactoryGirl.create(:user, email: '2@admin.controller.spec', uid: '2.admin.controller.spec')
+        admin = FactoryGirl.create(:admin, user_id: user.id)
+        get :show, id: admin.id
         expect(response).to redirect_to(controller.home_path)
       end
     end
@@ -137,14 +141,14 @@ RSpec.describe AdminsController, type: :controller do
         user = FactoryGirl.create(:user, email: '2@admin.controller.spec', uid: '2.admin.controller.spec')
         admin = FactoryGirl.create(:admin, user_id: user.id)
         delete :destroy, id: admin.id
-        expect(response).to redirect_to(admins_path)
+        expect(response).to redirect_to(admins_path(cohort: controller.current_cohort))
         expect(flash[:success]).not_to be_nil
       end
 
-      it 'should redirect with failure for admin user' do
+      it 'should redirect with failure for admin user if trying to delete self' do
         admin = Admin.find_by(user_id: subject.current_user.id)
         delete :destroy, id: admin.id
-        expect(response).to redirect_to(admins_path)
+        expect(response).to redirect_to(admins_path(cohort: controller.current_cohort))
         expect(flash[:danger]).not_to be_nil
       end
     end

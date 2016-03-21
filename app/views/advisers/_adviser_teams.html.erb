@@ -1,10 +1,5 @@
-<div>
-
+<div class="table-responsive">
   <table class="table table-hover">
-    <col width="25%">
-    <col width="25%">
-    <col width="25%">
-    <col width="25%">
     <thead>
     <tr>
       <th>Team Name</th>
@@ -14,7 +9,7 @@
     </tr>
     </thead>
     <tbody>
-    <% locals[:adviser].teams.each do |team| %>
+      <% locals[:adviser].teams.each do |team| %>
         <tr>
           <td>
             <a href="<%= team_path(team) %>" class="btn btn-info"><%= team.team_name %></a>
@@ -31,7 +26,7 @@
             <a href="<%= edit_team_path(team) %>" class="btn btn-success">Edit</a>
           </td>
         </tr>
-    <% end %>
+      <% end %>
     </tbody>
   </table>
 </div>
