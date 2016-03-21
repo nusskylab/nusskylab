@@ -1,7 +1,7 @@
 # Base Class for different roles
 class RolesController < ApplicationController
   def index
-    !authenticate_user(true, true) && return
+    !authenticate_user(true, false, additional_users_for_index) && return
     cohort = params[:cohort] || current_cohort
     @page_title = t('.page_title')
     @roles = role_cls.where(cohort: cohort)
@@ -24,7 +24,7 @@ class RolesController < ApplicationController
   end
 
   def new
-    !authenticate_user(true, true) && return
+    !authenticate_user(true, false, additional_users_for_new) && return
     @page_title = t('.page_title')
     @role = role_cls.new
     cohort = params[:cohort] || current_cohort
@@ -38,7 +38,7 @@ class RolesController < ApplicationController
   end
 
   def create
-    !authenticate_user(true, true) && return
+    !authenticate_user(true, false, additional_users_for_new) && return
     post_params = role_params
     user = User.find(post_params[:user_id])
     cohort = post_params[:cohort] || current_cohort
@@ -63,7 +63,7 @@ class RolesController < ApplicationController
 
   def show
     @role = role_cls.find(params[:id])
-    !authenticate_user(true, false, [@role.user]) && return
+    !authenticate_user(true, false, additional_users_for_show) && return
     @page_title = t('.page_title', user_name: @role.user.user_name)
     render locals: {
       role_data: data_for_role_show
@@ -71,17 +71,17 @@ class RolesController < ApplicationController
   end
 
   def edit
-    !authenticate_user(true, true) && return
-    @page_title = t('.page_title')
     @role = role_cls.find(params[:id])
+    !authenticate_user(true, false, additional_users_for_edit) && return
+    @page_title = t('.page_title')
     render locals: {
       role_data: data_for_role_edit
     }
   end
 
   def update
-    !authenticate_user(true, true) && return
     @role = role_cls.find(params[:id])
+    !authenticate_user(true, false, additional_users_for_edit) && return
     cohort = @role.cohort
     if @role.update(role_params)
       redirect_to path_for_index(cohort: cohort), flash: {
@@ -96,7 +96,7 @@ class RolesController < ApplicationController
   end
 
   def destroy
-    !authenticate_user(true, true) && return
+    !authenticate_user(true, false, additional_users_for_destroy) && return
     @role = role_cls.find(params[:id])
     cohort = @role.cohort
     if @role.destroy && can_destroy_role?
@@ -144,6 +144,31 @@ class RolesController < ApplicationController
   # Returns data for role's edit
   def data_for_role_edit
     {}
+  end
+
+  # Returns other users who can access index page
+  def additional_users_for_index
+    []
+  end
+
+  # Returns other users who can access new page
+  def additional_users_for_new
+    []
+  end
+
+  # Returns other users who can access edit page
+  def additional_users_for_edit
+    []
+  end
+
+  # Returns other users who can access show page
+  def additional_users_for_show
+    [@role.user]
+  end
+
+  # Returns other users who can access destroy action
+  def additional_users_for_destroy
+    []
   end
 
   # Returns paths: index for current controller

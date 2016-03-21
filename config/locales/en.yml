@@ -44,6 +44,8 @@ en:
         Admin %{user_name} has been successfully created
       failure_message: >
         Admin could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+      user_missing_message: >
+        User with specified ID could not be found. Please provide a valid user ID.
     show:
       page_title: >
         View admin %{user_name}'s page
@@ -66,6 +68,8 @@ en:
         Adviser %{user_name} has been successfully created
       failure_message: >
         Adviser could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+      user_missing_message: >
+        User with specified ID could not be found. Please provide a valid user ID.
     show:
       page_title: >
         View adviser %{user_name}'s page
@@ -122,6 +126,8 @@ en:
         Facilitator %{user_name} has been successfully created
       failure_message: >
         Facilitator could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+      user_missing_message: >
+        User with specified ID could not be found. Please provide a valid user ID.
     show:
       page_title: >
         View facilitator %{user_name}'s page
@@ -165,6 +171,8 @@ en:
         Mentor %{user_name} has been successfully created
       failure_message: >
         Mentor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+      user_missing_message: >
+        User with specified ID could not be found. Please provide a valid user ID.
     show:
       page_title: >
         View mentor %{user_name}'s page
@@ -404,6 +412,8 @@ en:
         Tutor %{user_name} has been successfully created
       failure_message: >
         Tutor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+      user_missing_message: >
+        User with specified ID could not be found. Please provide a valid user ID.
     show:
       page_title: >
         View tutor %{user_name}'s page

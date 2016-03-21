@@ -1,17 +1,17 @@
 <% content_for :main_content do %>
-    <% javascript 'students.js' %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2>
-          Create a student
-        </h2>
-      </div>
-      <div class="panel-body">
-        <div class="form-container">
-          <%= render 'student_form', locals: {student: @student,
-                                              users: users,
-                                              is_new: true} %>
-        </div>
+  <% javascript 'students.js' %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>
+        Create a student
+      </h2>
+    </div>
+    <div class="panel-body">
+      <div class="form-container">
+        <%= render 'student_form', locals: {
+          student: @role, users: users, is_new: true, cohort: cohort
+        } %>
       </div>
     </div>
+  </div>
 <% end %>

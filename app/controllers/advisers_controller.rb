@@ -16,10 +16,6 @@ class AdvisersController < RolesController
     new_adviser_path(ps)
   end
 
-  def path_for_edit(role_id)
-    edit_adviser_path(role_id)
-  end
-
   def path_for_show(role_id)
     adviser_path(role_id)
   end
@@ -29,11 +25,11 @@ class AdvisersController < RolesController
     teams_submissions = {}
     own_evaluations = {}
     populate_adviser_data(milestones, teams_submissions, own_evaluations)
-    role_data = {}
-    role_data[:milestones] = milestones
-    role_data[:teams_submissions] = teams_submissions
-    role_data[:own_evaluations] = own_evaluations
-    role_data
+    {
+      milestones: milestones,
+      teams_submissions: teams_submissions,
+      own_evaluations: own_evaluations
+    }
   end
 
   def populate_adviser_data(milestones, teams_submissions, own_evaluations)
