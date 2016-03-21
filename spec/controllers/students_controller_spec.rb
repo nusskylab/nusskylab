@@ -21,7 +21,7 @@ RSpec.describe StudentsController, type: :controller do
         student2 = FactoryGirl.create(:student, user: user2, team: team2)
         get :index
         expect(response).to render_template(:index)
-        expect(assigns(:students).length).to eql Student.all.length
+        expect(assigns(:roles).length).to eql Student.all.length
       end
 
       it 'should redirect to home_path for non_admin and non_adviser' do
@@ -34,7 +34,7 @@ RSpec.describe StudentsController, type: :controller do
       login_admin
       it 'should assign @students' do
         get :index
-        expect(assigns(:students).length).to eql Student.all.length
+        expect(assigns(:roles).length).to eql Student.all.length
         expect(response).to render_template(:index)
       end
     end
@@ -68,7 +68,8 @@ RSpec.describe StudentsController, type: :controller do
   describe 'POST #create' do
     context 'user not logged in' do
       it 'should redirect to root_path for non_user' do
-        post :create
+        user = FactoryGirl.create(:user, email: '1@student.controller.spec', uid: '1.student.controller.spec')
+        post :create, student: {user_id: user.id}
         expect(response).to redirect_to(root_path)
       end
     end
@@ -76,7 +77,8 @@ RSpec.describe StudentsController, type: :controller do
     context 'user logged in but not admin' do
       login_user
       it 'should redirect to home_path for non_admin' do
-        post :create
+        user = FactoryGirl.create(:user, email: '1@student.controller.spec', uid: '1.student.controller.spec')
+        post :create, student: {user_id: user.id}
         expect(response).to redirect_to(controller.home_path)
       end
     end
@@ -86,14 +88,14 @@ RSpec.describe StudentsController, type: :controller do
       it 'should redirect to students with success for admin user' do
         user = FactoryGirl.create(:user, email: '1@student.controller.spec', uid: '1.student.controller.spec')
         post :create, student: {user_id: user.id}
-        expect(response).to redirect_to(students_path)
+        expect(response).to redirect_to(students_path(cohort: controller.current_cohort))
         expect(flash[:success]).not_to be_nil
       end
 
       it 'should redirect to admins with danger for admin user' do
         student = FactoryGirl.create(:student, user_id: subject.current_user.id)
         post :create, student: {user_id: subject.current_user.id}
-        expect(response).to redirect_to(new_student_path)
+        expect(response).to redirect_to(new_student_path(cohort: controller.current_cohort))
         expect(flash[:danger]).not_to be_nil
       end
     end
@@ -149,12 +151,6 @@ RSpec.describe StudentsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should render edit for current student' do
-        student = FactoryGirl.create(:student, user_id: subject.current_user.id)
-        get :edit, id: student.id
-        expect(response).to render_template(:edit)
-      end
-
       it 'should redirect to home_path for non_admin and non_current_user' do
         user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
         student = FactoryGirl.create(:student, user_id: user.id)
@@ -186,13 +182,6 @@ RSpec.describe StudentsController, type: :controller do
 
     context 'user logged in but not admin' do
       login_user
-      it 'should update student for current student' do
-        student = FactoryGirl.create(:student, user_id: subject.current_user.id)
-        team = FactoryGirl.create(:team, team_name: '1.student.controller.spec')
-        put :update, id: student.id, student: {team_id: team.id}
-        expect(response).to redirect_to(student_path(student))
-      end
-
       it 'should redirect to home_path for non_admin and non_current_user' do
         user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
         student = FactoryGirl.create(:student, user_id: user.id)
@@ -208,7 +197,7 @@ RSpec.describe StudentsController, type: :controller do
         student = FactoryGirl.create(:student, user_id: user.id)
         team = FactoryGirl.create(:team, team_name: '1.student.controller.spec')
         put :update, id: student.id, student: {team_id: team.id}
-        expect(response).to redirect_to(student_path(student))
+        expect(response).to redirect_to(students_path(cohort: controller.current_cohort))
       end
     end
   end
@@ -235,7 +224,7 @@ RSpec.describe StudentsController, type: :controller do
         user = FactoryGirl.create(:user, email: '2@student.controller.spec', uid: '2.student.controller.spec')
         student = FactoryGirl.create(:student, user_id: user.id)
         delete :destroy, id: student.id
-        expect(response).to redirect_to(students_path)
+        expect(response).to redirect_to(students_path(cohort: controller.current_cohort))
         expect(flash[:success]).not_to be_nil
       end
     end

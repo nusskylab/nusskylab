@@ -1,24 +1,14 @@
 # StudentsController
 class StudentsController < RolesController
-  def check_student_show_rendering
-    if @student.is_pending
-      render template: 'students/show_pending'
-      return false
-    end
-    if @student.team_id.blank?
-      render template: 'students/show_no_team'
-      return false
-    end
-    true
-  end
-
   def role_cls
     Student
   end
 
   def role_params
-    stu = params.require(:student).permit(:team_id, :is_pending, :cohort)
-    stu.delete(:is_pending) unless @student.is_pending
+    stu = params.require(:student).permit(
+      :user_id, :team_id, :is_pending, :cohort
+    )
+    stu.delete(:is_pending) unless stu[:is_pending] && @role.is_pending
     stu
   end
 

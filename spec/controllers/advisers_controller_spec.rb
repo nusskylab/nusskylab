@@ -21,7 +21,7 @@ RSpec.describe AdvisersController, type: :controller do
       login_admin
       it 'should assign @advisers' do
         get :index
-        expect(assigns(:advisers).length).to eql Adviser.all.length
+        expect(assigns(:roles).length).to eql Adviser.all.length
       end
 
       it 'should render index for admin user' do
@@ -77,14 +77,14 @@ RSpec.describe AdvisersController, type: :controller do
       it 'should redirect to advisers with success for admin user' do
         user = FactoryGirl.create(:user, email: '1@adviser.controller.spec', uid: '1.adviser.controller.spec')
         post :create, adviser: {user_id: user.id}
-        expect(response).to redirect_to(advisers_path)
+        expect(response).to redirect_to(advisers_path(cohort: controller.current_cohort))
         expect(flash[:success]).not_to be_nil
       end
 
       it 'should redirect to admins with danger for admin user' do
         adviser = FactoryGirl.create(:adviser, user_id: subject.current_user.id)
         post :create, adviser: {user_id: subject.current_user.id}
-        expect(response).to redirect_to(new_adviser_path)
+        expect(response).to redirect_to(new_adviser_path(cohort: controller.current_cohort))
         expect(flash[:danger]).not_to be_nil
       end
     end
@@ -151,7 +151,7 @@ RSpec.describe AdvisersController, type: :controller do
         user = FactoryGirl.create(:user, email: '2@adviser.controller.spec', uid: '2.adviser.controller.spec')
         adviser = FactoryGirl.create(:adviser, user_id: user.id)
         delete :destroy, id: adviser.id
-        expect(response).to redirect_to(advisers_path)
+        expect(response).to redirect_to(advisers_path(cohort: controller.current_cohort))
         expect(flash[:success]).not_to be_nil
       end
     end

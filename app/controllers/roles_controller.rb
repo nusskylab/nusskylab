@@ -103,7 +103,7 @@ class RolesController < ApplicationController
       if handles_for_actions[:destroy] &&
          handles_for_actions[:destroy][:success]
         handle_fn = handles_for_actions[:destroy][:success]
-        handle_fn(@role)
+        handle_fn.call
       end
       redirect_to path_for_index(cohort: cohort), flash: {
         success: t('.success_message', user_name: @role.user.user_name)
