@@ -1,104 +1,58 @@
-# AdvisersController: manage actions related to advisers
-#   index:   list all advisers
-#   new:     view to create an adviser
-#   create:  create an adviser
-#   show:    view of an adviser
-#   destroy: delete an adviser
-class AdvisersController < ApplicationController
-  def index
-    !authenticate_user(true, true) && return
-    cohort = params[:cohort] || current_cohort
-    @page_title = t('.page_title')
-    @advisers = Adviser.where(cohort: cohort)
-    respond_to do |format|
-      format.html do
-        render locals: {
-          all_cohorts: all_cohorts
-        }
-      end
-      format.csv { send_data Adviser.to_csv }
-    end
+# AdvisersController
+class AdvisersController < RolesController
+  def role_cls
+    Adviser
   end
 
-  def new
-    !authenticate_user(true, true) && return
-    @page_title = t('.page_title')
-    @adviser = Adviser.new
-    render locals: { users: User.all }
+  def role_params
+    params.require(:adviser).permit(:user_id, :cohort)
   end
 
-  def create
-    !authenticate_user(true, true) && return
-    @page_title = t('.page_title')
-    user = User.find(params[:adviser][:user_id])
-    @adviser = Adviser.new(user_id: user.id)
-    redirect_after_create_action(user.user_name)
+  def path_for_index(ps = {})
+    advisers_path(ps)
   end
 
-  def show
-    @adviser = Adviser.find(params[:id])
-    !authenticate_user(true, false, [@adviser.user]) && return
-    @page_title = t('.page_title', user_name: @adviser.user.user_name)
-    milestones, teams_submissions, own_evaluations = data_for_adviser
-    render locals: {
-      milestones: milestones,
-      teams_submissions: teams_submissions,
-      own_evaluations: own_evaluations
-    }
+  def path_for_new(ps = {})
+    new_adviser_path(ps)
   end
 
-  def destroy
-    !authenticate_user(true, true) && return
-    @adviser = Adviser.find(params[:id])
-    redirect_after_destroy_action
+  def path_for_edit(role_id)
+    edit_adviser_path(role_id)
   end
 
-  private
-
-  def redirect_after_create_action(user_name)
-    if @adviser.save
-      redirect_to advisers_path, flash: {
-        success: t('.success_message', user_name: user_name)
-      }
-    else
-      redirect_to new_adviser_path, flash: {
-        danger: t('.failure_message',
-                  error_message: @adviser.errors.full_messages.join(' '))
-      }
-    end
+  def path_for_show(role_id)
+    adviser_path(role_id)
   end
 
-  def redirect_after_destroy_action
-    if @adviser.destroy
-      redirect_to advisers_path, flash: {
-        success: t('.success_message', user_name: @adviser.user.user_name)
-      }
-    else
-      redirect_to advisers_path, flash: {
-        danger: t('.failure_message',
-                  error_message: @adviser.errors.full_messages.join(' '))
-      }
-    end
-  end
-
-  # TODO: refactor this method to shorten this
-  def data_for_adviser
-    milestones = Milestone.order(:id).where(cohort: @adviser.cohort)
+  def data_for_role_show
+    milestones = Milestone.order(:id).where(cohort: @role.cohort)
     teams_submissions = {}
     own_evaluations = {}
+    populate_adviser_data(milestones, teams_submissions, own_evaluations)
+    role_data = {}
+    role_data[:milestones] = milestones
+    role_data[:teams_submissions] = teams_submissions
+    role_data[:own_evaluations] = own_evaluations
+    role_data
+  end
+
+  def populate_adviser_data(milestones, teams_submissions, own_evaluations)
     milestones.each do |milestone|
       teams_submissions[milestone.id] = {}
       own_evaluations[milestone.id] = {}
-      @adviser.teams.each do |team|
-        team_sub = Submission.find_by(milestone_id: milestone.id,
-                                      team_id: team.id)
+      @role.teams.each do |team|
+        team_sub = Submission.find_by(
+          milestone_id: milestone.id,
+          team_id: team.id
+        )
         teams_submissions[milestone.id][team.id] = team_sub
         next if team_sub.nil?
         own_evaluations[milestone.id][team.id] =
-          PeerEvaluation.find_by(submission_id: team_sub.id,
-                                 adviser_id: @adviser.id)
+          PeerEvaluation.find_by(
+            submission_id: team_sub.id,
+            adviser_id: @role.id
+          )
       end
     end
-    return milestones, teams_submissions, own_evaluations
   end
 end
