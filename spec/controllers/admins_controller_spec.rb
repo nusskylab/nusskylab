@@ -145,7 +145,7 @@ RSpec.describe AdminsController, type: :controller do
         expect(flash[:success]).not_to be_nil
       end
 
-      it 'should redirect with failure for admin user' do
+      it 'should redirect with failure for admin user if trying to delete self' do
         admin = Admin.find_by(user_id: subject.current_user.id)
         delete :destroy, id: admin.id
         expect(response).to redirect_to(admins_path(cohort: controller.current_cohort))

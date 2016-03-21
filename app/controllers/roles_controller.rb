@@ -89,7 +89,7 @@ class RolesController < ApplicationController
       }
     else
       redirect_to path_for_edit(@role.id), flash: {
-        success: t('.failure_message',
+        danger: t('.failure_message',
                    error_message: @role.errors.full_messages.join(', '))
       }
     end
@@ -110,7 +110,7 @@ class RolesController < ApplicationController
       }
     else
       redirect_to path_for_index(cohort: cohort), flash: {
-        success: t('.failure_message',
+        danger: t('.failure_message',
                    error_message: @role.errors.full_messages.join(', '))
       }
     end
