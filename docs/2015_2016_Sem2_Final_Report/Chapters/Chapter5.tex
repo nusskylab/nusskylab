@@ -1,23 +1,19 @@
-\chapter{Adviser focus group meeting} \label{focusgroupmeeting}
+\chapter{Security} \label{security}
 
-A focus group is a form of qualitative research in which a group of people are asked about their perceptions, opinions, beliefs, and attitudes towards a product, service, concept, advertisement, idea, or packaging\cite{citation15}. During middle of the semester a focus group meeting about Skylab with 2 advisers was conducted to get advisers' suggestions and feedback on experience with Skylab. The feedback is generally positive while there are indeed some useful suggestions and findings.
+During the development of Skylab, security has always been one of the priorities. Common attacks such as SQL injection, XSS attacks and CSRF attacks have been partly addressed by Rails framework itself and Skylab's main focus is to make sure authentication process and access control are well-defined and can withstand various attacks.
 
-\section{Focus group meeting}
+\section{User authentication}
 
-The focus group was conducted on 7th Oct 2015 and 3 questionnaires were designed beforehand to get advisers' opinions. During the meeting, discussions about the complete use case flow of Skylab were done and the whole meeting was recorded as well for later reference. Suggestions mentioned in the discussion and described in the responses to questionnaires are listed below, which are also documented in Skylab's repository:
+There are basically 2 ways to login to Skylab: email and password combination and NUS OpenID. For email and password combination we are using Devise to manage authentication related information in \textit{User} model. Devise has been used widely in Rails community and currently there are more than 13,000 stars of Devise repository on GitHub\cite{citation13}. What is more, according to security scanning of Devise by Hakiri there is no security warning, which further proves the trust-ability of Devise\cite{citation13}. As for NUS OpenID, it is using OAuth 2.0 as authentication protocol, which is believed to relatively safe and currently is adopted by many OpenID providers as well\cite{citation14}.
+
+\section{Access control}
+
+Skylab is adopting role based access control strategy to grant different permissions for different users. There are basically 3 levels of checking for each incoming requests:
 
 \begin{itemize}
-  \item Checking who had already evaluated / or sent feedback on an evaluation: we should have status columns(similar to ``dropped'' status) for submission status, peer evaluation status so that with just one glance adviser can figure out who have not submitted and remind them
-  \item Change tab order for adviser homepage: move the current first tab to last as advisers rarely use them
-  \item Forms too verbose Three radio fields take up more than one page. Suggested way of presenting options: Poor 1[?] 2[?] 3[?] 4[?] 5[?] Best(Question mark means only after the user hovers over the detailed explanation for the option will be given)
-  \item Hosting of videos
-  \item Auto expand text boxes when close to full
-  \item Dropdown for team selection not clear about whether the new team is being evaluation
-  \item Autosave text and input / prompt for leaving page
-  \item Summary composite page for the EG with respect to each evaluation question for Likert scale and textboxes / Quick Fix: use anchors to jump to a particular form on a concatenated page.
-  \item ``More info'' tab in adviser homepage is misleading
-  \item Enable users to view all past submissions, all past peer evaluations(by providing link to viewing them in some place) when you are editing/submitting a peer evaluation.
-  \item Evaluating relationship: explore use of D3(or similar stuff) to represent all relationships as graph
+  \item \textbf{login\_required:} if a action is login\_required then a user must sign to be granted for the access.
+  \item \textbf{admin\_only:} if a action is admin\_only then only users with role of \textit{Admin} can access.
+  \item \textbf{customized:} if a action requires login and is not only accessed by admins then the current logged-in user will be checked against the list of users who have the permissions.
 \end{itemize}
 
-Besides these suggestions, some of our assumptions have been tested as well and therefore necessary adjustments to plan for future implementation were made according to some of the findings from the focus group meeting.
+As this checking procedure is a common to nearly all actions, it is defined in \textit{ApplicationController} which will be effectively inherited by all controllers in Skylab. And further customization can be done by overriding as well.
