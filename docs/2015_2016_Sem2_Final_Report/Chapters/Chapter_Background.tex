@@ -54,7 +54,25 @@ Controllers will query models to get information needed to present views or make
   \label{fig:SkylabControllers}
 \end{figure}
 
-ApplicationController is the base of all other controllers. Utility methods such as access control, page title and handling of exceptions are included in ApplicationController and it also includes auxiliary modules such as CohortHelper to enrich its functionality. RolesController is the base class of all roles` controller classes: AdminsController, AdvisersController, MentorsController, StudentsController, FacilitatorsController and TutorsController. These roles share quite a lot in common so they will share request processing methods and they will override data related methods or provide some handlers for special cases. 
+ApplicationController is the base of all other controllers. Utility methods such as access control, page title and handling of exceptions are included in ApplicationController and it also includes auxiliary modules such as CohortHelper to enrich its functionality. RolesController is the base class of all roles` controller classes: AdminsController, AdvisersController, MentorsController, StudentsController, FacilitatorsController and TutorsController. These roles share quite a lot in common so they will share request processing methods and they will override data related methods or provide some handlers for special cases. Other controllers are as follows:
+
+\begin{itemize}
+  \item \textbf{HomeController}: serves home page to user only.
+  \item \textbf{UsersConroller}: 
+  \item \textbf{TagsConroller}: 
+  \item \textbf{MilestonesConroller}: 
+  \item \textbf{SurveyTemplatesConroller}: 
+  \item \textbf{QuestionsConroller}: 
+  \item \textbf{SubmissionsConroller}: 
+  \item \textbf{PeerEvaluationsConroller}: 
+  \item \textbf{FeedbacksConroller}: 
+  \item \textbf{ReceivedEvalsConroller}: 
+  \item \textbf{ReceivedFeedbacksConroller}: 
+  \item \textbf{PublicProjectsConroller}: 
+  \item \textbf{PublicStaffConroller}: 
+  \item \textbf{TeamsConroller}: 
+  \item \textbf{EvaluatingsConroller}: 
+\end{itemize} 
 
 \section{Development process}
 
