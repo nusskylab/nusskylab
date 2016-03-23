@@ -12,7 +12,7 @@ A high-level overview of the architecture of Skylab is illustrated in Figure~\re
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.85\textwidth]{Images/Skylab_arch.png}
+  \includegraphics[width=0.85\textwidth]{Images/Skylab_Arch.png}
   \caption{Architecture of Skylab}
   \label{fig:Skylabarch}
 \end{figure}
@@ -45,27 +45,16 @@ Each student has a \textit{Team} and a team has an \textit{Adviser} and a \texti
 
 Before Orbital officially starts, interested students need to register in Skylab first. A \textit{Registration} will be created to record information about the student and his/her interested topics of project in the summer for recommending potential teammates if they do not have a partner in mind at the time of registration. \textit{Registration}, \textit{PeerEvaluation} and \textit{Feedback} will all make references to a \textit{SurveyTemplate}, which contains some \textit{Questions} to be answered.
 
-Controllers will query models to get information needed to present views or make modifications to models if requested. Therefore they are crucial in powering a Rails application and in Skylab we have well-defined controllers to carry out different tasks. A list of controllers is as follows:
+Controllers will query models to get information needed to present views or make modifications to models if requested. Therefore they are crucial in powering a Rails application and in Skylab we have well-defined controllers to carry out different tasks. A class digram of all controllers in Skylab is shown in Figure~\ref{fig:SkylabControllers}.
 
-\begin{itemize}
-  \item \textbf{AdminsConroller}: handles listing of all Admins, display of an Admin, creation and update of an Admin as well as deletion of an Admin.
-  \item \textbf{AdvisersConroller}: handles listing of all Advisers, display of an Adviser, creation and update of an Adviser as well as deletion of an Adviser.
-  \item \textbf{EvaluatingsConroller}: handles listing of all evaluation relationships, creation and update of an evaluation relationship as well as deletion of evaluation relationship.
-  \item \textbf{FeedbacksConroller}: handles creation and update of a Feedback.
-  \item \textbf{HomeConroller}: handles serving of homepage.
-  \item \textbf{MentorsConroller}: handles listing of all Mentors, display of a Mentor, creation and update of a Mentor as well as deletion of a Mentor.
-  \item \textbf{MilestonesConroller}: handles listing of all Milestones, display of a Milestone, creation and update of a Milestone as well as deletion of a Milestone.
-  \item \textbf{PeerEvaluationsConroller}: handles creation and update of a PeerEvaluation.
-  \item \textbf{ReceivedEvalsConroller}: handles listing of all received peer evaluations by a team for one milestone.
-  \item \textbf{ReceivedFeedbacksConroller}: handles listing of all received feedbacks by a team for one milestone.
-  \item \textbf{StudentsConroller}: handles listing of all Students, display of a Student, creation and update of a Student as well as deletion of a Student.
-  \item \textbf{SubmissionsConroller}: handles display of a Submission, creation and update of a Submission.
-  \item \textbf{SurveyTemplatesConroller}: handles listing of all SurveyTemplates, creation and update of a SurveyTemplate as well as deletion of a SurveyTemplate.
-  \item \textbf{TeamsConroller}: handles listing of all Teams, display of a Team, creation and update of a Team as well as deletion of a Team.
-  \item \textbf{UsersConroller}: handles listing of all Users, display of a User, creation and update of a User as well as deletion of a User.
-  \item \textbf{auth}: handles authentication related to Devise and OpenID.
-  \item \textbf{public\_views}: handles serving of publicly available information.
-\end{itemize}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{Images/Skylab_Controllers.png}
+  \caption{Current ER diagram for Skylab}
+  \label{fig:SkylabControllers}
+\end{figure}
+
+ApplicationController is the base of all other controllers. Utility methods such as access control, page title and handling of exceptions are included in ApplicationController and it also includes auxiliary modules such as CohortHelper to enrich its functionality. RolesController is the base class of all roles` controller classes: AdminsController, AdvisersController, MentorsController, StudentsController, FacilitatorsController and TutorsController. These roles share quite a lot in common so they will share request processing methods and they will override data related methods or provide some handlers for special cases. 
 
 \section{Development process}
 
@@ -73,7 +62,7 @@ As Skylab is a web application for which version does not mean anything in parti
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.85\textwidth]{Images/Github_Flow_Branching_Model.jpg}
+  \includegraphics[width=0.85\textwidth]{Images/Github_Flow_Branching_Model.png}
   \caption{Branching diagram for GitHub Flow. Excerpted from \cite{citation8}}
   \label{fig:GithubFlow}
 \end{figure}
