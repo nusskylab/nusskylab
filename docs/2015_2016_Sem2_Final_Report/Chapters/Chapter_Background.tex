@@ -39,7 +39,7 @@ So the most fundamental component in this whole process is model, which stores a
   \label{fig:SkylabER}
 \end{figure}
 
-As you can see from the entity relation diagram shown in Figure~\ref{fig:SkylabER}(source available at \cite{citationERSource}), users' basic information is captured in the \textit{User} model and each user may have different roles such as \textit{Admin}, \textit{Student}, \textit{Adviser}, \textit{Mentor}, \textit{Tutor} and \textit{Facilitator}. Each user can have only one of any role in a cohort--meaning that if \textit{User} A is an \textit{Adviser} B for cohort 2015, then he/she's adviser role for cohort 2015 will only be B. But for cohort 2016 if \textit{User} A is an adviser again, then it is another \textit{Adviser} role C. Roles like \textit{Facilitator}, \textit{Tutor} do not have practical meanings in the system but only for display in public staff page. \textit{Admin} is supposed to overlook manage everything in Skylab. The remaining roles, \textit{Adviser}, \textit{Mentors} and \textit{Student} are connected via different relationships.
+As you can see from the entity relation diagram shown in Figure~\ref{fig:SkylabER}(source available at \cite{citationERSource}), users' basic information is captured in the \textit{User} model and each user may have different roles such as \textit{Admin}, \textit{Student}, \textit{Adviser}, \textit{Mentor}, \textit{Tutor} and \textit{Facilitator}. Each user can have only one of any role in a cohort —-- meaning that if \textit{User} A is an \textit{Adviser} B for cohort 2015, then he/she's adviser role for cohort 2015 will only be B. But for cohort 2016 if \textit{User} A is an adviser again, then it is another \textit{Adviser} role C. Roles like \textit{Facilitator}, \textit{Tutor} do not have practical meanings in the system but only for display in public staff page. \textit{Admin} is supposed to overlook manage everything in Skylab. The remaining roles, \textit{Adviser}, \textit{Mentors} and \textit{Student} are connected via different relationships.
 
 Each student has a \textit{Team} and a team has an \textit{Adviser} and a \textit{Mentor}(optional, only if the team requested). A group of teams under the same adviser is called an \textit{Evaluation Group} and evaluating relationships will be assigned from team to team in the same \textit{Evaluation Group}. Each team will create \textit{Submissions} to \textit{Milestones} to report their progress and their adviser and assigned evaluator teams will submit \textit{PeerEvaluations} to the team`s \textit{Submissions}. A \textit{SurveyTemplate} contains \textit{Questions} for a \textit{Feedback}, which is for evaluated team to provide feedback to their evaluator teams. After receiving the \textit{PeerEvaluation}, the team is supposed to submit \textit{Feedback} to rate the helpness of received \textit{PeerEvaluations}.
 
@@ -50,7 +50,7 @@ Controllers will query models to get information needed to present views or make
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{Images/Skylab_Controllers.png}
-  \caption{Current ER diagram for Skylab}
+  \caption{Current Class diagram of controllers in Skylab}
   \label{fig:SkylabControllers}
 \end{figure}
 
@@ -58,21 +58,34 @@ ApplicationController is the base of all other controllers. Utility methods such
 
 \begin{itemize}
   \item \textbf{HomeController}: serves home page to user only.
-  \item \textbf{UsersConroller}: 
-  \item \textbf{TagsConroller}: 
-  \item \textbf{MilestonesConroller}: 
-  \item \textbf{SurveyTemplatesConroller}: 
-  \item \textbf{QuestionsConroller}: 
-  \item \textbf{SubmissionsConroller}: 
-  \item \textbf{PeerEvaluationsConroller}: 
-  \item \textbf{FeedbacksConroller}: 
-  \item \textbf{ReceivedEvalsConroller}: 
-  \item \textbf{ReceivedFeedbacksConroller}: 
-  \item \textbf{PublicProjectsConroller}: 
-  \item \textbf{PublicStaffConroller}: 
-  \item \textbf{TeamsConroller}: 
-  \item \textbf{EvaluatingsConroller}: 
-\end{itemize} 
+  \item \textbf{UsersConroller}: manages listing, creation, editing and display of users and also includes functionality for admin to masquerade as any user, for new users to register as students in Orbital.
+  \item \textbf{TagsConroller}: lists tags based on specified filters.
+  \item \textbf{MilestonesConroller}: handles listing, creation, editing and display of milestones.
+  \item \textbf{SurveyTemplatesConroller}: handles listing, creation, editing and display of survey templates and also serves as interface for editing of questions belonging to current survey templates. 
+  \item \textbf{QuestionsConroller}: manages Ajax requests to create, edit or delete a question.
+  \item \textbf{SubmissionsConroller}: manages creation, editing and display of submissions by students.
+  \item \textbf{PeerEvaluationsConroller}: handles creation, editing and display of peer evaluations from evaluator teams or advisers to evaluated teams.
+  \item \textbf{FeedbacksConroller}: manages creation, editing and display of feedback from evaluated team to evaluator teams or advisers.
+  \item \textbf{ReceivedEvalsConroller}: compiles a set of received peer evaluations for a team in one milestone.
+  \item \textbf{ReceivedFeedbacksConroller}: compiles a set of received feedback for a team or an adviser in one milestone.
+  \item \textbf{PublicProjectsConroller}: serves completed teams` projects to the public.
+  \item \textbf{PublicStaffConroller}: serves staff of Orbital program to the public.
+  \item \textbf{TeamsConroller}: manages listing, creation, editing and display of teams.
+  \item \textbf{EvaluatingsConroller}: handles listing, creation, editing and display of evaluating relation among teams.
+\end{itemize}
+
+Controller manages a collection of \textit{resources} in Skylab, meaning that each controller is managing(list, create, edit and display) usually one model class only for higher cohesion. If dependency on other models is needed, for example, SurveyTemplate will manage questions belonging to current SurveyTemplate, the requests will be handled by Ajax requests to separate concerns.
+
+Skylab is following Ruby on Rails convention for controller classes. A basic controller that manages a collection would have the following structure illustrated in Figure~\ref{fig:SkylabSampleController}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Images/Skylab_Sample_Controller.png}
+  \caption{Sample controller class in Skylab}
+  \label{fig:SkylabSampleController}
+\end{figure}
+
+These methods —-- index, new, create, edit, update, show and destroy —-- have included all the basic actions to be done with a collection of resources. Following such a convention would not only make controller class in Skylab consistent and easy to read, but also align well with a more human-readable RESTful URL design.
 
 \section{Development process}
 
