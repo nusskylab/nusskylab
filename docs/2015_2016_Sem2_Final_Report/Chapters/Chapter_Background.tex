@@ -19,6 +19,8 @@ A high-level overview of the architecture of Skylab is illustrated in Figure~\re
 
 \section{System design}
 
+\subsection{MVC pattern in Ruby on Rails}
+
 The basic MVC structure of Rails is shown in Figure~\ref{fig:RailsMVC}:
 
 \begin{figure}[h]
@@ -32,6 +34,10 @@ After request is received by Ruby on Rails framework, the router will look at th
 
 So the most fundamental component in this whole process is model, which stores all the business data. A good design of model can in fact save a lot of trouble when it comes to writing controllers.
 
+\subsection{Overview of Models in Skylab}
+
+An overview of current models` design would be as Figure~\ref{fig:SkylabER}(source available at \cite{citationERSource}).
+
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{Images/Skylab_ER.png}
@@ -39,11 +45,13 @@ So the most fundamental component in this whole process is model, which stores a
   \label{fig:SkylabER}
 \end{figure}
 
-As you can see from the entity relation diagram shown in Figure~\ref{fig:SkylabER}(source available at \cite{citationERSource}), users' basic information is captured in the \textit{User} model and each user may have different roles such as \textit{Admin}, \textit{Student}, \textit{Adviser}, \textit{Mentor}, \textit{Tutor} and \textit{Facilitator}. Each user can have only one of any role in a cohort —-- meaning that if \textit{User} A is an \textit{Adviser} B for cohort 2015, then he/she's adviser role for cohort 2015 will only be B. But for cohort 2016 if \textit{User} A is an adviser again, then it is another \textit{Adviser} role C. Roles like \textit{Facilitator}, \textit{Tutor} do not have practical meanings in the system but only for display in public staff page. \textit{Admin} is supposed to overlook manage everything in Skylab. The remaining roles, \textit{Adviser}, \textit{Mentors} and \textit{Student} are connected via different relationships.
+As you can see from the entity relation diagram shown in Figure~\ref{fig:SkylabER}, users' basic information is captured in the \textit{User} model and each user may have different roles such as \textit{Admin}, \textit{Student}, \textit{Adviser}, \textit{Mentor}, \textit{Tutor} and \textit{Facilitator}. Each user can have only one of any role in a cohort —-- meaning that if \textit{User} A is an \textit{Adviser} B for cohort 2015, then he/she's adviser role for cohort 2015 will only be B. But for cohort 2016 if \textit{User} A is an adviser again, then it is another \textit{Adviser} role C. Roles like \textit{Facilitator}, \textit{Tutor} do not have practical meanings in the system but only for display in public staff page. \textit{Admin} is supposed to overlook manage everything in Skylab. The remaining roles, \textit{Adviser}, \textit{Mentors} and \textit{Student} are connected via different relationships.
 
 Each student has a \textit{Team} and a team has an \textit{Adviser} and a \textit{Mentor}(optional, only if the team requested). A group of teams under the same adviser is called an \textit{Evaluation Group} and evaluating relationships will be assigned from team to team in the same \textit{Evaluation Group}. Each team will create \textit{Submissions} to \textit{Milestones} to report their progress and their adviser and assigned evaluator teams will submit \textit{PeerEvaluations} to the team`s \textit{Submissions}. A \textit{SurveyTemplate} contains \textit{Questions} for a \textit{Feedback}, which is for evaluated team to provide feedback to their evaluator teams. After receiving the \textit{PeerEvaluation}, the team is supposed to submit \textit{Feedback} to rate the helpness of received \textit{PeerEvaluations}.
 
 Before Orbital officially starts, interested students need to register in Skylab first. A \textit{Registration} will be created to record information about the student and his/her interested topics of project in the summer for recommending potential teammates if they do not have a partner in mind at the time of registration. \textit{Registration}, \textit{PeerEvaluation} and \textit{Feedback} will all make references to a \textit{SurveyTemplate}, which contains some \textit{Questions} to be answered.
+
+\subsection{Overview of Controllers in Skylab}
 
 Controllers will query models to get information needed to present views or make modifications to models if requested. Therefore they are crucial in powering a Rails application and in Skylab we have well-defined controllers to carry out different tasks. A class digram of all controllers in Skylab is shown in Figure~\ref{fig:SkylabControllers}.
 

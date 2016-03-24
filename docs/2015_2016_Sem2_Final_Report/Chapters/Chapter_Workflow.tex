@@ -2,6 +2,50 @@
 
 \section{Registration} \label{registration}
 
+To enroll in Orbital program, students will need to register in Skylab first. When a user first logs into Skylab, a \textit{User} object will be created for user. And since it is the first time the user logins to the system, there is not role belonging to current user. Then Skylab assumes that the user is trying to register and therefore a link to registration will be displayed. This workflow works for most users who are students in Orbital program. As for roles like \textit{Adviser}, \textit{Mentor} and \textit{Tutor}, admin users will create those roles manually. This is because there are only a few such roles and they have higher privileges and therefore creation of such roles should definitely be controller by admin users.
+
+For students` registration, after a user click the registration link a form consisting of different questions will be presented to user. Among these questions, several questions are to get a sense of what sort of interests the user has for the project over the summer. The user is supposed to select interested topics from different categories like programming language, web framework or mobile platform, IDE or text editor, e-commerce, cloud platform, purpose, embedded system, game framework, content management system and audience. These information will recorded for match-making among students who need to find a teammate in Skylab.
+
+After after completing the registration form, if the user already has a teammate in mind, he/she can send an invitation to the potential teammate to form a team. Some users, on the other hand, do not have anyone to partner with for Orbital yet and a match-making algorithm will be run offline by admin user based on the interested topics they have selected during registration. An illustration of the whole workflow is as Figure~\ref{fig:RegistrationWorkflow}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\textwidth]{Images/Skylab_Registration_Workflow.png}
+  \caption{Illustration of registration workflow in Skylab}
+  \label{fig:RegistrationWorkflow}
+\end{figure}
+
+\subsection{Match making algorithm}
+
+For students who have not have potential teammates at the time of registration, we will run a matching making algorithm based on the interested topics recorded in registration form. The algorithm composes of mainly two steps:
+
+%% http://nlp.stanford.edu/IR-book/html/htmledition/inverse-document-frequency-1.html
+%% http://dl.acm.org/citation.cfm?doid=361219.361220
+%% http://elib.ict.nsc.ru/jspui/bitstream/ICT/1230/1/soltan_10.1.1.107.7453.pdf
+
+\begin{itemize}
+  \item Calculate inverse document frequency of tags: inverse document frequency is to reflect how rare a term is in the corpus. In Skylab`s match making`s case, if a term(tag) is rare among registration form results, we will be more confident that if both students choose this term and they will have higher chance of forming a team. The formula of calculation is as Formula~\ref{eq:idf}
+
+  \begin{equation}
+    idf(t,D) = \log \frac{N}{\{ d \in D : t \in d \}} \
+    \label{eq:idf}
+  \end{equation}
+  
+  with \(N\) as total number of documents in the corpus \( N = |D| \) and \(\{ d \in D : t \in d \}\) as number of documents where the term \(t\) appears(if it happens to be 0, just set the result to 1 to avoid divide-by-zero error).
+
+  \item Construct a vector space model based on students` selected tags and each tag`s weight calculated in previous step and calculate similarity(cosine) of different students.
+
+  \begin{equation}
+    \cos\theta  = \frac{d_2 \cdot q}{ ||d_2|| ||q||} \
+    \label{eq:veccos}
+  \end{equation}
+
+\end{itemize}
+
+In fact, the steps described above is mentioned in the paper by [] ...
+
+As matching making only needs to be run once before Orbital officially starts for those students who do no have a team yet, the algorithm is currently designed to run offline as a rake task. Currently it is only for students but in the future with recoding of mentors` and advisers` interested tags, this algorithm can be easily extended to students and mentors or students and advisers as well.
+
 \section{Submission} \label{submission}
 
 Students in Orbital are supposed to report their progress regarding their project for each milestone via \textit{Submission}. Basically a submission contains 3 parts:
@@ -37,7 +81,7 @@ Another improvement over user experience is auto expanding of TinyMCE editing ar
 
 \section{Peer Evaluation} \label{peerevaluation}
  
- After students have submitted to milestones, peer evaluation process can begin. Teams will look through evaluated teams' projects and submissions and evaluate their performance in \textit{Peer Evaluation}, which is a very important component in determining whether the evaluated teams can pass or not. Although there are different questions for each peer evaluation, all evaluations contains essentially 2 parts:
+ After students have submitted to milestones, peer evaluation process can begin. Teams will look through evaluated teams' projects and submissions and evaluate their performance in \textit{PeerEvaluation}, which is a very important component in determining whether the evaluated teams can pass or not. Although there are different questions for each peer evaluation, all evaluations contains essentially 2 parts:
 
  \begin{itemize}
   \item Public: a section with general feedback on how well the evaluated team has done and the response will be viewed by target team with evaluator team name available.
@@ -46,13 +90,13 @@ Another improvement over user experience is auto expanding of TinyMCE editing ar
 
 \subsection{Loading of Peer Evaluation templates}
 
-Currently, the public part of a \textit{Peer Evaluation} templates will be one html form and the private part is another one. This means all questions in the public part are coded in one predefined html template and same goes for questions in private part.
+Currently, the public part of a \textit{PeerEvaluation} templates will be one html form and the private part is another one. This means all questions in the public part are coded in one predefined html template and same goes for questions in private part.
 
-This approach does not seem to have much problem at first and it really served Skylab's purpose well by delivering perfectly workable features in time. However, since questions are different for different \textit{Peer Evaluation} templates, separate templates have to be created for new \textit{Peer Evaluation} template. And when user wants to view/submit/edit a \textit{Peer Evaluation}, the corresponding templates will have to loaded based on properties of the evaluation. In this way, the system is not really open to extension and clearly it violates Open-Close principle. After realizing this, a system for dynamically creating questions has been implemented for \textit{Feedback} and migration of \textit{Peer Evaluations} will be done as future work, which will be described in more details in Chapter~\ref{conclusionandfuturework}.
+This approach does not seem to have much problem at first and it really served Skylab's purpose well by delivering perfectly workable features in time. However, since questions are different for different \textit{PeerEvaluation} templates, separate templates have to be created for new \textit{PeerEvaluation} template. And when user wants to view/submit/edit a \textit{PeerEvaluation}, the corresponding templates will have to loaded based on properties of the evaluation. In this way, the system is not really open to extension and clearly it violates Open-Close principle. After realizing this, a system for dynamically creating questions has been implemented for \textit{Feedback} and migration of \textit{PeerEvaluations} has been done as well. A more detailed description for how the dynamic loading of questions is in Section~\ref{feedback}
 
 \section{Feedback} \label{feedback}
 
-\textit{Feedback} is for evaluated teams to evaluate the \textit{Peer Evaluations} they have received and it is also a very important component in determining whether the evaluator team can pass or not. After realizing the lack of extensibility in the design for \textit{PeerEvaluations} and with more time available for implementation of \textit{Feedback}, a Survey Template and question creation system has been set up, which made the system open for extensions for more questions and even question types.
+\textit{Feedback} is for evaluated teams to evaluate the \textit{PeerEvaluations} they have received and it is also a very important component in determining whether the evaluator team can pass or not. After realizing the lack of extensibility in the design for \textit{PeerEvaluations} and with more time available for implementation of \textit{Feedback}, a Survey Template and question creation system has been set up, which made the system open for extensions for more questions and even question types.
 
 \subsection{Survey Template and question creation system}
 
@@ -72,7 +116,8 @@ There currently 3 types of \textit{Questions} in the system:
 \begin{itemize}
   \item \textbf{TextQuestion}: a text question which will be rendered in the format of textarea and text-based responses are expected. 
   \item \textbf{RichTextQuestion}: a rich text question which will be rendered in the format of TinyMCE editable area and rich text is expected as response.
-  \item \textbf{MultipleChoiceQuestion}: a multiple choice question which will be rendered as checkboxes followed by option descriptions and one option value is expected.
+  \item \textbf{MultipleChoiceQuestion}: a multiple choice question which will be rendered as radio buttons followed by option descriptions and one option value is expected.
+  \item \textbf{MultipleSelectQuestion}: a multiple choice question which will be rendered as a select with multiple enabled with each option as one choice of selection.
 \end{itemize}
 
 \begin{figure}[h]
