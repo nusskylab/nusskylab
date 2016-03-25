@@ -4,7 +4,7 @@ During the development of Skylab, security has always been one of the priorities
 
 \section{User authentication}
 
-There are basically 2 ways to login to Skylab: email and password combination and NUS OpenID. For email and password combination we are using Devise to manage authentication related information in \textit{User} model. Devise has been used widely in Rails community and currently there are more than 13,000 stars of Devise repository on GitHub\cite{citation13}. What is more, according to security scanning of Devise by Hakiri there is no security warning, which further proves the trust-ability of Devise\cite{citation13}. As for NUS OpenID, it is using OAuth 2.0 as authentication protocol, which is believed to relatively safe and currently is adopted by many OpenID providers as well\cite{citation14}.
+There are basically 2 ways to login to Skylab: email and password combination and NUS OpenID. For email and password combination we are using Devise to manage authentication related information in \textit{User} model. Devise has been used widely in Rails community and currently there are more than 13,000 stars of Devise repository on GitHub\cite{citationdevise}. What is more, according to security scanning of Devise by Hakiri there is no security warning, which further proves the trust-ability of Devise\cite{citationdevisehakiri}. As for NUS OpenID, it is using OAuth 2.0 as authentication protocol, which is believed to relatively safe and currently is adopted by many OpenID providers as well\cite{citationnusopenid}.
 
 \section{Access control}
 
@@ -12,8 +12,8 @@ Skylab is adopting role based access control strategy to grant different permiss
 
 \begin{itemize}
   \item \textbf{login\_required:} if a action is login\_required then a user must sign to be granted for the access.
-  \item \textbf{admin\_only:} if a action is admin\_only then only users with role of \textit{Admin} can access.
-  \item \textbf{customized:} if a action requires login and is not only accessed by admins then the current logged-in user will be checked against the list of users who have the permissions.
+  \item \textbf{admin\_only:} if a action is admin\_only then only users with role of \textit{Admin} can access; but if current user is admin, the next check will be skipped and return true directly as admin users can access any resources in Skylab.
+  \item \textbf{allowed\_users:} if a action requires login and is not only accessed by admins then the current logged-in user will be checked against the list of allowed users who have the permissions.
 \end{itemize}
 
 As this checking procedure is a common to nearly all actions, it is defined in \textit{ApplicationController} which will be effectively inherited by all controllers in Skylab. And further customization can be done by overriding as well.
