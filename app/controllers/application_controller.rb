@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def authenticate_user(login_required = true, admin_only = false,
-                        allowed_users = [], **options)
+                        allowed_users = [], strategy = nil, **options)
     logged_in_user = current_user
     if !login_required
       return true
@@ -22,6 +22,9 @@ class ApplicationController < ActionController::Base
     unless allowed_users.index { |user| user.id == current_user.id }
       redirect_user(options) and return false
     end
+    if !strategy.nil? && !strategy.call
+      redirect_user(options) and return false
+    end
     true
   end
 
@@ -30,28 +33,6 @@ class ApplicationController < ActionController::Base
     redirect_message = options[:redirect_message] ||
                        t('application.not_enough_privilege_message')
     redirect_to redirect_path, flash: { danger: redirect_message }
-  end
-
-  # TODO: remove this method later if confirmed not in use
-  # Deprecated, used for check_access
-  def check_access(login_required = true, admin_only = false,
-                   special_access_strategy = nil)
-    if login_required && current_user.nil?
-      redirect_user({}) and return false
-    end
-    if admin_only && !current_user_admin?
-      redirect_user({}) and return false
-    end
-    return true if current_user_admin?
-    if special_access_strategy.nil?
-      return true
-    else
-      if !special_access_strategy.call
-        redirect_user({}) and return false
-      else
-        return true
-      end
-    end
   end
 
   def after_sign_in_path_for(_resource)
