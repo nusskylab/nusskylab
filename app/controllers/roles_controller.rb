@@ -15,7 +15,7 @@ class RolesController < ApplicationController
       end
       format.csv do
         if role_cls && role_cls.respond_to?('to_csv')
-          send_data role_cls.to_csv
+          send_data role_cls.to_csv(cohort: cohort)
         else
           render plain: 'Format not supported!'
         end

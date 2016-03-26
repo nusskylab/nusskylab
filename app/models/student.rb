@@ -21,15 +21,25 @@ class Student < ActiveRecord::Base
 
   def self.to_csv(**options)
     require 'csv'
+    if options[:cohort].nil?
+      exported_stus = all
+    else
+      exported_stus = where(cohort: options[:cohort])
+      options.delete(:cohort)
+    end
     CSV.generate(options) do |csv|
-      csv << ['User Name', 'User Email', 'Team Name', 'Project Level',
-              'Adviser Name', 'Has Dropped']
-      all.each do |student|
+      csv << generate_csv_header_row
+      exported_stus.each do |student|
         csv_row = [student.user.user_name, student.user.email]
         csv_row.concat(student.team_adviser_info)
         csv << csv_row
       end
     end
+  end
+
+  def self.generate_csv_header_row
+    ['User Name', 'User Email', 'Team Name', 'Project Level',
+     'Adviser Name', 'Has Dropped']
   end
 
   def get_teammates
