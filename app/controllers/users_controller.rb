@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     user_ps = user_params(true)
     @user = User.new(user_ps)
     if @user.save
-      UserMailer.welcome_email(@user, user_ps[:password]).deliver_now
+      UserMailer.welcome_email(@user, user_ps[:password]).deliver_later
       redirect_to users_path, flash: {
         success: t('.success_message')
       }
