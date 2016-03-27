@@ -10,7 +10,7 @@ After completing the registration form, if the user already has a teammate in mi
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.85\textwidth]{Images/Skylab_Registration_Workflow.png}
+  \includegraphics[width=\textwidth]{Images/Skylab_Registration_Workflow.png}
   \caption{Illustration of registration workflow in Skylab}
   \label{fig:RegistrationWorkflow}
 \end{figure}
@@ -23,11 +23,11 @@ For students who do not have potential teammates at the time of registration, we
   \item Calculate inverse document frequency of tags: inverse document frequency is to reflect how rare a term is in the corpus\cite{citationir}. In Skylab`s match making`s case, a document is a user`s selection of interested topics, or tags; the corpus is the collection of users` interested topic sets; a term is a tag in a users` selections. If a term(tag) is rare among registration form results, we will be more confident that if both students choose this term and they will have higher chance of forming a team. The formula of calculation is as Formula~\ref{eq:idf}.
 
   \begin{equation}
-    idf(t,D) = \log \frac{N}{\{ d \in D : t \in d \}} \
+    idf(t,D) = \log \frac{N}{\{ d \in D : t \in d \} + 1} \
     \label{eq:idf}
   \end{equation}
   
-  with \(N\) as total number of documents in the corpus \( N = |D| \) and \(\{ d \in D : t \in d \}\) as number of documents where the term \(t\) appears\cite{citationir}(if it happens to be 0, just set the result to 1 to avoid divide-by-zero error).
+  with \(N\) as total number of documents in the corpus \( N = |D| \) and \(\{ d \in D : t \in d \}\) as number of documents where the term \(t\) appears\cite{citationir}.
 
   \item Construct a vector space model based on students` selected tags and each tag`s weight calculated in previous step and calculate similarity(cosine) of different students. The formula for calculating cosine of two vectors is as Formula~\ref{eq:veccos}\cite{citationvecspacemodel}.
 
@@ -106,7 +106,7 @@ The basic flow when a request to create a \textit{Feedback} is illustrated in th
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.5\textwidth]{Images/Skylab_Feedback_Flow.png}
+  \includegraphics[width=0.8\textwidth]{Images/Skylab_Feedback_Flow.png}
   \caption{Flow of a feedback creation process}
   \label{fig:FeedbackFlow}
 \end{figure}
@@ -124,7 +124,7 @@ There currently 4 types of \textit{Questions} in the system:
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.85\textwidth]{Images/Skylab_Questions.png}
+    \includegraphics[width=\textwidth]{Images/Skylab_Questions.png}
     \caption{3 types of questions in Skylab}
 \end{figure}
 
