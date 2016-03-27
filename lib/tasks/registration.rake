@@ -11,15 +11,22 @@ namespace :registration do
   desc 'Match students without teams yet'
   task match_students_without_teams: :environment do
     tag_freq_table = {}
+    tag_table = {}
     HashTag.all.each do |tag|
       tag_freq_table[tag.id] = 0
+      tag_table[tag.id] = tag.content
     end
     users_vectors = {}
     match_making_user_ids = generate_user_ids_for_match_making
     all_registrations = Registration.where(user_id: match_making_user_ids)
+    users = {}
+    User.where(id: match_making_user_ids).each do |user|
+      users[user.id] = user
+    end
     fill_tag_frequency_table_and_users_vetors(
       all_registrations, tag_freq_table, users_vectors
     )
+    users_tags = generate_users_tags(users_vectors, tag_table)
     similarity_table = {}
     users_vectors.each do |stu1_user_id, vec1|
       similarity_table[stu1_user_id] = {}
@@ -37,7 +44,7 @@ namespace :registration do
       other_users.sort! { |a, b| a[1] <=> b[1] }
       potential_teammates[user_id] = other_users.last(3).reverse
     end
-    write_results_to_csv(potential_teammates)
+    write_results_to_csv(potential_teammates, users_tags, users)
   end
 
   def compute_vector_cosine(vec1, vec2)
@@ -105,18 +112,34 @@ namespace :registration do
     end
   end
 
-  def write_results_to_csv(potential_teammates)
+  def generate_users_tags(users_vectors, tags_table)
+    users_tags = {}
+    users_vectors.each do |user_id, vec|
+      tags = []
+      vec.each do |tag_id, val|
+        tags.append(tags_table[tag_id])
+      end
+      users_tags[user_id] = tags
+    end
+    users_tags
+  end
+
+  def write_results_to_csv(potential_teammates, users_tags, users)
     require 'csv'
     CSV.open('matches.csv', 'wb') do |csv|
       csv << [
-        'Target User ID', 'Match 1 ID', 'Match 1 Similarity',
-        'Match 2 ID', 'Match 2 Similarity', 'Match 3 ID', 'Match 3 Similarity'
+        'Target User ID', 'User Name', 'Email', 'Match 1 ID', 'Match 1 Similarity',
+        'Match 2 ID', 'Match 2 Similarity', 'Match 3 ID', 'Match 3 Similarity',
+        'User\'s tags'
       ]
       potential_teammates.each do |user_id, matches|
         row = [user_id]
+        row.append(users[user_id].user_name)
+        row.append(users[user_id].email)
         matches.each do |match|
           row.concat(match)
         end
+        row.append(users_tags[user_id])
         csv << row
       end
     end
