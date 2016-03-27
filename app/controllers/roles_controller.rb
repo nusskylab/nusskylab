@@ -95,6 +95,27 @@ class RolesController < ApplicationController
     end
   end
 
+  def general_mailing
+    @role = role_cls.find(params[:id])
+    !authenticate_user(true, false, additional_users_for_general_mailing) && return
+    mailing_options = general_mailing_params
+    receivers = mailing_options[:receivers]
+    subject = mailing_options[:subject]
+    content = mailing_options[:content]
+    if receivers && subject && content
+      UserMailer.general_announcement(
+        @role.user, User.where(id: receivers), subject, content
+      ).deliver_later
+      redirect_to path_for_show(@role_id), flash: {
+        success: t('.success_message')
+      }
+    else
+      redirect_to path_for_show(@role_id), flash: {
+        danger: t('.failure_message')
+      }
+    end
+  end
+
   def destroy
     !authenticate_user(true, false, additional_users_for_destroy) && return
     @role = role_cls.find(params[:id])
@@ -110,8 +131,10 @@ class RolesController < ApplicationController
       }
     else
       redirect_to path_for_index(cohort: cohort), flash: {
-        danger: t('.failure_message',
-                   error_message: @role.errors.full_messages.join(', '))
+        danger: t(
+          '.failure_message',
+          error_message: @role.errors.full_messages.join(', ')
+        )
       }
     end
   end
@@ -123,6 +146,11 @@ class RolesController < ApplicationController
 
   # Returns params needed for creating/updating role
   def role_params
+    {}
+  end
+
+  # Returns params needed for sending general emails
+  def general_mailing_params
     {}
   end
 
@@ -164,6 +192,11 @@ class RolesController < ApplicationController
   # Returns other users who can access show page
   def additional_users_for_show
     [@role.user]
+  end
+
+  # Returns other users who can send general emails
+  def additional_users_for_general_mailing
+    []
   end
 
   # Returns other users who can access destroy action
