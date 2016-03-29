@@ -98,6 +98,7 @@ class RolesController < ApplicationController
   def general_mailing
     @role = role_cls.find(params[:id])
     !authenticate_user(true, false, additional_users_for_general_mailing) && return
+    @page_title = t('.page_title')
     render locals: {
       role_data: data_for_role_general_mailing
     }
