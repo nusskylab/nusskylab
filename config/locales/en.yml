@@ -46,6 +46,9 @@ en:
         Admin could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
+    general_mailing:
+      page_title: >
+        Send emails to students
     send_general_mailing:
       success_message: >
         The email has been sent successfully
@@ -86,6 +89,9 @@ en:
         and submit/edit your evaluation for one submission.
       more_info_instruction: >
         You can view more related information here.
+    general_mailing:
+      page_title: >
+        Send emails to students
     send_general_mailing:
       success_message: >
         The email has been sent successfully
@@ -186,6 +192,9 @@ en:
     show:
       page_title: >
         View mentor %{user_name}'s page
+    general_mailing:
+      page_title: >
+        Send emails to students
     send_general_mailing:
       success_message: >
         The email has been sent successfully
