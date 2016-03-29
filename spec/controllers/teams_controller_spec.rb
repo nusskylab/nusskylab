@@ -94,7 +94,7 @@ RSpec.describe TeamsController, type: :controller do
         adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
         post :create, team: {team_name: '1.team.controller.spec',
                              project_level: 'Project Gemini', adviser_id: adviser1.id}
-        expect(response).to redirect_to(teams_path)
+        expect(response).to redirect_to(teams_path(cohort: controller.current_cohort))
         expect(flash[:success]).not_to be_nil
       end
 
@@ -104,7 +104,7 @@ RSpec.describe TeamsController, type: :controller do
         team1 = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
         post :create, team: {team_name: '1.team.controller.spec',
                              project_level: 'Project Gemini', adviser_id: adviser1.id}
-        expect(response).to redirect_to(new_team_path)
+        expect(response).to redirect_to(new_team_path(cohort: controller.current_cohort))
         expect(flash[:danger]).not_to be_nil
       end
     end
@@ -270,7 +270,7 @@ RSpec.describe TeamsController, type: :controller do
         adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
         team = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
         delete :destroy, id: team.id
-        expect(response).to redirect_to(teams_path)
+        expect(response).to redirect_to(teams_path(cohort: controller.current_cohort))
         expect(flash[:success]).not_to be_nil
       end
     end
