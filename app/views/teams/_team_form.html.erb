@@ -1,14 +1,17 @@
 <%= simple_form_for(locals[:team], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
                     url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
-    <%= f.error_notification %>
-    <%= f.input :team_name %>
-    <%= f.input :project_level, collection: {Vostok: 'Vostok',
-                                             'Project Gemini'.to_sym => 'Gemini',
-                                             'Apollo 11'.to_sym => 'Apollo 11'}, include_blank: false, required: true %>
-    <% if current_user_admin? %>
-        <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Select an adviser', required: true %>
-        <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Select an mentor' %>
-    <% end %>
-    <%= f.input :has_dropped%>
-    <%= f.button :submit_centred, class: 'btn-success' %>
+  <%= f.error_notification %>
+  <%= f.input :team_name %>
+  <%= f.input :project_level, collection: {Vostok: 'Vostok',
+                                           'Project Gemini'.to_sym => 'Gemini',
+                                           'Apollo 11'.to_sym => 'Apollo 11'}, include_blank: false, required: true %>
+  <% if current_user_admin? %>
+      <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Select an adviser', required: true %>
+      <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Select an mentor' %>
+  <% end %>
+  <% if locals[:is_new] %>
+    <input type="hidden" name="team[cohort]" value="<%= locals[:cohort] %>">
+  <% end %>
+  <%= f.input :has_dropped%>
+  <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>

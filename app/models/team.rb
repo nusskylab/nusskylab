@@ -23,9 +23,15 @@ class Team < ActiveRecord::Base
 
   def self.to_csv(**options)
     require 'csv'
+    if options[:cohort].nil?
+      exported_teams = all
+    else
+      exported_teams = where(cohort: options[:cohort])
+      options.delete(:cohort)
+    end
     CSV.generate(options) do |csv|
       csv << Team.generate_csv_header_row
-      all.each do |team|
+      exported_teams.each do |team|
         csv << team.to_csv_row
       end
     end

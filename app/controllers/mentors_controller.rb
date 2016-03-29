@@ -36,9 +36,19 @@ class MentorsController < RolesController
         )
       end
     end
-    role_data = {}
-    role_data[:milestones] = milestones
-    role_data[:teams_submissions] = teams_submissions
-    role_data
+    {
+      milestones: milestones,
+      teams_submissions: teams_submissions
+    }
+  end
+
+  def data_for_role_general_mailing
+    users = []
+    @role.teams.each do |team|
+      users.concat(team.get_team_members)
+    end
+    {
+      users: users
+    }
   end
 end

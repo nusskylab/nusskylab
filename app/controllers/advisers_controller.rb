@@ -32,6 +32,16 @@ class AdvisersController < RolesController
     }
   end
 
+  def data_for_role_general_mailing
+    users = []
+    @role.teams.each do |team|
+      users.concat(team.get_team_members)
+    end
+    {
+      users: users
+    }
+  end
+
   def populate_adviser_data(milestones, teams_submissions, own_evaluations)
     milestones.each do |milestone|
       teams_submissions[milestone.id] = {}

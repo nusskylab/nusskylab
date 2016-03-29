@@ -8,17 +8,17 @@
         <div class="col-sm-12">
           <% if can_current_user_download_csv %>
           <div class="col-sm-2 col-sm-offset-3">
-            <%= link_to 'Download CSV', teams_path(format: 'csv'), class: 'btn btn-primary' %>
+            <%= link_to 'Download CSV', teams_path(format: 'csv', cohort: cohort), class: 'btn btn-primary' %>
           </div>
           <% end %>
           <% if can_current_user_create_new_team %>
           <div class="col-sm-2 col-sm-offset-3">
-            <a href="<%= new_team_path %>" class="btn btn-success">Create New Team</a>
+            <a href="<%= new_team_path(cohort: cohort) %>" class="btn btn-success">Create New Team</a>
           </div>
           <% end %>
         </div>
         <br><hr>
-        <%= render 'teams_table', locals: { teams: @teams} %>
+        <%= render 'teams_table', locals: { teams: @teams } %>
         <br><br><hr>
         <div class="col-sm-12">
           <% all_cohorts.each do |cohort| %>

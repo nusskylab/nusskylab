@@ -15,7 +15,7 @@ class RolesController < ApplicationController
       end
       format.csv do
         if role_cls && role_cls.respond_to?('to_csv')
-          send_data role_cls.to_csv
+          send_data role_cls.to_csv(cohort: cohort)
         else
           render plain: 'Format not supported!'
         end
@@ -95,6 +95,36 @@ class RolesController < ApplicationController
     end
   end
 
+  def general_mailing
+    @role = role_cls.find(params[:id])
+    !authenticate_user(true, false, additional_users_for_general_mailing) && return
+    render locals: {
+      role_data: data_for_role_general_mailing
+    }
+  end
+
+  def send_general_mailing
+    @role = role_cls.find(params[:id])
+    !authenticate_user(true, false, additional_users_for_general_mailing) && return
+    mailing_options = general_mailing_params
+    receivers = mailing_options[:receivers]
+    subject = mailing_options[:subject]
+    content = mailing_options[:content]
+    if receivers && subject && content
+      receiver_users = User.where(id: receivers)
+      UserMailer.general_announcement(
+        @role.user, receiver_users, subject, content
+      ).deliver_now
+      redirect_to path_for_show(@role.id), flash: {
+        success: t('.success_message')
+      }
+    else
+      redirect_to path_for_show(@role.id), flash: {
+        danger: t('.failure_message')
+      }
+    end
+  end
+
   def destroy
     !authenticate_user(true, false, additional_users_for_destroy) && return
     @role = role_cls.find(params[:id])
@@ -110,8 +140,10 @@ class RolesController < ApplicationController
       }
     else
       redirect_to path_for_index(cohort: cohort), flash: {
-        danger: t('.failure_message',
-                   error_message: @role.errors.full_messages.join(', '))
+        danger: t(
+          '.failure_message',
+          error_message: @role.errors.full_messages.join(', ')
+        )
       }
     end
   end
@@ -124,6 +156,11 @@ class RolesController < ApplicationController
   # Returns params needed for creating/updating role
   def role_params
     {}
+  end
+
+  # Returns params needed for sending general emails
+  def general_mailing_params
+    params.require(:mailing).permit({:receivers => []}, :subject, :content)
   end
 
   # Returns data for role's index
@@ -146,6 +183,11 @@ class RolesController < ApplicationController
     {}
   end
 
+  # Returns data for role's general mailing
+  def data_for_role_general_mailing
+    {}
+  end
+
   # Returns other users who can access index page
   def additional_users_for_index
     []
@@ -163,6 +205,11 @@ class RolesController < ApplicationController
 
   # Returns other users who can access show page
   def additional_users_for_show
+    [@role.user]
+  end
+
+  # Returns other users who can send general emails
+  def additional_users_for_general_mailing
     [@role.user]
   end
 

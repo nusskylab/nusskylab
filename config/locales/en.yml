@@ -46,6 +46,11 @@ en:
         Admin could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
+    send_general_mailing:
+      success_message: >
+        The email has been sent successfully
+      failure_message: >
+        The provided parameters are not in the right format. Please revise.
     show:
       page_title: >
         View admin %{user_name}'s page
@@ -81,6 +86,11 @@ en:
         and submit/edit your evaluation for one submission.
       more_info_instruction: >
         You can view more related information here.
+    send_general_mailing:
+      success_message: >
+        The email has been sent successfully
+      failure_message: >
+        The provided parameters are not in the right format. Please revise.
     destroy:
       success_message: >
         Adviser %{user_name} has been successfully deleted
@@ -176,6 +186,11 @@ en:
     show:
       page_title: >
         View mentor %{user_name}'s page
+    send_general_mailing:
+      success_message: >
+        The email has been sent successfully
+      failure_message: >
+        The provided parameters are not in the right format. Please revise.
     destroy:
       success_message: >
         Mentor %{user_name} has been successfully deleted

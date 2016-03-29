@@ -20,7 +20,7 @@ class PublicViews::PublicStaffController < ApplicationController
     staff_table[:facilitators] = facilitators
     staff_table[:advisers] = advisers
     staff_table[:mentors] = mentors
-    staff_table[:tutor] = tutors
+    staff_table[:tutors] = tutors
     render locals: {
       staff: staff_table,
       cohort: cohort,
