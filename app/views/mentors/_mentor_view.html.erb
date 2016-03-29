@@ -1,11 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h2>
-      <% if (not locals[:mentor]) %>
-          <span class="text-danger">Not a mentor </span>
-      <% else %>
-          <span><%= locals[:mentor].user.user_name %> </span>
-      <% end %>
+      <span><%= locals[:mentor].user.user_name %></span>
     </h2>
   </div>
   <div class="panel-body">
@@ -57,5 +53,8 @@
       </div>
       <hr>
     <% end %>
+    <br><hr>
+    You can send emails to your students via
+    <%= link_to 'General Mailing', general_mailing_mentor_path(locals[:mentor].id), class: 'btn btn-success' %>
   </div>
 </div>

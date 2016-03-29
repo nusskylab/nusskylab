@@ -186,6 +186,11 @@ en:
     show:
       page_title: >
         View mentor %{user_name}'s page
+    send_general_mailing:
+      success_message: >
+        The email has been sent successfully
+      failure_message: >
+        The provided parameters are not in the right format. Please revise.
     destroy:
       success_message: >
         Mentor %{user_name} has been successfully deleted
