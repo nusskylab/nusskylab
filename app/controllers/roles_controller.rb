@@ -98,6 +98,14 @@ class RolesController < ApplicationController
   def general_mailing
     @role = role_cls.find(params[:id])
     !authenticate_user(true, false, additional_users_for_general_mailing) && return
+    render locals: {
+      role_data: data_for_role_general_mailing
+    }
+  end
+
+  def send_general_mailing
+    @role = role_cls.find(params[:id])
+    !authenticate_user(true, false, additional_users_for_general_mailing) && return
     mailing_options = general_mailing_params
     receivers = mailing_options[:receivers]
     subject = mailing_options[:subject]
@@ -171,6 +179,11 @@ class RolesController < ApplicationController
 
   # Returns data for role's edit
   def data_for_role_edit
+    {}
+  end
+
+  # Returns data for role's general mailing
+  def data_for_role_general_mailing
     {}
   end
 
