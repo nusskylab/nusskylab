@@ -86,6 +86,11 @@ en:
         and submit/edit your evaluation for one submission.
       more_info_instruction: >
         You can view more related information here.
+    send_general_mailing:
+      success_message: >
+        The email has been sent successfully
+      failure_message: >
+        The provided parameters are not in the right format. Please revise.
     destroy:
       success_message: >
         Adviser %{user_name} has been successfully deleted
