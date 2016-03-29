@@ -111,14 +111,15 @@ class RolesController < ApplicationController
     subject = mailing_options[:subject]
     content = mailing_options[:content]
     if receivers && subject && content
+      receiver_users = User.where(id: receivers)
       UserMailer.general_announcement(
-        @role.user, User.where(id: receivers), subject, content
-      ).deliver_later
-      redirect_to path_for_show(@role_id), flash: {
+        @role.user, receiver_users, subject, content
+      ).deliver_now
+      redirect_to path_for_show(@role.id), flash: {
         success: t('.success_message')
       }
     else
-      redirect_to path_for_show(@role_id), flash: {
+      redirect_to path_for_show(@role.id), flash: {
         danger: t('.failure_message')
       }
     end
@@ -159,7 +160,7 @@ class RolesController < ApplicationController
 
   # Returns params needed for sending general emails
   def general_mailing_params
-    {}
+    params.require(:mailing).permit({:receivers => []}, :subject, :content)
   end
 
   # Returns data for role's index
@@ -209,7 +210,7 @@ class RolesController < ApplicationController
 
   # Returns other users who can send general emails
   def additional_users_for_general_mailing
-    []
+    [@role.user]
   end
 
   # Returns other users who can access destroy action

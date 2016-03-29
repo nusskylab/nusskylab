@@ -29,4 +29,10 @@ class AdminsController < RolesController
     @role.errors.add(:user_id, t('.cannot_delete_self_error')) if is_error
     !is_error
   end
+
+  def data_for_role_general_mailing
+    {
+      users: User.all
+    }
+  end
 end

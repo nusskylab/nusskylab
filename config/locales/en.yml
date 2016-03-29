@@ -46,6 +46,11 @@ en:
         Admin could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
+    send_general_mailing:
+      success_message: >
+        The email has been sent successfully
+      failure_message: >
+        The provided parameters are not in the right format. Please revise.
     show:
       page_title: >
         View admin %{user_name}'s page

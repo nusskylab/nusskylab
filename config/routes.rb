@@ -32,7 +32,13 @@ Rails.application.routes.draw do
   resources :students
   resources :advisers, only: [:index, :new, :create, :show, :destroy]
   resources :mentors, only: [:index, :new, :create, :show, :destroy]
-  resources :admins, only: [:index, :new, :create, :show, :destroy]
+  resources :admins, only: [:index, :new, :create, :show, :destroy] do
+    member do
+      get 'general_mailing'
+      post 'send_general_mailing'
+      patch 'send_general_mailing'
+    end
+  end
   resources :facilitators, only: [:index, :new, :create, :show, :destroy]
   resources :tutors, only: [:index, :new, :create, :show, :destroy]
   resources :teams do
