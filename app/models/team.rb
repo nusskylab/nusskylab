@@ -211,13 +211,13 @@ class Team < ActiveRecord::Base
 
   def invitor_student
     students.each do |stu|
-      return stu if stu.id == invitor_student_id
+      return stu if stu.user_id == invitor_student_id
     end
   end
 
   def invitee_student
     students.each do |stu|
-      return stu if stu.id != invitor_student_id
+      return stu if stu.user_id != invitor_student_id
     end
   end
 

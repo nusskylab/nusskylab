@@ -51,11 +51,11 @@
                     </p>
                   <% else %>
                     <% if (pending_stu = (user_pending_student?)) %>
-                      <% if pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id != pending_stu.id %>
+                      <% if pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id != pending_stu.user_id %>
                       <p>
                         You have been invited to participate in Orbital as a team with <strong><%= pending_stu.team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the invitation </a> now?
                       </p>
-                      <% elsif pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id == pending_stu.id %>
+                      <% elsif pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id == pending_stu.user_id %>
                       <p>
                         You have invited <strong><%= pending_stu.team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
                       </p>
