@@ -1,10 +1,10 @@
-\chapter{Testing} \label{testing}
+\chapter{Testing and user evaluations} \label{testing}
 
 Testing is very important in development as it serves as the validation and verification of the program\cite{citationtesting}. And also in the process of continuous development, having tests can help us catching errors, especially regression errors. Skylab as a software engineering project, is covered by different level of tests to make sure the delivered features are as promised.
 
 Testing in GitHub flow —-- the development process adopted in Skylab —-- has a special place as well. Through continuous integration tools like Travis, each pull requests and commits on master branch will be tested and the status will be used as the indicator whether merging to master brunch should be done and the health of current master brunch.
 
-Rspec is the testing library used in Skylab and it is widely used the testing tool for many Ruby on Rails programmers as well\cite{citationrspec}. And for database testing, FactoryGirl is used for creating records in databases. The syntax of FactoryGirl and Rspec is pretty expressive and concise, which aligns well with design of Ruby on Rails and helps to improve readability of testing code.
+RSpec is the testing library used in Skylab and it is widely used the testing tool for many Ruby on Rails programmers as well\cite{citationrspec}. And for tests involving database, FactoryGirl is used for creating records in databases and DataCleaner to ensure testing database is cleaned before and after tests. The syntax of FactoryGirl and RSpec is pretty expressive and concise, which aligns well with design of Ruby on Rails and helps to improve readability of testing code.
 
 \section{Unit testing} \label{unittesting}
 
@@ -14,4 +14,28 @@ Controllers usually do some complicated data querying and processing so tests on
 
 \section{Acceptance testing} \label{acceptancetesting}
 
-Acceptance testing is to make the whole system would work as expected when users carry out various of activities. Most use cases are covered in acceptance tests for Skylab like registration form submission, team invitation, admin`s overview of different models in Skylab, students` submissions, peer evaluations and feedback. Although the testing coverage in Skylab is pretty high and most use cases are included in acceptance testing as well, there are more details to check in testing and other cases like advisers` evaluations, management of evaluatings and others as well. Trying to cover more perspectives in Skylab is therefore one of the main future tasks.
+Acceptance testing is to make sure the whole system has met the requirement specifications when users carry out various of activities\cite{citationacceptancetesting}. To simulate user actions such as filling the form and clicking buttons, Capybara is the used as the testing library for acceptance testing. It is a very popular testing library written in Ruby and works well with RSpec\cite{citationcapybara}. There are different drivers used by Capybara as well. For most use cases where JavaScript execution and external resources are not required, RackTest is used as the default driver as it is lightweight and fast to run\cite{citationcapybara}. Capybara-webkit is used for those cases in which JavaScript execution is required as it supports JavaScript and it is still faster than drivers like selenium since it can save the process of loading of an entire browser\cite{citationcapybara}.
+
+Most use cases are covered in acceptance tests for Skylab like registration form submission, team invitation, admin`s overview of different models in Skylab, students` submissions, peer evaluations and feedback. Although the testing coverage in Skylab is pretty high and most use cases are included in acceptance testing as well, there are more details to check in testing and other cases like advisers` evaluations, management of evaluatings and others as well. Trying to cover more perspectives in Skylab is therefore one of the main future tasks.
+
+\section{Focus group meeting}
+
+A focus group is a form of qualitative research in which a group of people are asked about their perceptions, opinions, beliefs, and attitudes towards a product, service, concept, advertisement, idea, or packaging\cite{citationfocusgroup}. During middle of the first semester a focus group meeting about Skylab with 2 advisers and 1 facilitator was conducted to get advisers' suggestions and feedback on experience with Skylab. The feedback is generally positive while there are indeed some useful suggestions and findings.
+
+The focus group was conducted on 7th Oct 2015 and 3 questionnaires were designed beforehand to get advisers' opinions. During the meeting, discussions about the complete use case flow of Skylab were done and the whole meeting was recorded as well for later reference. Suggestions mentioned in the discussion and described in the responses to questionnaires are listed below, which are also documented in Skylab's repository\cite{citationskylabfocusgroup}:
+
+\begin{itemize}
+  \item Checking who had already evaluated / or sent feedback on an evaluation: we should have status columns(similar to ``dropped'' status) for submission status, peer evaluation status so that with just one glance adviser can figure out who have not submitted and remind them
+  \item Change tab order for adviser homepage: move the current first tab to last as advisers rarely use them
+  \item Forms too verbose Three radio fields take up more than one page. Suggested way of presenting options: Poor 1[?] 2[?] 3[?] 4[?] 5[?] Best(Question mark means only after the user hovers over the detailed explanation for the option will be given)
+  \item Hosting of videos
+  \item Auto expand text boxes when close to full
+  \item Dropdown for team selection not clear about whether the new team is being evaluation
+  \item Autosave text and input / prompt for leaving page
+  \item Summary composite page for the evaluation group with respect to each question for Likert scale and textboxes / Quick Fix: use anchors to jump to a particular form on a concatenated page.
+  \item ``More info'' tab in adviser homepage is misleading
+  \item Enable users to view all past submissions, all past peer evaluations(by providing link to viewing them in some place) when you are editing/submitting a peer evaluation.
+  \item Evaluating relationship: explore use of D3(or similar stuff) to represent all relationships as graph
+\end{itemize}
+
+Besides these suggestions, some of our assumptions have been tested as well and therefore necessary adjustments to plan for future implementation were made according to some of the findings from the focus group meeting.

@@ -66,20 +66,20 @@ ApplicationController is the base of all other controllers. Utility methods such
 
 \begin{itemize}
   \item \textbf{HomeController}: serves home page to user only.
-  \item \textbf{UsersConroller}: manages listing, creation, editing and display of users and also includes functionality for admin to masquerade as any user, for new users to register as students in Orbital.
-  \item \textbf{TagsConroller}: lists tags based on specified filters.
-  \item \textbf{MilestonesConroller}: handles listing, creation, editing and display of milestones.
-  \item \textbf{SurveyTemplatesConroller}: handles listing, creation, editing and display of survey templates and also serves as interface for editing of questions belonging to current survey templates. 
-  \item \textbf{QuestionsConroller}: manages Ajax requests to create, edit or delete a question.
-  \item \textbf{SubmissionsConroller}: manages creation, editing and display of submissions by students.
-  \item \textbf{PeerEvaluationsConroller}: handles creation, editing and display of peer evaluations from evaluator teams or advisers to evaluated teams.
-  \item \textbf{FeedbacksConroller}: manages creation, editing and display of feedback from evaluated team to evaluator teams or advisers.
-  \item \textbf{ReceivedEvalsConroller}: compiles a set of received peer evaluations for a team in one milestone.
+  \item \textbf{UsersController}: manages listing, creation, editing and display of users and also includes functionality for admin to masquerade as any user, for new users to register as students in Orbital.
+  \item \textbf{TagsController}: lists tags based on specified filters.
+  \item \textbf{MilestonesController}: handles listing, creation, editing and display of milestones.
+  \item \textbf{SurveyTemplatesController}: handles listing, creation, editing and display of survey templates and also serves as interface for editing of questions belonging to current survey templates. 
+  \item \textbf{QuestionsController}: manages Ajax requests to create, edit or delete a question.
+  \item \textbf{SubmissionsController}: manages creation, editing and display of submissions by students.
+  \item \textbf{PeerEvaluationsController}: handles creation, editing and display of peer evaluations from evaluator teams or advisers to evaluated teams.
+  \item \textbf{FeedbacksController}: manages creation, editing and display of feedback from evaluated team to evaluator teams or advisers.
+  \item \textbf{ReceivedEvalsController}: compiles a set of received peer evaluations for a team in one milestone.
   \item \textbf{ReceivedFeedbacksConroller}: compiles a set of received feedback for a team or an adviser in one milestone.
-  \item \textbf{PublicProjectsConroller}: serves completed teams` projects to the public.
-  \item \textbf{PublicStaffConroller}: serves staff of Orbital program to the public.
-  \item \textbf{TeamsConroller}: manages listing, creation, editing and display of teams.
-  \item \textbf{EvaluatingsConroller}: handles listing, creation, editing and display of evaluating relation among teams.
+  \item \textbf{PublicProjectsController}: serves completed teams` projects to the public.
+  \item \textbf{PublicStaffController}: serves staff of Orbital program to the public.
+  \item \textbf{TeamsController}: manages listing, creation, editing and display of teams.
+  \item \textbf{EvaluatingsController}: handles listing, creation, editing and display of evaluating relation among teams.
 \end{itemize}
 
 Controller manages a collection of \textit{resources} in Skylab, meaning that each controller is managing(list, create, edit and display) usually one model class only for higher cohesion. If dependency on other models is needed, for example, SurveyTemplate will manage questions belonging to current SurveyTemplate, the requests will be handled by Ajax requests to separate concerns.

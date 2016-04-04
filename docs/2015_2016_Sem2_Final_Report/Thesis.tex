@@ -3,7 +3,7 @@
 %% ---------------------------------------------------------------- 
 
 % Set up the document
-\documentclass[a4paper, 11pt, oneside]{Thesis}  % Use the "Thesis" style, based on the ECS Thesis style by Steve Gunn
+\documentclass[a4paper, 12pt, oneside]{Thesis}  % Use the "Thesis" style, based on the ECS Thesis style by Steve Gunn
 % \graphicspath{./Images/}  % Location of the graphics files (set up for graphics to be in PDF format)
 
 % Include any extra LaTeX packages required
@@ -11,6 +11,7 @@
 \usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
 \usepackage{vector}  % Allows "\bvec{}" and "\buvec{}" for "blackboard" style bold vectors in maths
 \usepackage{commath}
+\usepackage{enumitem}
 \hypersetup{urlcolor=blue, colorlinks=true}  % Colours hyperlinks in blue, but this can be distracting if there are many links.
 
 %% ----------------------------------------------------------------
@@ -106,7 +107,7 @@ Orbital is the School of Computing`s self-driven programming summer experience. 
 \clearpage  % Abstract ended, start a new page
 %% ----------------------------------------------------------------
 
-\setstretch{1.3}  % Reset the line-spacing to 1.3 for body text (if it has changed)
+\setstretch{1.5}  % Reset the line-spacing to 1.5 for body text (if it has changed)
 
 % The Acknowledgements page, for thanking everyone
 \acknowledgements{
@@ -131,7 +132,7 @@ provided me with significant support and assistance. I would also like to apprec
 % End of the pre-able, contents and lists of things
 % Begin the Dedication page
 
-\setstretch{1.3}  % Return the line spacing back to 1.3
+\setstretch{1.5}  % Return the line spacing back to 1.5
 
 \addtocontents{toc}{\vspace{2em}}  % Add a gap in the Contents, for aesthetics
 
@@ -155,8 +156,6 @@ provided me with significant support and assistance. I would also like to apprec
 
 \input{Chapters/Chapter_Security} % Security
 
-\input{Chapters/Chapter_Focus_Group_Meeting} % Focus group meeting
-
 \input{Chapters/Chapter_Testing} % Testing
 
 \input{Chapters/Chapter_Conclusion} % Conclusion
@@ -168,7 +167,7 @@ provided me with significant support and assistance. I would also like to apprec
 
 \appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
 
-% \input{Appendices/AppendixA}	% Appendix Title
+% \input{Appendices/Appendix_Issues}	% Appendix Title
 
 %\input{Appendices/AppendixB} % Appendix Title
 
