@@ -1,6 +1,7 @@
 class AddQuestionsToRegistrationSurveyTemplate < ActiveRecord::Migration
   def up
     survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 3)
+    return unless survey_template
 
     question = Question.new(
       title: 'Your level of interest in Orbital?',
@@ -58,6 +59,6 @@ class AddQuestionsToRegistrationSurveyTemplate < ActiveRecord::Migration
 
   def down
     survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 3)
-    survey_template.questions.each(&:destroy)
+    survey_template.questions.each(&:destroy) if survey_template
   end
 end

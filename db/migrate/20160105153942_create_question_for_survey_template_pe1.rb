@@ -1,6 +1,7 @@
 class CreateQuestionForSurveyTemplatePe1 < ActiveRecord::Migration
   def up
     survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 1)
+    return unless survey_template
 
     question = Question.new(
       title: 'The project should serve some user needs. Is it clear who would benefit from the project?',
@@ -195,6 +196,6 @@ class CreateQuestionForSurveyTemplatePe1 < ActiveRecord::Migration
 
   def down
     survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 1)
-    survey_template.questions.each(&:destroy)
+    survey_template.questions.each(&:destroy) if survey_template
   end
 end

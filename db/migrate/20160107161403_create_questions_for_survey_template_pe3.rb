@@ -1,6 +1,7 @@
 class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
   def up
     survey_template = SurveyTemplate.find_by(milestone_id: 3, survey_type: 1)
+    return unless survey_template
 
     question = Question.new(
       title: 'For each of the user stories already implemented'\
@@ -349,6 +350,6 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
 
   def down
     survey_template = SurveyTemplate.find_by(milestone_id: 3, survey_type: 1)
-    survey_template.questions.each(&:destroy)
+    survey_template.questions.each(&:destroy) if survey_template
   end
 end
