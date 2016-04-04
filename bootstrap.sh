@@ -7,10 +7,23 @@ sudo yum install -y wget
 
 # For nginx
 sudo yum install -y nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
 
 # for postgres
 sudo yum install -y postgresql-server
 sudo yum install -y postgresql-devel
+sudo postgresql-setup initdb
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+# postgres setup
+sudo -i -u postgres
+psql -c "create user nusskylab with createdb login password 'nusskylab';"
+exit
+
+# JS runtime
+curl --silent --location https://rpm.nodesource.com/setup_5.x | sudo bash -
+sudo yum -y install nodejs
 
 # Dependencies for gems
 sudo yum install -y xorg-x11-server-Xvfb

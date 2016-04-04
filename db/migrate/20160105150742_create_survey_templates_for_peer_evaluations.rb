@@ -6,14 +6,16 @@ class CreateSurveyTemplatesForPeerEvaluations < ActiveRecord::Migration
       deadline: DateTime.new(2015, 6, 27, 24, 0, 0, '+8'),
       milestone_id: 1
     )
-    survey_template1.save
+    milestone = Milestone.find_by(id: 1)
+    survey_template1.save if milestone
     survey_template2 = SurveyTemplate.new(
       instruction: 'Answer all questions below as evaluation for peer team',
       survey_type: 1,
       deadline: DateTime.new(2015, 7, 14, 24, 0, 0, '+8'),
       milestone_id: 2
     )
-    survey_template2.save
+    milestone = Milestone.find_by(id: 2)
+    survey_template2.save if milestone
     survey_template3 = SurveyTemplate.new(
       instruction: 'Note while the Orbital course is not officially finished
                     until Splashdown, whether the target team passes Orbital and
@@ -29,15 +31,16 @@ class CreateSurveyTemplatesForPeerEvaluations < ActiveRecord::Migration
       deadline: DateTime.new(2015, 8, 10, 24, 0, 0, '+8'),
       milestone_id: 3
     )
-    survey_template3.save
+    milestone = Milestone.find_by(id: 3)
+    survey_template3.save if milestone
   end
 
   def down
     survey_template = SurveyTemplate.find_by(milestone_id: 1, survey_type: 1)
-    survey_template.destroy
+    survey_template.destroy if survey_template
     survey_template = SurveyTemplate.find_by(milestone_id: 2, survey_type: 1)
-    survey_template.destroy
+    survey_template.destroy if survey_template
     survey_template = SurveyTemplate.find_by(milestone_id: 3, survey_type: 1)
-    survey_template.destroy
+    survey_template.destroy if survey_template
   end
 end
