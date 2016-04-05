@@ -1,16 +1,15 @@
-\chapter{Public view} \label{publicprofile}
+% Min: seems too short to be a chapter.  Fold it in some other chapter?
+\chapter{Public Views} \label{publicprofile}
 
-Before Skylab is implemented, display of past Orbital projects is done by manually collecting project links from all teams and a compiled version of those records will be created by human. It is a tedious and error-prune process. And since Skylab already has all the information about all the teams, publicly accessible pages have been created to display projects from those teams that completed Orbital program.
+Before Skylab was implemented, the display of past Orbital staff and projects was done by means of a manually curated WordPress post.   Project links for teams and team members were all manually created, which was a tedious and error-prone process. Since Skylab already captures all information on teams and students, publicly-accessible (i.e., without needing to login) pages are a logical form of data export that has been created to supercede these past facilities.
 
-Another public view is the profiles of staff in Orbital program. The publication process of those profiles relied on human effort solely as well before Skylab is developed. And those users could not change their profiles unless contact the website admin. In Skylab, users can edit their own profile for public display so that admin do not have to bothered by these sort of issues and others can see updated information of those staff.
+\section{User Avatars} \label{useravatar}
 
-\section{User Avatar} \label{useravatar}
-
-Skylab does not handle image uploading now as it requires a lot more storage and more efforts in security as well. So for users` avatar, we have decided to use Gravatar, a globally recognized avatars for users\cite{citationgravatar}. Gravatar is supposed by Wordpress and many sites are using it as well so it is not only easy for Skylab to serve those avatars but also easy for users who already have Gravatar set up. The steps to get a user`s gravatar are as follows:
+Skylab does not currently handle image uploading, as it requires a lot more storage and more efforts in security as well. However, we need to support user avatar pictures as this enhances the user experience of Skylab.  To implement this, we have integrated with an external third party service.   We have decided to use Gravatar, a globally recognized avatars for users\cite{citationgravatar}. Gravatar is popularized by Wordpress and in use by many sites.  It is easy to integrate and a number of users already use gravatar for creating a universal user avatar for themselves.  The steps to get a gravatar are as follows:
 
 \begin{itemize}
-  \item Trim the user`s email address, convert it to lower case calculate md5 hash of the transformed email address.
-  \item Use the hash computed in previous step and append it to \url{http://www.gravatar.com/avatar/} to be the gravatar image source.
+  \item Trim the user's email address, convert it to lower case, and calculate MD5 hash of the transformed email address.
+  \item Use the hash computed in previous step and append it to \url{http://www.gravatar.com/avatar/} to obtain the gravatar's image source.
 \end{itemize}
 
-Gravatar serves our purpose of serve users` avatars and the complication of image uploading and storage is handled by the service. And the most important part in arriving at this solution is that it is a relatively quick, easy yet clean to serve users` profile images. Compromises like this happen as we need to weigh advantages and disadvantages of different approaches and take the time taken and priority of issues in implementation into consideration as well. So in the future if we find the inconvenience with use of gravatar due to context switching in using Skylab or other reasons, we will decide to host avatar images in our own server and handle problems arise in file uploading and storage.
+Gravatar serves our purpose of serving users' avatars while bypassing the complication of supporting image uploading and storage, as this is handled by the service. And the most important part in arriving at this solution is that it is a relatively quick, easy yet clean to serve users' profile images. Compromises like this happen as we need to weigh advantages and disadvantages of different approaches and take the time taken and priority of issues in implementation into consideration. In the future, if we find too many inconveniences from using Gravatar, we may decide to host avatar images on our own server, and handle problems arising from the support of file uploading and storage.
