@@ -36,7 +36,7 @@ Skylab was first hosted on an Amazon EC2 instance and later migrated to an NUS S
 
 \subsection{Development Process}
 
-We adopted the GitHub workflow for Skylab's development to facilitate agile and iterative development. Also by adopting continuous integration tool like Travis, code quality and test coverage monitoring tool like CodeClimate, security analysis tool like Hikiri, the process of ensure testing, quality and security is greatly smoothened and different issues are easily monitored.
+We adopted the GitHub workflow for Skylab's development to facilitate agile and iterative development. Also by adopting continuous integration tool like Travis, code quality and test coverage monitoring tool like CodeClimate, security analysis tool like Hakiri, the process of ensure testing, quality and security is greatly smoothened and different issues are easily monitored.
 
 \subsection{Major Use Cases}
 
@@ -58,5 +58,7 @@ While Skylab serves its purpose well, there are still limitations and enhancemen
   \item Questions/template system (involving migration of current data): currently \textit{Feedback} and \textit{Peer Evaluation} is utilizing the \textit{SurveyTemplate} and \textit{Question} system but \textit{Submission} are still not. With a migration to the \textit{Questions} system, we can further improve the system by adding more extensibility.
   \item Logging of user activities: by logging down activities carried out by different users, administrative staff can discover problematic events and acquire situational awareness of the context in Orbital.
   \item Unit testing needs to cover more classes and acceptance testing needs to cover more use cases in Skylab, especially by different roles.
+  \item Upgrade of the Rails framework to address the warnings on Hakiri and continue working on improving security.
+  \item Mailing could be improved by having mailing history and other customized reminders.
 \end{itemize}
 

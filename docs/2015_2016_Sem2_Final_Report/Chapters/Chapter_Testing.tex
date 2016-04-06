@@ -10,8 +10,7 @@ RSpec is the testing library used in Skylab and it is widely used the testing to
 
 Models are the most fundamental components in Rails' MVC pattern and they are tested and fully covered in Skylab. In Skylab, models' testing are executed on testing database instead of faking models to test logic and validation in models only. Although this would slow down execution of test suite overall as database access is usually slow, we want to make the integration of models' logic and constraints in database work as expected. And since  the test suite of Skylab is quick to complete (less than 2 minutes to run), we favor better tested code over faster test execution.
 
-% Min: sentence doesn't read right.  Please fix.
-Controllers usually do some complicated data querying and processing, so tests on controllers can fully cover as well. However, so far, helpers and mailers are not tested in Skylab now due to time limit and the fact the helpers and mailers are relatively straightforward.
+Besides models, controllers, mailers and helpers are tested as well. The unit testing can make sure each individual component in Skylab is working as expected and also contributes the most to overall test coverage.
 
 \section{Acceptance testing} \label{acceptancetesting}
 
@@ -25,21 +24,16 @@ A focus group is a form of qualitative research in which a group of people are a
 
 The focus group was conducted on 7th Oct 2015 and three questionnaires were designed beforehand to get advisers' opinions. During the meeting, discussions about the complete use case flow of Skylab were done and the whole meeting was recorded as well for later reference. Suggestions mentioned in the discussion and described in the responses to questionnaires are listed below, which are also documented in Skylab's repository\cite{citationskylabfocusgroup}:
 
-% Min: Good to add to this list with whether these issues were closed or not accepted to be modified: e.g., \item (closed on XX YY as implemented) Item ZZ.
 \begin{itemize}
-  \item Checking who had already evaluated / or sent feedback on an evaluation: we should have status columns (similar to ``dropped'' status) for submission status, peer evaluation status so that with just one glance adviser can figure out who have not submitted and remind them;
-  \item Change tab order for adviser homepage: move the current first tab to last as advisers rarely use them;
-  \item Forms too verbose Three radio fields take up more than one page. Suggested way of presenting options: Poor 1[?] 2[?] 3[?] 4[?] 5[?] Best(Question mark means only after the user hovers over the detailed explanation for the option will be given);
-  \item Hosting of videos;
-  \item Auto expand text boxes when close to full;
-  \item Dropdown for team selection not clear about whether the new team is being evaluation;
-  \item Autosave text and input / prompt for leaving page;
-  \item Summary composite page for the evaluation group with respect to each question for Likert scale and textboxes / Quick Fix: use anchors to jump to a particular form on a concatenated page;
-  \item ``More info'' tab in adviser homepage is misleading;
-  \item Enable users to view all past submissions, all past peer evaluations(by providing link to viewing them in some place) when you are editing/submitting a peer evaluation;
-  \item Evaluating relationship: explore use of D3(or similar stuff) to represent all relationships as graph;
+  \item Checking who had already evaluated / or sent feedback on an evaluation: we should have status columns (similar to ``dropped'' status) for submission status, peer evaluation status so that with just one glance adviser can figure out who have not submitted and remind them (this issue is still in the issue tracker);
+  \item Change tab order for adviser homepage: move the current first tab to last as advisers rarely use them (this has been implemented);
+  \item Forms too verbose Three radio fields take up more than one page. Suggested way of presenting options: Poor 1[?] 2[?] 3[?] 4[?] 5[?] Best(Question mark means only after the user hovers over the detailed explanation for the option will be given) (this issue is still in the issue tracker);
+  \item Hosting of videos (this is not accepted as it seems to be too ambitious);
+  \item Auto expand text boxes when close to full (this has been implemented);
+  \item Dropdown for team selection not clear about whether the new team is being evaluated (this has been implemented);
+  \item Autosave text and input / prompt for leaving page (this has been implemented);
+  \item Summary composite page for the evaluation group with respect to each question for Likert scale and textboxes / Quick Fix: use anchors to jump to a particular form on a concatenated page (this issue is still in the issue tracker);
+  \item ``More info'' tab in adviser homepage is misleading (this issue is still in the issue tracker);
+  \item Enable users to view all past submissions, all past peer evaluations(by providing link to viewing them in some place) when you are editing/submitting a peer evaluation (this has been implemented);
+  \item Evaluating relationship: explore use of D3(or similar stuff) to represent all relationships as graph (this issue is still in the issue tracker);
 \end{itemize}
-
-Aside from these suggestions, 
-% Min: too general, make more specific.
-some of our assumptions have been tested as well and therefore necessary adjustments to plan for future implementation were made according to some of the findings from the focus group meeting.
