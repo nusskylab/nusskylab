@@ -1,6 +1,6 @@
 \chapter{Introduction} \label{introduction}
 
-Orbital is the School of Computing's self-driven programming summer experience. It is designed to give first-year students the opportunity to self-learn and build something useful. It is designed as a 4 modular credit (MC) module that is taken pass/fail (CS/CU) over the summer\cite{citation0}. With its focus on hands-on experience, an increasing number of students are joining the program to gain practical coding and software engineering experience. During the academic year of 2015/2016, more than 250 students completed the Orbital program with 20 advisers evaluating these teams.
+Orbital is the School of Computing's self-driven programming summer experience. It is designed to give first-year students the opportunity to self-learn and build something useful. It is designed as a 4 modular credit (MC) module that is taken pass/fail (CS/CU) over the summer\cite{citation0}. With its focus on hands-on experience, an increasing number of students are joining the program to gain practical coding and software engineering experience. During the academic year of 2015/2016, more than 250 students completed the Orbital program with 19 advisers evaluating these teams.
 
 The {\it team} is the basic unit in Orbital.  Teams have exactly two students.  Teams start a project, submit project log and evaluate other teams. To express their interests in Orbital program, students have to register in Skylab (the official Orbital website) first. They can sign up as a team of two students if they have a partner in mind. If at the time of registration they do not have any one in mind whom they can partner with during the summer, they can sign up as individual first and a match making session is going to be conducted before Orbital program officially starts to help them find a good partner.
   
@@ -19,7 +19,7 @@ The scale and routine nature of the project management in Orbital necessitates t
 
 \subsection{Tight deadlines}
 
-As the implementation of Skylab was started only at March 2015 and students started using the system at May 2015, there was not much time for the core development. In fact, many features could only be delivered and put into production right before students in the 2015 cohort used them. Chasing deadlines and fixing urgent issues during implementation, especially in the summer when students were actively using Skylab, not only brought a lot of pressure to me but also led to difficulties in system design. I made some design decisions to compromise on certain deadlines, allowing me to postpone potential problems for later implementation.
+As the implementation of Skylab was started only in March 2015 and students started using the system at May 2015, there was not much time for the core development. In fact, many features could only be delivered and put into production right before students in the 2015 cohort used them. Chasing deadlines and fixing urgent issues during implementation, especially in the summer when students were actively using Skylab, not only brought a lot of pressure to me but also led to difficulties in system design. I made some design decisions to compromise on certain deadlines, allowing me to postpone potential problems for later implementation.
 
 \subsection{System design}
 
@@ -37,7 +37,7 @@ Sometimes a schema migration is required as a result of change in requirements. 
 
 Security is definitely a very important perspective in web development. Although the Rails framework already handles security well by taking measures against SQL injection, XSS attacks and CSRF attacks, there are still certain vulnerabilities when not implemented well. During development of Skylab, various techniques and practices are adopted to make Skylab more secure and trustable. For example, we implemented user roles within Skylab, allowing a role based access control system to permit users to permit fine-grained control to allowed actions.
 
-\subsection{Coding quality/maintainability}
+\subsection{Code quality/maintainability}
 
 Although currently there is only one developer constantly contributing to Skylab repository, a good development cycle which is agile enough is not only important to keep track of history and manage different issues but also convenient for developers who may join later to jump in and get started in a short time. Testing is also a very important factor when it comes to long-term maintenance. A continuous integration would also help in catching regression errors in development early and easily. Besides all mentioned above, refactoring is helpful to the maintainability and growth of Skylab.
 
