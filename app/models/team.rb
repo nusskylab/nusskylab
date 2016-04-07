@@ -213,12 +213,14 @@ class Team < ActiveRecord::Base
     students.each do |stu|
       return stu if stu.id == invitor_student_id
     end
+    nil
   end
 
   def invitee_student
     students.each do |stu|
       return stu if stu.id != invitor_student_id
     end
+    nil
   end
 
   def get_evaluator_teams_members

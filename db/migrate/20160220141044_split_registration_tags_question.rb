@@ -1,6 +1,7 @@
 class SplitRegistrationTagsQuestion < ActiveRecord::Migration
   def up
     milestone = Milestone.find_by(name: 'Milestone 1', cohort: 2016)
+    return unless milestone
     survey_template = SurveyTemplate.find_by(milestone_id: milestone.id, survey_type: 3)
     questions = Question.where(survey_template_id: survey_template.id, question_type: 3)
     questions.each(&:destroy)

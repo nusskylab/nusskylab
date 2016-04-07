@@ -4,11 +4,15 @@ Please recall that the version requirements for the four software are:
 * Nginx
 * Puma
 * Postgres
-* CentOS 
 
 So first, install Nginx with the the following command:
 ```
+sudo yum install -y epel-release
 sudo yum update
+# installation for general use
+sudo yum groupinstall -y "Development tools"
+sudo yum install -y vim
+sudo yum install -y wget
 sudo yum install nginx
 ```
 
@@ -43,13 +47,33 @@ git clone https://github.com/sstephenson/rbenv-vars.git ~/.rbenv/plugins/rbenv-v
 For Postgres:
 ```
 yum install postgresql-server
+yum install postgresql-devel
+# initdb and add postgres to startup
+sudo postgresql-setup initdb
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
 # Or refer to here:http://www.postgresql.org/download/linux/redhat/ for more/newer versions
+```
+
+There are also additional steps for Postgres user's creation and authentication settings:
+```
+sudo -i -u postgres
+psql -c "create user nusskylab with createdb login password 'nusskylab';"
+exit
+# change default local authentication to md5 so that we can login as nusskylab by our password
+sudo sed -i 's/peer/md5/g' /var/lib/pgsql/data/pg_hba.conf
+sudo systemctl restart postgresql
 ```
 
 And some requirements for particular gems:
 ```
 yum install xorg-x11-server-Xvfb
 yum install qtwebkit-devel
+# linking required for CentOS
+sudo ln -s /usr/lib64/qt4/bin/qmake /usr/bin/qmake
+# JS runtime, for uglify-js
+curl --silent --location https://rpm.nodesource.com/setup_5.x | sudo bash -
+sudo yum -y install nodejs
 ```
 
 Navigate to the cloned app folder and run <code>bundle install</code> for installing all gems.
@@ -58,6 +82,8 @@ Then setup the database by first changing the configuration for database in conf
 bundle exec rake db:create
 bundle exec rake db:migrate
 ```
+
+Also you need to make sure secrects.yml and other environmental variables are set. For environmental variables, see rbenv-vars's use.
 
 Run <code>./server.sh</code> to start up the production server, which listens on port 9292. Then configure Nginx to forward requests to 9292. A sample forward declaration for the server in /etc/nginx/nginx.conf looks like:
 ```
