@@ -103,29 +103,32 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     !authenticate_user(true, false, [@user]) && return
     team_params = params.require(:team).permit(:email)
-    user = User.find_by(email: team_params[:email])
+    invited_user = User.find_by(email: team_params[:email])
     return redirect_to user_path(@user.id), flash: {
       danger: t('.no_user_found_message')
-    } unless user
-    student = Student.student?(user.id, cohort: current_cohort)
+    } unless invited_user
+    return redirect_to user_path(@user.id), flash: {
+      danger: t('.cannot_invite_self_message')
+    } if invited_user.id == @user.id
+    invited_student = Student.student?(invited_user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.no_registered_student_found_message')
-    } if !student || !student.is_pending
+    } if !invited_student || !invited_student.is_pending
     return redirect_to user_path(@user.id), flash: {
       danger: t('.student_found_team_message')
-    } if student.team
-    student_user = Student.student?(@user.id, cohort: current_cohort)
+    } if invited_student.team
+    invitor_student = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.cannot_register_team_message')
-    } if !student_user || !student_user.is_pending || student_user.team
+    } if !invitor_student || !invitor_student.is_pending || invitor_student.team
     team = Team.new(
       team_name: (Team.order('id').last.id + 1), is_pending: true,
-      cohort: current_cohort, invitor_student_id: student_user.id)
+      cohort: current_cohort, invitor_student_id: invitor_student.id)
     team.save
-    student.team_id = team.id
-    student.save
-    student_user.team_id = team.id
-    student_user.save
+    invited_student.team_id = team.id
+    invited_student.save
+    invitor_student.team_id = team.id
+    invitor_student.save
     redirect_to user_path(@user.id), flash: {
       success: t('.team_invitation_success_message')
     }

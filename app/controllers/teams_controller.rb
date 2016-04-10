@@ -50,9 +50,7 @@ class TeamsController < ApplicationController
                        @team.get_relevant_users(true, true)) && return
     @page_title = t('.page_title', team_name: @team.team_name)
     cohort = @team.cohort || current_cohort
-    render locals: {
-      milestones: Milestone.where(cohort: cohort)
-    }
+    render locals: data_for_display
   end
 
   def edit
@@ -108,5 +106,30 @@ class TeamsController < ApplicationController
     team_ps[:project_level] = Team.get_project_level_from_raw(
       team_ps[:project_level]) if team_ps[:project_level]
     team_ps
+  end
+
+  def data_for_display
+    milestones = Milestone.order(:id).where(cohort: @team.cohort)
+    survey_templates = []
+    milestones.each do |milestone|
+      survey_templates = survey_templates.concat(milestone.survey_templates)
+    end
+    basic_data = {
+      milestones: milestones,
+      survey_templates: survey_templates
+    }
+    basic_data.merge(team_related_data)
+  end
+
+  def team_related_data
+    {
+      evaluateds: @team.evaluateds,
+      evaluators: @team.evaluators,
+      team_submissions: @team.get_own_submissions,
+      team_evaluateds_submissions: @team.get_others_submissions,
+      team_evaluations: @team.get_own_evaluations_for_others,
+      team_evaluators_evaluations: @team.get_evaluations_for_own_team,
+      team_feedbacks: @team.get_feedbacks_for_others
+    }
   end
 end

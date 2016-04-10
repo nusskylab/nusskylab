@@ -73,7 +73,7 @@ class RolesController < ApplicationController
   def edit
     @role = role_cls.find(params[:id])
     !authenticate_user(true, false, additional_users_for_edit) && return
-    @page_title = t('.page_title')
+    @page_title = t('.page_title', user_name: @role.user.user_name)
     render locals: {
       role_data: data_for_role_edit
     }

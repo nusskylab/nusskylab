@@ -46,9 +46,9 @@
       <% end %>
       <% if (adviser_evaluation = locals[:team_evaluators_evaluations][milestone.id][:adviser]) %>
         <tr>
-          <td><%= locals[:student].team.adviser.user.user_name %></td>
+          <td><%= locals[:team].adviser.user.user_name %></td>
           <td>
-            <a href="<%= milestone_adviser_peer_evaluation_path(milestone.id, locals[:student].team.adviser_id, adviser_evaluation.id) %>"
+            <a href="<%= milestone_adviser_peer_evaluation_path(milestone.id, locals[:team].adviser_id, adviser_evaluation.id) %>"
                class="btn btn-primary">
               View
             </a>
@@ -62,8 +62,8 @@
           <td>
             <span data-toggle="tooltip" data-placement="top"
                   title="The team has not submitted peer evaluation yet">
-              <%= (not locals[:student].team.nil? and not locals[:student].team.adviser_id.nil?) ?
-                          locals[:student].team.adviser.user.user_name : 'No adviser' %>
+              <%= (not locals[:team].nil? and not locals[:team].adviser_id.nil?) ?
+                          locals[:team].adviser.user.user_name : 'No adviser' %>
             </span>
           </td>
           <td>
@@ -79,11 +79,11 @@
       <% end %>
       <tr>
         <td colspan="3" class="text-center">
-          <% if locals[:student].team %>
-              <a href="<%= milestone_team_received_evals_path(milestone.id, locals[:student].team.id) %>"
-                 class="btn btn-primary">
-                View all submitted evaluations
-              </a>
+          <% if locals[:team] %>
+            <a href="<%= milestone_team_received_evals_path(milestone.id, locals[:team].id) %>"
+               class="btn btn-primary">
+              View all submitted evaluations
+            </a>
           <% end %>
         </td>
       </tr>

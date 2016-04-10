@@ -469,6 +469,8 @@ en:
     register_team:
       no_user_found_message: >
         No user found with specified email
+      cannot_invite_self_message: >
+        You should not invite yourself to form a team
       no_registered_student_found_message: >
         No currently registered student with specified email
       student_found_team_message: >

@@ -49,7 +49,7 @@
             <p class="small"><%= t '.submit_submission_instruction' %></p>
           </div>
           <%= render 'student_submissions', locals: {
-            student: locals[:student],
+            team: locals[:student].team,
             milestones: locals[:role_data][:milestones],
             team_submissions: locals[:role_data][:team_submissions]
           } %>
@@ -60,7 +60,6 @@
             <p class="small"><%= t '.submit_evaluation_instruction' %></p>
           </div>
           <%= render 'student_submit_evaluations', locals: {
-            student: locals[:student],
             milestones: locals[:role_data][:milestones],
             evaluateds: locals[:role_data][:evaluateds],
             team_evaluateds_submissions: locals[:role_data][:team_evaluateds_submissions],
@@ -73,7 +72,7 @@
             <p class="small"><%= t '.view_evaluation_instruction' %></p>
           </div>
           <%= render 'student_view_others_evaluations', locals: {
-            student: locals[:student],
+            team: locals[:student].team,
             milestones: locals[:role_data][:milestones],
             evaluators: locals[:role_data][:evaluators],
             team_evaluators_evaluations: locals[:role_data][:team_evaluators_evaluations]
@@ -85,7 +84,7 @@
             <p class="small"><%= t '.submit_feedback_instruction' %></p>
           </div>
           <%= render 'student_submit_feedbacks', locals: {
-            student: locals[:student],
+            team: locals[:student].team,
             milestones: locals[:role_data][:milestones],
             evaluators: locals[:role_data][:evaluators],
             team_feedbacks: locals[:role_data][:team_feedbacks]
@@ -97,7 +96,6 @@
             <p class="small"><%= t '.preview_survey_template_instruction' %></p>
           </div>
           <%= render 'student_preview_survey_template', locals: {
-            student: locals[:student],
             milestones: locals[:role_data][:milestones],
             survey_templates: locals[:role_data][:survey_templates]
           } %>

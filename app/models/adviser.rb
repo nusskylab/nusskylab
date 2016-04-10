@@ -22,10 +22,16 @@ class Adviser < ActiveRecord::Base
 
   def self.to_csv(**options)
     require 'csv'
+    if options[:cohort].nil?
+      exported_advisers = all
+    else
+      exported_advisers = where(cohort: options[:cohort])
+      options.delete(:cohort)
+    end
     CSV.generate(options) do |csv|
       csv << ['Adviser UserID', 'Adviser Name', 'Adviser Email',
               'Avg feedback rating']
-      all.each do |adviser|
+      exported_advisers.each do |adviser|
         csv << [adviser.user.id, adviser.user.user_name, adviser.user.email,
                 adviser.feedback_average_rating]
       end

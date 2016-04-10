@@ -18,30 +18,30 @@
           </td>
           <td>
             <% if (team_feedback = locals[:team_feedbacks][evaluator.id]) %>
-                <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:student].team_id, team_feedback.id) %>">
-                  Edit feedback</a>
+              <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:team].id, team_feedback.id) %>">
+                Edit feedback</a>
             <% else %>
-                <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:student].team_id) %>">
-                  Submit feedback</a>
+              <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:team].id) %>">
+                Submit feedback</a>
             <% end %>
           </td>
         </tr>
       <% end %>
       <tr>
         <td>
-          <%= (not locals[:student].team.nil? and not locals[:student].team.adviser_id.nil?) ?
-                      locals[:student].team.adviser.user.user_name: 'No adviser' %>
+          <%= (not locals[:team].nil? and not locals[:team].adviser_id.nil?) ?
+                      locals[:team].adviser.user.user_name: 'No adviser' %>
         </td>
         <td>
           Active
         </td>
         <td>
           <% if (adviser_feedback = locals[:team_feedbacks][:adviser]) %>
-              <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:student].team_id, adviser_feedback.id) %>">
-                Edit feedback</a>
+            <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:team].id, adviser_feedback.id) %>">
+              Edit feedback</a>
           <% else %>
-              <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:student].team_id) %>">
-                Submit feedback</a>
+            <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:team].id) %>">
+              Submit feedback</a>
           <% end %>
         </td>
       </tr>
