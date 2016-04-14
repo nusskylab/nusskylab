@@ -1,10 +1,12 @@
 <% unless locals[:peer_evaluations].blank? %>
-    <p class="alert alert-info">You can view all of your peer_evaluations to <%= locals[:peer_evaluations][0].submission.team.team_name %>
+    <p class="alert alert-info">You can view all of your peer evaluations to <%= locals[:peer_evaluations][0].submission.team.team_name %>
       <% locals[:peer_evaluations].each do |eval| %>
-            <a href="<%= milestone_team_peer_evaluation_path(eval.submission.milestone_id, eval.team_id, eval.id) %>"
-               class="btn btn-success btn-xs">
-              <%= eval.submission.milestone.name %>
-            </a>
+        <% if !eval.nil? %>
+          <a href="<%= milestone_team_peer_evaluation_path(eval.submission.milestone_id, eval.team_id, eval.id) %>"
+             class="btn btn-success btn-xs">
+            <%= eval.submission.milestone.name %>
+          </a>
+        <% end %>
       <% end %>
     </p>
 <% end %>

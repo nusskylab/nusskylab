@@ -1,9 +1,4 @@
 # PeerEvaluationsController: manage actions related to peer_evaluations
-#   new:    view to create a peer_evaluation
-#   create: create a peer_evaluation
-#   show:   view of a peer_evaluation
-#   edit:   view to update a peer_evaluation
-#   update: update a peer_evaluation
 class PeerEvaluationsController < ApplicationController
   def new
     evaluating = Evaluating.find(params[:target_evaluation_id]) ||
