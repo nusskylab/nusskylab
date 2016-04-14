@@ -7,7 +7,8 @@
       <div class="panel-body">
         <%= render 'peer_evaluation_form_more_info', locals: {
           submissions: submissions,
-          peer_evaluations: peer_evaluations
+          peer_evaluations: peer_evaluations,
+          for_adviser: for_adviser
         } %>
         <%= render 'peer_evaluation_form', locals: {
           peer_evaluation: @peer_evaluation,

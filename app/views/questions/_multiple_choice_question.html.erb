@@ -2,10 +2,10 @@
     <div class="form-group">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <label><%= locals[:question].title %></label>
+          <label><%= locals[:question].title.html_safe %></label>
         </div>
         <div class="panel-body">
-          <div class="help-block small"><%= locals[:question].instruction %></div>
+          <div class="help-block small"><%= locals[:question].instruction.html_safe %></div>
           <div class="col-sm-12">
             <% options = JSON.parse(locals[:question].content); options.each_with_index do |itm, idx| %>
                 <div class="">
@@ -25,10 +25,10 @@
     <div class="form-group">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <label><%= locals[:question].title %></label>
+          <label><%= locals[:question].title.html_safe %></label>
         </div>
         <div class="panel-body">
-          <div class="help-block small"><%= locals[:question].instruction %></div>
+          <div class="help-block small"><%= locals[:question].instruction.html_safe %></div>
           <div class="col-sm-12">
             <% options = JSON.parse(locals[:question].content); options.each_with_index do |itm, idx| %>
                 <div class="radio">

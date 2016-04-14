@@ -1,13 +1,23 @@
 # PeerEvaluationsController: manage actions related to peer_evaluations
 class PeerEvaluationsController < ApplicationController
   def new
-    evaluating = Evaluating.find(params[:target_evaluation_id]) ||
-                 (record_not_found && return)
-    submission = Submission.find_by(team_id: evaluating.evaluated_id,
-                                    milestone_id: params[:milestone_id]) ||
-                 (record_not_found && return)
-    peer_evaluation = PeerEvaluation.find_by(team_id: params[:team_id],
-                                             submission_id: submission.id)
+    if params[:team_id]
+      evaluating = Evaluating.find(params[:target_evaluation_id]) ||
+                   (record_not_found && return)
+      submission = Submission.find_by(team_id: evaluating.evaluated_id,
+                                      milestone_id: params[:milestone_id]) ||
+                   (record_not_found && return)
+    elsif params[:adviser_id]
+      submission = Submission.find_by(id: params[:target])
+    end
+    peer_evaluation = PeerEvaluation.find_by(
+      team_id: params[:team_id],
+      submission_id: submission.id
+    )
+    peer_evaluation ||= PeerEvaluation.find_by(
+      adviser_id: params[:adviser_id],
+      submission_id: submission.id
+    )
     if peer_evaluation
       edit_eval_path = edit_milestone_team_peer_evaluation_path(
         params[:milestone_id], params[:team_id], peer_evaluation.id)
@@ -16,13 +26,21 @@ class PeerEvaluationsController < ApplicationController
     !can_access_peer_evaluation && return
     @page_title = t('.page_title')
     @peer_evaluation = PeerEvaluation.new
-    (submissions, peer_evaluations) = team_submissions_and_own_evaluations(
-      evaluating.evaluated_id, params[:team_id])
+    if params[:team_id]
+      (submissions, peer_evaluations) = team_submissions_and_own_evaluations(
+        evaluating.evaluated_id, params[:team_id])
+      for_adviser = false
+    elsif params[:adviser_id]
+      submissions = []
+      peer_evaluations = []
+      for_adviser = true
+    end
     render locals: {
       submission: submission,
       milestone: Milestone.find(params[:milestone_id]),
       submissions: submissions,
       peer_evaluations: peer_evaluations,
+      for_adviser: for_adviser,
       survey_template: SurveyTemplate.find_by(
         milestone_id: params[:milestone_id], survey_type: 1)
     }
@@ -60,12 +78,20 @@ class PeerEvaluationsController < ApplicationController
                        (record_not_found && return)
     !can_access_peer_evaluation && return
     @page_title = t('.page_title')
-    (submissions, peer_evaluations) = team_submissions_and_own_evaluations(
-      @peer_evaluation.submission.team_id, params[:team_id])
+    if params[:team_id]
+      (submissions, peer_evaluations) = team_submissions_and_own_evaluations(
+        @peer_evaluation.submission.team_id, params[:team_id])
+      for_adviser = false
+    elsif params[:adviser_id]
+      submissions = []
+      peer_evaluations = []
+      for_adviser = true
+    end
     render locals: {
       milestone: Milestone.find(params[:milestone_id]),
       submissions: submissions,
       peer_evaluations: peer_evaluations,
+      for_adviser: for_adviser,
       survey_template: @peer_evaluation.survey_template
     }
   end
