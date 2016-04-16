@@ -1,7 +1,7 @@
 # Question: question modeling
 class Question < ActiveRecord::Base
   before_validation :prefill_json_fields
-  before_save :validate_json_fields
+  validate :validate_json_fields
 
   belongs_to :survey_template
 
