@@ -2,10 +2,10 @@
     <div class="form-group">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <label><%= locals[:question].title %></label>
+          <label><%= locals[:question].title.html_safe %></label>
         </div>
         <div class="panel-body">
-          <div class="help-block small"><%= locals[:question].instruction %></div>
+          <div class="help-block small"><%= locals[:question].instruction.html_safe %></div>
           <select class="form-control" disabled multiple>
             <% options = JSON.parse(locals[:question].content); options.each_with_index do |itm, idx| %>
                 <option value="<%= idx %>" <% if not locals[:question_response].nil? and locals[:question_response].include? idx.to_s %>selected<% end %>>
@@ -20,10 +20,10 @@
     <div class="form-group">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <label><%= locals[:question].title %></label>
+          <label><%= locals[:question].title.html_safe %></label>
         </div>
         <div class="panel-body">
-          <div class="help-block small"><%= locals[:question].instruction %></div>
+          <div class="help-block small"><%= locals[:question].instruction.html_safe %></div>
           <select class="form-control question-multiple-select" multiple name="<%= get_question_name(locals[:question]) %>[]"
             <% extras = JSON.parse(locals[:question].extras); extras.each do |name, val| %>
               data-<%=name%>="<%=val%>"

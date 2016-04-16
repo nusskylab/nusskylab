@@ -2,10 +2,10 @@
     <div class="form-group">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <label><%= locals[:question].title %></label>
+          <label><%= locals[:question].title.html_safe %></label>
         </div>
         <div class="panel-body">
-          <div class="help-block"><%= locals[:question].instruction %></div>
+          <div class="help-block"><%= locals[:question].instruction.html_safe %></div>
           <div class="form-control-static"><%= locals[:question_response] %></div>
         </div>
       </div>
@@ -14,10 +14,10 @@
     <div class="form-group">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <label><%= locals[:question].title %></label>
+          <label><%= locals[:question].title.html_safe %></label>
         </div>
         <div class="panel-body">
-          <div class="help-block"><%= locals[:question].instruction %></div>
+          <div class="help-block"><%= locals[:question].instruction.html_safe %></div>
           <textarea class="form-control" rows="7" name="<%= get_question_name(locals[:question]) %>"
                     placeholder="<%= locals[:question].content %>"><%= locals[:question_response] %></textarea>
         </div>

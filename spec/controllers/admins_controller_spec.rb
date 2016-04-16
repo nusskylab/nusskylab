@@ -89,6 +89,50 @@ RSpec.describe AdminsController, type: :controller do
     end
   end
 
+  describe 'GET #general_mailing' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        user = FactoryGirl.create(:user, email: '1@admin.controller.spec', uid: '1.admin.controller.spec')
+        admin = FactoryGirl.create(:admin, user_id: user.id)
+        get :general_mailing, id: admin.id
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should render general_mailing for admin user' do
+        admin = Admin.find_by(user_id: subject.current_user.id)
+        get :general_mailing, id: admin.id
+        expect(response).to render_template(:general_mailing)
+      end
+    end
+  end
+
+  describe 'POST #send_general_mailing' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        user = FactoryGirl.create(:user, email: '1@admin.controller.spec', uid: '1.admin.controller.spec')
+        admin = FactoryGirl.create(:admin, user_id: user.id)
+        post :send_general_mailing, id: admin.id
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should redirect with error for admin user' do
+        admin = Admin.find_by(user_id: subject.current_user.id)
+        post :send_general_mailing, id: admin.id, mailing: {
+          'receivers[]': '1',
+          'subject': 'testing'
+        }
+        expect(response).to redirect_to(admin_path(admin))
+        expect(flash[:danger]).not_to be_nil
+      end
+    end
+  end
+
   describe 'GET #show' do
     context 'user not logged in' do
       it 'should redirect to root_path for non_user' do

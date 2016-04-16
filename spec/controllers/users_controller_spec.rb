@@ -161,6 +161,168 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe 'GET #register_as_student' do
+    context 'user not logged in' do
+      it 'should redirect to 404 if requested user does not exist' do
+        get :register_as_student, id: 1
+        expect(response.status).to eql 404
+      end
+    end
+
+    context 'user logged in but not admin' do
+      login_user
+      it 'should render correct template' do
+        milestone = FactoryGirl.create(:milestone, name: 'Milestone 1')
+        FactoryGirl.create(
+          :survey_template,
+          milestone: milestone,
+          survey_type: SurveyTemplate.survey_types[:survey_type_registration]
+        )
+        get :register_as_student, id: subject.current_user.id
+        expect(response).to render_template(:register_as_student)
+      end
+    end
+  end
+
+  describe 'POST #register' do
+    context 'user not logged in' do
+      it 'should redirect to 404 if requested user does not exist' do
+        post :register, id: 1
+        expect(response.status).to eql 404
+      end
+    end
+
+    context 'user logged in but not admin' do
+      login_user
+      it 'should redirect_to users path' do
+        milestone = FactoryGirl.create(:milestone, name: 'Milestone 1')
+        FactoryGirl.create(
+          :survey_template,
+          milestone: milestone,
+          survey_type: SurveyTemplate.survey_types[:survey_type_registration]
+        )
+        post :register, id: subject.current_user.id, questions: {'1': 'test', '2': '2'}
+        expect(response).to redirect_to(user_path(subject.current_user))
+      end
+    end
+  end
+
+  describe 'GET #register_as_team:' do
+    context 'user not logged in:' do
+      it 'should redirect to 404 if requested user does not exist' do
+        get :register_as_team, id: 1
+        expect(response.status).to eql 404
+      end
+    end
+
+    context 'user logged in but not admin:' do
+      login_user
+      it 'should handle different cases for user' do
+        get :register_as_team, id: subject.current_user.id
+        expect(response).to redirect_to(user_path(subject.current_user))
+        expect(flash[:danger]).not_to be_nil
+
+        student = FactoryGirl.create(:student, user: subject.current_user, is_pending: false)
+        get :register_as_team, id: subject.current_user.id
+        expect(response).to redirect_to(student_path(student))
+
+        student.is_pending = true
+        student.save
+        get :register_as_team, id: subject.current_user.id
+        expect(response).to render_template(:register_as_team)
+      end
+    end
+  end
+
+  describe 'POST #register_team' do
+    context 'user not logged in' do
+      it 'should redirect to 404 if requested user does not exist' do
+        post :register_team, id: 1
+        expect(response.status).to eql 404
+      end
+    end
+
+    context 'user logged in but not admin' do
+      login_user
+      it 'should handle different cases for user' do
+        post :register_team, id: subject.current_user.id, team: {
+          email: 'non_existing@user.controller.spec'
+        }
+        expect(response).to redirect_to(user_path(subject.current_user))
+        expect(flash[:danger]).not_to be_nil
+
+        post :register_team, id: subject.current_user.id, team: {
+          email: 'default_user@controller.spec'
+        }
+        expect(response).to redirect_to(user_path(subject.current_user))
+        expect(flash[:danger]).not_to be_nil
+
+        user = FactoryGirl.create(:user, email: '1@user.controller.spec', uid: '1.user.controller.spec')
+        post :register_team, id: subject.current_user.id, team: {
+          email: '1@user.controller.spec'
+        }
+        expect(response).to redirect_to(user_path(subject.current_user))
+        expect(flash[:danger]).not_to be_nil
+
+        team = FactoryGirl.create(:team, team_name: '1.user.controller.spec')
+        student = FactoryGirl.create(:student, user: user, team: team, is_pending: true)
+        post :register_team, id: subject.current_user.id, team: {
+          email: '1@user.controller.spec'
+        }
+        expect(response).to redirect_to(user_path(subject.current_user))
+        expect(flash[:danger]).not_to be_nil
+
+        student.team_id = nil
+        student.save
+        post :register_team, id: subject.current_user.id, team: {
+          email: '1@user.controller.spec'
+        }
+        expect(response).to redirect_to(user_path(subject.current_user))
+        expect(flash[:danger]).not_to be_nil
+
+        FactoryGirl.create(:student, user: subject.current_user, is_pending: true, team: nil)
+        post :register_team, id: subject.current_user.id, team: {
+          email: '1@user.controller.spec'
+        }
+        expect(response).to redirect_to(user_path(subject.current_user))
+        expect(flash[:success]).not_to be_nil
+      end
+    end
+  end
+
+  describe 'POST #confirm_team' do
+    context 'user not logged in' do
+      it 'should redirect to 404 if requested user does not exist' do
+        post :confirm_team, id: 1
+        expect(response.status).to eql 404
+      end
+    end
+
+    context 'user logged in but not admin' do
+      login_user
+      it 'should handle different cases' do
+        post :confirm_team, id: subject.current_user.id, team: {'confirm': 'true'}
+        expect(response).to redirect_to(user_path(subject.current_user))
+        expect(flash[:danger]).not_to be_nil
+
+        current_user = subject.current_user
+        team = FactoryGirl.create(:team, team_name: '1.user.controller.spec')
+        student = FactoryGirl.create(:student, user: current_user, team: team, is_pending: true)
+        post :confirm_team, id: current_user.id, team: {'confirm': 'false'}
+        expect(response).to redirect_to(user_path(subject.current_user))
+        expect(flash[:success]).not_to be_nil
+        expect(Student.find_by(user_id: current_user.id).team_id).to be_nil
+
+        team = FactoryGirl.create(:team, team_name: '2.user.controller.spec')
+        student.team_id = team.id
+        student.save
+        post :confirm_team, id: current_user.id, team: {'confirm': 'true'}
+        expect(response).to redirect_to(user_path(subject.current_user))
+        expect(flash[:success]).not_to be_nil
+      end
+    end
+  end
+
   describe 'GET #edit' do
     context 'user not logged in' do
       it 'should redirect to root_path for non_user' do
