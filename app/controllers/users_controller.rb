@@ -1,11 +1,4 @@
 # UsersController: manage actions related to user
-#   index:      list of users
-#   new:        view to create a user
-#   create:     create a user
-#   preview_as: for admin to login as another user
-#   edit:       view to update a user
-#   update:     update a user
-#   destroy:    delete a user
 class UsersController < ApplicationController
   def index
     !authenticate_user(true, true) && return
@@ -45,7 +38,7 @@ class UsersController < ApplicationController
   end
 
   def register_as_student
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     milestone = Milestone.find_by(name: 'Milestone 1', cohort: current_cohort)
     survey_template = SurveyTemplate.find_by(
@@ -64,7 +57,7 @@ class UsersController < ApplicationController
   end
 
   def register
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     milestone = Milestone.find_by(name: 'Milestone 1', cohort: current_cohort)
     survey_template = SurveyTemplate.find_by(
@@ -84,7 +77,7 @@ class UsersController < ApplicationController
   end
 
   def register_as_team
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
@@ -100,7 +93,7 @@ class UsersController < ApplicationController
   end
 
   def register_team
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     team_params = params.require(:team).permit(:email)
     invited_user = User.find_by(email: team_params[:email])
@@ -135,7 +128,7 @@ class UsersController < ApplicationController
   end
 
   def confirm_team
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     team_params = params.require(:team).permit(:confirm)
     student_user = Student.student?(@user.id, cohort: current_cohort)
