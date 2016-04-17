@@ -16,10 +16,6 @@ class FacilitatorsController < RolesController
     new_facilitator_path(ps)
   end
 
-  def path_for_edit(role_id)
-    edit_facilitator_path(role_id)
-  end
-
   def path_for_show(role_id)
     facilitator_path(role_id)
   end
