@@ -121,7 +121,7 @@ RSpec.describe AdminsController, type: :controller do
 
     context 'user logged in and admin' do
       login_admin
-      it 'should redirect with error for admin user' do
+      it 'should redirect with error when params are wrong' do
         admin = Admin.find_by(user_id: subject.current_user.id)
         post :send_general_mailing, id: admin.id, mailing: {
           'receivers[]': '1',
@@ -129,6 +129,17 @@ RSpec.describe AdminsController, type: :controller do
         }
         expect(response).to redirect_to(admin_path(admin))
         expect(flash[:danger]).not_to be_nil
+      end
+
+      it 'should send emails' do
+        admin = Admin.find_by(user_id: subject.current_user.id)
+        post :send_general_mailing, id: admin.id, mailing: {
+          'receivers': ['1', '2'],
+          'subject': 'testing',
+          'content': 'testing email'
+        }
+        expect(response).to redirect_to(admin_path(admin))
+        expect(flash[:success]).not_to be_nil
       end
     end
   end

@@ -5,16 +5,21 @@
 #   update: update a feedback
 class FeedbacksController < ApplicationController
   def new
-    team = Team.find(params[:team_id])
-    !authenticate_user(true, false, team.get_relevant_users(false, false)) && return
+    team = Team.find(params[:team_id]) || (record_not_found && return)
+    !authenticate_user(
+      true, false, team.get_relevant_users(false, false)
+    ) && return
     @page_title = t('.page_title')
     @feedback = Feedback.new
     evaluators = []
     team.evaluators.each do |evaluator|
       evaluators.append(evaluator.evaluator)
     end
-    # TODO: need to properly handle this!!!
-    feedback_template = SurveyTemplate.all[0]
+    milestone = Milestone.find_by(name: 'Milestone 3', cohort: team.cohort)
+    feedback_template = SurveyTemplate.find_by(
+      milestone_id: milestone.id,
+      survey_type: SurveyTemplate.survey_types[:survey_type_feedback]
+    )
     render locals: {
       advisers: [team.adviser],
       evaluators: evaluators,
@@ -24,7 +29,9 @@ class FeedbacksController < ApplicationController
 
   def create
     team = Team.find(params[:team_id])
-    !authenticate_user(true, false, team.get_relevant_users(false, false)) && return
+    !authenticate_user(
+      true, false, team.get_relevant_users(false, false)
+    ) && return
     if create_or_update_feedback_and_responses
       redirect_to home_path, flash: {
         success: t('.success_message')
@@ -38,16 +45,21 @@ class FeedbacksController < ApplicationController
   end
 
   def edit
-    team = Team.find(params[:team_id])
-    !authenticate_user(true, false, team.get_relevant_users(false, false)) && return
+    team = Team.find(params[:team_id]) || (record_not_found && return)
+    !authenticate_user(
+      true, false, team.get_relevant_users(false, false)
+    ) && return
     @page_title = t('.page_title')
     @feedback = Feedback.find(params[:id])
     evaluators = []
     team.evaluators.each do |evaluator|
       evaluators.append(evaluator.evaluator)
     end
-    # TODO: need to properly handle this!!!
-    feedback_template = SurveyTemplate.all[0]
+    milestone = Milestone.find_by(name: 'Milestone 3', cohort: team.cohort)
+    feedback_template = SurveyTemplate.find_by(
+      milestone_id: milestone.id,
+      survey_type: SurveyTemplate.survey_types[:survey_type_feedback]
+    )
     render locals: {
       advisers: [team.adviser],
       evaluators: evaluators,
@@ -57,7 +69,9 @@ class FeedbacksController < ApplicationController
 
   def update
     team = Team.find(params[:team_id])
-    !authenticate_user(true, false, team.get_relevant_users(false, false)) && return
+    !authenticate_user(
+      true, false, team.get_relevant_users(false, false)
+    ) && return
     @feedback = Feedback.find(params[:id])
     if create_or_update_feedback_and_responses(@feedback)
       redirect_to home_path, flash: {

@@ -16,10 +16,6 @@ class AdminsController < RolesController
     new_admin_path(ps)
   end
 
-  def path_for_edit(role_id)
-    edit_admin_path(role_id)
-  end
-
   def path_for_show(role_id)
     admin_path(role_id)
   end

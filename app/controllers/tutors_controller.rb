@@ -16,10 +16,6 @@ class TutorsController < RolesController
     new_tutor_path(ps)
   end
 
-  def path_for_edit(role_id)
-    edit_tutor_path(role_id)
-  end
-
   def path_for_show(role_id)
     tutor_path(role_id)
   end
