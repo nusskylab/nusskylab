@@ -39,7 +39,8 @@ class SurveyTemplatesController < ApplicationController
 
   def edit
     !authenticate_user(true, true) && return
-    @survey_template = SurveyTemplate.find(params[:id])
+    @survey_template = SurveyTemplate.find(params[:id]) ||
+                       (record_not_found && return)
     @page_title = t('.page_title')
     render locals: {
       milestones: Milestone.all
@@ -48,7 +49,8 @@ class SurveyTemplatesController < ApplicationController
 
   def update
     !authenticate_user(true, true) && return
-    @survey_template = SurveyTemplate.find(params[:id])
+    @survey_template = SurveyTemplate.find(params[:id]) ||
+                       (record_not_found && return)
     if @survey_template.update(survey_template_params)
       redirect_to survey_templates_path, flash: {
         success: t('.success_message')
@@ -64,7 +66,8 @@ class SurveyTemplatesController < ApplicationController
 
   def show
     !authenticate_user(true, true) && return
-    @survey_template = SurveyTemplate.find(params[:id])
+    @survey_template = SurveyTemplate.find(params[:id]) ||
+                       (record_not_found && return)
     @page_title = t('.page_title')
     render locals: {
       new_question: Question.new(survey_template_id: @survey_template.id)

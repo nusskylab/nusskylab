@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
 
   def update
     !authenticate_user(true, true) && return
-    @question = Question.find(params[:id])
+    @question = Question.find(params[:id]) || (record_not_found && return)
     q_params = question_params
     q_params.except!(:survey_template_id)
     if @question.update(q_params)

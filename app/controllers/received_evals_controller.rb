@@ -2,8 +2,9 @@
 #   index: list of all the evaluations received
 class ReceivedEvalsController < ApplicationController
   def index
-    team = Team.find(params[:team_id])
-    milestone = Milestone.find(params[:milestone_id])
+    team = Team.find(params[:team_id]) || (record_not_found && return)
+    milestone = Milestone.find(params[:milestone_id]) ||
+                (record_not_found && return)
     !authenticate_user(true, false, team.get_relevant_users(false, false)) &&
       return
     @page_title = t('.page_title')
