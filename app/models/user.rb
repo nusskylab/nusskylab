@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
     message: ': An OpenID account can only be used for creating one account'
   }, if: 'uid.present?'
 
+  has_many :registrations, dependent: :destroy
+
   enum provider: [:provider_nil, :provider_NUS]
   enum program_of_study: [
     :program_of_study_unknown, :program_of_study_cs, :program_of_study_ceg,

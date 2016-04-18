@@ -1,5 +1,5 @@
 class Registration < ActiveRecord::Base
-  belongs_to :user, dependent: :destroy
+  belongs_to :user
   belongs_to :survey_template
 
   def get_response_for_question(question_id)
