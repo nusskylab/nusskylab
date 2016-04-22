@@ -8,7 +8,7 @@
         <td><%= idx + 1 %></td>
         <td><%= user.id %></td>
         <td><%= user.user_name %></td>
-	<td><%= user.created_at %></td>
+	      <td><%= l user.created_at %></td>
         <td><%= user.email %></td>
         <td>
           <a class="btn btn-primary btn-xs" href="<%=  user_path(user.id) %>">View</a>

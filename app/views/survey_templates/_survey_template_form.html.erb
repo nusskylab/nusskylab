@@ -1,7 +1,7 @@
 <%= simple_form_for(locals[:survey_template], wrapper: :vertical_form,
         url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
     <%= f.error_notification %>
-    <%= f.input :milestone_id, collection: locals[:milestones].map {|m| [m.name, m.id]}, include_blank: false %>
+    <%= f.input :milestone_id, collection: locals[:milestones].map {|m| ["#{m.name} - (#{m.cohort})", m.id]}, include_blank: false %>
     <%= f.input :survey_type, collection: SurveyTemplate.survey_types, include_blank: false %>
     <%= f.input :instruction, input_html: {rows: 10} %>
     <%= f.input :deadline, as: :string, input_html: { value: (l(f.object.deadline) if f.object.deadline), class: 'datetime-picker' } %>

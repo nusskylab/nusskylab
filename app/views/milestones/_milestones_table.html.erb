@@ -10,7 +10,7 @@
         <td><%= l milestone.peer_evaluation_deadline %></td>
         <td><%= milestone.cohort %></td>
         <td>
-          <a class="btn btn-default btn-xs" href="<%=  milestone_path(milestone.id) %>">View</a>
+          <a class="btn btn-primary btn-xs" href="<%=  milestone_path(milestone.id) %>">View</a>
           <a class="btn btn-default btn-xs" href="<%= edit_milestone_path(milestone.id) %>">Edit</a>
           <%= link_to 'Delete', milestone_path(milestone.id), method: :delete, class: 'btn btn-danger btn-xs',
             data: { confirm: 'Are you sure you want to delete this milestone?' } %>
