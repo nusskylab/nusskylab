@@ -39,10 +39,10 @@ namespace :registration do
       other_users = []
       similarity_tbl.each do |other_user_id, similarity|
         similarity = 0.0 if similarity.nan?
-        other_users.append([other_user_id, similarity])
+        other_users.append([users[other_user_id].user_name, similarity])
       end
       other_users.sort! { |a, b| a[1] <=> b[1] }
-      potential_teammates[user_id] = other_users.last(3).reverse
+      potential_teammates[user_id] = other_users.last(10).reverse
     end
     write_results_to_csv(potential_teammates, users_tags, users)
   end
@@ -69,7 +69,7 @@ namespace :registration do
     current_cohort = Time.now.year
     if user_type == 'pending_students'
       pending_students = Student.where(
-        cohort: current_cohort, is_pending: true, team_id: nil
+        cohort: current_cohort, is_pending: false, team_id: nil
       )
     else
       fail ArgumentError, 'Unrecognized user type for match making'
