@@ -105,7 +105,7 @@ namespace :registration do
         next unless JSON.parse(questions[key.to_i].extras)['for_registration']
         val.each do |tag_idx|
           users_vectors[registration.user_id][tag_idx.to_i] = Math.log2(
-            all_registrations.length / (1 + tag_freq_table[tag_idx.to_i])
+            all_registrations.length.to_f / (1 + tag_freq_table[tag_idx.to_i])
           )
         end
       end

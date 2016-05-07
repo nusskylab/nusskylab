@@ -19,7 +19,7 @@
         <td><%= team.cohort %></td>
         <td>
           <% if can_current_user_view_team(team) %>
-              <a class="btn btn-default btn-xs" href="<%=  team_path(team.id) %>">View</a>
+              <a class="btn btn-primary btn-xs" href="<%=  team_path(team.id) %>">View</a>
           <% end %>
           <% if can_current_user_edit_team(team) %>
               <a class="btn btn-default btn-xs" href="<%= edit_team_path(team.id) %>">Edit</a>
