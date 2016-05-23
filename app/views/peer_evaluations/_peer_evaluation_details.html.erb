@@ -9,7 +9,7 @@
 </div>
 <% if (current_user_student? and current_user_student?.team and current_user_student?.team_id == locals[:peer_evaluation].team_id) %>
     <div id="peer-evaluation-private-part">
-      <% locals[:survey_template].questions.each do |question| %>
+      <% locals[:survey_template].questions.order('questions.id ASC').each do |question| %>
         <% if not question.is_public %>
           <%= render 'questions/question_template',
                      locals: {question: question, view_template: true,

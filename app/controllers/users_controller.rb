@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     @page_title = t('.page_title')
     render locals: {
       survey_template: survey_template,
-      questions: survey_template.questions.order('questions.id ASC'),
+      questions: survey_template.questions.order('questions.order ASC'),
       registration: registration
     }
   end

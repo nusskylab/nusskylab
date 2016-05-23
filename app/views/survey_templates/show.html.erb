@@ -9,7 +9,7 @@
           <%= render 'survey_template_view', locals: {survey_template: @survey_template} %>
         </div>
         <div id="survey-template-questions">
-          <% @survey_template.questions.each do |question| %>
+          <% @survey_template.questions.order('questions.order ASC').each do |question| %>
               <%= render 'questions/view_edit_question_template', locals: {
                 question: question,
                 question_response: nil
