@@ -10,7 +10,7 @@ class Question < ActiveRecord::Base
                        :question_type_multiple_select]
 
   def prefill_json_fields
-    self.extras = '[]' if extras.blank?
+    self.extras = '{}' if extras.blank?
     self.content = '[]' if content.blank?
   end
 
