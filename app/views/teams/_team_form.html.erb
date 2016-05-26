@@ -6,7 +6,7 @@
                                            'Project Gemini'.to_sym => 'Gemini',
                                            'Apollo 11'.to_sym => 'Apollo 11'}, include_blank: false, required: true %>
   <% if current_user_admin? %>
-      <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: Not assigned', required: true %>
+      <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Not assigned', required: true %>
       <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Not assigned' %>
   <% end %>
   <% if locals[:is_new] %>
