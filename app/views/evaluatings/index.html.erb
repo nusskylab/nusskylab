@@ -2,18 +2,22 @@
     <% javascript 'evaluatings.js' %>
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h3 class="text-center">Evaluating relations</h3>
+        <h3 class="text-center">Evaluating relations in cohort <%= cohort %></h3>
       </div>
       <div class="panel-body">
         <div class="col-sm-2 col-sm-offset-4">
-          <a href="<%= new_evaluating_path %>" class="btn btn-success">Create New Evaluation relationship</a>
+          <%= link_to 'Create New Evaluation Relationship', new_evaluating_path(cohort: cohort), class: 'btn btn-success' %>
         </div>
         <br><hr>
         <%= render 'evaluatings_table', locals: {evaluatings: @evaluatings} %>
         <hr>
-        <div class="col-sm-2 col-sm-offset-4">
-          <a href="<%= new_evaluating_path %>" class="btn btn-success">Create New Evaluation relationship</a>
-        </div>
+        <div class="col-sm-12">
+        <% all_cohorts.each do |cohort| %>
+          <div class="col-sm-2">
+            <%= link_to cohort, evaluatings_path(cohort: cohort), class: 'btn btn-info' %>
+          </div>
+        <% end %>
+      </div>
       </div>
     </div>
 <% end %>
