@@ -34,19 +34,19 @@
                 <br>
                 <div class="jumbotron">
                   <% if (adm = user_admin?) or (adv = user_adviser?) or  (men = user_mentor?) or (stu = user_student?) %>
-                    <p>Use Skylab as which available role to you:</p>
+		    <p>Use Skylab as:</p>
                     <p>
                     <% if adm %>
-                          <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">Admin</a>
+                          <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>
                       <% end %>
                       <% if adv %>
-                          <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">Adviser</a>
+                          <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>
                       <% end %>
                       <% if men %>
-                          <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">Mentor</a>
+                          <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">A Mentor</a>
                       <% end %>
                       <% if stu %>
-                          <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">Student</a>
+                          <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">A Student</a>
                       <% end %>
                     </p>
                   <% else %>
