@@ -115,7 +115,8 @@ class EvaluatingsController < ApplicationController
 
   def evaluating_permitted_users
     evaluating_users = []
-    if adviser && @evaluating.evaluated.adviser.user_id == current_user.id
+    adviser = @evaluating.evaluated.adviser
+    if adviser and adviser.user_id == current_user.id
       evaluating_users.append(adviser.user)
     end
     evaluating_users
