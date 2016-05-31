@@ -1,5 +1,5 @@
 <div id="peer-evaluation-public-part">
-  <% locals[:survey_template].questions.each do |question| %>
+  <% locals[:survey_template].questions.order('questions.id ASC').each do |question| %>
     <% if question.is_public %>
       <%= render 'questions/question_template',
                  locals: {question: question, view_template: true,
