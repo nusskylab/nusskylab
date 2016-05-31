@@ -1,5 +1,5 @@
 <% unless locals[:submissions].blank? %>
-    <p class="alert alert-info">You can view all of <%= locals[:submissions][0].team.team_name %>'s submissions
+    <p class="alert alert-info">You can view all of target team's submissions
       <% locals[:submissions].each do |sub| %>
             <a href="<%= milestone_team_submission_path(sub.milestone_id, sub.team_id, sub.id) %>"
                class="btn btn-success btn-xs">
