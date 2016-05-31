@@ -163,6 +163,11 @@ class PeerEvaluationsController < ApplicationController
     elsif params[:adviser_id]
       eval_params[:adviser_id] = params[:adviser_id]
     end
+    eval_params[:response_content] = questions_params.to_json
     eval_params
+  end
+
+  def questions_params
+    params.require(:questions).permit!
   end
 end
