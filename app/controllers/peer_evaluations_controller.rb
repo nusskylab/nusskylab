@@ -7,17 +7,17 @@ class PeerEvaluationsController < ApplicationController
       submission = Submission.find_by(team_id: evaluating.evaluated_id,
                                       milestone_id: params[:milestone_id]) ||
                    (record_not_found && return)
+      peer_evaluation = PeerEvaluation.find_by(
+        team_id: params[:team_id],
+        submission_id: submission.id
+      )
     elsif params[:adviser_id]
       submission = Submission.find_by(id: params[:target])
+      peer_evaluation = PeerEvaluation.find_by(
+        adviser_id: params[:adviser_id],
+        submission_id: submission.id
+      )
     end
-    peer_evaluation = PeerEvaluation.find_by(
-      team_id: params[:team_id],
-      submission_id: submission.id
-    )
-    peer_evaluation ||= PeerEvaluation.find_by(
-      adviser_id: params[:adviser_id],
-      submission_id: submission.id
-    )
     if peer_evaluation
       edit_eval_path = edit_milestone_team_peer_evaluation_path(
         params[:milestone_id], params[:team_id], peer_evaluation.id)
