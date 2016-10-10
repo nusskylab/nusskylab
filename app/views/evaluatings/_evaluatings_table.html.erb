@@ -11,7 +11,7 @@
             <td><del><%= evaluating.evaluator.team_name %></del></td>
           </span>
         <% else %>
-          <td><%= locals[:team].team_name %></td>
+          <td><%= evaluating.evaluator.team_name %></td>
         <% end %>
         <% if evaluating.evaluated.has_dropped %>
           <span data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>">
