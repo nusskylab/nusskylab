@@ -6,8 +6,20 @@
   <% locals[:evaluatings].each_with_index do |evaluating, idx| %>
       <tr>
         <td><%= idx + 1 %></td>
-        <td><%= evaluating.evaluator.team_name %></td>
-        <td><%= evaluating.evaluated.team_name %></td>
+        <% if evaluating.evaluator.has_dropped %>
+          <span data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>">
+            <td><del><%= evaluating.evaluator.team_name %></del></td>
+          </span>
+        <% else %>
+          <td><%= locals[:team].team_name %></td>
+        <% end %>
+        <% if evaluating.evaluated.has_dropped %>
+          <span data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>">
+            <td><del><%= evaluating.evaluated.team_name %></del></td>
+          </span>
+        <% else %>
+          <td><%= evaluating.evaluated.team_name %></td>
+        <% end %>
         <td>
           <a class="btn btn-default btn-xs" href="<%= edit_evaluating_path(evaluating.id) %>">Edit</a>
           <%= link_to 'Delete', evaluating_path(evaluating.id),
