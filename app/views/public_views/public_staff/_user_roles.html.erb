@@ -6,10 +6,10 @@
     <% if locals[:roles] && locals[:roles].length > 0 %>
       <% locals[:roles].each do |role| %>
         <div class="row">
-          <div class="col-sm-2">
+          <div class="col-md-3">
             <%= image_tag role.user.gravatar_url(size: 150) %>
           </div>
-          <div class="col-sm-10">
+          <div class="col-md-9">
             <div>Name: <strong><%= role.user.user_name %></strong></div>
             <div class="automail">Email: <%= role.user.email %></div>
             <div class="autolink">GitHub: <%= role.user.github_link %></div>
