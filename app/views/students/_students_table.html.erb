@@ -9,11 +9,12 @@
       <td>
         <% if get_student_team_dropped_status(student) == true %>
           <span data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>">
-            <del><%= student.user.user_name %></td></del>
+            <del><%= student.user.user_name %></del>
           </span>
         <% else %>
-          <span><%= student.user.user_name %></td></span>
+          <span><%= student.user.user_name %></span>
         <% end %>
+      </td>
       <td><%= student.user.email %></td>
       <td>
         <% if get_student_team_dropped_status(student) == true %>
