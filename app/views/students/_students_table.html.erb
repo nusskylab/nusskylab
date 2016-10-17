@@ -1,16 +1,32 @@
 <table class="table-sortable table table-hover" id="students-table">
   <thead>
-  <tr><th class="unsortable sort-index">Index</th><th>User Name</th><th>User Email</th><th>Team Name</th><th>Project Level</th><th>Adviser</th><th>Pending?</th><th class="unsortable">Actions</th></tr>
+  <tr><th class="unsortable sort-index">Index</th><th>User Name</th><th>User Email</th><th>Team Name</th><th>Project Level</th><th>Adviser</th><th>Dropped?</th><th>Pending?</th><th class="unsortable">Actions</th></tr>
   </thead>
   <tbody>
   <% locals[:students].each_with_index do |student, idx| %>
     <tr>
       <td><%= idx + 1 %></td>
-      <td><%= student.user.user_name %></td>
+      <td>
+        <% if get_student_team_dropped_status(student) == true %>
+          <span data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>">
+            <del><%= student.user.user_name %></td></del>
+          </span>
+        <% else %>
+          <span><%= student.user.user_name %></td></span>
+        <% end %>
       <td><%= student.user.email %></td>
-      <td><%= get_student_team_name(student) %></td>
+      <td>
+        <% if get_student_team_dropped_status(student) == true %>
+          <span data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>">
+            <del><%= get_student_team_name(student) %></del>
+          </span>
+        <% else %>
+          <span><%= get_student_team_name(student) %></span>
+        <% end %>
+      </td>
       <td><%= get_student_team_project_level(student) %></td>
       <td><%= get_student_team_adviser_name(student) %></td>
+      <td><%= get_student_team_dropped_status(student) %></td>
       <td><%= student.is_pending %></td>
       <td>
         <a class="btn btn-primary btn-xs" href="<%=  student_path(student.id) %>">View</a>
