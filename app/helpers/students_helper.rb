@@ -14,4 +14,8 @@ module StudentsHelper
   def get_student_team_adviser_name(student)
     (student.team && student.team.adviser) ? student.team.adviser.user.user_name : 'Nil'
   end
+
+  def get_student_team_dropped_status(student)
+    student.team ? student.team.has_dropped : 'Nil'
+  end
 end
