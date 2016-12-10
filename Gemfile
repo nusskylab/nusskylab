@@ -73,6 +73,10 @@ source 'https://rubygems.org' do
     # codeclimate coverage
     gem 'codeclimate-test-reporter'
   end
+
+  group :production do
+    gem 'rails_12factor'
+  end
 end
 
 source 'https://rails-assets.org' do
@@ -80,3 +84,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-select2', '~> 4.0.0'
   gem 'rails-assets-autosize', '~> 3.0.13'
 end
+
+ruby "2.3.1"
