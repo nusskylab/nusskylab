@@ -73,10 +73,6 @@ source 'https://rubygems.org' do
     # codeclimate coverage
     gem 'codeclimate-test-reporter'
   end
-
-  group :production do
-    gem 'rails_12factor'
-  end
 end
 
 source 'https://rails-assets.org' do
