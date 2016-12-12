@@ -1,9 +1,11 @@
 <head>
-  image {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-  }
+  <style>
+    image {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+    }
+  </style>
 </head>
 <div class="panel panel-info">
   <div class="panel-heading">
@@ -20,5 +22,5 @@
     <div class="col-sm-10"><%= locals[:user].uid %></div>
     <div class="col-sm-2">Gravatar Icon:</div>
     <div class="col-sm-10 image"><%= image_tag locals[:user].gravatar_url(size: 150) %>
+    </div>
   </div>
-</div>
