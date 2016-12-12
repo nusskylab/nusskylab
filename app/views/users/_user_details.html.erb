@@ -21,6 +21,6 @@
     <div class="col-sm-2">OpenID UID:</div>
     <div class="col-sm-10"><%= locals[:user].uid %></div>
     <div class="col-sm-2">Gravatar Icon:</div>
-    <div class="col-sm-10"><%= image_tag locals[:user].gravatar_url() %>
+    <div class="col-sm-10"><%= image_tag locals[:user].gravatar_url(size: 150) %>
     </div>
   </div>
