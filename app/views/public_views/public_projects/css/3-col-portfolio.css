@@ -16,12 +16,9 @@ footer {
     margin: 50px 0;
 }
 
-.blocktext {
-    margin-left: auto;
-    margin-right: auto;
-    width: 6em
-}
-
-.percent {
-	text-align: center;
+.center {
+	margin: auto;
+	width: 50%;
+	border: 3px;
+	padding: 10px;
 }
