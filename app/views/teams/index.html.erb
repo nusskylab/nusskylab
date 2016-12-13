@@ -17,7 +17,15 @@
           </div>
           <% end %>
         </div>
-        <br><hr>
+        <br><br><hr>
+        <div class="col-sm-12">
+          <% all_cohorts.each do |cohort| %>
+          <div class="col-sm-2">
+            <%= link_to cohort, teams_path(cohort: cohort), class: 'btn btn-info' %>
+          </div>
+          <% end %>
+        </div>
+        <br><br><hr>
         <%= render 'teams_table', locals: { teams: @teams } %>
         <br><br><hr>
         <div class="col-sm-12">

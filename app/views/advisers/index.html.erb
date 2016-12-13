@@ -13,7 +13,15 @@
           <a href="<%= new_adviser_path(cohort: cohort) %>", class="btn btn-success">Create New Adviser</a>
         </div>
       </div>
-      <br><hr>
+      <br><br><hr>
+      <div class="col-sm-12">
+        <% all_cohorts.each do |cohort| %>
+        <div class="col-sm-2">
+          <%= link_to cohort, advisers_path(cohort: cohort), class: 'btn btn-info' %>
+        </div>
+        <% end %>
+      </div>
+      <br><br><hr> 
       <%= render 'advisers_table', locals: {advisers: @roles} %>
       <hr>
       <div class="col-sm-12">
