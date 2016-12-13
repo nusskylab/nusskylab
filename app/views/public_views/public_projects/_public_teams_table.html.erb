@@ -12,6 +12,14 @@
 
     <!-- Custom CSS -->
     <link href="css/3-col-portfolio.css" rel="stylesheet">
+    <style>
+      .center {
+        margin: auto;
+        width: 50%;
+        border: 3px;
+        padding: 10px;
+      }
+    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,16 +32,16 @@
   <div class="row">
     <div class="col-sm-4 center">
       <% if locals[:selected_type] == 'Vostok' %>
-      <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded blocktext', style: 'width: 8%;') %>
+      <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded blocktext', style: 'width: 15%;') %>
       <% elsif locals[:selected_type] == 'Project Gemini' %>
-      <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded blocktext', style: 'width: 8%;') %>
+      <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded blocktext', style: 'width: 15%;') %>
       <% elsif locals[:selected_type] == 'Apollo 11' %>
-      <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded blocktext', style: 'width: 8%;') %>
+      <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded blocktext', style: 'width: 15%;') %>
       <% end %>
     </div>
   </div>
   <div class="row">
-  <div class="col-sm-4 center"><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</div>
+  <div class="col-sm-4 center"><h2><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</h2></div>
   </div>
   
   <!-- Page Content -->
