@@ -1,17 +1,22 @@
 <% first_loop = true; %>
-<ul class="nav nav-pills nav-stacked col-md-2" id="accordion">
+<ul class="nav nav-pills nav-stacked col-md-2" id="all_cohorts">
 	<% @teams_table.each do | cohort, teams | %>
-	<li>
-		<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=cohort%>" aria-expanded="true" aria-controls="collapse<%=cohort%>" id="<%=cohort%>">
+	<li <% if first_loop %>class="active"<% first_loop = false; end %>>
+		<a role="button" data-toggle="pill" href="#collapse<%=cohort%>" id="<%=cohort%>">
 			Cohort <%= cohort %>
 		</a>
 	</li>
 	<% end %>
 </ul>
-
-<% @teams_table.each do | cohort, teams | %>
-<ul id="collapse<%=cohort%>" class="nav nav-pills col-md-10 collapse <% if first_loop %>in<% first_loop = false; end %>">
-	<li class="active">
+<div class="col-md-10">
+<% second_loop=true; @teams_table.each do | cohort, teams | %>
+<ul data-toggle="collapse" data-target="#<%=cohort%>" class="nav nav-pills collapse <% if first_loop %>in<% first_loop = false; end %>">
+	<li class="active"><a data-toggle="pill" href="#vostok<%=cohort%>">Vostok</a></li>
+	<li><a data-toggle="pill" href="#project_gemini<%=cohort%>">Project Gemini</a></li>
+	<li><a data-toggle="pill" href="#apollo_11<%=cohort%>">Apollo 11</a></li>
+</ul>
+<div class="tab-content">
+	<div id="vostok<%=cohort%>" class="tab-pane fade in active">
 		<% if teams.select{|team| team.vostok?}.length > 0 %>
 		<%= render 'public_teams_table', locals: {teams: teams,
 			selected_teams: teams.select{|team| team.vostok?},
@@ -19,24 +24,25 @@
 			<% else %>
 			No Data Available
 			<% end %>
-		</li>
-		<li>
-			<% if teams.select{|team| team.project_gemini?}.length > 0 %>
+	</div>
+	<div id="project_gemini<%=cohort%>" class="tab-pane fade">
+		<% if teams.select{|team| team.project_gemini?}.length > 0 %>
 			<%= render 'public_teams_table', locals: {teams: teams,
 				selected_teams: teams.select{|team| team.project_gemini?},
 				selected_type: 'Project Gemini'} %>
 				<% else %>
 				No Data Available
 				<% end %>
-			</li>
-			<li>
-				<% if teams.select{|team| team.apollo_11?}.length > 0 %>
+	</div>
+	<div id="apollo_11<%=cohort%>" class="tab-pane fade">
+		<% if teams.select{|team| team.apollo_11?}.length > 0 %>
 				<%= render 'public_teams_table', locals: {teams: teams,
 					selected_teams: teams.select{|team| team.apollo_11?},
 					selected_type: 'Apollo 11'} %>
 					<% else %>
 					No Data Available
 					<% end %>
-				</li>
-			</ul>
-			<% end %>
+	</div>
+</div>
+<% end %>
+</div>
