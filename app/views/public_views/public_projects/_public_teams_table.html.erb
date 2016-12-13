@@ -30,17 +30,6 @@
 </head>
 <body>
   <div class="row">
-    <div class="center">
-      <% if locals[:selected_type] == 'Vostok' %>
-      <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded', style: 'width: 15%;') %>
-      <% elsif locals[:selected_type] == 'Project Gemini' %>
-      <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded', style: 'width: 15%;') %>
-      <% elsif locals[:selected_type] == 'Apollo 11' %>
-      <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded', style: 'width: 15%;') %>
-      <% end %>
-    </div>
-  </div>
-  <div class="row">
   <div class="center"><h2><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</h2></div>
   </div>
   
