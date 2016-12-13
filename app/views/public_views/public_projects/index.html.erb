@@ -9,8 +9,8 @@
 	<% end %>
 </ul>
 
+<% @teams_table.each do | cohort, teams | %>
 <ul id="collapse<%=cohort%>" class="nav nav-pills col-md-10 collapse <% if first_loop %>in<% first_loop = false; end %>">
-	<% @teams_table.each do | cohort, teams | %>
 	<li class="active">
 		<% if teams.select{|team| team.vostok?}.length > 0 %>
 		<%= render 'public_teams_table', locals: {teams: teams,
@@ -39,4 +39,4 @@
 					<% end %>
 				</li>
 			</ul>
-
+			<% end %>
