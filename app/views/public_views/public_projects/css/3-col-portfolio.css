@@ -15,3 +15,13 @@ body {
 footer {
     margin: 50px 0;
 }
+
+.blocktext {
+    margin-left: auto;
+    margin-right: auto;
+    width: 6em
+}
+
+.percent {
+	text-align: center;
+}
