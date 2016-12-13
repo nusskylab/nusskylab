@@ -1,8 +1,8 @@
 <% first_loop = true; %>
 <ul class="nav nav-pills nav-stacked col-md-2" id="all_cohorts">
 	<% @teams_table.each do | cohort, teams | %>
-	<li <% if first_loop %>class="active"<% first_loop = false; end %>>
-		<a role="button" data-toggle="pill collapse" data-target="#<%=cohort%>" href="#collapse<%=cohort%>">
+	<li>
+		<a role="button" data-toggle="collapse" data-target="#<%=cohort%>" href="#collapse<%=cohort%>">
 			Cohort <%= cohort %>
 		</a>
 	</li>
