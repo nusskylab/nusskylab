@@ -8,8 +8,8 @@
 	</li>
 	<% end %>
 </ul>
-<div data-toggle="collapse" data-target="#<%=cohort%>" class="col-md-10 collapse <% if first_loop %>in<% first_loop = false; end %>">
 <% second_loop=true; @teams_table.each do | cohort, teams | %>
+<div data-toggle="collapse" data-target="#<%=cohort%>" class="col-md-10 collapse <% if first_loop %>in<% first_loop = false; end %>">
 <ul class="nav nav-pills">
 	<li class="active"><a data-toggle="pill" href="#vostok<%=cohort%>">Vostok</a></li>
 	<li><a data-toggle="pill" href="#project_gemini<%=cohort%>">Project Gemini</a></li>
@@ -44,5 +44,5 @@
 					<% end %>
 	</div>
 </div>
-<% end %>
 </div>
+<% end %>
