@@ -10,7 +10,7 @@
 </ul>
 <% first_loop = true; %>
 <% @teams_table.each do | cohort, teams | %>
-<div class="col-md-10 collapse">
+<div class="col-md-10 collapse" id="<%=cohort%>">
 <ul class="nav nav-pills">
 	<li class="active"><a data-toggle="pill" href="#vostok<%=cohort%>">Vostok</a></li>
 	<li><a data-toggle="pill" href="#project_gemini<%=cohort%>">Project Gemini</a></li>
