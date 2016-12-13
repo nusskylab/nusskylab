@@ -2,15 +2,16 @@
 <ul class="nav nav-pills nav-stacked col-md-2" id="all_cohorts">
 	<% @teams_table.each do | cohort, teams | %>
 	<li>
-		<a role="button" data-toggle="pill collapse" data-target="#<%=cohort%>" href="#collapse<%=cohort%>">
+		<a role="button" data-toggle="pill" href="#<%=cohort%>" class="<% if first_loop %>active<% first_loop = false; end %>">
 			Cohort <%= cohort %>
 		</a>
 	</li>
 	<% end %>
 </ul>
 <% first_loop = true; %>
+<div class="tab-content col-md-10">
 <% @teams_table.each do | cohort, teams | %>
-<div class="col-md-10 collapse" id="<%=cohort%>">
+<div class="tab-pane fade <% if first_loop %>in active<% first_loop = false; end %>" id="<%=cohort%>">
 <ul class="nav nav-pills">
 	<li class="active"><a data-toggle="pill" href="#vostok<%=cohort%>">Vostok</a></li>
 	<li><a data-toggle="pill" href="#project_gemini<%=cohort%>">Project Gemini</a></li>
@@ -47,3 +48,4 @@
 </div>
 </div>
 <% end %>
+</div>
