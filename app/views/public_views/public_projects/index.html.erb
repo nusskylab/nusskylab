@@ -8,6 +8,7 @@
 	</li>
 	<% end %>
 </ul>
+<% first_loop = true; %>
 <% second_loop=true; @teams_table.each do | cohort, teams | %>
 <div data-toggle="collapse" data-target="#<%=cohort%>" class="col-md-10 collapse <% if first_loop %>in<% first_loop = false; end %>">
 <ul class="nav nav-pills">
