@@ -40,9 +40,9 @@ $(function () {
  * Autolink links. Mainly for video links.
  -- This script seems to have problems--
  */
-$(function() {
-  $('.autolink').autolink(); 
-  $('.automail').automail();
+jQuery(function ($) {
+  $('document.autolink').autolink(); 
+  $('document.automail').automail();
 });
 
 
