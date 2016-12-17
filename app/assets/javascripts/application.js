@@ -5,6 +5,10 @@
 //= require select2
 //= require jQuery.autolink
 //= require autosize
+//= require public_views/bootstrap.js
+//= require public_views/bootstrap.min.js
+//= require public_views/jquery.js
+//= require public_views/modalbox.js
 
 /**
  * Customization for table sorter
