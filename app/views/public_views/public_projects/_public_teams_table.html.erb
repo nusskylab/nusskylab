@@ -45,8 +45,8 @@
   <!-- /.row -->
   <% locals[:selected_teams].each_with_index do |team, idx| %>
   <!-- The Project Profile -->
-  <div class="col-md-4 portfolio-item" role="button" onclick="createModalBox(this,document.getElementById("modal_" + <%= team.team_name %>))" id="button_<%= team.team_name %>">
-    <div>
+  <div class="col-md-4 portfolio-item" id="button_<%= team.team_name %>">
+    <a role="button" onclick="createModalBox(<%= team.team_name %>)">
       <% if locals[:selected_type] == 'Vostok' %>
       <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded img-responsive') %>
       <% elsif locals[:selected_type] == 'Project Gemini' %>
@@ -54,7 +54,7 @@
       <% elsif locals[:selected_type] == 'Apollo 11' %>
       <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded img-responsive') %>
       <% end %>
-    </div>
+    </a>
     <h3>
         <div><%= idx + 1 %>. <strong><%= team.team_name %></strong></div> <!-- Clicking the link creates another layer of window that shows the team's project -->
     </h3>

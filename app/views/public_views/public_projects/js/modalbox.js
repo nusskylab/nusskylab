@@ -1,4 +1,6 @@
-function createModalBox(btn, modal) {
+function createModalBox(team_name) {
+	var modal = document.getElementById("modal_".concat(team_name));
+	var button = document.getElementById("button_".concat(team_name));
 	var span = document.getElementsByClassName("close")[0];
 	modal.style.display = "block";
 	span.onclick = function() {
