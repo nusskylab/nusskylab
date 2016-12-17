@@ -63,10 +63,13 @@
   </div>
   <!-- The Modal Box -->
   <div id="modal_<%= team.team_name %>" class="modal">
-    <br><br>
-    <h2><strong><%= team.team_name %></strong></h2>
-    <br><hr>
-    <span>Some content</span>
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <br><br>
+      <h2><strong><%= team.team_name %></strong></h2>
+      <br><hr>
+      <span>Some content</span>
+    </div>
   </div>
   <% end %>
   <!-- Projects Row -->
