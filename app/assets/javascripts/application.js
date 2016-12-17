@@ -38,11 +38,13 @@ $(function () {
 
 /**
  * Autolink links. Mainly for video links.
+ -- This script seems to have problems--
  */
-$(function() {
+/*$(function() {
   $('.autolink').autolink();
   $('.automail').automail();
-});
+});*/
+
 
 /**
  * Autosize textareas. TinyMCE are autosized by its own plugin.
