@@ -7,6 +7,8 @@
 
     <title>3 Col Portfolio - Start Bootstrap Template</title>
 
+    <%= stylesheet_link_tag params[:controller] %>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -59,4 +61,5 @@
   </div>
   <% end %>
   <!-- Projects Row -->
+  <%= javascript_include_tag params[:controller] %>
 </body>
