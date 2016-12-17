@@ -44,8 +44,9 @@
   </div>
   <!-- /.row -->
   <% locals[:selected_teams].each_with_index do |team, idx| %>
-  <div class="col-md-4 portfolio-item">
-    <a href="#">
+  <!-- The Project Profile -->
+  <div class="col-md-4 portfolio-item" role="button" onclick="createModalBox(this,document.getElementById("modal_" + <%= team.team_name %>))" id="button_<%= team.team_name %>">
+    <div>
       <% if locals[:selected_type] == 'Vostok' %>
       <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded img-responsive') %>
       <% elsif locals[:selected_type] == 'Project Gemini' %>
@@ -53,12 +54,19 @@
       <% elsif locals[:selected_type] == 'Apollo 11' %>
       <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded img-responsive') %>
       <% end %>
-    </a>
+    </div>
     <h3>
-        <a href="#"><%= idx + 1 %>. <strong><%= team.team_name %></strong></a> <!-- Clicking the link creates another layer of window that shows the team's project -->
+        <div><%= idx + 1 %>. <strong><%= team.team_name %></strong></div> <!-- Clicking the link creates another layer of window that shows the team's project -->
     </h3>
     <p class="text-muted">Students: <%= team.students.map{|student| student.user.user_name}.join(' & ') %></p>
     <p class="text-muted">Advised by:</p> <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %>
+  </div>
+  <!-- The Modal Box -->
+  <div id="modal_<%= team.team_name %>" class="modal">
+    <br><br>
+    <h2><strong><%= team.team_name %></strong></h2>
+    <br><hr>
+    <span>Some content</span>
   </div>
   <% end %>
   <!-- Projects Row -->
@@ -66,4 +74,6 @@
   <script src="js/jquery.js"></script>
   <!-- Bootstrap Core JavaScript -->
   <script src="js/bootstrap.min.js"></script>
+  <!-- Javascript for Modal Box -->
+  <script src="js/modalbox.js"></script>
 </body>
