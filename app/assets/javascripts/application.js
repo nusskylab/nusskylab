@@ -3,7 +3,7 @@
 //= require bootstrap
 //= require jquery.tablesorter
 //= require select2
-//= require jQuery.autolink
+//= require jQuery.autolink.js
 //= require autosize
 //= require public_views/bootstrap.js
 //= require public_views/bootstrap.min.js
@@ -40,10 +40,10 @@ $(function () {
  * Autolink links. Mainly for video links.
  -- This script seems to have problems--
  */
-/*$(function() {
-  $('.autolink').autolink();
+$(function() {
+  $('.autolink').autolink(); 
   $('.automail').automail();
-});*/
+});
 
 
 /**
