@@ -7,10 +7,18 @@
     <div class="panel-body">
       <div class="col-sm-12">
         <div class="col-sm-2 col-sm-offset-5">
-          <%= link_to 'Create New Facilitator', new_facilitator_path(cohort: cohort), class: 'btn btn-success' %>
+          <a href="<%= new_facilitator_path(cohort: cohort) %>" class="btn btn-success">Create New Facilitator</a>
         </div>
       </div>
-      <br><hr>
+      <br><br><hr>
+      <div class="col-sm-12">
+        <% all_cohorts.each do |cohort| %>
+        <div class="col-sm-2">
+          <%= link_to cohort, facilitators_path(cohort: cohort), class: 'btn btn-info' %>
+        </div>
+        <% end %>
+      </div>
+      <br><br><hr> 
       <%= render 'facilitators_table', locals: {facilitators: @roles} %>
       <hr>
       <div class="col-sm-12">
