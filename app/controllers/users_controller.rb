@@ -192,7 +192,7 @@ class UsersController < ApplicationController
   def user_params(generate_pswd = false)
     user_ps = params.require(:user).permit(
       :user_name, :email, :uid, :provider, :github_link, :linkedin_link,
-      :blog_link, :program_of_study, :self_introduction)
+      :blog_link, :program_of_study, :matric_number, :self_introduction)
     user_ps[:password] = Devise.friendly_token.first(8) if generate_pswd
     user_ps[:provider] = user_ps[:provider].to_i
     user_ps[:program_of_study] = user_ps[:program_of_study].to_i
