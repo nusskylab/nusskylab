@@ -9,9 +9,17 @@
         <%= link_to 'Download CSV', students_path(format: 'csv', cohort: cohort), class: 'btn btn-primary' %>
       </div>
       <div class="col-sm-2 col-sm-offset-3">
-        <%= link_to 'Create New Student', new_student_path, class: 'btn btn-success' %>
+        <a href="<%= new_student_path(cohort: cohort) %>" class="btn btn-success">Create New Student</a>
       </div>
-      <br><hr>
+      <br><br><hr>
+      <div class="col-sm-12">
+        <% all_cohorts.each do |cohort| %>
+        <div class="col-sm-2">
+          <%= link_to cohort, students_path(cohort: cohort), class: 'btn btn-info' %>
+        </div>
+        <% end %>
+      </div>
+      <br><br><hr>      
       <%= render 'students_table', locals: {students: @roles} %>
       <hr>
       <div class="col-sm-12">
