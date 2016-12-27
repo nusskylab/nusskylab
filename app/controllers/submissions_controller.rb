@@ -39,7 +39,11 @@ class SubmissionsController < ApplicationController
         success: t('.success_message')
       }
     else
-      redirect_to new_milestone_team_submission_path(milestone, team), flash: {
+      render :new, locals: {
+        team_id: params[:team_id],
+        milestone: milestone,
+        submissions: Submission.where(team_id: team.id)
+      }, flash: {
         danger: t('.failure_message',
                   error_message: @submission.errors.full_messages.join(', '))
       }
@@ -78,10 +82,11 @@ class SubmissionsController < ApplicationController
         success: t('.success_message')
       }
     else
-      edit_submission_path = edit_milestone_team_submission_path(milestone,
-                                                                 team,
-                                                                 @submission)
-      redirect_to edit_submission_path, flash: {
+      render :edit, locals: {
+        team_id: params[:team_id],
+        milestone: milestone,
+        submissions: Submission.where(team_id: team.id)
+      }, flash: {
         danger: t('.failure_message',
                   error_message: @submission.errors.full_messages.join(', '))
       }
