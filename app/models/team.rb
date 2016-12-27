@@ -171,7 +171,7 @@ class Team < ActiveRecord::Base
     peer_evaluations_hash.each do |milestone_id, evaluations_hash|
       ratings = []
       evaluations_hash.each do |key, evaluation|
-        if !evaluation.nil?
+        if !evaluation.nil? && !evaluation.private_content.nil?
           private_parts = JSON.parse(evaluation.private_content)
           rating = private_parts[Milestone.find(
             milestone_id).get_overall_rating_question_id].to_i
