@@ -31,8 +31,8 @@
   <!-- /.row -->
   <% locals[:selected_teams].each_with_index do |team, idx| %>
   <!-- The Project Profile -->
-  <div class="col-md-4 portfolio-item" id="button_<%= team.team_name %>">
-    <a role="button" onclick="createModalBox(<%= team.team_name %>)">
+  <div class="col-md-4 portfolio-item">
+    <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
       <% if locals[:selected_type] == 'Vostok' %>
       <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded img-responsive') %>
       <% elsif locals[:selected_type] == 'Project Gemini' %>
