@@ -18,6 +18,7 @@
     <% else %>
         <%= f.input :program_of_study, collection: User.program_of_studies, include_blank: false, selected: User.program_of_studies[locals[:user].program_of_study] %>
     <% end %>
+    <%= f.input :matric_number %>
     <%= f.input :self_introduction %>
     <div class="text-right">
         <a href="https://en.gravatar.com/gravatars/new" target="_blank">Change your Gravatar image</a>
