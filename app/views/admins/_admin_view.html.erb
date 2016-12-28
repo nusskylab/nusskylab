@@ -7,7 +7,6 @@
   <div class="panel-body">
     <div class="col-sm-12">
       <div class="well">You can use navbar above to look around</div>
-      <%= render 'users/user_details', locals: {user: locals[:admin].user} %>
       <br><hr>
       <%= link_to 'General Mailing', general_mailing_admin_path(locals[:admin].id), class: 'btn btn-success' %>
     </div>

@@ -1,24 +1,69 @@
-<div class="col-sm-12">
-  <div class="col-sm-2">
-  <% if locals[:selected_type] == 'Vostok' %>
-      <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded', style: 'width: 80px;') %>
-  <% elsif locals[:selected_type] == 'Project Gemini' %>
-      <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded', style: 'width: 80px;') %>
-  <% elsif locals[:selected_type] == 'Apollo 11' %>
-      <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded', style: 'width: 80px;') %>
-  <% end %>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>3 Col Portfolio - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/3-col-portfolio.css" rel="stylesheet">
+    <style>
+      .center {
+        margin: auto;
+        width: 50%;
+        border: 3px;
+        padding: 10px;
+      }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+  <div class="row">
+  <div class="center"><h2><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</h2></div>
   </div>
-  <div class="col-sm-4"><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</div>
-</div>
-<br><br><hr>
-<% locals[:selected_teams].each_with_index do |team, idx| %>
-    <div class="col-sm-12">
-      <%= idx + 1 %>. <strong><%= team.team_name %></strong>
-      <span class="text-muted">Students:</span>
-      <%= team.students.map{|student| student.user.user_name}.join(' & ') %>
-    </div>
-    <div class="col-sm-12">
-      <span class="text-muted">Advised by:</span> <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %>
-    </div>
-    <br><hr>
-<% end %>
+  
+  <!-- Page Content -->
+  <!-- Page Header -->
+  <div class="row">
+      <div class="col-lg-12">
+          <h1 class="page-header">Project List
+              <small><%= locals[:selected_teams].length %> teams</small>
+          </h1>
+      </div>
+  </div>
+  <!-- /.row -->
+  <% locals[:selected_teams].each_with_index do |team, idx| %>
+  <div class="col-md-4 portfolio-item">
+    <a href="#">
+      <% if locals[:selected_type] == 'Vostok' %>
+      <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded img-responsive') %>
+      <% elsif locals[:selected_type] == 'Project Gemini' %>
+      <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded img-responsive') %>
+      <% elsif locals[:selected_type] == 'Apollo 11' %>
+      <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded img-responsive') %>
+      <% end %>
+    </a>
+    <h3>
+        <a href="#"><%= idx + 1 %>. <strong><%= team.team_name %></strong></a> <!-- Clicking the link creates another layer of window that shows the team's project -->
+    </h3>
+    <p class="text-muted">Students: <%= team.students.map{|student| student.user.user_name}.join(' & ') %></p>
+    <p class="text-muted">Advised by:</p> <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %>
+  </div>
+  <% end %>
+  <!-- Projects Row -->
+  <!-- jQuery -->
+  <script src="js/jquery.js"></script>
+  <!-- Bootstrap Core JavaScript -->
+  <script src="js/bootstrap.min.js"></script>
+</body>

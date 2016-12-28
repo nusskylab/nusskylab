@@ -221,6 +221,7 @@ ActiveRecord::Schema.define(version: 20161217084309) do
     t.integer  "program_of_study",       default: 0
     t.text     "self_introduction",      default: ""
     t.string   "matric_number",          default: ""
+    t.string   "slack_id",               default: ""
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
