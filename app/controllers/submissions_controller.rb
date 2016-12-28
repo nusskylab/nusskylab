@@ -38,6 +38,12 @@ class SubmissionsController < ApplicationController
       redirect_to home_path, flash: {
         success: t('.success_message')
       }
+    elsif empty_input_field?
+      render :new, locals: {
+        team_id: params[:team_id],
+        milestone: milestone,
+        submissions: Submission.where(team_id: team.id)
+      }
     else
       redirect_to new_milestone_team_submission_path(milestone, team), flash: {
         danger: t('.failure_message',
@@ -77,6 +83,12 @@ class SubmissionsController < ApplicationController
       redirect_to home_path, flash: {
         success: t('.success_message')
       }
+    elsif empty_input_field?
+      render :edit, locals: {
+        team_id: params[:team_id],
+        milestone: milestone,
+        submissions: Submission.where(team_id: team.id)
+      }
     else
       edit_submission_path = edit_milestone_team_submission_path(milestone,
                                                                  team,
@@ -95,6 +107,12 @@ class SubmissionsController < ApplicationController
     sub_params[:milestone_id] = @submission.milestone_id
     sub_params[:team_id] = @submission.team_id
     @submission.update(sub_params) ? @submission : nil
+  end
+
+  def empty_input_field?
+    @submission.errors[:project_log].any? || 
+    @submission.errors[:read_me].any? || 
+    @submission.errors[:video_link].any?
   end
 
   def submission_params
