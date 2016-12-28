@@ -43,7 +43,7 @@
     </a>
     <!-- createModalBox(<%= team.team_name %>) -->
     <h3>
-        <a role="button" onclick="testOne()"><%= idx + 1 %>. <strong><%= team.team_name %></strong></a> <!-- Clicking the link creates another layer of window that shows the team's project -->
+        <button onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>"><%= idx + 1 %>. <strong><%= team.team_name %></strong></button> <!-- Clicking the link creates another layer of window that shows the team's project -->
     </h3>
     <p class="text-muted">Students: <%= team.students.map{|student| student.user.user_name}.join(' & ') %></p>
     <p class="text-muted">Advised by:</p> <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %>
