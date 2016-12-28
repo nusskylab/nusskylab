@@ -41,8 +41,8 @@ $(function () {
  -- This script seems to have problems--
  */
 jQuery(function ($) {
-  $('document.autolink').autolink(); 
-  $('document.automail').automail();
+  $('.autolink').autolink(); 
+  $('.automail').automail();
 });
 
 
