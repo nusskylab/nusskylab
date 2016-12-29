@@ -67,26 +67,26 @@ class SubmissionsController < ApplicationController
   end
 
   def update
-    # team = Team.find(params[:team_id]) || (record_not_found && return)
-    # milestone = Milestone.find_by(id: params[:milestone_id]) ||
-    #             (record_not_found && return)
-    # @submission = Submission.find(params[:id]) || (record_not_found && return)
-    # !authenticate_user(true, false,
-    #                    team.get_relevant_users(false, false)) && return
-    # if update_submission
-    #   redirect_to home_path, flash: {
-    #     success: t('.success_message')
-    #   }
-    # else
-    #   edit_submission_path = edit_milestone_team_submission_path(milestone,
-    #                                                              team,
-    #                                                              @submission)
-    #   redirect_to edit_submission_path, flash: {
-    #     danger: t('.failure_message',
-    #               error_message: @submission.errors.full_messages.join(', '))
-    #   }
-    # end
-    render plain: params[:submission].inspect
+    team = Team.find(params[:team_id]) || (record_not_found && return)
+    milestone = Milestone.find_by(id: params[:milestone_id]) ||
+                (record_not_found && return)
+    @submission = Submission.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false,
+                       team.get_relevant_users(false, false)) && return
+    if update_submission
+      redirect_to home_path, flash: {
+        success: t('.success_message')
+      }
+    else
+      edit_submission_path = edit_milestone_team_submission_path(milestone,
+                                                                 team,
+                                                                 @submission)
+      redirect_to edit_submission_path, flash: {
+        danger: t('.failure_message',
+                  error_message: @submission.errors.full_messages.join(', '))
+      }
+    end
+    # render plain: params[:submission].inspect (For debugging)
   end
 
   private
