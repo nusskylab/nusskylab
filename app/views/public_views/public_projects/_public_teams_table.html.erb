@@ -56,7 +56,7 @@
       <h2><strong><%= team.team_name %></strong></h2>
       <br><hr>
       <% if (Submission.where(team_id: team.id)[-1]&&Submission.where(team_id: team.id)[-1].show_public) %>
-	      <button class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].video_link %>">Watch Project Video</button>
+	      <a role="button" class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].video_link %>">Watch Project Video</a>
 	  <% else %>
 	  	  <span>Video is not shown/not available</span>
 	  <% end %>
@@ -65,9 +65,6 @@
   <% end %>
   <!-- Projects Row -->
   <script>
-    function testOne() {
-      console.log("Success");
-    }
     function createModalBox(team_id) {
       var modal = document.getElementById("modal_".concat(team_id));
       var button = document.getElementById("button_".concat(team_id));

@@ -67,9 +67,14 @@ footer {
 .button_video {
     background-color: #4CAF50;
     color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #4CAF50;
 }
 .button_video:hover {
     background-color: white; 
-    color: black; 
+    color: black;
+    font-size: 16px;
     border: 2px solid #4CAF50;
+    border-radius: 8px;
 }
