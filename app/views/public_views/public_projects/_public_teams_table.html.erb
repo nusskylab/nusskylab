@@ -55,7 +55,7 @@
       <br><br>
       <h2><strong><%= team.team_name %></strong></h2>
       <br><hr>
-      <span><%= Submission.where(team: team.team_id).video_link ? Submission.where(team: team.team_id).video_link : 'No submission yet' %></span>
+      <span><%= Submission.where(team_id: team.id).video_link ? Submission.where(team_id: team.id).video_link : 'No submission yet' %></span>
     </div>
   </div>
   <% end %>
