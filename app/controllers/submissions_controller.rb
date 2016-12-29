@@ -67,25 +67,26 @@ class SubmissionsController < ApplicationController
   end
 
   def update
-    team = Team.find(params[:team_id]) || (record_not_found && return)
-    milestone = Milestone.find_by(id: params[:milestone_id]) ||
-                (record_not_found && return)
-    @submission = Submission.find(params[:id]) || (record_not_found && return)
-    !authenticate_user(true, false,
-                       team.get_relevant_users(false, false)) && return
-    if update_submission
-      redirect_to home_path, flash: {
-        success: t('.success_message')
-      }
-    else
-      edit_submission_path = edit_milestone_team_submission_path(milestone,
-                                                                 team,
-                                                                 @submission)
-      redirect_to edit_submission_path, flash: {
-        danger: t('.failure_message',
-                  error_message: @submission.errors.full_messages.join(', '))
-      }
-    end
+    # team = Team.find(params[:team_id]) || (record_not_found && return)
+    # milestone = Milestone.find_by(id: params[:milestone_id]) ||
+    #             (record_not_found && return)
+    # @submission = Submission.find(params[:id]) || (record_not_found && return)
+    # !authenticate_user(true, false,
+    #                    team.get_relevant_users(false, false)) && return
+    # if update_submission
+    #   redirect_to home_path, flash: {
+    #     success: t('.success_message')
+    #   }
+    # else
+    #   edit_submission_path = edit_milestone_team_submission_path(milestone,
+    #                                                              team,
+    #                                                              @submission)
+    #   redirect_to edit_submission_path, flash: {
+    #     danger: t('.failure_message',
+    #               error_message: @submission.errors.full_messages.join(', '))
+    #   }
+    # end
+    render plain: params[:submission].inspect
   end
 
   private
@@ -101,9 +102,11 @@ class SubmissionsController < ApplicationController
     submission_params = params.require(:submission).permit(:milestone_id,
                                                            :read_me,
                                                            :project_log,
-                                                           :video_link,:show_public)
+                                                           :video_link,
+                                                           :show_public)
     submission_params[:team_id] = params[:team_id]
     submission_params[:milestone_id] = params[:milestone_id]
+    submission_params[:show_public] = params[:show_public]
     submission_params
   end
 end
