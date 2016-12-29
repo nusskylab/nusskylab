@@ -5,7 +5,7 @@ class Submission < ActiveRecord::Base
     scope: :milestone_id,
     message: 'each team can only submit one copy to every milestone'
   }
-  validates :project_log, :read_me, :video_link, presence: true
+  validates :project_log, :read_me, :video_link, :show_public, presence: true
 
   belongs_to :milestone
   belongs_to :team

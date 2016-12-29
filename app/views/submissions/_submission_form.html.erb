@@ -12,5 +12,10 @@
     <br>
     <%= f.input :project_log, input_html: {class: 'tinymce'}, placeholder: 'Input project log', rows: '3', required: true %>
     <%= f.input :video_link, placeholder: 'Input project video link', required: true %>
+    <p>Allow public viewers to see your video?</p>
+    <%= radio_button_tag(:show_public, "Yes") %>
+    <%= label_tag(:show_public_yes, "Yes") %>
+    <%= radio_button_tag(:show_public, "No") %>
+    <%= label_tag(:show_public_no, "No") %>
     <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>

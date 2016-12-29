@@ -55,7 +55,11 @@
       <br><br>
       <h2><strong><%= team.team_name %></strong></h2>
       <br><hr>
-      <span><%= Submission.where(team_id: team.id)[0] ? Submission.where(team_id: team.id)[0].video_link : 'No submission yet' %></span>
+      <% if (Submission.where(team_id: team.id)[-1]&&Submission.where(team_id: team.id)[-1].show_public) %>
+	      <button class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].video_link %>">Watch Project Video</button>
+	  <% else %>
+	  	  <span>Video is not shown/not available</span>
+	  <% end %>
     </div>
   </div>
   <% end %>
