@@ -13,6 +13,7 @@ rerun.txt
 pickle-email-*.html
 
 config/initializers/secret_token.rb
+config/local_env.yml
 .rbenv-vars
 
 ## Environment normalisation:
