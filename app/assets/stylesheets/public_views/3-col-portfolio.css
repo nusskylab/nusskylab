@@ -85,16 +85,16 @@ footer {
 .button_video {
     background-color: #4CAF50;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 8px;
     border: 2px solid #4CAF50;
-    padding: 14px 40px;
+    padding: 12px 40px;
 }
 .button_video:hover {
     background-color: white;
     color: black;
-    font-size: 16px;
+    font-size: 14px;
     border: 2px solid #4CAF50;
     border-radius: 8px;
-    padding: 14px 40px;
+    padding: 12px 30px;
 }

@@ -103,6 +103,7 @@ class SubmissionsController < ApplicationController
                                                            :read_me,
                                                            :project_log,
                                                            :video_link,
+                                                           :poster_link,
                                                            :show_public)
     submission_params[:team_id] = params[:team_id]
     submission_params[:milestone_id] = params[:milestone_id]
