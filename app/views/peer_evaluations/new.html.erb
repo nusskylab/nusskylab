@@ -1,0 +1,22 @@
+<% content_for :main_content do %>
+    <% javascript 'peer_evaluations.js' %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="text-center">Create peer evaluation</h3>
+      </div>
+      <div class="panel-body">
+        <%= render 'peer_evaluation_form_more_info', locals: {
+          submissions: submissions,
+          peer_evaluations: peer_evaluations,
+          for_adviser: for_adviser
+        } %>
+        <%= render 'peer_evaluation_form', locals: {
+          peer_evaluation: @peer_evaluation,
+          submission: submission,
+          milestone: milestone,
+          survey_template: survey_template,
+          is_new: true
+        } %>
+      </div>
+    </div>
+<% end %>

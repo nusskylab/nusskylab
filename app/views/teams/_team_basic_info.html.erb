@@ -1,0 +1,74 @@
+<div>
+  <div class="col-sm-12">
+    <p class="col-sm-3 col-sm-offset-2">Team name:</p>
+    <p class="col-sm-7">
+    <% if locals[:team].has_dropped %>
+      <span data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>">
+        <del><%= locals[:team].team_name %></del>
+      </span>
+    <% else %>
+        <span><%= locals[:team].team_name %></span>
+    <% end %>
+    </p>
+  </div>
+  <hr>
+  <div class="col-sm-12">
+    <p class="col-sm-3 col-sm-offset-2">Project level:</p>
+    <p class="col-sm-7"><%= locals[:team].get_project_level %></p>
+  </div>
+  <hr>
+  <div class="col-sm-12">
+    <p class="col-sm-3 col-sm-offset-2">Members:</p>
+    <p class="col-sm-7">
+      <% locals[:team].students.each do |student| %>
+          <a class="btn btn-info btn-sm" href="<%= student_path(student) %>">
+            <%= student.user.user_name %></a>&nbsp;&nbsp;
+      <% end %>
+      <% if locals[:team].students.length == 0 %>
+          <span class="text-muted">No students in this team</span>
+      <% end %>
+    </p>
+  </div>
+  <hr>
+  <div class="col-sm-12">
+    <p class="col-sm-3 col-sm-offset-2">Evaluated teams:</p>
+    <p class="col-sm-7">
+      <% locals[:team].evaluateds.each do |evaluated| %>
+          <a class="btn btn-info btn-sm"
+             href="<%= team_path(evaluated.evaluated) %>">
+            <%= evaluated.evaluated.team_name %></a>&nbsp;&nbsp;
+      <% end %>
+      <% if locals[:team].evaluateds.length == 0 %>
+          <span class="text-muted">Not evaluated teams assigned to this team</span>
+      <% end %>
+    </p>
+  </div>
+  <hr>
+  <div class="col-sm-12">
+    <p class="col-sm-3 col-sm-offset-2">Evaluator teams:</p>
+    <p class="col-sm-7">
+      <% locals[:team].evaluators.each do |evaluator| %>
+          <a class="btn btn-info btn-sm"
+             href="<%= team_path(evaluator.evaluator) %>">
+            <%= evaluator.evaluator.team_name %></a>&nbsp;&nbsp;
+      <% end %>
+      <% if locals[:team].evaluateds.length == 0 %>
+          <span class="text-muted">Not evaluated teams assigned to this team</span>
+      <% end %>
+    </p>
+  </div>
+  <hr>
+  <div class="col-sm-12">
+    <p class="col-sm-3 col-sm-offset-2">Adviser:</p>
+    <p class="col-sm-7">
+      <%= locals[:team].adviser ? locals[:team].adviser.user.user_name : 'Nil' %>
+    </p>
+  </div>
+  <hr>
+  <div class="col-sm-12">
+    <p class="col-sm-3 col-sm-offset-2">Mentor:</p>
+    <p class="col-sm-7">
+      <%= locals[:team].mentor ? locals[:team].mentor.user.user_name : 'Nil' %>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<table class="table-sortable table table-hover" id="students-table">
+  <thead>
+  <tr><th class="unsortable sort-index">Index</th><th>User Name</th><th>User Email</th><th>Team Name</th><th>Project Level</th><th>Adviser</th><th>Dropped?</th><th>Pending?</th><th class="unsortable">Actions</th></tr>
+  </thead>
+  <tbody>
+  <% locals[:students].each_with_index do |student, idx| %>
+    <tr>
+      <td><%= idx + 1 %></td>
+      <td>
+        <% if get_student_team_dropped_status(student) == true %>
+          <span data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>">
+            <del><%= student.user.user_name %></del>
+          </span>
+        <% else %>
+          <span><%= student.user.user_name %></span>
+        <% end %>
+      </td>
+      <td><%= student.user.email %></td>
+      <td>
+        <% if get_student_team_dropped_status(student) == true %>
+          <span data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>">
+            <del><%= get_student_team_name(student) %></del>
+          </span>
+        <% else %>
+          <span><%= get_student_team_name(student) %></span>
+        <% end %>
+      </td>
+      <td><%= get_student_team_project_level(student) %></td>
+      <td><%= get_student_team_adviser_name(student) %></td>
+      <td><%= get_student_team_dropped_status(student) %></td>
+      <td><%= student.is_pending %></td>
+      <td>
+        <a class="btn btn-primary btn-xs" href="<%=  student_path(student.id) %>">View</a>
+        <a class="btn btn-default btn-xs" href="<%= edit_student_path(student.id) %>">Edit</a>
+        <%= link_to 'Delete', student_path(student.id), method: :delete, class: 'btn btn-danger btn-xs',
+          data: { confirm: 'Are you sure you want to delete this student?' } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

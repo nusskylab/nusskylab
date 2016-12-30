@@ -1,0 +1,20 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>Milestone name</th><th>Survey Type</th><th>Cohort</th><th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% locals[:survey_templates].each do |st| %>
+      <tr>
+        <td><%= st.milestone.name %></td>
+        <td><%= st.survey_type %></td>
+        <td><%= st.milestone.cohort %></td>
+        <td>
+          <a class="btn btn-primary btn-xs" href="<%= survey_template_path(st.id) %>">View &amp; edit questions</a>
+          <a class="btn btn-default btn-xs" href="<%= edit_survey_template_path(st.id) %>">Edit</a>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

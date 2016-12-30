@@ -1,0 +1,6 @@
+<% content_for :main_content do %>
+  <% javascript 'facilitators.js' %>
+  <%= render 'facilitator_view', locals: {
+    facilitator: @role, role_data: role_data
+  } %>
+<% end %>

@@ -1,0 +1,46 @@
+<% content_for :main_content do %>
+    <% javascript 'received_evals.js' %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1>
+          All evaluations for <%= team.team_name %>
+        </h1>
+      </div>
+      <div class="panel-body">
+        <div role="tabpanel">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#public-content" aria-controls="public-content"
+                 role="tab" data-toggle="tab">
+                Public content
+              </a>
+            </li>
+            <li role="presentation">
+              <a href="#private-content" aria-controls="private-content"
+                 role="tab" data-toggle="tab">
+                Private
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="public-content">
+              <h2 class="text-center">Evaluation public part</h2>
+              <% evaluator_names.each do |evaluator_name| %>
+                  <% if not team_evaluations_table[evaluator_name].nil? %>
+                      <%= render 'eval_public_part',
+                                 locals: {eval: team_evaluations_table[evaluator_name],
+                                          survey_template: survey_template,
+                                          evaluator_name: evaluator_name} %>
+                  <% end %>
+              <% end %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="private-content">
+              <h2 class="text-center">Evaluation private part</h2>
+              <%= render 'eval_private_compiled', locals: {evals_table: team_evaluations_table,
+                                                           survey_template: survey_template} %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>

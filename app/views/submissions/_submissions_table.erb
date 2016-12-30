@@ -1,0 +1,10 @@
+<table class="table">
+  <thead>
+  <tr><th>Milestone name</th><th>Last updated at</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+  <% locals[:submissions].each do |submission| %>
+      <%= render 'submission_info_table_row', locals: {submission: submission} %>
+  <% end %>
+  </tbody>
+</table>

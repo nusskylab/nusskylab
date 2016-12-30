@@ -1,0 +1,16 @@
+<% content_for :main_content do %>
+  <% javascript 'admins.js' %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2 class="text-center">
+        General Mailing
+      </h2>
+    </div>
+    <div class="panel-body">
+      <%= render 'general_mailing_form', locals: {
+        admin: @role,
+        role_data: role_data
+      } %>
+    </div>
+  </div>
+<% end %>

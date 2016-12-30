@@ -1,0 +1,5 @@
+<% if not locals[:is_new] %>
+    <p class="alert alert-info">
+      You can <a href="<%= milestone_team_submission_path(locals[:milestone].id, locals[:submission].team_id, locals[:submission].id) %>" class="btn btn-success btn-xs">see</a> the submission from a peer evaluator's perspective.
+    </p>
+<% end %>

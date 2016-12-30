@@ -1,0 +1,22 @@
+<%= simple_form_for locals[:submission], wrapper: :vertical_form,
+                    url: {action: (locals[:is_new] ? 'create' : 'update')} do |f| %>
+    <%= f.error_notification %>
+    <br><br>
+    <div class="form-group submission_milestone_name">
+      <label class="control-label col-sm-2" for="submission_milestone_name" style="padding-left: 0;">Milestone Name: </label>
+      <div class="col-sm-10">
+        <p><strong class="form-control-static" id="submission_milestone_name"><%= locals[:milestone].name %></strong></p>
+      </div>
+    </div>
+    <%= f.input :read_me, input_html: {class: 'tinymce'}, placeholder: 'Input project readme', rows: '3', required: true %>
+    <br>
+    <%= f.input :project_log, input_html: {class: 'tinymce'}, placeholder: 'Input project log', rows: '3', required: true %>
+    <%= f.input :video_link, placeholder: 'Input project video link', required: true %>
+    <%= f.input :poster_link, placeholder: 'Input project poster link', required: true %>
+    <p><strong>Allow public viewers to see your video?</strong></p>
+    <%= radio_button("submission", "show_public" ,true) %>
+    <%= label_tag(:show_public_yes, "Yes") %>
+    <%= radio_button("submission", "show_public" ,false) %>
+    <%= label_tag(:show_public_no, "No") %>
+    <%= f.button :submit_centred, class: 'btn-success' %>
+<% end %>

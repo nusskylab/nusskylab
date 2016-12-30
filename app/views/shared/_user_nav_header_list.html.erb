@@ -1,0 +1,7 @@
+<% if current_user_admin? %>
+    <%= render 'shared/nav_headers/admin_nav_header_list' %>
+<% elsif current_user_adviser? %>
+    <%= render 'shared/nav_headers/adviser_nav_header_list' %>
+<% else %>
+    <%= render 'shared/nav_headers/general_nav_header_list' %>
+<% end %>

@@ -1,0 +1,29 @@
+<ul class="nav navbar-nav navbar-right">
+  <% if current_user %>
+      <li>
+        <p class="navbar-text user-name-text">
+          Welcome, <%= current_user.user_name %>
+        </p>
+      </li>
+      <li>
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"
+                  id="settings-dropdown" aria-expanded="true">
+            <span class="glyphicon glyphicon-cog"></span><span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="settings-dropdown">
+            <li><a href="<%= edit_user_path(current_user.id) %>">Edit User Settings</a></li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <%= link_to 'Logout', destroy_user_session_path,
+                    method: :delete, class: 'btn btn-default btn-sm navbar-btn' %>
+      </li>
+  <% else %>
+      <li>
+        <%= link_to 'Login', new_user_session_path,
+                    method: :get, class: 'btn btn-default btn-sm navbar-btn' %>
+      </li>
+  <% end %>
+</ul>

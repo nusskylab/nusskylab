@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>
+      <span>Hi, <%= locals[:admin].user.user_name %> </span>
+    </h2>
+  </div>
+  <div class="panel-body">
+    <div class="col-sm-12">
+      <div class="well">You can use navbar above to look around</div>
+      <%= render 'users/user_details', locals: {user: locals[:admin].user} %>
+      <br><hr>
+      <%= link_to 'General Mailing', general_mailing_admin_path(locals[:admin].id), class: 'btn btn-success' %>
+    </div>
+  </div>
+</div>

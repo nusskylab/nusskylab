@@ -1,0 +1,16 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+    <tr><th>Milestone Name</th><th>Last updated at</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+    <% locals[:milestones].each do |milestone| %>
+      <%= render 'submissions/submission_info_table_row', locals: {
+        submission: locals[:team_submissions][milestone.id],
+        milestone: milestone,
+        team: locals[:team]
+      } %>
+    <% end %>
+    </tbody>
+  </table>
+</div>

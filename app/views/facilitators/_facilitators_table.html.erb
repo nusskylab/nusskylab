@@ -1,0 +1,21 @@
+<table class="table table-hover table-sortable">
+  <thead>
+  <tr>
+    <th class="unsortable sort-index">Index</th><th>User Name</th><th>User Email</th><th class="unsortable">Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% locals[:facilitators].each_with_index do |facilitator, idx| %>
+      <tr>
+        <td><%= idx + 1 %></td>
+        <td><%= facilitator.user.user_name %></td>
+        <td><%= facilitator.user.email %></td>
+        <td>
+          <a class="btn btn-default btn-xs" href="<%= facilitator_path(facilitator.id) %>">View</a>
+          <%= link_to 'Delete', facilitator_path(facilitator.id), method: :delete, class: 'btn btn-danger btn-xs',
+            data: { confirm: 'Are you sure you want to delete this facilitator?' } %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,12 @@
+<% content_for :main_content do %>
+    <% javascript 'survey_templates.js' %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="text-center">Create Survey Template</h3>
+      </div>
+      <div class="panel-body">
+        <%= render 'survey_template_form', locals: {survey_template: @survey_template, is_new: true,
+                                                    milestones: milestones} %>
+      </div>
+    </div>
+<% end %>
