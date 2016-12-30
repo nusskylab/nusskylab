@@ -10,7 +10,7 @@ body {
 
 .portfolio-item {
     margin-bottom: 25px;
-    border: 2px solid blue;
+    border: 2px;
 }
 
 footer {
@@ -73,7 +73,7 @@ footer {
     padding: 14px 40px;
 }
 .button_video:hover {
-    background-color: white; 
+    background-color: white;
     color: black;
     font-size: 16px;
     border: 2px solid #4CAF50;
