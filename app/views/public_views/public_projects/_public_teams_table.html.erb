@@ -56,7 +56,7 @@
       <br><hr>
       <h4 class="text-muted">Links</h4>
       <br>
-      <% if (Submission.where(team_id: team.id)[-1] && Submission.where(team_id: team.id)[-1].show_public) %>
+      <% if (Submission.where(team_id: team.id)[-1]) %>
       <div class="col-md-6">
         <div class="center">
   	      <a role="button" class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].video_link %>">Watch Project Video</a>
