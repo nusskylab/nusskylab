@@ -44,7 +44,7 @@ footer {
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 70%; /* Could be more or less, depending on screen size */
+    width: 50%; /* Could be more or less, depending on screen size */
     height: 40%;
 }
 
@@ -88,7 +88,7 @@ footer {
     font-size: 14px;
     border-radius: 8px;
     border: 2px solid #4CAF50;
-    padding: 12px 40px;
+    padding: 12px 30px;
 }
 .button_video:hover {
     background-color: white;
