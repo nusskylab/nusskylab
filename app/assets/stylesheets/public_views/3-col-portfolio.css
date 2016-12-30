@@ -63,6 +63,24 @@ footer {
     cursor: pointer;
 }
 
+/* Team button */
+.button_team {
+    background-color: #0091ff;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #0091ff;
+    padding: 14px 40px;
+}
+.button_team:hover {
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    border: 2px solid #0091ff;
+    border-radius: 8px;
+    padding: 14px 40px;
+}
+
 /* Watch video button */
 .button_video {
     background-color: #4CAF50;
