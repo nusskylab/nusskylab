@@ -1,7 +1,0 @@
-<%= simple_form_for(locals[:evaluating], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
-                    url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
-    <%= f.error_notification %>
-    <%= f.input :evaluated_id, collection: locals[:teams].map {|team| [team.team_name, team.id]}, include_blank: false %>
-    <%= f.input :evaluator_id, collection: locals[:teams].map {|team| [team.team_name, team.id]}, include_blank: false %>
-    <%= f.button :submit_centred, class: 'btn-success' %>
-<% end %>

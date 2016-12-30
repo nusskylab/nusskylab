@@ -1,7 +1,0 @@
-<% content_for :main_content do %>
-  <% javascript 'admins.js' %>
-  <%= render 'admin_view', locals: {
-    admin: @role,
-    role_data: role_data
-  } %>
-<% end %>

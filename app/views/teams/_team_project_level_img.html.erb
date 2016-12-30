@@ -1,7 +1,0 @@
-<% if locals[:team].vostok? %>
-    <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded', style: 'width: 50px;') %>
-<% elsif locals[:team].project_gemini? %>
-    <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded', style: 'width: 50px;') %>
-<% elsif locals[:team].apollo_11? %>
-    <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded', style: 'width: 50px;') %>
-<% end %>

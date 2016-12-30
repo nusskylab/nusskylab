@@ -1,8 +1,0 @@
-<%= simple_form_for(locals[:milestone], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
-                    url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
-    <%= f.error_notification %>
-    <%= f.input :name, input_html: {placeholder: 'input milestone name'}, required: true %>
-    <%= f.input :submission_deadline, as: :string, input_html: { value: (l(f.object.submission_deadline) if f.object.submission_deadline), class: 'datetime-picker' } %>
-    <%= f.input :peer_evaluation_deadline, as: :string, input_html: { value: (l(f.object.peer_evaluation_deadline) if f.object.peer_evaluation_deadline), class: 'datetime-picker' } %>
-    <%= f.button :submit_centred, class: 'btn-success' %>
-<% end %>

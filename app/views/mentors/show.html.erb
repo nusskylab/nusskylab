@@ -1,8 +1,0 @@
-<% content_for :main_content do %>
-  <% javascript 'mentors.js' %>
-  <%= render 'mentor_view', locals: {
-    mentor: @role,
-    milestones: role_data[:milestones],
-    teams_submissions: role_data[:teams_submissions]
-  } %>
-<% end %>

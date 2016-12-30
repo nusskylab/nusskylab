@@ -1,9 +1,0 @@
-<%= simple_form_for(locals[:student], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
-                    url: {action: 'update'}) do |f| %>
-  <%= f.error_notification %>
-  <%= f.input :team_id, collection: locals[:teams].map {|team| [team.team_name, team.id]}, include_blank: true, required: true %>
-  <% if locals[:student].is_pending %>
-  <%= f.input :is_pending %>
-  <% end %>
-  <%= f.button :submit_centred, class: 'btn-success' %>
-<% end %>
