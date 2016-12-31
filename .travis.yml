@@ -15,6 +15,7 @@ before_script:
 - sleep 3
 script:
 - bundle exec rake db:test:prepare
+- codeclimate-test-reporter
 - bundle exec rspec spec/
 env:
   global:
