@@ -26,12 +26,10 @@ class User < ActiveRecord::Base
     scope: :provider,
     message: ': An OpenID account can only be used for creating one account'
   }, if: 'uid.present?'
-  #check for matric number
-  validates :matric_number, presence: true, format: {
-    with: /\AA\d{7}\D\z/i,
+  validates :matric_number, format: {
+    with: /\A$|\AA\d{7}\D\z/i,
     message: ': Invalid matric number'
   }
-
   has_many :registrations, dependent: :destroy
 
   enum provider: [:provider_nil, :provider_NUS]
