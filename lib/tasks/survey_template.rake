@@ -1,5 +1,5 @@
 namespace :survey_template do
-  desc 'Migrate survey templates from previous cohort to current cohort'
+  desc 'Migrate survey templates from previous cohort to current cohort. Requires you to first instantiate Milestones for the new cohort.'
   task migrate_from_prev_cohort: :environment do
     current_cohort = Time.now.year
     previous_cohort = current_cohort - 1
