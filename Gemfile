@@ -11,6 +11,8 @@ source 'https://rubygems.org' do
   gem 'coffee-rails', '~> 4.1.0'
   # Use Puma as the app server
   gem 'puma', '~> 2.11.2'
+  # Use Thredded as the forum engine
+  gem 'thredded', '~> 0.9.3'
 
   # Use devise for email sign-up and sign-in
   gem 'devise', '~> 3.5.2'
@@ -29,7 +31,7 @@ source 'https://rubygems.org' do
   # Use bootstrap for styling
   gem 'bootstrap-sass', '~> 3.3.4'
   # Use jquery as the JavaScript library
-  gem 'jquery-rails', '~> 4.0.5'
+  gem 'jquery-rails', '~> 4.2.1'
   # simple_form for form validation
   gem 'simple_form', '~> 3.1.1'
   # tiny_mce for rails

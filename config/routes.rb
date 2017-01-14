@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # forum engine
+  mount Thredded::Engine => '/forum'
+
   # homepage
   root 'home#index'
 
