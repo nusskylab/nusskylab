@@ -98,6 +98,7 @@ class SubmissionsController < ApplicationController
                   error_message: @submission.errors.full_messages.join(', '))
       }
     end
+    # render plain: params[:submission].inspect
   end
 
   private
@@ -119,7 +120,8 @@ class SubmissionsController < ApplicationController
     submission_params = params.require(:submission).permit(:milestone_id,
                                                            :read_me,
                                                            :project_log,
-                                                           :video_link)
+                                                           :video_link,
+                                                           :poster_link)
     submission_params[:team_id] = params[:team_id]
     submission_params[:milestone_id] = params[:milestone_id]
     submission_params
