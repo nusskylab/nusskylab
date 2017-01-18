@@ -86,11 +86,11 @@ ActiveRecord::Schema.define(version: 20161217084309) do
   add_index "mentors", ["user_id"], name: "index_mentors_on_user_id", using: :btree
 
   create_table "milestones", force: :cascade do |t|
-    t.datetime "submission_deadline",      default: '2016-12-10 03:56:07', null: false
+    t.datetime "submission_deadline",      default: '2015-07-05 10:27:14', null: false
     t.string   "name"
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
-    t.datetime "peer_evaluation_deadline", default: '2016-12-10 03:56:07', null: false
+    t.datetime "peer_evaluation_deadline", default: '2015-07-05 10:27:14', null: false
     t.integer  "cohort"
   end
 
@@ -220,8 +220,8 @@ ActiveRecord::Schema.define(version: 20161217084309) do
     t.string   "blog_link",              default: ""
     t.integer  "program_of_study",       default: 0
     t.text     "self_introduction",      default: ""
-    t.string   "matric_number",          default: ""
     t.string   "slack_id",               default: ""
+    t.string   "matric_number",          default: ""
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
