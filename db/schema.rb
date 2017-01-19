@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161217084309) do
+ActiveRecord::Schema.define(version: 20161230033247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,11 +86,11 @@ ActiveRecord::Schema.define(version: 20161217084309) do
   add_index "mentors", ["user_id"], name: "index_mentors_on_user_id", using: :btree
 
   create_table "milestones", force: :cascade do |t|
-    t.datetime "submission_deadline",      default: '2015-07-05 10:27:14', null: false
+    t.datetime "submission_deadline",      default: '2017-01-18 09:10:22', null: false
     t.string   "name"
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
-    t.datetime "peer_evaluation_deadline", default: '2015-07-05 10:27:14', null: false
+    t.datetime "peer_evaluation_deadline", default: '2017-01-18 09:10:22', null: false
     t.integer  "cohort"
   end
 
@@ -158,6 +158,8 @@ ActiveRecord::Schema.define(version: 20161217084309) do
     t.string   "video_link"
     t.text     "read_me"
     t.text     "project_log"
+    t.boolean  "show_public",  default: true
+    t.string   "poster_link"
   end
 
   add_index "submissions", ["milestone_id"], name: "index_submissions_on_milestone_id", using: :btree
@@ -220,7 +222,6 @@ ActiveRecord::Schema.define(version: 20161217084309) do
     t.string   "blog_link",              default: ""
     t.integer  "program_of_study",       default: 0
     t.text     "self_introduction",      default: ""
-    t.string   "slack_id",               default: ""
     t.string   "matric_number",          default: ""
   end
 
