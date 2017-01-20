@@ -60,7 +60,7 @@ Rails.application.routes.draw do
                                  :edit, :update, :destroy]
   resources :milestones do
     resources :teams, only: [:show] do
-      resources :submissions, only: [:index, :new, :create, :edit, :update, :show]
+      resources :submissions, only: [:new, :create, :edit, :update, :show]
       resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
       resources :received_evals, only: [:index]
       resources :received_feedbacks, only: [:index]
@@ -75,6 +75,7 @@ Rails.application.routes.draw do
       get 'preview'
     end
   end
+  resources :submissions
   resources :questions, only: [:create, :update, :destroy]
   resources :tags, only: [:index]
   namespace 'public_views' do
