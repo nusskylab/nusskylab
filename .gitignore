@@ -19,6 +19,7 @@ config/local_env.yml
 ## Environment normalisation:
 /.bundle
 /vendor/bundle
+*.bash_profile
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
