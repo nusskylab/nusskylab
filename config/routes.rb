@@ -60,6 +60,7 @@ Rails.application.routes.draw do
                                  :edit, :update, :destroy]
   resources :milestones do
     resources :teams, only: [:show] do
+      resources :submissions, only: [:index, :new, :create, :edit, :update, :show]
       resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
       resources :received_evals, only: [:index]
       resources :received_feedbacks, only: [:index]
@@ -69,7 +70,6 @@ Rails.application.routes.draw do
       resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
     end
   end
-  resources :submissions
   resources :survey_templates, except: [:destroy] do
     member do
       get 'preview'
