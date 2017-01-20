@@ -5,6 +5,20 @@
 #   edit:   view to update a submission
 #   update: update a submission
 class SubmissionsController < ApplicationController
+  def index
+    !authenticate_user(true, true) && return
+    @page_title = t('.page_title')
+    milestones = Milestone.where(cohort: current_cohort)
+    submission = Array.new
+    milestones.each do |x|
+      milestones_by_id = Milestone.find_by(id: x.id)
+      if milestones_by_id.size > 0
+        submission.push(Milestone.find_by(id: x.id)[0])
+      end
+    end
+    @submission = submission
+  end
+
   def new
     team = Team.find(params[:team_id]) || (record_not_found && return)
     milestone = Milestone.find_by(id: params[:milestone_id]) ||
