@@ -55,6 +55,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_user_public?()
+    return !(current_user_student? || current_user_adviser? || current_user_admin? || current_user_mentor?)
+  end
+
   def current_user_student?(cohort = nil)
     cohort ||= current_cohort
     return unless current_user
@@ -97,4 +101,5 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_adviser?
   helper_method :current_user_mentor?
   helper_method :current_user_student?
+  helper_method :current_user_public?
 end
