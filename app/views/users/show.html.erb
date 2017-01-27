@@ -9,13 +9,13 @@
       <div class="panel-body">
         <div role="tabpanel">
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation">
+            <li role="presentation" class="active">
               <a href="#user-details" aria-controls="user-details"
                  role="tab" data-toggle="tab">
                 User details
               </a>
             </li>
-            <li role="presentation" class="active">
+            <li role="presentation">
               <a href="#user-roles" aria-controls="user-roles"
                  role="tab" data-toggle="tab">
                 User roles
@@ -23,12 +23,22 @@
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade" id="user-details">
+            <div role="tabpanel" class="tab-pane fade in active" id="user-details">
               <div class="col-sm-12">
                 <br>
+                  <h3>
+                    <span>
+                      Forum Contributions [<%= @user.thredded_user_detail.posts_count %>]
+                    </span>
+                  </h3>
+                  <div class="jumbotron">
+                    <p>
+                      <%= Thredded::ApplicationController.render partial: 'thredded/users/posts', locals: { posts: Thredded.posts_page_view(scope: @user.thredded_posts.order_newest_first.limit(5), current_user: @user) } %>
+                    </p>
+                  </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane fade in active" id="user-roles">
+            <div role="tabpanel" class="tab-pane fade" id="user-roles">
               <div class="col-sm-12">
                 <br>
                 <div class="jumbotron">

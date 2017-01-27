@@ -48,6 +48,8 @@ GEM
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
+    backport_new_renderer (1.0.0)
+      rails
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -327,6 +329,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  backport_new_renderer (~> 1.0.0)!
   bootstrap-sass (~> 3.3.4)!
   bootstrap3-datetimepicker-rails (~> 4.15.35)!
   capybara (~> 2.5.0)!

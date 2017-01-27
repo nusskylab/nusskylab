@@ -13,6 +13,8 @@ source 'https://rubygems.org' do
   gem 'puma', '~> 2.11.2'
   # Use Thredded as the forum engine
   gem 'thredded', '~> 0.9.3'
+  # Use Backport render for Thredded
+  gem 'backport_new_renderer', '~> 1.0.0'
 
   # Use devise for email sign-up and sign-in
   gem 'devise', '~> 3.5.2'
