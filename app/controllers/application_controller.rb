@@ -89,6 +89,10 @@ class ApplicationController < ActionController::Base
     current_user ? after_sign_in_path_for(current_user) : root_path
   end
 
+  def forum_path
+    "/forum"
+  end
+
   def record_not_found
     respond_to do |f|
       f.html { render file: "#{Rails.root}/public/404.html", status: 404 }
@@ -96,6 +100,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :home_path
+  helper_method :forum_path
   helper_method :page_title
   helper_method :current_user_admin?
   helper_method :current_user_adviser?
