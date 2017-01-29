@@ -81,7 +81,7 @@ Thredded.layout = 'layouts/application'
 # Thredded::ContentFormatter.whitelist[:elements] += %w(custom-element)
 
 # ==> User autocompletion (Private messages and @-mentions)
-# Thredded.autocomplete_min_length = 2 lower to 1 if have 1-letter names -- increase if you want
+Thredded.autocomplete_min_length = 2 # lower to 1 if have 1-letter names -- increase if you want
 
 # ==> Error Handling
 # By default Thredded just renders a flash alert on errors such as Topic not found, or Login required.
@@ -130,10 +130,27 @@ Thredded.layout = 'layouts/application'
 # Change how users can choose to be notified, by adding notifiers here, or removing the initializer altogether
 #
 # default:
-# Thredded.notifiers = [Thredded::EmailNotifier.new]
+Thredded.notifiers = [Thredded::EmailNotifier.new]
 #
 # none:
 # Thredded.notifiers = []
 #
 # add in (must install separate gem (under development) as well):
 # Thredded.notifiers = [Thredded::EmailNotifier.new, Thredded::PushoverNotifier.new(ENV['PUSHOVER_APP_ID'])]
+
+
+# to allow you to not to have to add `main_app` before every path helper 
+# when embedding Thredded within a main-app supplied layout (with navbar and links to the main_app)
+
+Rails.application.config.to_prepare do
+  Rails.application.reload_routes!
+  thredded_methods = (Thredded::Engine.routes.url_helpers.methods + Thredded::UrlsHelper.instance_methods)
+    .select { |s| s.to_s.ends_with?("_path", "_url") }
+  main_app_delegator = Module.new do
+    Rails.application.routes.url_helpers.methods
+      .select { |m| m.to_s.ends_with?('_path', '_url') }
+      .reject { |m| thredded_methods.include?(m).tap { |r| Rails.logger.warn "ignoring conflict: #{m}" if r } }
+      .each{ |method_name| send(:define_method, method_name) {|*args| main_app.send(method_name, *args)} }
+  end
+  ::Thredded::ApplicationController.helper main_app_delegator
+end

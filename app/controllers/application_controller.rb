@@ -43,15 +43,15 @@ class ApplicationController < ActionController::Base
     admin = Admin.admin?(current_user.id, cohort: current_cohort)
     if student && !student.is_pending && adviser.nil? && mentor.nil? &&
        admin.nil?
-      student_path(student.id)
+      main_app.student_path(student.id)
     elsif student.nil? && adviser && mentor.nil? && admin.nil?
-      adviser_path(adviser.id)
+      main_app.adviser_path(adviser.id)
     elsif student.nil? && adviser.nil? && mentor && admin.nil?
-      mentor_path(mentor.id)
+      main_app.mentor_path(mentor.id)
     elsif student.nil? && adviser.nil? && mentor.nil? && admin
-      admin_path(admin.id)
+      main_app.admin_path(admin.id)
     else
-      user_path(current_user.id)
+      main_app.user_path(current_user.id)
     end
   end
 
