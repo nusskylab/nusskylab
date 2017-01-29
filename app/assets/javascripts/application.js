@@ -5,6 +5,7 @@
 //= require select2
 //= require jQuery.autolink
 //= require autosize
+//= require thredded
 
 /**
  * Customization for table sorter
