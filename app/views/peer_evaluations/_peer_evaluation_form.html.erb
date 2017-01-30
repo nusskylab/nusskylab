@@ -2,9 +2,12 @@
                     :url => {action: (locals[:is_new] ? 'create' : 'update')} do |f| %>
     <%= render 'shared/error_messages', locals: {target_model: locals[:peer_evaluation]} %>
     <div class="form-group">
-      <label class="control-label">Link to:</label>
+
+
+      <label class="control-label">View submission in new tab: (For easier reference, you can drag the tab out into its separate window, and do the evaluation side-by-side)</label>
+
       <div class="form-control-static">
-        <a href="<%= milestone_team_submission_path(locals[:submission].milestone_id, locals[:submission].team_id, locals[:submission].id) %>" class="btn btn-success">
+        <a href="<%= milestone_team_submission_path(locals[:submission].milestone_id, locals[:submission].team_id, locals[:submission].id) %>" class="btn btn-success" target="_blank" >
             <%= locals[:submission].team.team_name + ' @ ' + locals[:submission].milestone.name %> Submission
         </a>
         <input type="hidden" name="peer_evaluation[submission_id]" value="<%= locals[:submission].id %>">
