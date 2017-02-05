@@ -109,7 +109,7 @@ GEM
       activesupport (>= 4.1.0)
     gravtastic (3.2.6)
     hashie (3.4.3)
-    html-pipeline (2.4.2)
+    html-pipeline (2.5.0)
       activesupport (>= 2)
       nokogiri (>= 1.4)
     html-pipeline-vimeo (0.1.1)
@@ -130,18 +130,18 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
-    kaminari (1.0.0)
+    kaminari (1.0.1)
       activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.0.0)
-      kaminari-activerecord (= 1.0.0)
-      kaminari-core (= 1.0.0)
-    kaminari-actionview (1.0.0)
+      kaminari-actionview (= 1.0.1)
+      kaminari-activerecord (= 1.0.1)
+      kaminari-core (= 1.0.1)
+    kaminari-actionview (1.0.1)
       actionview
-      kaminari-core (= 1.0.0)
-    kaminari-activerecord (1.0.0)
+      kaminari-core (= 1.0.1)
+    kaminari-activerecord (1.0.1)
       activerecord
-      kaminari-core (= 1.0.0)
-    kaminari-core (1.0.0)
+      kaminari-core (= 1.0.1)
+    kaminari-core (1.0.1)
     kramdown (1.13.2)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -279,7 +279,7 @@ GEM
       sprockets (>= 3.0.0)
     thor (0.19.1)
     thread_safe (0.3.5)
-    thredded (0.9.3)
+    thredded (0.9.4)
       active_record_union (>= 1.2.0)
       autoprefixer-rails
       autosize-rails
@@ -359,7 +359,7 @@ DEPENDENCIES
   simple_form (~> 3.1.1)!
   simplecov (~> 0.10.0)!
   spring!
-  thredded (~> 0.9.3)!
+  thredded (~> 0.9.4)!
   tinymce-rails (~> 4.2.5)!
   turbolinks (~> 2.5.3)!
   uglifier (>= 1.3.0)!

@@ -11,7 +11,7 @@ $thredded-base-line-height: 1.5;
 $thredded-heading-line-height: 1.5;
 $thredded-button-font-size: 1.25rem;
 
-@import "thredded";
+@import "thredded/thredded";
 
 .thredded--main-container {
   // The padding and max-width are handled by the app's container.

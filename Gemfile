@@ -12,7 +12,7 @@ source 'https://rubygems.org' do
   # Use Puma as the app server
   gem 'puma', '~> 2.11.2'
   # Use Thredded as the forum engine
-  gem 'thredded', '~> 0.9.3'
+  gem 'thredded', '~> 0.9.4'
   # Use Backport render for Thredded
   gem 'backport_new_renderer', '~> 1.0.0'
 
