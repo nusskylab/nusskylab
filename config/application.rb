@@ -7,19 +7,12 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 module Vagrant
-	class Application < Rails::Application
-		config.time_zone = 'Singapore'
+  class Application < Rails::Application
+    config.time_zone = 'Singapore'
 
-		I18n.available_locales = [:en]
-		config.i18n.default_locale = :en
+    I18n.available_locales = [:en]
+    config.i18n.default_locale = :en
 
-		config.active_record.raise_in_transactional_callbacks = true
-		config.before_configuration do
-			env_file = File.join(Rails.root, 'config', 'secrets.yml')
-			YAML.load(File.open(env_file)).each do |key, value|
-				ENV[key.to_s] = value
-			end if File.exists?(env_file)
-		end
-	end
+    config.active_record.raise_in_transactional_callbacks = true
+  end
 end
-
