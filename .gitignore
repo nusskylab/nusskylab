@@ -13,13 +13,12 @@ rerun.txt
 pickle-email-*.html
 
 config/initializers/secret_token.rb
-config/local_env.yml
+config/secrets.yml
 .rbenv-vars
 
 ## Environment normalisation:
 /.bundle
 /vendor/bundle
-*.bash_profile
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

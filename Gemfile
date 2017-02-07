@@ -1,3 +1,5 @@
+gem 'rails_12factor', group: :production #For full functionality on heroku
+
 source 'https://rubygems.org' do
   # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
   gem 'rails', '4.2.2'
@@ -80,5 +82,3 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-select2', '~> 4.0.0'
   gem 'rails-assets-autosize', '~> 3.0.13'
 end
-
-gem 'rails_12factor', group: :production #For full functionality on heroku
