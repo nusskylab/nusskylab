@@ -8,15 +8,11 @@ class SubmissionsController < ApplicationController
   def index
     !authenticate_user(true, true) && return
     @page_title = t('.page_title')
-    milestones = Milestone.where(cohort: current_cohort)
-    submission = Array.new
-    milestones.each do |x|
-      milestones_by_id = Milestone.find_by(id: x.id)
-      if milestones_by_id.size > 0
-        submission.push(Milestone.find_by(id: x.id)[0])
-      end
-    end
-    @submission = submission
+    @teams_table = {}
+    teams = Team.where(cohort: current_cohort, has_dropped: false)
+    @teams_table["vostok"] = teams.select{|team| team.vostok?}
+    @teams_table["project_gemini"] = teams.select{|team| team.project_gemini?}
+    @teams_table["apollo_11"] = teams.select{|team| team.apollo_11?}
   end
 
   def new
