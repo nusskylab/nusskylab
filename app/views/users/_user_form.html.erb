@@ -9,7 +9,6 @@
         <%= f.input :provider, collection: User.providers, include_blank: false, disabled: true %>
     <% end %>
     <%= f.input :uid %>
-    <%= f.input :slack_id %>
     <%= f.input :github_link %>
     <%= f.input :linkedin_link %>
     <%= f.input :blog_link, label: 'Website Link' %>
@@ -20,9 +19,5 @@
     <% end %>
     <%= f.input :matric_number %>
     <%= f.input :self_introduction %>
-    <div class="text-right">
-        <a href="https://en.gravatar.com/gravatars/new" target="_blank">Change your Gravatar image</a>
-        <%= image_tag @user.gravatar_url(size: 150) %>
-    </div>
     <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>

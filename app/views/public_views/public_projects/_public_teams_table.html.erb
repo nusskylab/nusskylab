@@ -7,20 +7,6 @@
 
     <title>3 Col Portfolio - Start Bootstrap Template</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/3-col-portfolio.css" rel="stylesheet">
-    <style>
-      .center {
-        margin: auto;
-        width: 50%;
-        border: 3px;
-        padding: 10px;
-      }
-    </style>
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -44,26 +30,61 @@
   </div>
   <!-- /.row -->
   <% locals[:selected_teams].each_with_index do |team, idx| %>
+  <!-- The Project Profile -->
   <div class="col-md-4 portfolio-item">
-    <a href="#">
+    <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
       <% if locals[:selected_type] == 'Vostok' %>
-      <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded img-responsive') %>
+      <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded') %>
       <% elsif locals[:selected_type] == 'Project Gemini' %>
-      <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded img-responsive') %>
+      <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded') %>
       <% elsif locals[:selected_type] == 'Apollo 11' %>
-      <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded img-responsive') %>
+      <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded') %>
       <% end %>
     </a>
+    <!-- createModalBox(<%= team.team_name %>) -->
     <h3>
-        <a href="#"><%= idx + 1 %>. <strong><%= team.team_name %></strong></a> <!-- Clicking the link creates another layer of window that shows the team's project -->
+        <button class="button button_team" onclick="createModalBox(<%= team.id %>)" id="button_<%= team.id %>"><%= idx + 1 %>. <strong><%= team.team_name %></strong></button> <!-- Clicking the link creates another layer of window that shows the team's project -->
     </h3>
     <p class="text-muted">Students: <%= team.students.map{|student| student.user.user_name}.join(' & ') %></p>
-    <p class="text-muted">Advised by:</p> <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %>
+    <p class="text-muted">Advised by: <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></p>
+  </div>
+  <!-- The Modal Box -->
+  <div id="modal_<%= team.id %>" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h4 class="text-muted"><%= team.team_name %></h4>
+      <br><hr>
+      <h4 class="text-muted">Links</h4>
+      <br>
+      <% if (Submission.where(team_id: team.id)[-1]) %>
+      <div class="col-md-6">
+	      <a role="button" class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].video_link %>">Watch Project Video</a>
+      </div>
+      <div class="col-md-6">
+        <a role="button" class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].poster_link %>">View Project Poster</a>
+      </div>
+  	  <% else %>
+  	  	  <span>Video is not shown/not available</span>
+  	  <% end %>
+    </div>
   </div>
   <% end %>
   <!-- Projects Row -->
-  <!-- jQuery -->
-  <script src="js/jquery.js"></script>
-  <!-- Bootstrap Core JavaScript -->
-  <script src="js/bootstrap.min.js"></script>
+  <script>
+    function createModalBox(team_id) {
+      var modal = document.getElementById("modal_".concat(team_id));
+      var button = document.getElementById("button_".concat(team_id));
+      var span = document.getElementsByClassName("close")[0];
+      console.log("Success!");
+      modal.style.display = "block";
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    }
+  </script>
 </body>
