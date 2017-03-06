@@ -7,7 +7,6 @@
 //= require autosize
 //= require public_views/bootstrap.js
 //= require public_views/bootstrap.min.js
-//= require public_views/jquery.js
 //= require public_views/modalbox.js
 
 /**
