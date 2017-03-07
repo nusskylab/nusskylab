@@ -1,5 +1,7 @@
-# UsersController: manage actions related to user
+# UsersController: manage actions related to user  
 class UsersController < ApplicationController
+  skip_before_filter :verify_authenticity_token
+
   def index
     !authenticate_user(true, true) && return
     @page_title = t('.page_title')
@@ -193,12 +195,47 @@ class UsersController < ApplicationController
     user_ps = params.require(:user).permit(
       :user_name, :email, :uid, :provider, :slack_id, :github_link, :linkedin_link,
       :blog_link, :program_of_study, :matric_number, :self_introduction)
-
     user_ps[:password] = Devise.friendly_token.first(8) if generate_pswd
     user_ps[:provider] = user_ps[:provider].to_i
     user_ps[:program_of_study] = user_ps[:program_of_study].to_i
+    if(user_ps[:matric_number] != '')
+      user_ps[:matric_number] = calculate_matric_number(user_ps[:matric_number])
+    end
     user_ps
   end
+ 
+  def calculate_matric_number(id)
+  matric_regex = /^A\d{7}|U\d{6,7}/
+  matches = matric_regex.match(id.upcase)
+
+  if (matches)
+  match = matches[0]
+
+   if (match[0].eql?('U') && match.length === 8)
+      match = match[0, 3] + match[4]
+    end
+
+    weights = {
+      U: [0, 1, 3, 1, 2, 7],
+      A: [1, 1, 1, 1, 1, 1]
+    }
+
+    weights = weights[:"#{match[0]}"]
+
+    sum = 0
+    digits = match[2, 7]
+
+    for i in 0..6 do
+      sum += weights[i].to_i * digits[i].to_i
+    end
+    calculated_id = match.to_s + 'YXWURNMLJHEAB' [sum % 13]
+    if(id.upcase == calculated_id)
+      return (match.to_s + 'YXWURNMLJHEAB' [sum % 13])
+    end
+  end
+      #trigger invalid matric number warning if its not correct
+      return "invalid matric number" 
+end
 
   def registration_params
     params.require(:questions).permit!
