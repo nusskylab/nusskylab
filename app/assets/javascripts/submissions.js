@@ -76,3 +76,19 @@ $(function () {
     plugins: 'autolink link image table autosave paste textcolor emoticons autoresize'
   });
 });
+
+function createModalBox(team_id) {
+      var modal = document.getElementById("modal_".concat(team_id));
+      var button = document.getElementById("button_".concat(team_id));
+      var span = document.getElementsByClassName("close")[0];
+      console.log("Success!");
+      modal.style.display = "block";
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    }

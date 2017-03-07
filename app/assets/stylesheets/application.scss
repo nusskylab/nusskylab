@@ -3,6 +3,50 @@
 @import "select2";
 @import "jquery.tablesorter/theme.bootstrap";
 @import "bootstrap-datetimepicker";
+@import "public_views/3-col-portfolio.css";
+@import "submissions/thumbnail-gallery.css";
+
+// Forum style
+$thredded-base-font-size: 1.6rem;
+$thredded-font-size-small: 1.5rem;
+$thredded-base-line-height: 1.5;
+$thredded-heading-line-height: 1.5;
+$thredded-button-font-size: 1.25rem;
+
+@import "thredded/thredded";
+
+.thredded--main-container {
+  // The padding and max-width are handled by the app's container.
+  max-width: none;
+  padding: 0;
+  @include thredded-media-tablet-and-up {
+    padding: 0;
+  }
+
+  a, p, li {
+    font-family: inherit;
+    font-size: 1.5rem;
+  }
+}
+
+.thredded--messageboard--title {
+  font-size: 1.5rem;
+}
+
+%thredded--nav-tabs--item--badge {
+  font-size: 1.5rem;
+}
+
+.thredded--navigation--search {
+  input[type="search"] {
+    @include thredded-media-desktop-and-up {
+      min-width: 15rem;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+// ===== END OF FORUM STYLES ==== //
 
 .navbar-nav .btn {
   margin: 7px;

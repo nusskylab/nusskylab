@@ -51,7 +51,8 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
-  config.logger = ActiveSupport::Logger.new('log/production.log')
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger.const_get((ENV["LOG_LEVEL"] || "INFO").upcase)
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store

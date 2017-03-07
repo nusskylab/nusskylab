@@ -1,0 +1,28 @@
+<head>
+  <style>
+    img {
+      width: 50%;
+      height: auto;
+      max-width: 50%;
+    }
+  </style>
+</head>
+<div class="panel panel-info">
+  <div class="panel-heading"><h3 class="text-center">User details</h3></div>
+  <div class="panel-body">
+    <div class="row">
+    <div class="col-md-3">
+      <%= image_tag locals[:user].gravatar_url(size: 150) %>
+    </div>
+    <div class="col-md-9">
+      <div>Name: <strong><%= locals[:user].user_name %></strong></div>
+      <div class="automail">Email: <%= locals[:user].email %></div>
+      <div class="autolink">GitHub: <%= locals[:user].github_link %></div>
+      <div class="autolink">LinkedIn: <%= locals[:user].linkedin_link %></div>
+      <div class="autolink">Personal website: <%= locals[:user].blog_link %></div>
+      <div class="autolink">Self Introduction: <%= locals[:user].self_introduction %></div>
+    </div>
+    <div class="col-sm-12"><br><i>You may change your profile picture with <a href="http://www.gravatar.org/">Gravatar</a>.</i></div>
+    </div>
+  </div>
+</div>

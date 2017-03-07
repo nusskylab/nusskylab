@@ -19,10 +19,7 @@
 
 require 'capybara/rspec'
 require 'database_cleaner'
-require 'codeclimate-test-reporter'
 require 'simplecov'
-
-CodeClimate::TestReporter.start
 SimpleCov.start
 
 RSpec.configure do |config|
