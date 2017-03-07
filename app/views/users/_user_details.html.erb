@@ -12,15 +12,23 @@
     <h3 class="text-center">User details</h3>
   </div>
   <div class="panel-body">
-    <div class="col-sm-2"><%= image_tag locals[:user].gravatar_url(size: 150) %></div>
-    <div class="col-sm-2">Username:</div>
-    <div class="col-sm-8"><%= locals[:user].user_name %></div>
-    <div class="col-sm-2">Email:</div>
-    <div class="col-sm-8"><%= locals[:user].email %></div>
-    <div class="col-sm-2">OpenID provider:</div>
-    <div class="col-sm-8"><%= locals[:user].provider %></div>
-    <div class="col-sm-2">OpenID UID:</div>
-    <div class="col-sm-8"><%= locals[:user].uid %></div>
+    <div class="col-lg-2"><%= image_tag locals[:user].gravatar_url(size: 300) %></div>
+    <div class="col-sm-10">
+      <div class="col-sm-2"><b>Username:</b></div>
+      <div class="col-sm-10"><%= locals[:user].user_name %> (<%= locals[:user].program_of_study.presence || '-' %>)</div>
+      <div class="col-sm-2"><b>Matric Number:</b></div>
+      <div class="col-sm-10"><%= locals[:user].matric_number.presence || 'NA' %></div>
+      <div class="col-sm-2"><b>Email:</b></div>
+      <div class="col-sm-10"><%= locals[:user].email %></div>
+      <div class="col-sm-2"><b>GitHub:</b></div>
+      <div class="col-sm-10"><%= locals[:user].github_link.presence || '-' %></div>
+      <div class="col-sm-2"><b>LinkedIn:</b></div>
+      <div class="col-sm-10"><%= locals[:user].linkedin_link.presence || '-' %></div>
+      <div class="col-sm-2"><b>Blog:</b></div>
+      <div class="col-sm-10"><%= locals[:user].blog_link.presence || '-' %></div>
+      <div class="col-sm-12"><b>Self introduction:</b></div>
+      <div class="col-sm-12"><%= locals[:user].self_introduction.presence || '-' %></div>
+    </div>
     <div class="col-sm-12"><br><i>You may change your profile picture with <a href="http://www.gravatar.org/">Gravatar</a>.</i></div>
   </div>
 </div>
