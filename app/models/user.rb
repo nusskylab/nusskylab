@@ -69,4 +69,9 @@ class User < ActiveRecord::Base
       self.uid = NUS_OPEN_ID_PREFIX + uid unless uid[NUS_OPEN_ID_PREFIX_REGEX]
     end
   end
+
+  # Thredded method compatibility
+  def admin
+    Admin.admin?(self.id)
+  end
 end
