@@ -1,95 +1,12 @@
-<% content_for :main_content do %>
-    <% javascript 'users.js' %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2>
-          <span>Hi, <%= @user.user_name %> </span>
-        </h2>
-      </div>
-      <div class="panel-body">
-        <div role="tabpanel">
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation">
-              <a href="#user-details" aria-controls="user-details"
-                 role="tab" data-toggle="tab">
-                User details
-              </a>
-            </li>
-            <li role="presentation" class="active">
-              <a href="#user-roles" aria-controls="user-roles"
-                 role="tab" data-toggle="tab">
-                User roles
-              </a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade" id="user-details">
-              <div class="col-sm-12">
-                <%= render 'user_details', locals: {user: @user} %>
-                <div class="panel panel-info">
-                  <div class="panel-heading">
-                    <h3 class="text-center">Forum Contributions [<%= @user.thredded_user_detail.posts_count %>]</h3>
-                  </div>
-                  <div class="panel-body">
-                      <%= Thredded::ApplicationController.render partial: 'thredded/users/posts', locals: { posts: Thredded.posts_page_view(scope: @user.thredded_posts.order_newest_first.limit(5), current_user: @user) } %>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane fade in active" id="user-roles">
-              <div class="col-sm-12">
+
                 <br>
-                <div class="jumbotron">
-                  <% if (adm = user_admin?) or (adv = user_adviser?) or  (men = user_mentor?) or (stu = user_student?) %>
-		    <p>Use Skylab as:</p>
+                  <h3>
+                    <span>
+                      Forum Contributions [<%= @user.thredded_user_detail.posts_count %>]
+                    </span>
+                  </h3>
+                  <div class="jumbotron">
                     <p>
-                    <% if adm %>
-                          <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>
-                      <% end %>
-                      <% if adv %>
-                          <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>
-                      <% end %>
-                      <% if men %>
-                          <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">A Mentor</a>
-                      <% end %>
-                      <% if stu %>
-                          <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">A Student</a>
-                      <% end %>
+                      <%= Thredded::ApplicationController.render partial: 'thredded/users/posts', locals: { posts: Thredded.posts_page_view(scope: @user.thredded_posts.order_newest_first.limit(5), current_user: @user) } %>
                     </p>
-                  <% else %>
-                    <% if (pending_stu = (user_pending_student?)) %>
-                      <% if pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id != pending_stu.id %>
-                      <p>
-                        You have been invited to participate in Orbital as a team with <strong><%= pending_stu.team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the invitation </a> now?
-                      </p>
-                      <% elsif pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id == pending_stu.id %>
-                      <p>
-                        You have invited <strong><%= pending_stu.team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
-                      </p>
-                      <% elsif pending_stu.team && !pending_stu.team.is_pending  %>
-                      <p>
-                        We have registered you and your teammate's interest for Orbital. You're all done. Please log in again when we notify you later that you have been accepted for this year's Orbital cohort.
-                      </p>
-                      <% elsif !pending_stu.team %>
-                      <p>
-                        You have not invited a teammate nor been invited to be a teammate for Orbital yet.
-                        <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> Invite a teammate </a>.
-                        <br/>
-                        If you do not have anyone in mind, that is OK. At a later date, we will have a matchmaking session to help you find a suitable teammate. Please log in again when we notify you later that you have been accepted for this year's Orbital cohort.
-                      </p>
-                      <% end %>
-                      <br>
-                      <p class="text-muted">
-                        You can still further modify your submission to <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration form </a>.</p>
-                    <% else %>
-                      <p>Please fill in the <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration form </a>. After you fill out the registration, you will be able to invite a teammate to participate in Orbital with you.</p>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-<% end %>
+                  </div>
