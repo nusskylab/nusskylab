@@ -205,9 +205,9 @@ class UsersController < ApplicationController
  
   def calculate_matric_number(id)
   matric_regex = /^A\d{7}|U\d{6,7}/
-  matches = matric_regex.match(id.upcase)
 
-  if (matches)
+  if (matric_regex.match(id.upcase))
+  matches = matric_regex.match(id.upcase)
   match = matches[0]
 
    if (match[0].eql?('U') && match.length === 8)
