@@ -22,14 +22,16 @@ class User < ActiveRecord::Base
   }
   validates :user_name, presence: true
   validates :provider, presence: true
+  validates :program_of_study, presence: true
   validates :uid, uniqueness: {
     scope: :provider,
     message: ': An OpenID account can only be used for creating one account'
   }, if: 'uid.present?'
-  validates :matric_number, format: {
-    with: /\A$|\AA\d{7}\D\z/i,
-    message: ': Invalid matric number'
+  validates :matric_number, presence: true, allow_blank: true, format: {
+     with: /\AA\d{7}\D\z/i,
+     message: ': Invalid matric number'
   }
+
   has_many :registrations, dependent: :destroy
 
   enum provider: [:provider_nil, :provider_NUS]
