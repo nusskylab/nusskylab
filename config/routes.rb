@@ -78,6 +78,7 @@ Rails.application.routes.draw do
       get 'preview'
     end
   end
+  resources :submissions
   resources :questions, only: [:create, :update, :destroy]
   resources :tags, only: [:index]
   namespace 'public_views' do

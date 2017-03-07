@@ -1,3 +1,5 @@
+gem 'rails_12factor', group: :production #For full functionality on heroku
+
 source 'https://rubygems.org' do
   # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
   gem 'rails', '4.2.2'

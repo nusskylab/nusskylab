@@ -3,7 +3,7 @@
 //= require bootstrap
 //= require jquery.tablesorter
 //= require select2
-//= require jQuery.autolink
+//= require jQuery.autolink.js
 //= require autosize
 //= require thredded
 
@@ -35,11 +35,13 @@ $(function () {
 
 /**
  * Autolink links. Mainly for video links.
+ -- This script seems to have problems--
  */
-$(function() {
-  $('.autolink').autolink();
+jQuery(function ($) {
+  $('.autolink').autolink(); 
   $('.automail').automail();
 });
+
 
 /**
  * Autosize textareas. TinyMCE are autosized by its own plugin.

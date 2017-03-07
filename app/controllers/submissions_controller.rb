@@ -5,6 +5,16 @@
 #   edit:   view to update a submission
 #   update: update a submission
 class SubmissionsController < ApplicationController
+  def index
+    !authenticate_user(true, true) && return
+    @page_title = t('.page_title')
+    @teams_table = {}
+    teams = Team.where(cohort: current_cohort, has_dropped: false)
+    @teams_table["vostok"] = teams.select{|team| team.vostok?}
+    @teams_table["project_gemini"] = teams.select{|team| team.project_gemini?}
+    @teams_table["apollo_11"] = teams.select{|team| team.apollo_11?}
+  end
+
   def new
     team = Team.find(params[:team_id]) || (record_not_found && return)
     milestone = Milestone.find_by(id: params[:milestone_id]) ||
@@ -98,6 +108,7 @@ class SubmissionsController < ApplicationController
                   error_message: @submission.errors.full_messages.join(', '))
       }
     end
+    # render plain: params[:submission].inspect
   end
 
   private
@@ -119,7 +130,8 @@ class SubmissionsController < ApplicationController
     submission_params = params.require(:submission).permit(:milestone_id,
                                                            :read_me,
                                                            :project_log,
-                                                           :video_link)
+                                                           :video_link,
+                                                           :poster_link)
     submission_params[:team_id] = params[:team_id]
     submission_params[:milestone_id] = params[:milestone_id]
     submission_params

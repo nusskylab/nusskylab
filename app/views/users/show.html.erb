@@ -36,6 +36,7 @@
                       <%= Thredded::ApplicationController.render partial: 'thredded/users/posts', locals: { posts: Thredded.posts_page_view(scope: @user.thredded_posts.order_newest_first.limit(5), current_user: @user) } %>
                     </p>
                   </div>
+                <%= render 'user_details', locals: {user: @user} %>
               </div>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="user-roles">
