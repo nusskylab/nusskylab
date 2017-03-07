@@ -9,13 +9,13 @@
       <div class="panel-body">
         <div role="tabpanel">
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation">
+            <li role="presentation" class="active">
               <a href="#user-details" aria-controls="user-details"
                  role="tab" data-toggle="tab">
                 User details
               </a>
             </li>
-            <li role="presentation" class="active">
+            <li role="presentation">
               <a href="#user-roles" aria-controls="user-roles"
                  role="tab" data-toggle="tab">
                 User roles
@@ -23,7 +23,7 @@
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade" id="user-details">
+            <div role="tabpanel" class="tab-pane fade in active" id="user-details">
               <div class="col-sm-12">
                 <%= render 'user_details', locals: {user: @user} %>
                 <div class="panel panel-info">
@@ -36,7 +36,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane fade in active" id="user-roles">
+            <div role="tabpanel" class="tab-pane fade" id="user-roles">
               <div class="col-sm-12">
                 <br>
                 <div class="jumbotron">
