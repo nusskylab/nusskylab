@@ -57,10 +57,10 @@ Thredded.messageboards_order = :position
 
 # ==> Email Configuration
 # Email "From:" field will use the following
-# Thredded.email_from = 'no-reply@example.com'
+Thredded.email_from = 'no-reply@comp.nus.edu.sg'
 
 # Emails going out will prefix the "Subject:" with the following string
-# Thredded.email_outgoing_prefix = '[My Forum] '
+Thredded.email_outgoing_prefix = '[Skylab Forum] '
 
 # ==> View Configuration
 # Set the layout for rendering the thredded views.
