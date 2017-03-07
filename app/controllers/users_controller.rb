@@ -1,6 +1,5 @@
 # UsersController: manage actions related to user  
 class UsersController < ApplicationController
-  skip_before_filter :verify_authenticity_token
 
   def index
     !authenticate_user(true, true) && return
