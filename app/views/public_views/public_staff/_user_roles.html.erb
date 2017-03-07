@@ -5,20 +5,23 @@
   <div class="panel-body">
     <% if locals[:roles] && locals[:roles].length > 0 %>
       <% locals[:roles].each do |role| %>
-        <div class="row">
-          <div class="col-md-3">
-            <%= image_tag role.user.gravatar_url(size: 150) %>
+        <!-- Filters out sample data ending with @example.com -->
+        <% if not role.user.email.end_with? "@example.com" %>
+          <div class="row">
+            <div class="col-md-3">
+              <%= image_tag role.user.gravatar_url(size: 150) %>
+            </div>
+            <div class="col-md-9">
+              <div>Name: <strong><%= role.user.user_name %></strong></div>
+              <div class="automail">Email: <%= role.user.email %></div>
+              <div class="autolink">GitHub: <%= role.user.github_link %></div>
+              <div class="autolink">LinkedIn: <%= role.user.linkedin_link %></div>
+              <div class="autolink">Personal website: <%= role.user.blog_link %></div>
+              <div class="autolink">Self Introduction: <%= role.user.self_introduction %></div>
+            </div>
           </div>
-          <div class="col-md-9">
-            <div>Name: <strong><%= role.user.user_name %></strong></div>
-            <div class="automail">Email: <%= role.user.email %></div>
-            <div class="autolink">GitHub: <%= role.user.github_link %></div>
-            <div class="autolink">LinkedIn: <%= role.user.linkedin_link %></div>
-            <div class="autolink">Personal website: <%= role.user.blog_link %></div>
-            <div class="autolink">Self Introduction: <%= role.user.self_introduction %></div>
-          </div>
-        </div>
-        <br><hr><br>
+          <br><hr><br>
+        <% end %>
       <% end %>
     <% else %>
       No data to show
