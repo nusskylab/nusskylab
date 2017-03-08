@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user_public?()
-    return !(current_user_student? || current_user_adviser? || current_user_admin? || current_user_mentor?)
+    return current_user.nil?
   end
 
   def current_user_student?(cohort = nil)
