@@ -57,7 +57,7 @@ Thredded.messageboards_order = :position
 
 # ==> Email Configuration
 # Email "From:" field will use the following
-Thredded.email_from = 'no-reply@comp.nus.edu.sg'
+#Thredded.email_from = 'no-reply@comp.nus.edu.sg'
 
 # Emails going out will prefix the "Subject:" with the following string
 Thredded.email_outgoing_prefix = '[Skylab Forum] '
@@ -130,7 +130,7 @@ Thredded.autocomplete_min_length = 2 # lower to 1 if have 1-letter names -- incr
 # Change how users can choose to be notified, by adding notifiers here, or removing the initializer altogether
 #
 # default:
-Thredded.notifiers = [Thredded::EmailNotifier.new]
+#Thredded.notifiers = [Thredded::EmailNotifier.new]
 #
 # none:
 # Thredded.notifiers = []
