@@ -197,20 +197,20 @@ class UsersController < ApplicationController
     user_ps[:password] = Devise.friendly_token.first(8) if generate_pswd
     user_ps[:provider] = user_ps[:provider].to_i
     user_ps[:program_of_study] = user_ps[:program_of_study].to_i
-    if(user_ps[:matric_number] != '')
+    unless(user_ps[:matric_number].blank?)
       user_ps[:matric_number] = calculate_matric_number(user_ps[:matric_number])
     end
     user_ps
   end
  
-  def calculate_matric_number(id)
+  def calculate_matric_number(num)
   matric_regex = /^A\d{7}|U\d{6,7}/
 
-  if (matric_regex.match(id.upcase))
-  matches = matric_regex.match(id.upcase)
+  if (num.present? && matric_regex.match(num.upcase))
+  matches = matric_regex.match(num.upcase)
   match = matches[0]
 
-   if (match[0].eql?('U') && match.length === 8)
+    if (match[0].eql?('U') && match.length === 8)
       match = match[0, 3] + match[4]
     end
 
@@ -224,13 +224,13 @@ class UsersController < ApplicationController
     sum = 0
     digits = match[2, 7]
 
-    for i in 0..6 do
-      sum += weights[i].to_i * digits[i].to_i
-    end
+      for i in 0..6 do
+        sum += weights[i].to_i * digits[i].to_i
+      end
     calculated_id = match.to_s + 'YXWURNMLJHEAB' [sum % 13]
-    if(id.upcase == calculated_id)
-      return (match.to_s + 'YXWURNMLJHEAB' [sum % 13])
-    end
+        if(num.upcase == calculated_id)
+          return (match.to_s + 'YXWURNMLJHEAB' [sum % 13])
+        end
   end
       #trigger invalid matric number warning if its not correct
       return "invalid matric number" 
