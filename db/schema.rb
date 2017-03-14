@@ -99,11 +99,11 @@ ActiveRecord::Schema.define(version: 20170307175911) do
   add_index "mentors", ["user_id"], name: "index_mentors_on_user_id", using: :btree
 
   create_table "milestones", force: :cascade do |t|
-    t.datetime "submission_deadline",      default: '2016-12-07 16:08:49', null: false
+    t.datetime "submission_deadline",      default: '2015-07-05 10:27:14', null: false
     t.string   "name"
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
-    t.datetime "peer_evaluation_deadline", default: '2016-12-07 16:08:49', null: false
+    t.datetime "peer_evaluation_deadline", default: '2015-07-05 10:27:14', null: false
     t.integer  "cohort"
   end
 
