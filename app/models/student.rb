@@ -32,6 +32,7 @@ class Student < ActiveRecord::Base
       exported_stus.each do |student|
         csv_row = [student.user.user_name, student.user.email]
         csv_row.concat(student.team_adviser_info)
+        csv_row.concat([student.created_at.to_s(format=:db)])
         csv << csv_row
       end
     end
@@ -39,7 +40,7 @@ class Student < ActiveRecord::Base
 
   def self.generate_csv_header_row
     ['User Name', 'User Email', 'Team Name', 'Project Level',
-     'Adviser Name', 'Has Dropped']
+     'Adviser Name', 'Has Dropped', 'Registered on']
   end
 
   def get_teammates
