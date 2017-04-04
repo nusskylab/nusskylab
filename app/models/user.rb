@@ -22,23 +22,25 @@ class User < ActiveRecord::Base
   }
   validates :user_name, presence: true
   validates :provider, presence: true
+  validates :program_of_study, presence: true
   validates :uid, uniqueness: {
     scope: :provider,
     message: ': An OpenID account can only be used for creating one account'
   }, if: 'uid.present?'
-  validates :matric_number, format: {
-    with: /\A$|\AA\d{7}\D\z/i,
-    message: ': Invalid matric number'
+  validates :matric_number, presence: true, allow_blank: true, format: {
+     with: /\AA\d{7}\D\z/i,
+     message: ': Invalid matric number'
   }
+
   has_many :registrations, dependent: :destroy
 
   enum provider: [:provider_nil, :provider_NUS]
   enum program_of_study: [
-    :program_of_study_unknown, :program_of_study_cs, :program_of_study_ceg,
-    :program_of_study_is, :program_of_study_science,
-    :program_of_study_engineering, :program_of_study_fass,
-    :program_of_study_business, :program_of_study_others,
-    :program_of_study_infosec, :program_of_study_bza ]
+    :unknown, :Computer_Science, :Computer_Engineering,
+    :Information_Systems , :Science,
+    :Engineering, :FASS,
+    :Business, :others,
+    :Information_Security, :Business_Analytics, :Law, :Medicine, :SDE ]
 
   def self.from_omniauth(auth)
     user = User.find_by(provider: User.get_provider_from_raw(auth.provider),

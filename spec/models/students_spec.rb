@@ -23,7 +23,7 @@ RSpec.describe Student, type: :model do
     FactoryGirl.create(:student, user: student2_user, team: team1)
     require 'csv'
     csv = CSV.parse(Student.to_csv)
-    expect(csv.first).to eql ['User Name', 'User Email', 'Team Name', 'Project Level', 'Adviser Name', 'Has Dropped']
+    expect(csv.first).to eql ['User Name', 'User Email', 'Team Name', 'Project Level', 'Adviser Name', 'Has Dropped', 'Registered on']
   end
 
   it '.student?' do
