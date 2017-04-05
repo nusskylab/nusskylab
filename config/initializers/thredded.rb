@@ -60,7 +60,7 @@ Thredded.messageboards_order = :position
 #Thredded.email_from = 'no-reply@comp.nus.edu.sg'
 
 # Emails going out will prefix the "Subject:" with the following string
-Thredded.email_outgoing_prefix = '[Skylab Forum] '
+#Thredded.email_outgoing_prefix = '[Skylab Forum] '
 
 # ==> View Configuration
 # Set the layout for rendering the thredded views.
@@ -130,16 +130,16 @@ Thredded.autocomplete_min_length = 2 # lower to 1 if have 1-letter names -- incr
 # Change how users can choose to be notified, by adding notifiers here, or removing the initializer altogether
 #
 # default:
-#Thredded.notifiers = [Thredded::EmailNotifier.new]
+# Thredded.notifiers = [Thredded::EmailNotifier.new]
 #
 # none:
-# Thredded.notifiers = []
+Thredded.notifiers = []
 #
 # add in (must install separate gem (under development) as well):
 # Thredded.notifiers = [Thredded::EmailNotifier.new, Thredded::PushoverNotifier.new(ENV['PUSHOVER_APP_ID'])]
 
 
-# to allow you to not to have to add `main_app` before every path helper 
+# to allow you to not to have to add `main_app` before every path helper
 # when embedding Thredded within a main-app supplied layout (with navbar and links to the main_app)
 
 Rails.application.config.to_prepare do
