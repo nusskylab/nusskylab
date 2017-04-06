@@ -138,7 +138,6 @@ Thredded.notifiers = [Thredded::EmailNotifier.new]
 # add in (must install separate gem (under development) as well):
 # Thredded.notifiers = [Thredded::EmailNotifier.new, Thredded::PushoverNotifier.new(ENV['PUSHOVER_APP_ID'])]
 
-
 # to allow you to not to have to add `main_app` before every path helper
 # when embedding Thredded within a main-app supplied layout (with navbar and links to the main_app)
 
