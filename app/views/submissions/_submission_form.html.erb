@@ -8,8 +8,10 @@
         <p><strong class="form-control-static" id="submission_milestone_name"><%= locals[:milestone].name %></strong></p>
       </div>
     </div>
+    <p>For the Project README
     <%= f.input :read_me, input_html: {class: 'tinymce'}, placeholder: 'Input Project README', rows: '3', required: true %>
     <br>
+    <p>For the Project Log, document each team member's hours towards meeting or exceeding the hourly goal (140 hours minimum for each team member).  Keep your logs at the resolution of hours (not fractions), and include time in designing, meeting up, learning a technology (reading up, watching videos), debugging and coding.</p>
     <%= f.input :project_log, input_html: {class: 'tinymce'}, placeholder: 'Input Project Log', rows: '3', required: true %>
     <%= f.input :video_link, placeholder: 'Input project video link', required: true %>
     <%= f.input :poster_link, placeholder: 'Input project poster link', required: true %>
