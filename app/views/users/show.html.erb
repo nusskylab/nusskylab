@@ -82,7 +82,10 @@
                       <p class="text-muted">
                         You can still further modify your submission to <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration form </a>.</p>
                     <% else %>
-                      <p>Please fill in the <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration form </a>. After you fill out the registration, you will be able to invite a teammate to participate in Orbital with you.</p>
+                      <!-- Registration opened -->
+                      <!-- <p>Please fill in the <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration form </a>. After you fill out the registration, you will be able to invite a teammate to participate in Orbital with you.</p> -->
+                      <!-- Registration closed -->
+                      <p>Registration for Orbital 2017 has closed. Thank you for your interest.</p>
                     <% end %>
                   <% end %>
                 </div>
