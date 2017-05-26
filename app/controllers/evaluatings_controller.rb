@@ -1,3 +1,5 @@
+# NOTE: Addressing Issue #546 (2017), advisors will be able to map relations between ALL teams.
+
 # EvaluatingsController: manage actions related to evaluatings
 #   index:   list of evaluatings
 #   new:     view to create an evaluating
@@ -9,12 +11,12 @@ class EvaluatingsController < ApplicationController
     !authenticate_user(true, false, Adviser.all.map(&:user)) && return
     cohort = params[:cohort] || current_cohort
     cohort = cohort.to_i
-    if current_user_admin?
+    if current_user_admin? or current_user_adviser?
       @evaluatings = Evaluating.all
-    elsif current_user_adviser?
-      @evaluatings = Adviser.find_by(
-        user_id: current_user.id,
-        cohort: cohort).advised_teams_evaluatings
+    # elsif current_user_adviser?
+    #   @evaluatings = Adviser.find_by(
+    #     user_id: current_user.id,
+    #     cohort: cohort).advised_teams_evaluatings
     else
       fail ActionController::RoutingError, t(
         'application.path_not_found_message')
@@ -34,10 +36,10 @@ class EvaluatingsController < ApplicationController
     @evaluating = Evaluating.new
     cohort = params[:cohort] || current_cohort
     adviser = Adviser.find_by(user_id: current_user.id, cohort: cohort)
-    if current_user_admin?
+    if current_user_admin? or adviser
       teams = Team.where(cohort: cohort)
-    elsif adviser
-      teams = adviser.teams.where(cohort: cohort)
+    # elsif adviser
+    #   teams = adviser.teams.where(cohort: cohort)
     end
     @page_title = t('.page_title')
     render locals: { teams: teams }
@@ -62,11 +64,14 @@ class EvaluatingsController < ApplicationController
 
   def edit
     @evaluating = Evaluating.find(params[:id])
-    !authenticate_user(true, false, evaluating_permitted_users) && return
-    if current_user_admin?
-      teams = Team.all
-    elsif (adviser = current_user_adviser?)
-      teams = adviser.teams
+    # !authenticate_user(true, false, evaluating_permitted_users) && return
+    !authenticate_user(true, false, Adviser.all.map(&:user)) && return
+    cohort = params[:cohort] || current_cohort
+    if current_user_admin? or current_user_adviser?
+      teams = Team.where(cohort: cohort)
+      # teams = Team.all
+    # elsif (adviser = current_user_adviser?)
+    #   teams = adviser.teams
     end
     @page_title = t('.page_title')
     render locals: { teams: teams }
@@ -74,7 +79,8 @@ class EvaluatingsController < ApplicationController
 
   def update
     @evaluating = Evaluating.find(params[:id])
-    !authenticate_user(true, false, evaluating_permitted_users) && return
+    # !authenticate_user(true, false, evaluating_permitted_users) && return
+    !authenticate_user(true, false, Adviser.all.map(&:user)) && return
     @evaluating.assign_attributes(evaluating_params)
     if create_or_update_evaluation_relationship
       redirect_to evaluatings_path, flash: {
@@ -92,7 +98,8 @@ class EvaluatingsController < ApplicationController
 
   def destroy
     @evaluating = Evaluating.find(params[:id])
-    !authenticate_user(true, false, evaluating_permitted_users) && return
+    # !authenticate_user(true, false, evaluating_permitted_users) && return
+    !authenticate_user(true, false, Adviser.all.map(&:user)) && return
     if @evaluating.destroy
       redirect_to evaluatings_path, flash: {
         success: t('.success_message',
@@ -123,17 +130,18 @@ class EvaluatingsController < ApplicationController
   end
 
   def create_or_update_evaluation_relationship
-    if current_user_admin?
+    if current_user_admin? or current_user_adviser?
       return @evaluating.save ? @evaluating : nil
+    # else
+    #   if (@evaluating.evaluated &&
+    #       @evaluating.evaluated.adviser.user_id == current_user.id) &&
+    #      (@evaluating.evaluator &&
+    #       @evaluating.evaluator.adviser.user_id == current_user.id)
+    #     return @evaluating.save ? @evaluating : nil
+    #   else
+    #     @evaluating.errors.add(:evaluated_id, 'User not allowed to do this')
     else
-      if (@evaluating.evaluated &&
-          @evaluating.evaluated.adviser.user_id == current_user.id) &&
-         (@evaluating.evaluator &&
-          @evaluating.evaluator.adviser.user_id == current_user.id)
-        return @evaluating.save ? @evaluating : nil
-      else
-        @evaluating.errors.add(:evaluated_id, 'User not allowed to do this')
-      end
+      @evaluating.errors.add(:evaluated_id, 'User not allowed to do this')
     end
     nil
   end
