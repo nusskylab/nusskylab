@@ -3,6 +3,7 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
   config.vm.box_check_update = false
+  config.vm.hostname = 'nusskylab'
 
   # Forward the Rails server default port to the host
   config.vm.network :forwarded_port, host: 3000, guest: 3000
