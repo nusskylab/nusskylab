@@ -24,7 +24,7 @@ sudo sed -i 's/peer/md5/g' /var/lib/pgsql/data/pg_hba.conf
 sudo systemctl restart postgresql
 
 # JS runtime
-curl --silent --location https://rpm.nodesource.com/setup_5.x | sudo bash -
+curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
 sudo yum -y install nodejs
 
 # Dependencies for gems
