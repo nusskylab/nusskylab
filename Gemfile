@@ -59,7 +59,7 @@ source 'https://rubygems.org' do
     gem 'spring'
 
     # rspec for test & dev
-    gem 'rspec-rails', '3.3.3'
+    gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
     gem 'database_cleaner', '~> 1.5.0'
     gem 'factory_girl_rails', '~> 4.5.0'
     gem 'capybara', '~> 2.5.0'
