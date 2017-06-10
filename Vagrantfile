@@ -14,6 +14,19 @@ Vagrant.configure(2) do |config|
   # A private dhcp network is required for NFS to work (on Windows hosts, at least)
   config.vm.network "private_network", ip: "192.168.33.10"
 
+  # Disable default vagrant share folder.
+  # config.vm.synced_folder "", "/vagrant", disabled: true
+  #
+  # # Add additional synced folders to unversioned 'synced_folders' file
+  #  if File.exist?('./synced_folders')
+  #    synced_folders = File.read 'synced_folders'
+  #    eval synced_folders
+  #  end
+
+  # Have synced folders in vagrant directory
+  config.vm.synced_folder "./", "/vagrant", type: "rsync",
+    rsync__exclude: ".git/"
+
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
