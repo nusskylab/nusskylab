@@ -51,9 +51,11 @@ sudo -u postgres psql -c "create user nusskylab SUPERUSER login password 'nussky
 sudo sed -i 's/peer/md5/g' /var/lib/pgsql/data/pg_hba.conf
 sudo systemctl restart postgresql
 
+#install rails
+cd /vagrant
 gem install bundler
-cd /home/vagrant/sync
-bundle install
+bundle update
+rbenv rehash
 bundle exec rake db:create
 bundle exec rake db:migrate
 
