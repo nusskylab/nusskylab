@@ -10,19 +10,6 @@ sudo yum install -y nginx
 sudo systemctl start nginx
 sudo systemctl enable nginx
 
-# for postgres
-sudo yum install -y postgresql-server
-sudo yum install -y postgresql-devel
-sudo postgresql-setup initdb
-sudo systemctl start postgresql
-sudo systemctl enable postgresql
-# postgres setup
-sudo -i -u postgres
-psql -c "create user nusskylab with createdb login password 'nusskylab';"
-exit
-sudo sed -i 's/peer/md5/g' /var/lib/pgsql/data/pg_hba.conf
-sudo systemctl restart postgresql
-
 # JS runtime
 curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
 sudo yum -y install nodejs
@@ -47,6 +34,19 @@ git clone https://github.com/sstephenson/rbenv-vars.git /home/vagrant/.rbenv/plu
 sudo chown vagrant .rbenv -R
 rbenv install 2.2.1
 rbenv shell 2.2.1
+# for postgres
+sudo yum install -y postgresql-server
+sudo yum install -y postgresql-devel
+sudo postgresql-setup initdb
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+cd ~postgres/
+sudo -i -u postgres
+sudo -u postgres psql -c "create user nusskylab SUPERUSER login password 'nusskylab';"
+#exit
+sudo sed -i 's/peer/md5/g' /var/lib/pgsql/data/pg_hba.conf
+sudo systemctl restart postgresql
+
 gem install bundler
 cd /home/vagrant/sync
 bundle install
