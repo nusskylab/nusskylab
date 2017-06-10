@@ -32,8 +32,12 @@ git clone https://github.com/sstephenson/ruby-build.git /home/vagrant/.rbenv/plu
 git clone https://github.com/sstephenson/rbenv-gem-rehash.git /home/vagrant/.rbenv/plugins/rbenv-gem-rehash
 git clone https://github.com/sstephenson/rbenv-vars.git /home/vagrant/.rbenv/plugins/rbenv-vars
 sudo chown vagrant .rbenv -R
-rbenv install 2.2.1
-rbenv shell 2.2.1
+cd /home/vagrant
+rbenv install -v 2.3.3
+rbenv shell 2.3.3
+rbenv global 2.3.3
+rbenv rehash
+
 # for postgres
 sudo yum install -y postgresql-server
 sudo yum install -y postgresql-devel
