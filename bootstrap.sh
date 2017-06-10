@@ -62,9 +62,11 @@ echo "export SECRET_KEY_BASE=30d2be332860d7ce451325452b8ea2f4ae10485dca93c7a761e
 source ~/.bash_profile
 
 #populate with rails data
+echo "Populating rails databases"
 bundle exec rake db:create
 bundle exec rake db:migrate
-
+echo "Testing rails console"
+rails console
 
 # setup nginx forwarding
 block="
