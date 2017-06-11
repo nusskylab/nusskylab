@@ -3,6 +3,7 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
   config.vm.box_check_update = false
+  config.vm.hostname = 'nusskylab'
 
   # Forward the Rails server default port to the host
   config.vm.network :forwarded_port, host: 3000, guest: 3000
@@ -12,6 +13,19 @@ Vagrant.configure(2) do |config|
   # using a specific IP.
   # A private dhcp network is required for NFS to work (on Windows hosts, at least)
   config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Disable default vagrant share folder.
+  # config.vm.synced_folder "", "/vagrant", disabled: true
+  #
+  # # Add additional synced folders to unversioned 'synced_folders' file
+  #  if File.exist?('./synced_folders')
+  #    synced_folders = File.read 'synced_folders'
+  #    eval synced_folders
+  #  end
+
+  # Have synced folders in vagrant directory
+  config.vm.synced_folder "./", "/vagrant", type: "rsync",
+    rsync__exclude: ".git/"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -46,5 +60,5 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.provision :shell, path: "bootstrap.sh", privileged: false
 end

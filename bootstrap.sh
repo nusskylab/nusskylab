@@ -10,21 +10,8 @@ sudo yum install -y nginx
 sudo systemctl start nginx
 sudo systemctl enable nginx
 
-# for postgres
-sudo yum install -y postgresql-server
-sudo yum install -y postgresql-devel
-sudo postgresql-setup initdb
-sudo systemctl start postgresql
-sudo systemctl enable postgresql
-# postgres setup
-sudo -i -u postgres
-psql -c "create user nusskylab with createdb login password 'nusskylab';"
-exit
-sudo sed -i 's/peer/md5/g' /var/lib/pgsql/data/pg_hba.conf
-sudo systemctl restart postgresql
-
 # JS runtime
-curl --silent --location https://rpm.nodesource.com/setup_5.x | sudo bash -
+curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
 sudo yum -y install nodejs
 
 # Dependencies for gems
@@ -45,14 +32,41 @@ git clone https://github.com/sstephenson/ruby-build.git /home/vagrant/.rbenv/plu
 git clone https://github.com/sstephenson/rbenv-gem-rehash.git /home/vagrant/.rbenv/plugins/rbenv-gem-rehash
 git clone https://github.com/sstephenson/rbenv-vars.git /home/vagrant/.rbenv/plugins/rbenv-vars
 sudo chown vagrant .rbenv -R
-rbenv install 2.2.1
-rbenv shell 2.2.1
+cd /home/vagrant
+rbenv install -v 2.3.3
+rbenv shell 2.3.3
+rbenv global 2.3.3
+rbenv rehash
+
+# for postgres
+sudo yum install -y postgresql-server
+sudo yum install -y postgresql-devel
+sudo postgresql-setup initdb
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+cd ~postgres/
+sudo -i -u postgres
+sudo -u postgres psql -c "create user nusskylab SUPERUSER login password 'nusskylab';"
+#exit
+sudo sed -i 's/peer/md5/g' /var/lib/pgsql/data/pg_hba.conf
+sudo systemctl restart postgresql
+
+#install rails
+cd /vagrant
 gem install bundler
-cd /home/vagrant/sync
-bundle install
+bundle update
+rbenv rehash
+
+echo "export DEVISE_SECRET_TOKEN=6c72eee138a80cb5b349080d4f47410c53a2a6d3fa67f1f912d10d63eff098d1f9eb9fcdc49d9e80452621524b90130bedf50d1437f0b8276f271ea20d530ff8" >> ~/.bash_profile
+echo "export SECRET_KEY_BASE=30d2be332860d7ce451325452b8ea2f4ae10485dca93c7a761e724ae15f24e21f125c264dc618eb3b05f426660baeed98a73bd57df493bd0739444fc0ae217c5" >> ~/.bash_profile
+source ~/.bash_profile
+
+#populate with rails data
+echo "Populating rails databases"
 bundle exec rake db:create
 bundle exec rake db:migrate
-
+echo "Testing rails console"
+rails console
 
 # setup nginx forwarding
 block="
