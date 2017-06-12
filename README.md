@@ -13,7 +13,7 @@ The recommended development environment setup is via Vagrant. Simply run `vagran
 
 If you do not want to use Vagrant but instead you want to have a real local setup, see [bootstrap.sh](./bootstrap.sh) for steps needed for CentOS 7. For other OSes like Mac, Ubuntu, just translate those instructions for your own platform.
 
-[Instructions for local setup for Mac OS] (https://github.com/nusskylab/nusskylab/wiki/Local-Installations-(Non-Vagrant))
+[Instructions for local setup for Mac OS](https://github.com/nusskylab/nusskylab/wiki/Local-Installations-(Non-Vagrant))
 
 ### Development
 
