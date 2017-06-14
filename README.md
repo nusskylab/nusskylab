@@ -9,9 +9,11 @@ NUS Skylab is the project for managing Orbital program in NUS. For more info abo
 
 ### Setup
 
-The recommended development environment setup is via Vagrant. Simply run `vagrant up` and you should get the server running in your localhost:3000--so make sure it could be bound by Vagrant though.
+The recommended development environment setup is via Vagrant. Simply run `vagrant up` and you should get the server running in your localhost:3000--so make sure it could be bound by Vagrant though. [Vagrant setup instructions](https://github.com/nusskylab/nusskylab/wiki/Developing-NUSSkylab-with-Vagrant)
 
 If you do not want to use Vagrant but instead you want to have a real local setup, see [bootstrap.sh](./bootstrap.sh) for steps needed for CentOS 7. For other OSes like Mac, Ubuntu, just translate those instructions for your own platform.
+
+[Instructions for local setup for Mac OS](https://github.com/nusskylab/nusskylab/wiki/Local-Installations-(Non-Vagrant))
 
 ### Development
 
