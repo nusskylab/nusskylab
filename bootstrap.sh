@@ -33,7 +33,6 @@ git clone https://github.com/sstephenson/ruby-build.git /home/vagrant/.rbenv/plu
 git clone https://github.com/sstephenson/rbenv-gem-rehash.git /home/vagrant/.rbenv/plugins/rbenv-gem-rehash
 git clone https://github.com/sstephenson/rbenv-vars.git /home/vagrant/.rbenv/plugins/rbenv-vars
 sudo chown vagrant .rbenv -R
-cd /home/vagrant
 rbenv install -v 2.3.3
 rbenv shell 2.3.3
 rbenv global 2.3.3
@@ -56,11 +55,12 @@ sudo systemctl restart postgresql
 cd /vagrant
 gem install bundler
 bundle update
-rbenv rehash
 
-echo "export DEVISE_SECRET_TOKEN=6c72eee138a80cb5b349080d4f47410c53a2a6d3fa67f1f912d10d63eff098d1f9eb9fcdc49d9e80452621524b90130bedf50d1437f0b8276f271ea20d530ff8" >> ~/.bash_profile
-echo "export SECRET_KEY_BASE=30d2be332860d7ce451325452b8ea2f4ae10485dca93c7a761e724ae15f24e21f125c264dc618eb3b05f426660baeed98a73bd57df493bd0739444fc0ae217c5" >> ~/.bash_profile
-source ~/.bash_profile
+echo "Inserting dummy tokens to run rails"
+sh ./dummyToken.sh
+# echo "export DEVISE_SECRET_TOKEN=6c72eee138a80cb5b349080d4f47410c53a2a6d3fa67f1f912d10d63eff098d1f9eb9fcdc49d9e80452621524b90130bedf50d1437f0b8276f271ea20d530ff8" >> ~/.bash_profile
+# echo "export SECRET_KEY_BASE=30d2be332860d7ce451325452b8ea2f4ae10485dca93c7a761e724ae15f24e21f125c264dc618eb3b05f426660baeed98a73bd57df493bd0739444fc0ae217c5" >> ~/.bash_profile
+# source ~/.bash_profile
 
 #populate with rails data
 echo "Populating rails databases"
