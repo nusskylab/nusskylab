@@ -1,3 +1,4 @@
+#!/bin/bash
 # Preparation work
 sudo yum install -y epel-release
 sudo yum update
