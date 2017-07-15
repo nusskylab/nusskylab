@@ -62,10 +62,6 @@
                           <p>
                             You have invited <strong><%= stu.team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
                           </p>
-                          <% elsif stu.team && !stu.team.is_pending  %>
-                          <p>
-                            We have registered you and your teammate's interest for Orbital. You're all done. Please log in again when we notify you later that you have been accepted for this year's Orbital cohort.
-                          </p>
                           <% elsif !stu.team %>
                           <p>
                             You have yet to form a team. You may <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary">invite</a> a teammate now.
