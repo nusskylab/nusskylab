@@ -34,8 +34,8 @@ user_<%= n %>:
   email: <%= "user#{n}@example.com" %>        
   uid: <%= "https://openid.nus.edu.sg/e000#{n}" %>
   user_name: <%= "name#{n}" %>
-  created_at: 
-  updated_at:
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
   encrypted_password: random 
   reset_password_token: 
   reset_password_sent_at: 
