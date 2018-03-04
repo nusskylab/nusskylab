@@ -1,5 +1,34 @@
-#user_id 2-5: admins, 6-9: advisers, 10-20: students, 21-22: mentors   
+#user_id 2-5: admins, 6-9: advisers, 10-20: students, 21-22: mentors 
+#for cohort 2018  
 <% (2..22).each do |n| %>
+user_<%= n %>:
+  id: <%= n %>
+  email: <%= "user#{n}@example.com" %>        
+  uid: <%= "https://openid.nus.edu.sg/e000#{n}" %>
+  user_name: <%= "name#{n}" %>
+  created_at: 
+  updated_at:
+  encrypted_password: random 
+  reset_password_token: 
+  reset_password_sent_at: 
+  remember_created_at: 
+  sign_in_count: 123
+  current_sign_in_at: 
+  last_sign_in_at: 
+  current_sign_in_ip: 
+  last_sign_in_ip: 
+  provider:
+  github_link:
+  linkedin_link:
+  blog_link:
+  program_of_study:
+  self_introduction:
+  matric_number:
+<% end %>
+
+#user_id 1702-1705: admins, 1706-1709: advisers, 1710-1720: students, 1721-1722: mentors 
+#for cohort 2017  
+<% (1702..1722).each do |n| %>
 user_<%= n %>:
   id: <%= n %>
   email: <%= "user#{n}@example.com" %>        
