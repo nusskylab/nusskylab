@@ -21,14 +21,6 @@
               User roles
             </a>
           </li>
-          <% if (adm = user_admin?) %>
-            <li role="presentation">
-              <a href="#user-registration" aria-controls="user-registration"
-                 role="tab" data-toggle="tab">
-                Registration Management
-              </a>
-            </li>
-          <% end %>
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active" id="user-details">
@@ -100,24 +92,20 @@
                       <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration
                         form </a>.</p>
                   <% else %>
+                    <% if is_registration_open? %>
                     <!-- Registration opened -->
-                    <!-- <p>Please fill in the <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration form </a>. After you fill out the registration, you will be able to invite a teammate to participate in Orbital with you.</p> -->
+                      <p>
+                        Please fill in the <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration form </a>. After you fill out the registration, you will be able to invite a teammate to participate in Orbital with you.
+                      </p>
+                    <% else %>
                     <!-- Registration closed -->
-                    <p>Registration for Orbital 2017 has closed. Thank you for your interest.</p>
+                      <p>
+                        Registration for Orbital 2017 has closed. Thank you for your interest.
+                      </p>
+                    <% end %>
                   <% end %>
                 <% end %>
               </div>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane fade" id="user-registration">
-            <div class="col-sm-12">
-              <!-- Add logic to automatically change registration_status: "Open", "Closed" and button_color: "danger", "success" -->
-              <h5>Registration Status: <%= registration_status = "Open/Closed" %></h5>
-              <span class="btn btn-<%= button_color = "warning" %>">
-                <!-- Add logic to toggle registration status -->
-                <%= link_to 'toggle', '#' ,
-                            data: { confirm: 'Are you sure you want to open/close/toggle registrations' } %>
-              </span>
             </div>
           </div>
         </div>
