@@ -29,6 +29,10 @@ module UsersHelper
     stu if stu && stu.is_pending
   end
 
+  def is_registration_open?
+    return (ENV['REGISTRATION_STATUS'] == 'open') 
+  end
+
   def current_cohort
     Time.now.year
   end

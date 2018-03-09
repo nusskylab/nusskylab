@@ -34,11 +34,19 @@
         <div class="col-sm-12">
           <!-- Add logic to automatically change registration_status: "Open", "Closed" and button_color: "danger", "success" -->
           <div class="well">
-            <h5>Registration Status: <%= registration_status = "Open/Closed" %></h5>
-            <span class="btn btn-<%= button_color = "warning" %>">
-              <!-- Add logic to toggle registration status -->
-              <%= link_to 'toggle', '#' , data: { confirm: 'Are you sure you want to open/close/toggle  registrations' } %>
-            </span>
+            <% if is_registration_open? =%>
+              <h5>Registration Status: <%= registration_status = "Open" %></h5>
+              <span class="btn btn-<%= button_color = "danger" %>">
+                <!-- Add logic to toggle registration status -->
+                <%= link_to 'Close', toggle_registration_admin_path(locals[:admin].id), data: { confirm: 'Are you sure you want to close registration?' } %>
+              </span>
+            <% else %>
+              <h5>Registration Status: <%= registration_status = "Closed" %></h5>
+              <span class="btn btn-<%= button_color = "success" %>">
+                <!-- Add logic to toggle registration status -->
+                <%= link_to 'Open', toggle_registration_admin_path(locals[:admin].id), data: { confirm: 'Are you sure you want to open registration?' } %>
+              </span>
+            <% end %>
           </div>
         </div>
       </div>
