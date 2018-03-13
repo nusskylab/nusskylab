@@ -2,7 +2,7 @@ gem 'rails_12factor', group: :production #For full functionality on heroku
 
 source 'https://rubygems.org' do
   # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-  gem 'rails', '4.2.2'
+  gem 'rails', '4.2.7.1'
   # Use postgres as the database for Active Record
   gem 'pg', '~> 0.18.3'
   # Use SCSS for stylesheets
@@ -21,7 +21,7 @@ source 'https://rubygems.org' do
   # Use devise for email sign-up and sign-in
   gem 'devise', '~> 3.5.2'
   # Use omniauth for openid authentication
-  gem 'omniauth', '~> 1.2.2'
+  gem 'omniauth', '~> 1.3.2'
   gem 'omniauth-openid', '~> 1.0.1'
 
   # Turbolinks makes following links in your web application faster.
