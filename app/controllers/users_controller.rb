@@ -134,7 +134,7 @@ class UsersController < ApplicationController
     student_user = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.cannot_confirm_team_message')
-    } if !student_user || !student_user.is_pending || !student_user.team
+    } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:confirm] == 'true'
       team.is_pending = false
