@@ -84,7 +84,6 @@ class UsersController < ApplicationController
     return redirect_to user_path(@user.id), flash: {
       danger: t('.register_as_student_message')
     } unless student
-    return redirect_to student_path(student) unless student.is_pending
     student_team = student.team || Team.new
     @page_title = t('.page_title')
     render locals: {
@@ -107,14 +106,14 @@ class UsersController < ApplicationController
     invited_student = Student.student?(invited_user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.no_registered_student_found_message')
-    } if !invited_student || !invited_student.is_pending
+    } if !invited_student
     return redirect_to user_path(@user.id), flash: {
       danger: t('.student_found_team_message')
     } if invited_student.team
     invitor_student = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.cannot_register_team_message')
-    } if !invitor_student || !invitor_student.is_pending || invitor_student.team
+    } if !invitor_student || invitor_student.team
     team = Team.new(
       team_name: (Team.order('id').last.id + 1), is_pending: true,
       cohort: current_cohort, invitor_student_id: invitor_student.id)
