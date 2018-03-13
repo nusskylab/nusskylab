@@ -54,6 +54,19 @@
                     <% end %>
                     <% if stu %>
                       <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">A Student</a>
+                      <% if stu.team && stu.team.is_pending && stu.team.invitor_student_id != stu.id %>
+                        <p>
+                          You have been invited to participate in Orbital as a team with <strong><%= stu.team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the invitation </a> now?
+                        </p>
+                      <% elsif stu.team && stu.team.is_pending && stu.team.invitor_student_id == stu.id %>
+                        <p>
+                          You have invited <strong><%= stu.team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
+                        </p>
+                      <% elsif !stu.team %>
+                        <p>
+                          You have yet to form a team. You may <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary">invite</a> a teammate now.
+                        </p>
+                      <% end %>
                     <% end %>
                   </p>
                 <% else %>
