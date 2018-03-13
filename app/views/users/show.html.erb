@@ -69,9 +69,9 @@
                       <% end %>
                     <% end %>
                   </p>
-                  <% else %>
-                    <% if (pending_stu = (user_pending_student?)) %>
-                      <% if pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id != pending_stu.id %>
+                <% else %>
+                  <% if (pending_stu = (user_pending_student?)) %>
+                    <% if pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id != pending_stu.id %>
                       <p>
                         You have been invited to participate in Orbital as a team with
                         <strong><%= pending_stu.team.invitor_student.user.user_name %></strong>. Respond to
