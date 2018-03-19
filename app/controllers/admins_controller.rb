@@ -31,4 +31,13 @@ class AdminsController < RolesController
       users: User.all
     }
   end
+
+  def toggle_registration
+    if ENV['REGISTRATION_STATUS'] == 'open'
+      ENV['REGISTRATION_STATUS'] = 'closed'
+    else
+      ENV['REGISTRATION_STATUS'] = 'open'
+    end
+    redirect_to admin_path(params[:id])
+  end
 end

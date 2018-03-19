@@ -5,11 +5,44 @@
     </h2>
   </div>
   <div class="panel-body">
-    <div class="col-sm-12">
-      <div class="well">You can use navbar above to look around</div>
-      <%= render 'users/user_details', locals: {user: locals[:admin].user} %>
-      <br><hr>
-      <%= link_to 'General Mailing', general_mailing_admin_path(locals[:admin].id), class: 'btn btn-success' %>
+    <div role="tabpanel">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#user-details" aria-controls="user-details"
+             role="tab" data-toggle="tab">
+            User details
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#registration-management" aria-controls="registration-management"
+             role="tab" data-toggle="tab">
+            Registration Management
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="user-details">
+        <div class="col-sm-12">
+          <div class="well">You can use navbar above to look around</div>
+          <%= render 'users/user_details', locals: {user: locals[:admin].user} %>
+          <br>
+          <hr>
+          <%= link_to 'General Mailing', general_mailing_admin_path(locals[:admin].id), class: 'btn btn-success' %>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="registration-management">
+        <div class="col-sm-12">
+          <div class="well">
+            <h5>Registration Status: <%= registration_status %></h5>
+            <% if is_registration_open? %>
+              <%= link_to 'Close', toggle_registration_admin_path(locals[:admin].id), class: 'btn btn-danger', data: {confirm: 'Are you sure you want to close registration?'} %>
+            <% else %>
+              <%= link_to 'Open', toggle_registration_admin_path(locals[:admin].id), class: 'btn btn-success', data: {confirm: 'Are you sure you want to open registration?'} %>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

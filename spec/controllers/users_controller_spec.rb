@@ -224,7 +224,7 @@ RSpec.describe UsersController, type: :controller do
 
         student = FactoryGirl.create(:student, user: subject.current_user, is_pending: false)
         get :register_as_team, id: subject.current_user.id
-        expect(response).to redirect_to(student_path(student))
+        expect(response).to render_template(:register_as_team)
 
         student.is_pending = true
         student.save
