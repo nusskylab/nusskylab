@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   end
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
     member do
+      get 'toggle_registration'
       get 'general_mailing'
       post 'send_general_mailing'
       patch 'send_general_mailing'
