@@ -8,6 +8,8 @@
   <% if current_user_admin? %>
       <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Not assigned', required: true %>
       <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Not assigned' %>
+      <%= f.input :poster_link %>
+      <%= f.input :video_link %>
   <% end %>
   <% if locals[:is_new] %>
     <input type="hidden" name="team[cohort]" value="<%= locals[:cohort] %>">
