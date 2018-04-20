@@ -19,6 +19,6 @@
   <% if locals[:is_new] %>
     <input type="hidden" name="team[cohort]" value="<%= locals[:cohort] %>">
   <% end %>
-  <%= f.input :has_dropped%>
+  <%= f.input :has_dropped %>
   <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>
