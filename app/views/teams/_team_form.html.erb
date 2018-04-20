@@ -11,10 +11,10 @@
     <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Not assigned', required: true %>
     <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Not assigned' %>
   <% end %>
-  <% if current_user_admin? or current_user_student? %>
+  <% if current_user_admin? or current_user_adviser? or current_user_student? %>
     <%= f.input :poster_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
   <% end %>
-  <% if current_user_admin? %>
+  <% if current_user_admin? or current_user_adviser? %>
     <%= f.input :video_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
   <% end %>
   <% if locals[:is_new] %>
