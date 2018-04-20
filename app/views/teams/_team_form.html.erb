@@ -5,11 +5,16 @@
   <%= f.input :project_level, collection: {Vostok: 'Vostok',
                                            'Project Gemini'.to_sym => 'Gemini',
                                            'Apollo 11'.to_sym => 'Apollo 11'}, include_blank: false, required: true %>
+
   <% if current_user_admin? %>
-      <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Not assigned', required: true %>
-      <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Not assigned' %>
-      <%= f.input :poster_link, placeholder: true, placeholder: "Enter in url form e.g. https//..." %>
-      <%= f.input :video_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...'%>
+    <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Not assigned', required: true %>
+    <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Not assigned' %>
+  <% end %>
+  <% if current_user_admin? or current_user_student? %>
+    <%= f.input :poster_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
+  <% end %>
+  <% if current_user_admin? %>
+    <%= f.input :video_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
   <% end %>
   <% if locals[:is_new] %>
     <input type="hidden" name="team[cohort]" value="<%= locals[:cohort] %>">
