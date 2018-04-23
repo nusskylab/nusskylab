@@ -5,56 +5,98 @@
     </h2>
   </div>
   <div class="panel-body">
-    <% locals[:milestones].each do |milestone| %>
-      <h3 class="text-center"><%= milestone.name %></h3>
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr><th>Team Name</th><th>Status</th><th>Last updated at</th></tr>
-          </thead>
-          <tbody>
-            <% locals[:mentor].teams.each do |team| %>
-              <% if (team_submission = locals[:teams_submissions][milestone.id][team.id]) %>
-                <tr>
-                  <td><%= team.team_name %></td>
-                  <td>
-                    <a href="<%= milestone_team_submission_path(milestone.id, team.id, team_submission.id) %>"
-                       class="btn btn-success">
-                      View
-                    </a>
-                  </td>
-                  <td>
-                    <%= l team_submission.updated_at %>
-                  </td>
-                </tr>
-              <% else %>
-                <tr>
-                  <td>
-                    <span data-toggle="tooltip" data-placement="top" title="The team has not submitted project log yet">
-                      <%= team.team_name %>
-                    </span>
-                  </td>
-                  <td>
-                    <a href="#" class="btn btn-default" disabled="disabled">
-                      View
-                    </a>
-                  </td>
-                  <td>
-                    Not submitted yet
-                  </td>
-                </tr>
-              <% end %>
-            <% end %>
-            <% if locals[:mentor].teams.length <= 0 %>
-              <tr><td colspan="3">No teams to display yet</td></tr>
-            <% end %>
-          </tbody>
-        </table>
+    <div class="tabpanel">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#team-matching-panel" aria-controls="team-matching-panel"
+             role="tab" data-toggle="tab">
+            Team Matching
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#team-submissions-panel" aria-controls="team-submissions-panel"
+             role="tab" data-toggle="tab">
+            Team Submissions
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#general-mailing-panel" aria-controls="general-mailing-panel"
+             role="tab" data-toggle="tab">
+            General Mailing
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="team-matching-panel">
+           <table style="width:100%">
+              <tr>
+                <th>Teamname</th>
+                <th>Project Name</th>
+                <th></th>
+              </tr>
+              <tr>
+                <td>New Team</td>
+                <td>Modulo</td>
+                <td><%= link_to '✓','' , class: 'btn btn-success' %></td>
+              </tr>
+            </table> 
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="team-submissions-panel">
+          <% locals[:milestones].each do |milestone| %>
+            <h3 class="text-center"><%= milestone.name %></h3>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr><th>Team Name</th><th>Status</th><th>Last updated at</th></tr>
+                </thead>
+                <tbody>
+                  <% locals[:mentor].teams.each do |team| %>
+                    <% if (team_submission = locals[:teams_submissions][milestone.id][team.id]) %>
+                      <tr>
+                        <td><%= team.team_name %></td>
+                        <td>
+                          <a href="<%= milestone_team_submission_path(milestone.id, team.id, team_submission.id) %>"
+                             class="btn btn-success">
+                            View
+                          </a>
+                        </td>
+                        <td>
+                          <%= l team_submission.updated_at %>
+                        </td>
+                      </tr>
+                    <% else %>
+                      <tr>
+                        <td>
+                          <span data-toggle="tooltip" data-placement="top" title="The team has not submitted project log yet">
+                            <%= team.team_name %>
+                          </span>
+                        </td>
+                        <td>
+                          <a href="#" class="btn btn-default" disabled="disabled">
+                            View
+                          </a>
+                        </td>
+                        <td>
+                          Not submitted yet
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                  <% if locals[:mentor].teams.length <= 0 %>
+                    <tr><td colspan="3">No teams to display yet</td></tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+           <hr>
+          <% end %>
+        </div>
+        <hr><br>
+        <div role="tabpanel" class="tab-pane fade" id="general-mailing-panel">
+          You can send emails to your students via
+          <%= link_to 'General Mailing', general_mailing_mentor_path(locals[:mentor].id), class: 'btn btn-success' %>
+        </div>
       </div>
-      <hr>
-    <% end %>
-    <br><hr>
-    You can send emails to your students via
-    <%= link_to 'General Mailing', general_mailing_mentor_path(locals[:mentor].id), class: 'btn btn-success' %>
+    </div>
   </div>
 </div>

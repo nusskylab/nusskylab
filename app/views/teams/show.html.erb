@@ -46,6 +46,12 @@
               </a>
             </li>
             <li role="presentation">
+              <a href="#mentor-matching-panel" aria-controls="mentor-matching-panel"
+                 role="tab" data-toggle="tab">
+                Mentor Matching
+              </a>
+            </li>
+            <li role="presentation">
               <a href="#preview-survey-template-panel" aria-controls="preview-survey-template-panel"
                  role="tab" data-toggle="tab">
                 Preview Forms
@@ -126,6 +132,45 @@
                 milestones: milestones,
                 survey_templates: survey_templates
               } %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="mentor-matching-panel">
+              <h2 class="text-center">Mentor Matching</h2>
+              <div class="well">
+                <p class="small"><a href="http://nusskylab-dev.comp.nus.edu.sg/public_views/public_staff#mentors">View the list of mentors here</a></p>
+              </div>
+              <div>
+                <p> First Choice </p>
+                <select name="FirstChoice">
+                  <option value="None">None</option>
+                  <option value="ZhaoJin">Zhao Jin</option>
+                  <option value="JiaChao">Jia Chao</option>
+                  <option value="Kyle">Kyle</option>
+                </select>
+              </div>
+              <div>
+                <p> Second Choice </p>
+                <select name="SecondChoice">
+                  <option value="None">None</option>
+                  <option value="ZhaoJin">Zhao Jin</option>
+                  <option value="JiaChao">Jia Chao</option>
+                  <option value="Kyle">Kyle</option>
+                </select>
+              </div>
+              <div>
+                <p> Third Choice </p>
+                <select name="ThirdChoice">
+                  <option value="None">None</option>
+                  <option value="ZhaoJin">Zhao Jin</option>
+                  <option value="JiaChao">Jia Chao</option>
+                  <option value="Kyle">Kyle</option>
+                </select>
+              </div>
+              <br>
+              <div>
+                <p>
+                  <%= link_to 'Submit Prefences', '', class: 'btn btn-success' %>
+                </p>
+              </div>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="more-info-panel">
               <h2 class="text-center">More information</h2>
