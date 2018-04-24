@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307175911) do
+ActiveRecord::Schema.define(version: 20180424032949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,13 @@ ActiveRecord::Schema.define(version: 20170307175911) do
   add_index "hash_tags", ["content"], name: "index_hash_tags_on_content", using: :btree
   add_index "hash_tags", ["label"], name: "index_hash_tags_on_label", using: :btree
 
+  create_table "mentor_matchings", force: :cascade do |t|
+    t.integer "team_id"
+    t.integer "mentor_id"
+    t.integer "choice_ranking"
+    t.boolean "mentor_accepted"
+  end
+
   create_table "mentors", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "created_at", null: false
@@ -99,11 +106,11 @@ ActiveRecord::Schema.define(version: 20170307175911) do
   add_index "mentors", ["user_id"], name: "index_mentors_on_user_id", using: :btree
 
   create_table "milestones", force: :cascade do |t|
-    t.datetime "submission_deadline",      default: '2015-07-05 10:27:14', null: false
+    t.datetime "submission_deadline",      default: '2018-02-28 06:18:05', null: false
     t.string   "name"
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
-    t.datetime "peer_evaluation_deadline", default: '2015-07-05 10:27:14', null: false
+    t.datetime "peer_evaluation_deadline", default: '2018-02-28 06:18:05', null: false
     t.integer  "cohort"
   end
 
@@ -472,7 +479,6 @@ ActiveRecord::Schema.define(version: 20170307175911) do
     t.string   "blog_link",              default: ""
     t.integer  "program_of_study",       default: 0
     t.text     "self_introduction",      default: ""
-    t.string   "slack_id",               default: ""
     t.string   "matric_number",          default: ""
   end
 
