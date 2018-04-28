@@ -475,6 +475,7 @@ ActiveRecord::Schema.define(version: 20180424190355) do
     t.string   "blog_link",              default: ""
     t.integer  "program_of_study",       default: 0
     t.text     "self_introduction",      default: ""
+    t.string   "slack_id",               default: ""
     t.string   "matric_number",          default: ""
   end
 
