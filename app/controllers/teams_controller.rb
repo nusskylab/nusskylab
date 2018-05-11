@@ -102,7 +102,7 @@ class TeamsController < ApplicationController
   def team_params
     team_ps = params.require(:team).permit(:team_name, :project_level,
                                            :adviser_id, :mentor_id,
-                                           :has_dropped, :cohort)
+                                           :has_dropped, :cohort, :poster_link, :video_link)
     team_ps[:project_level] = Team.get_project_level_from_raw(
       team_ps[:project_level]) if team_ps[:project_level]
     team_ps
