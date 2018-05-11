@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180408182700) do
+
+ActiveRecord::Schema.define(version: 20180424190355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,19 +92,20 @@ ActiveRecord::Schema.define(version: 20180408182700) do
 
   create_table "mentors", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "cohort"
+    t.string   "slide_link", default: "0"
   end
 
   add_index "mentors", ["user_id"], name: "index_mentors_on_user_id", using: :btree
 
   create_table "milestones", force: :cascade do |t|
-    t.datetime "submission_deadline",      default: '2015-07-05 10:27:14', null: false
+    t.datetime "submission_deadline",      default: '2018-03-19 20:20:35', null: false
     t.string   "name"
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
-    t.datetime "peer_evaluation_deadline", default: '2015-07-05 10:27:14', null: false
+    t.datetime "peer_evaluation_deadline", default: '2018-03-19 20:20:35', null: false
     t.integer  "cohort"
   end
 
@@ -201,6 +203,7 @@ ActiveRecord::Schema.define(version: 20180408182700) do
     t.integer  "invitor_student_id"
     t.integer  "cohort"
     t.string   "poster_link"
+    t.string   "slide_link"
     t.string   "video_link"
   end
 
