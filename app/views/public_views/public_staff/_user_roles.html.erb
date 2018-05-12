@@ -18,6 +18,9 @@
               <div class="autolink">LinkedIn: <%= role.user.linkedin_link %></div>
               <div class="autolink">Personal website: <%= role.user.blog_link %></div>
               <div class="autolink">Self Introduction: <%= role.user.self_introduction %></div>
+              <% if locals[:selected_type] == "Advisers" %>
+                <%= render 'group_carousel' %>
+              <% end %>
             </div>
           </div>
           <br><hr><br>
