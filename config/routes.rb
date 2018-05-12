@@ -85,5 +85,6 @@ Rails.application.routes.draw do
   namespace 'public_views' do
     resources :public_projects, only: [:index]
     resources :public_staff, only: [:index]
+    resources :group_carousel, only: [:index]
   end
 end
