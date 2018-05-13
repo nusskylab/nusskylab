@@ -1,7 +1,8 @@
 <div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="text-center"><%= locals[:selected_type] %></h3>
-    <div class ="text-center"> <% if locals[:selected_type] == "Mentors" %>
+    <div class="text-center">
+      <% if locals[:selected_type] == "Mentors" %>
         <%= link_to " View All Mentors Slides", public_views_mentor_slides_path, class: "btn btn-success", target: "_blank" %>
       <% end %>
     </div>
@@ -18,16 +19,18 @@
             <div class="col-md-9">
               <div>Name: <strong><%= role.user.user_name %></strong></div>
               <div class="automail">Email: <%= role.user.email %></div>
-              <div class="autolink">GitHub: <%= role.user.github_link %></div>
-              <div class="autolink">LinkedIn: <%= role.user.linkedin_link %></div>
-              <div class="autolink">Personal website: <%= role.user.blog_link %></div>
+              <div class="autolink">GitHub: <a href='<%= role.user.github_link %>'><%= role.user.github_link %></a></div>
+              <div class="autolink">LinkedIn: <a href='<%= role.user.linkedin_link %>'><%= role.user.linkedin_link %></a></div>
+              <div class="autolink">Personal website: <a href='<%= role.user.blog_link %>'><%= role.user.blog_link %></a></div>
               <div class="autolink">Self Introduction: <%= role.user.self_introduction %></div>
               <% if locals[:selected_type] == "Advisers" %>
                 <%= link_to "Carousel Link", public_views_group_carousel_index_path(id: role.team_ids), class: "btn btn-success", target: "_blank" %>
               <% end %>
             </div>
           </div>
-          <br><hr><br>
+          <br>
+          <hr>
+          <br>
         <% end %>
       <% end %>
     <% else %>
