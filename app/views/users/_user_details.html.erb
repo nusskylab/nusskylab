@@ -16,7 +16,7 @@
       </div>
       <div class="col-md-9">
         <div>Name: <strong><%= locals[:user].user_name %></strong></div>
-        <div class="automail">Email: <%= locals[:user].email %></div>
+        <div class="automail">Email: <a href="mailto:<%= locals[:user].email %>"><%= locals[:user].email %></a></div>
         <div class="autolink">GitHub: <a href='<%= locals[:user].github_link %>'><%= locals[:user].github_link %></a></div>
         <div class="autolink">LinkedIn: <a href='<%= locals[:user].linkedin_link %>'><%= locals[:user].linkedin_link %></a></div>
         <div class="autolink">Personal website: <a href='<%= locals[:user].blog_link %>'><%= locals[:user].blog_link %></a></div>

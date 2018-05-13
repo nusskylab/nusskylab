@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-9">
               <div>Name: <strong><%= role.user.user_name %></strong></div>
-              <div class="automail">Email: <%= role.user.email %></div>
+              <div class="automail">Email: <a href="mailto:<%= role.user.email %>"><%= role.user.email %></a></div>
               <div class="autolink">GitHub: <a href='<%= role.user.github_link %>'><%= role.user.github_link %></a></div>
               <div class="autolink">LinkedIn: <a href='<%= role.user.linkedin_link %>'><%= role.user.linkedin_link %></a></div>
               <div class="autolink">Personal website: <a href='<%= role.user.blog_link %>'><%= role.user.blog_link %></a></div>
