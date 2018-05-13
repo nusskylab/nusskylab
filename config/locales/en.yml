@@ -268,6 +268,14 @@ en:
       index:
         page_title: >
           View all staff in Orbital
+    group_carousel:
+      index:
+        page_title: >
+          View slides of Orbital teams
+    mentor_slides:
+      index:
+        page_title: >
+          View slides of Orbital mentors
   received_feedbacks:
     index:
       page_title: >
