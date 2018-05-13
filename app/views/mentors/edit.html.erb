@@ -1,0 +1,15 @@
+<% content_for :main_content do %>
+  <% javascript 'mentors.js' %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>
+        Edit a mentor in cohort <%= role_data[:cohort] %>
+      </h2>
+    </div>
+    <div class="panel-body">
+      <%= render 'mentor_form', locals: {
+        mentor: @role, users: role_data[:users], cohort: role_data[:cohort], is_new: false
+      } %>
+    </div>
+  </div>
+<% end %>
