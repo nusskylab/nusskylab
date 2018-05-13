@@ -38,6 +38,13 @@ class MentorsController < RolesController
     }
   end
 
+  def data_for_role_edit
+    {
+      users: User.all(),
+      cohort: params[:cohort] || current_cohort
+    }
+  end
+
   def data_for_role_general_mailing
     users = []
     @role.teams.each do |team|

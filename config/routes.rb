@@ -40,7 +40,7 @@ Rails.application.routes.draw do
       patch 'send_general_mailing'
     end
   end
-  resources :mentors, only: [:index, :new, :create, :show, :destroy] do
+  resources :mentors, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
     member do
       get 'general_mailing'
       post 'send_general_mailing'
