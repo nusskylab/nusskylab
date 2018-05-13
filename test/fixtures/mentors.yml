@@ -1,1 +1,49 @@
+#cohort 2018
 
+admin_21:
+  id: 21
+  user_id: 21
+  slide_link: "http://funkyme.info/wp-content/uploads/2018/01/powerpoint-self-introduction-template-self-presentation-template-free-prezi-templates-prezibase-ideas-template.jpg"
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  cohort: 2018
+
+admin_22:
+  id: 22
+  user_id: 22
+  slide_link: "http://cdn.slideonline.com/upload/pres/876/slide-big-1.jpg"
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  cohort: 2018
+
+admin_23:
+  id: 23
+  user_id: 23
+  slide_link: "https://www.slideteam.net/wp/wp-content/uploads/2017/04/Introducing-Yourself-PowerPoint-Template.png"
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  cohort: 2018
+
+admin_24:
+  id: 24
+  user_id: 24
+  slide_link: ""
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  cohort: 2018
+
+admin_1721:
+  id: 1721
+  user_id: 1721
+  slide_link: "https://www.slideteam.net/media/catalog/product/cache/1/thumbnail/543x403/0e7a751fc24f39b632cb88e6c5925d9b/c/a/career_path_timeline_for_self_introduction_powerpoint_guide_Slide01.jpg"
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  cohort: 2017
+
+admin_1722:
+  id: 1722
+  user_id: 1722
+  slide_link: ""
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  cohort: 2017
