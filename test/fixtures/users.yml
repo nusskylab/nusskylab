@@ -1,6 +1,6 @@
-#user_id 2-5: admins, 6-9: advisers, 10-20: students, 21-22: mentors 
-#for cohort 2018  
-<% (2..22).each do |n| %>
+#user_id 2-5: admins, 6-9: advisers, 10-20: students, 21-24: mentors
+#for cohort 2018
+<% (2..24).each do |n| %>
 user_<%= n %>:
   id: <%= n %>
   email: <%= "user#{n}@testing.com" %>
