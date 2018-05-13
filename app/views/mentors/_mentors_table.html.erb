@@ -8,7 +8,8 @@
         <td><%= mentor.user.user_name %></td>
         <td><%= mentor.user.email %></td>
         <td>
-          <a class="btn btn-default btn-xs" href="<%=  mentor_path(mentor.id) %>">View</a>
+          <a class="btn btn-primary btn-xs" href="<%=  mentor_path(mentor.id) %>">View</a>
+          <a class="btn btn-default btn-xs" href="<%= edit_mentor_path(mentor.id) %>">Edit</a>
           <%= link_to 'Delete', mentor_path(mentor.id), method: :delete, class: 'btn btn-danger btn-xs',
             data: { confirm: 'Are you sure you want to delete this mentor?' } %>
         </td>

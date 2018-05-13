@@ -200,6 +200,14 @@ en:
         The email has been sent successfully
       failure_message: >
         The provided parameters are not in the right format. Please revise.
+    edit:
+      page_title: >
+        Edit mentor %{user_name}'s info
+    update:
+      success_message: >
+        Mentor %{user_name} has been edited successfully.
+      failure_message: >
+        Mentor's information could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     destroy:
       success_message: >
         Mentor %{user_name} has been successfully deleted
