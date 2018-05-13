@@ -3,7 +3,7 @@
 <% (2..22).each do |n| %>
 user_<%= n %>:
   id: <%= n %>
-  email: <%= "user#{n}@example.com" %>        
+  email: <%= "user#{n}@testing.com" %>
   uid: <%= "https://openid.nus.edu.sg/e000#{n}" %>
   user_name: <%= "name#{n}" %>
   created_at: <%= 0.days.from_now.to_s :db %>
