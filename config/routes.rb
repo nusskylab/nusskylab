@@ -86,5 +86,6 @@ Rails.application.routes.draw do
     resources :public_projects, only: [:index]
     resources :public_staff, only: [:index]
     resources :group_carousel, only: [:index]
+    resources :mentor_slides, only: [:index]
   end
 end
