@@ -5,7 +5,7 @@ class MentorsController < RolesController
   end
 
   def role_params
-    params.require(:mentor).permit(:user_id, :cohort)
+    params.require(:mentor).permit(:user_id, :cohort, :slide_link)
   end
 
   def path_for_index(ps = {})
