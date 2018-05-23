@@ -42,6 +42,8 @@ source 'https://rubygems.org' do
   gem 'tinymce-rails', '~> 4.2.5'
   # internalization
   gem 'rails-i18n', '~> 4.0.5'
+  # automatically change url to clickable links
+  gem 'rails_autolink', '~> 1.1.6'
   # datetime picker
   gem 'momentjs-rails', '>= 2.9.0'
   gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
