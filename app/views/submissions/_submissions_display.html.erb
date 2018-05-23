@@ -9,7 +9,7 @@
         <%= link_to image_tag(image_tag_string(locals[:selected_type]), class: 'img-rounded') %>
         <h3>
           <button class="button button_team" onclick="createModalBox(<%= team.id %>)" id="button_<%= team.id %>">
-            <%= get_team_button_text(team) %>
+            <%= team_button_text(team) %>
           </button>
         </h3>
       </div>

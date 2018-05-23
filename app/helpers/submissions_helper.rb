@@ -34,7 +34,7 @@ module SubmissionsHelper
     end
   end
 
-  def get_team_button_text (team)
+  def team_button_text (team)
     "#{team.id + 1} .  #{team.team_name}"
   end
 
