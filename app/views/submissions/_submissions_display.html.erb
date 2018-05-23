@@ -1,27 +1,12 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <% if locals[:selected_type] == 'vostok' %>
-        <% project_level = 'Vostok' %>
-      <% elsif locals[:selected_type] == 'project_gemini' %>
-        <% project_level = 'Project Gemini' %>
-      <% elsif locals[:selected_type] == 'apollo_11' %>
-        <% project_level = 'Apollo 11' %>
-      <% end %>
-      <h1 class="page-header"><%= project_level %> - <%= locals[:teams].length %> teams</h1>
+      <h1 class="page-header"><%= project_level_header(project_level_text(locals[:selected_type]), locals[:teams].length) %></h1>
     </div>
     <% locals[:teams].each_with_index do |team, idx| %>
       <!-- Thumbnail display for each team -->
       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-        <a class="thumbnail" href="button_<%= team.id %>">
-          <% if locals[:selected_type] == 'vostok' %>
-            <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded') %>
-          <% elsif locals[:selected_type] == 'project_gemini' %>
-            <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded') %>
-          <% elsif locals[:selected_type] == 'apollo_11' %>
-            <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded') %>
-          <% end %>
-        </a>
+        <%= link_to image_tag(image_tag_string(locals[:selected_type]), class: 'img-rounded') %>
         <h3>
           <button class="button button_team" onclick="createModalBox(<%= team.id %>)" id="button_<%= team.id %>">
             <%= get_team_button_text(team) %>
