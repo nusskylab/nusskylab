@@ -18,9 +18,9 @@ user_<%= n %>:
   current_sign_in_ip: 
   last_sign_in_ip: 
   provider:
-  github_link:
-  linkedin_link:
-  blog_link:
+  github_link:  <%= "https://github.com/example#{n}" %>
+  linkedin_link: <%= "https://www.linkedin.com/in/example#{n}" %>
+  blog_link: <%= " http://www.comp.nus.edu.sg/~example#{n}" %>
   program_of_study:
   self_introduction:
   matric_number:
