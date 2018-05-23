@@ -73,7 +73,7 @@ $(function () {
   tinyMCE.init({
     selector: 'textarea.tinymce',
     toolbar: 'undo redo | styleselect | fontselect fontsizeselect | forecolor backcolor | bold italic | bullist numlist outdent indent | link image | emoticons',
-    plugins: 'autolink link image table autosave paste textcolor emoticons autoresize'
+    plugins: 'link image table autosave paste textcolor emoticons autoresize'
   });
 });
 
