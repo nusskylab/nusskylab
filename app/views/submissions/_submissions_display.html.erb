@@ -8,29 +8,40 @@
       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
         <%= link_to image_tag(image_tag_string(locals[:selected_type]), class: 'img-rounded') %>
         <h3>
-          <button class="button button_team" onclick="createModalBox(<%= team.id %>)" id="button_<%= team.id %>">
+          <button type="button" class="btn btn-info btn-lg" id="button_<%= team.id %>" data-toggle="modal" data-target="#modal_<%= team.id %>">
             <%= team_button_text(team) %>
           </button>
         </h3>
       </div>
       <!-- End of thumbnail display -->
+
       <!-- Modal box: Display all the team's submissions -->
-      <div id="modal_<%= team.id %>" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h4 class="text-muted"><%= team.team_name %></h4>
-          <br>
-          <hr>
-          <% team_submission = Submission.where(team_id: team.id); %>
-          <% if (team_submission.length > 0) %>
-            <% team_submission.each_with_index do |submission, idx| %>
-              <div class="col-md-6 center-block">
-                <a role="button" class="button button_video" href="<%= submissions_show_path %>">Milestone <%= idx + 1 %></a>
-              </div>
-            <% end %>
-          <% else %>
-            <span>No submission for milestone 1</span>
-          <% end %>
+      <div id="modal_<%= team.id %>" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title"><%= team.team_name %>'s submissions</h4>
+            </div>
+            <div class="modal-body">
+              <% team_submission = Submission.where(team_id: team.id); %>
+              <% if (team_submission.length > 0) %>
+                <% team_submission.each_with_index do |submission, idx| %>
+                  <h3>
+                    <button type="button" class="btn btn-default" href="<%= submissions_path %>">
+                      Milestone <%= idx + 1 %>
+                    </button>
+                  </h3>
+                <% end %>
+              <% else %>
+                <h3>No submissions submitted</h3>
+              <% end %>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
       </div>
       <!-- End of modal box -->
