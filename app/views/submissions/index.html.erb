@@ -5,14 +5,13 @@
 </ul>
 <div class="tab-content col-md-10">
   <% @teams_table.each do |project_level, teams| %>
-    <div id="<%= project_level %>" class=<%= get_project_class_attribute(project_level)%> >
+    <div id="<%= project_level %>" class="tab-pane fade in active">
       <% if teams.length > 0 %>
         <%= render 'submissions_display', locals: {teams: teams,
                                                    selected_type: project_level} %>
       <% else %>
-        <p>This level currently has no submissions</p>
+        <h3>This level currently has no submissions</h3>
       <% end %>
     </div>
   <% end %>
 </div>
-

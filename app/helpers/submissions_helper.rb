@@ -26,14 +26,6 @@ module SubmissionsHelper
     tag_string
   end
 
-  def get_project_class_attribute (project_level)
-    if (project_level == "Vostock")
-      "fade in active"
-    else
-      "fade"
-    end
-  end
-
   def team_button_text (team)
     "#{team.id + 1} .  #{team.team_name}"
   end
