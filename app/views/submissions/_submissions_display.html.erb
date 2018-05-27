@@ -17,7 +17,7 @@
 
       <!-- Modal box: Display all the team's submissions -->
       <div id="modal_<%= team.id %>" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
@@ -25,18 +25,27 @@
               <h4 class="modal-title"><%= team.team_name %>'s submissions</h4>
             </div>
             <div class="modal-body">
+
+              <!-- Tab Content -->
               <% team_submission = Submission.where(team_id: team.id); %>
-              <% if (team_submission.length > 0) %>
+              <ul class="nav nav-tabs">
                 <% team_submission.each_with_index do |submission, idx| %>
-                  <h3>
-                    <button type="button" class="btn btn-default" href="<%= submissions_path %>">
-                      Milestone <%= idx + 1 %>
-                    </button>
-                  </h3>
+                  <li><a data-toggle="tab" href="#milestone<%= idx + 1 %>">Milestone <%= idx + 1 %></a></li>
                 <% end %>
-              <% else %>
-                <h3>No submissions submitted</h3>
-              <% end %>
+              </ul>
+              <div class="tab-content">
+                <% if (team_submission.length > 0) %>
+                  <% team_submission.each_with_index do |submission, idx| %>
+                    <div id="milestone<%= idx + 1 %>" class="tab-pane fade in active">
+                      <%= render 'submission_details', locals: {submission: submission} %>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <h3>No submissions submitted</h3>
+                <% end %>
+              </div>
+              <!-- End of Tab Content -->
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
