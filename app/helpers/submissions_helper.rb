@@ -26,8 +26,4 @@ module SubmissionsHelper
     tag_string
   end
 
-  def team_button_text (team)
-    "#{team.id + 1} .  #{team.team_name}"
-  end
-
 end
