@@ -30,22 +30,26 @@
 
               <!-- Tab Content -->
               <% team_submission = Submission.where(team_id: team.id); %>
-              <ul class="nav nav-tabs">
-                <% team_submission.each_with_index do |submission, idx| %>
-                  <li><a data-toggle="tab" href="#milestone<%= idx + 1 %>">Milestone <%= idx + 1 %></a></li>
-                <% end %>
-              </ul>
-              <div class="tab-content">
-                <% if (team_submission.length > 0) %>
-                  <% team_submission.each_with_index do |submission, idx| %>
-                    <div id="milestone<%= idx + 1 %>" class="tab-pane fade in active">
+              <% if (team_submission.length > 0) %>
+                <ul class="nav nav-tabs">
+                  <% team_submission.order(:milestone_id).each do |submission| %>
+                    <li>
+                      <a data-toggle="tab" href="#team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>">Milestone <%= submission.milestone_id %></a>
+                    </li>
+                  <% end %>
+                </ul>
+                <div class="tab-content">
+                  <% team_submission.order(:milestone_id).each do |submission| %>
+                    <div id="team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>" class="tab-pane fade in">
+                      <!--                      Team <%#= submission.team_id %>-->
+                      <!--                      Milestone <%#= submission.milestone_id %>-->
                       <%= render 'submission_details', locals: {submission: submission} %>
                     </div>
                   <% end %>
-                <% else %>
-                  <h3>No submissions submitted</h3>
-                <% end %>
-              </div>
+                </div>
+              <% else %>
+                <h3>No submissions submitted</h3>
+              <% end %>
               <!-- End of Tab Content -->
 
             </div>
