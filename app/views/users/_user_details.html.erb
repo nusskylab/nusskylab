@@ -16,11 +16,11 @@
     </div>
     <div class="col-md-9">
       <div>Name: <strong><%= locals[:user].user_name %></strong></div>
-      <div class="automail">Email: <%= locals[:user].email %></div>
-      <div class="autolink">GitHub: <%= locals[:user].github_link %></div>
-      <div class="autolink">LinkedIn: <%= locals[:user].linkedin_link %></div>
-      <div class="autolink">Personal website: <%= locals[:user].blog_link %></div>
-      <div class="autolink">Self Introduction: <%= locals[:user].self_introduction %></div>
+      <div>Email: <%= auto_link(locals[:user].email) %></div>
+      <div>GitHub: <%= auto_link(locals[:user].github_link) %></div>
+      <div>LinkedIn: <%= auto_link(locals[:user].linkedin_link) %></div>
+      <div>Personal website: <%= auto_link(locals[:user].blog_link) %></div>
+      <div>Self Introduction: <%= auto_link(locals[:user].self_introduction) %></div>
     </div>
     <div class="col-sm-12"><br><i>You may change your profile picture with <a href="http://www.gravatar.org/">Gravatar</a>.</i></div>
     </div>
