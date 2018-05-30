@@ -2,22 +2,66 @@
 <% (10..20).each do |n| %>
 stu_<%= n %>:
   id: <%= n %>
-  user_id: <%= n %> 
+  user_id: <%= n %>
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id:
   is_pending: TRUE
-  cohort: 2018	
+  cohort: 2018
 <% end %>
 
 # fixtures for students cohort 2017
-<% (1710..1720).each do |n| %>
+<% (1710..1712).each do |n| %>
 stu_<%= n %>:
   id: <%= n %>
-  user_id: <%= n %> 
+  user_id: <%= n %>
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
-  team_id:
-  is_pending: TRUE
-  cohort: 2017	
+  team_id: 1723
+  is_pending: false
+  cohort: 2017
+<% end %>
+
+<% (1713..1714).each do |n| %>
+stu_<%= n %>:
+  id: <%= n %>
+  user_id: <%= n %>
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_id: 1724
+  is_pending: false
+  cohort: 2017
+<% end %>
+
+<% (1715..1716).each do |n| %>
+stu_<%= n %>:
+  id: <%= n %>
+  user_id: <%= n %>
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_id: 1725
+  is_pending: false
+  cohort: 2017
+<% end %>
+
+<% (1717..1718).each do |n| %>
+stu_<%= n %>:
+  id: <%= n %>
+  user_id: <%= n %>
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_id: 1727
+  is_pending: false
+  cohort: 2017
+<% end %>
+
+<% (1719..1720).each do |n| %>
+stu_<%= n %>:
+  id: <%= n %>
+  user_id: <%= n %>
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_id: 1729
+  is_pending: false
+  cohort: 2017
 <% end %>
