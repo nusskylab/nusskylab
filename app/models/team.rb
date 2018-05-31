@@ -38,14 +38,14 @@ class Team < ActiveRecord::Base
   end
 
   def self.generate_csv_header_row
-    ['Team ID', 'Team Name', 'Project Level', 'Has Dropped', 'Student 1 UserID',
-     'Student 1 Name', 'Student 1 Email', 'Student 2 UserID', 'Student 2 Name',
+    ['Team ID', 'Team Name', 'Project Level', 'Has Dropped', 'Is Pending', 'Poster Link', 'Video Link',
+     'Student 1 UserID', 'Student 1 Name', 'Student 1 Email', 'Student 2 UserID', 'Student 2 Name',
      'Student 2 Email', 'Adviser UserID', 'Adviser Name', 'Mentor UserID',
      'Mentor Name', 'Average PE Score']
   end
 
   def to_csv_row
-    csv_row = [id, team_name, get_project_level, has_dropped]
+    csv_row = [id, team_name, get_project_level, has_dropped, is_pending, poster_link, video_link]
     export_add_team_members(csv_row)
     export_adviser_and_mentor(csv_row)
     ratings_hash = get_average_evaluation_ratings
