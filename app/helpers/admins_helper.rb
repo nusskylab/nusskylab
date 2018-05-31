@@ -7,7 +7,11 @@ module AdminsHelper
     ENV['REGISTRATION_STATUS'] == 'open'
   end
 
-  def is_level_locked?
-    return true
+  def project_level_swap_status
+    ENV['PROJECT_LEVEL_SWAP_STATUS']
+  end
+
+  def is_project_level_locked?
+    ENV['PROJECT_LEVEL_SWAP_STATUS'] == 'locked'
   end
 end

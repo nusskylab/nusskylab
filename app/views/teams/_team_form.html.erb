@@ -2,7 +2,7 @@
                     url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
   <%= f.error_notification %>
   <%= f.input :team_name %>
-  <% if not is_level_locked? %>
+  <% if not is_project_level_locked? %>
     <%= f.input :project_level, collection: {Vostok: 'Vostok',
                                             'Project Gemini'.to_sym => 'Project Gemini',
                                             'Apollo 11'.to_sym => 'Apollo 11'},

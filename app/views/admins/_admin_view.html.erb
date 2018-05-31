@@ -40,6 +40,13 @@
             <% else %>
               <%= link_to 'Open', toggle_registration_admin_path(locals[:admin].id), class: 'btn btn-success', data: {confirm: 'Are you sure you want to open registration?'} %>
             <% end %>
+            <br>
+            <h5>Project Level Swap Status: <%= project_level_swap_status %></h5>
+            <% if is_project_level_locked? %>
+              <%= link_to 'Close', toggle_project_level_swap_admin_path(locals[:admin].id), class: 'btn btn-danger', data: {confirm: 'Are you sure you want to lock project level?'} %>
+            <% else %>
+              <%= link_to 'Open', toggle_project_level_swap_admin_path(locals[:admin].id), class: 'btn btn-success', data: {confirm: 'Are you sure you want to unlock project level?'} %>
+            <% end %>
           </div>
         </div>
       </div>

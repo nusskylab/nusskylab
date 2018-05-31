@@ -40,4 +40,13 @@ class AdminsController < RolesController
     end
     redirect_to admin_path(params[:id])
   end
+
+  def toggle_project_level_swap
+    if ENV['PROJECT_LEVEL_SWAP_STATUS'] == 'locked'
+      ENV['PROJECT_LEVEL_SWAP_STATUS'] = 'unlocked'
+    else
+      ENV['PROJECT_LEVEL_SWAP_STATUS'] = 'locked'
+    end
+    redirect_to admin_path(params[:id])
+  end
 end
