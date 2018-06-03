@@ -107,6 +107,17 @@ class Team < ActiveRecord::Base
     relevant_users
   end
 
+  def get_team_submission_status(submission)
+    if submission.nil?
+      status = "Not Submitted"
+    elsif submission.submitted_late?
+      status = "Late"
+    else
+      status = "Submitted"
+    end
+    status
+  end
+
   def get_own_submissions
     submissions_hash = {}
     submissions.each do |submission|
