@@ -36,4 +36,16 @@ module TeamsHelper
     end
     (not team.adviser_id.blank? and current_user and current_user.id == team.adviser.user_id)
   end
+
+  def get_team_submission_status(submission)
+    if submission.nil?
+      status = "Not Submitted"
+    elsif submission.submitted_late?
+      status = "Late"
+    else
+      status = "Submitted"
+    end
+    status
+  end
+
 end
