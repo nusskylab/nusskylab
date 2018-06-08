@@ -33,6 +33,8 @@
     <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
       <% if locals[:selected_type] == 'Vostok' %>
       <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded') %>
+      <% if !team.poster_link.blank? %>
+        <%= link_to image_tag(team.poster_link, size: "200", alt: "Team's Poster Link is not in image form"), team.poster_link %>
       <% elsif locals[:selected_type] == 'Project Gemini' %>
       <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded') %>
       <% elsif locals[:selected_type] == 'Apollo 11' %>
