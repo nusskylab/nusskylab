@@ -106,10 +106,3 @@ h5 {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-
-.full-screen {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%; /*slider width*/
-}
