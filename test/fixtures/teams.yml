@@ -1,6 +1,8 @@
 # fixtures for teams cohort 2017
-<% (1723..1724).each do |n| %>
+# 1731-1734 vostok, 1735-1737 gemini, 1738-1740 apollo_11
+<% (1731..1732).each do |n| %>
 team_<%= n %>:
+  id: <%= n %>
   adviser_id: 1706
   mentor_id:
   created_at: <%= 0.days.from_now.to_s :db %>
@@ -14,8 +16,9 @@ team_<%= n %>:
   video_link: "https://www.youtube.com/watch?v=MAjY8mCTXWk"
 <% end %>
 
-<% (1725..1726).each do |n| %>
+<% (1733..1734).each do |n| %>
 team_<%= n %>:
+  id: <%= n %>
   adviser_id: 1707
   mentor_id:
   created_at: <%= 0.days.from_now.to_s :db %>
@@ -29,8 +32,9 @@ team_<%= n %>:
   video_link: "https://www.youtube.com/watch?v=kfXdP7nZIiE"
 <% end %>
 
-<% (1727..1728).each do |n| %>
+<% (1735..1736).each do |n| %>
 team_<%= n %>:
+  id: <%= n %>
   adviser_id: 1708
   mentor_id:
   created_at: <%= 0.days.from_now.to_s :db %>
@@ -44,8 +48,23 @@ team_<%= n %>:
   video_link: "https://www.youtube.com/watch?v=TMB6-YflpA4"
 <% end %>
 
-<% (1729..1730).each do |n| %>
+team_1737:
+  id: 1737
+  adviser_id: 1708
+  mentor_id:
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 1737"
+  has_dropped: false
+  project_level: 1
+  is_pending: false
+  cohort: 2017
+  poster_link: null
+  video_link:
+
+<% (1738..1739).each do |n| %>
 team_<%= n %>:
+  id: <%= n %>
   adviser_id: 1709
   mentor_id:
   created_at: <%= 0.days.from_now.to_s :db %>
@@ -58,3 +77,17 @@ team_<%= n %>:
   poster_link: "https://i.pinimg.com/736x/28/3d/1d/283d1d5648c027afa6cdb6c9535ce152--funny-monday-memes-monday-quotes.jpg"
   video_link: "https://www.youtube.com/watch?v=eS2T9IiOYbc"
 <% end %>
+
+team_1740:
+  id: 1740
+  adviser_id: 1708
+  mentor_id:
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 1740"
+  has_dropped: false
+  project_level: 2
+  is_pending: false
+  cohort: 2017
+  poster_link:
+  video_link:
