@@ -11,9 +11,9 @@
     <div class="carousel-inner" role="listbox">
       <% images.each_with_index do |image, index| %>
         <div class="item <%= index == 0 ? 'active' : '' %>">
-          <img class="full-screen" src="<%= image %> " alt="<%= index %>  Image">
+          <img src="<%= image %>" alt="<%= index %> Image">
           <div class="carousel-caption d-md-block">
-            <h5><%= @names[index] %></h5>
+            <h5 class="info"><%= @names[index] %><h5>
           </div>
         </div>
       <% end %>
