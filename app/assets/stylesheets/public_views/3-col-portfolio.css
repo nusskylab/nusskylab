@@ -112,3 +112,8 @@ h5 {
   background-repeat: no-repeat;
   width: 100%; /*slider width*/
 }
+
+.inactive_link {
+   pointer-events: none;
+   cursor: default;
+}
