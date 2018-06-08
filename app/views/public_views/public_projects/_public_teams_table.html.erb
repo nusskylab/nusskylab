@@ -15,11 +15,10 @@
     <![endif]-->
 </head>
 <body>
-  <div class="row">
-  <div class="center"><h2><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</h2></div>
-  </div>
-  
   <!-- Page Content -->
+  <div class="row">
+    <div class="center"><h2><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</h2></div>
+  </div>
   <!-- Page Header -->
   <div class="row">
       <div class="col-lg-12">
