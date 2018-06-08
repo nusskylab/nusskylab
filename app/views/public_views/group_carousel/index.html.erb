@@ -7,8 +7,6 @@
     <ol class="carousel-indicators">
       <% images.each_with_index do |image, index| %>
       <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
-      <!-- <li data-target="#carousel" data-slide-to="<%= index %>" ></li>
-      <li data-target="#carousel" data-slide-to="<%= index %>"></li> -->
       <% end %>
     </ol>
     <!-- Wrapper for slides -->
