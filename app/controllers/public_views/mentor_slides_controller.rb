@@ -9,10 +9,8 @@ class PublicViews::MentorSlidesController < ApplicationController
       cohort: current_cohort
     ).joins(:user).order('user_name')
     mentors.each do |mentor|
-      if (mentor.slide_link != "")
-        profile_links << mentor.slide_link
-        mentor_names << mentor.user.user_name
-      end
+      profile_links << mentor.slide_link
+      mentor_names << mentor.user.user_name
     end
     @slide_links = profile_links
     @names = mentor_names
