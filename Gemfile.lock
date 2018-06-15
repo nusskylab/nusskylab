@@ -40,7 +40,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.4)
-    autoprefixer-rails (8.5.1)
+    autoprefixer-rails (8.6.2)
       execjs
     autosize-rails (1.18.17)
       rails (>= 3.1)
@@ -101,7 +101,7 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    ffi (1.9.23)
+    ffi (1.9.25)
     friendly_id (5.2.4)
       activerecord (>= 4.0.0)
     gemoji (2.1.0)
@@ -142,7 +142,7 @@ GEM
       activerecord
       kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
-    kramdown (1.16.2)
+    kramdown (1.17.0)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -330,7 +330,7 @@ GEM
       coffee-rails
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.10)
+    uglifier (4.1.11)
       execjs (>= 0.3.0, < 3)
     warden (1.2.7)
       rack (>= 1.0)
@@ -386,4 +386,4 @@ DEPENDENCIES
   web-console (~> 2.0)!
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
