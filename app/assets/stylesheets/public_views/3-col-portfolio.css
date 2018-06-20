@@ -98,17 +98,11 @@ footer {
     padding: 12px 30px;
 }
 
-h5 {
+/* Carousel caption styling */
+.info {
   display: inline-block;
   padding: 10px;
-  background: #B9121B;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-}
-
-.full-screen {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%; /*slider width*/
+  background: #F26D21;
 }
