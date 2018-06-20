@@ -2,11 +2,20 @@
                     url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
   <%= f.error_notification %>
   <%= f.input :team_name %>
-  <%= f.input :project_level, collection: {Vostok: 'Vostok',
-                                           'Project Gemini'.to_sym => 'Project Gemini',
-                                           'Apollo 11'.to_sym => 'Apollo 11'},
-                              selected: locals[:team].get_project_level,
-                              include_blank: false, required: true %>
+  <% if is_project_level_locked? %>
+    <div class="form-group string required team_team_name">
+      <label class="string required col-sm-3 control-label"> Project level </label>
+      <div class="col-sm-9">
+        <p class="string required form-control"><%= locals[:team].get_project_level %></p>
+      </div>
+    </div>
+  <% else %>
+    <%= f.input :project_level, collection: {Vostok: 'Vostok',
+                                            'Project Gemini'.to_sym => 'Project Gemini',
+                                            'Apollo 11'.to_sym => 'Apollo 11'},
+                                selected: locals[:team].get_project_level,
+                                include_blank: false, required: true %>
+  <% end %>
   <% if current_user_admin? %>
     <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Not assigned', required: true %>
     <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Not assigned' %>
