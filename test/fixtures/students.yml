@@ -6,7 +6,7 @@ stu_<%= n %>:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id:
-  is_pending: TRUE
+  is_pending: FALSE
   cohort: 2018	
 <% end %>
 
