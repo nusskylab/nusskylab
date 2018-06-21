@@ -1,1 +1,49 @@
+#includes advisor
+team_1:
+  id:1801
+  adviser_id: 6
+  mentor_id: 22
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "with_advisor"
+  has_dropped: false
+  project_level: "vostok"
+  is_pending: false
+  invitor_student_id: 10
+  cohort: 2018
+  slide_link: "http://funkyme.info/wp-content/uploads/2018/01/powerpoint-self-introduction-template-self-presentation-template-free-prezi-templates-prezibase-ideas-template.jpg"
+  video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
+
+#no advisor
+team_2:
+  id:1802
+  adviser_id: 
+  mentor_id: 23
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "missing_advisor"
+  has_dropped: false
+  project_level: "vostok"
+  is_pending: false
+  invitor_student_id: 11 
+  cohort: 2018
+  slide_link: "http://funkyme.info/wp-content/uploads/2018/01/powerpoint-self-introduction-template-self-presentation-template-free-prezi-templates-prezibase-ideas-template.jpg"
+  video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
+
+  #null advisor
+team_2:
+  id:1803
+  adviser_id: null
+  mentor_id: 24
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "null_advisor"
+  has_dropped: false
+  project_level: "vostok"
+  is_pending: false
+  invitor_student_id: 12 
+  cohort: 2018
+  slide_link: "http://funkyme.info/wp-content/uploads/2018/01/powerpoint-self-introduction-template-self-presentation-template-free-prezi-templates-prezibase-ideas-template.jpg"
+  video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
+
 
