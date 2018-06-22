@@ -29,6 +29,8 @@ class Team < ActiveRecord::Base
       exported_teams = where(cohort: options[:cohort])
       options.delete(:cohort)
     end
+
+
     CSV.generate(options) do |csv|
       csv << Team.generate_csv_header_row
       exported_teams.each do |team|
@@ -41,7 +43,7 @@ class Team < ActiveRecord::Base
     ['Team ID', 'Team Name', 'Project Level', 'Has Dropped', 'Is Pending', 'Poster Link', 'Video Link',
      'Student 1 UserID', 'Student 1 Name', 'Student 1 Email', 'Student 2 UserID', 'Student 2 Name',
      'Student 2 Email', 'Adviser UserID', 'Adviser Name', 'Mentor UserID',
-     'Mentor Name', 'Average PE Score']
+     'Mentor Name', 'Average PE Score', 'Submission 1', 'Submission 2', 'Submission 3']
   end
 
   def to_csv_row
@@ -50,6 +52,7 @@ class Team < ActiveRecord::Base
     export_adviser_and_mentor(csv_row)
     ratings_hash = get_average_evaluation_ratings
     csv_row.append(ratings_hash[:all])
+    export_submission_status(csv_row)
     csv_row
   end
 
@@ -76,6 +79,17 @@ class Team < ActiveRecord::Base
     else
       csv_row.concat(%w(nil nil))
     end
+    csv_row
+  end
+
+  def export_submission_status(csv_row)
+    submission_status_array = []
+    (1..3).each do |submission_number|
+      submission = get_own_submissions[submission_number]
+      status = get_team_submission_status(submission)
+      submission_status_array.push(status)
+    end
+    csv_row.concat(submission_status_array)
     csv_row
   end
 
@@ -208,7 +222,7 @@ class Team < ActiveRecord::Base
     recv_feedbacks.each do |feedback|
       ratings.append(feedback.get_response_for_question(1).to_i)
     end
-    { all: get_average_for_ratings(ratings) }
+    {all: get_average_for_ratings(ratings)}
   end
 
   def get_average_for_ratings(ratings)
