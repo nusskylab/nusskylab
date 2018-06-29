@@ -4,9 +4,7 @@
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <% images.each_with_index do |image, index| %>
-        <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
-      <!-- <li data-target="#carousel" data-slide-to="<%= index %>" ></li>
-      <li data-target="#carousel" data-slide-to="<%= index %>"></li> -->
+      <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
       <% end %>
     </ol>
     <!-- Wrapper for slides -->
@@ -14,10 +12,9 @@
       <% images.each_with_index do |image, index| %>
         <% if !image.blank? %>
           <div class="item <%= index == 0 ? 'active' : '' %>">
-            <img class="full-screen" src="<%= image %> " alt="<%= index %>  Image">
+            <img src="<%= image %>" alt="<%= index %> Image">
             <div class="carousel-caption d-md-block">
-              <h5><%= @names[index] %></h5>
-            </div>
+              <h5 class="info"><%= @names[index] %><h5>
           </div>
         <% end %>
       <% end %>

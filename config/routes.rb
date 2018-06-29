@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
     member do
       get 'toggle_registration'
+      get 'toggle_project_level_swap'
       get 'general_mailing'
       post 'send_general_mailing'
       patch 'send_general_mailing'

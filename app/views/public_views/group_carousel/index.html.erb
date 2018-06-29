@@ -8,8 +8,6 @@
       <% images.each_with_index do |image, index| %>
         <% if !image.blank? %>
           <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
-      <!-- <li data-target="#carousel" data-slide-to="<%= index %>" ></li>
-      <li data-target="#carousel" data-slide-to="<%= index %>"></li> -->
         <% end %>
       <% end %>
     </ol>
@@ -18,10 +16,9 @@
       <% images.each_with_index do |image, index| %>
         <% if !image.blank? %>
           <div class="item <%= index == 0 ? 'active' : '' %>">
-            <img class="full-screen" src="<%= image %> " alt="<%= index %>  Image">
+            <img src="<%= image %>" alt="<%= index %> Image">
             <div class="carousel-caption d-md-block">
-              <h5><%= @team_names[index]%></h5>
-            </div>
+              <h5 class="info"><%= @team_names[index]%></h5>
           </div>
         <% end %>
       <% end %>
