@@ -106,3 +106,8 @@ footer {
   border-top-right-radius: 10px;
   background: #F26D21;
 }
+
+.item > img {
+  margin: auto;
+  width: 100%;
+}
