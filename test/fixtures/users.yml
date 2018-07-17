@@ -26,8 +26,9 @@ user_<%= n %>:
   matric_number:
 <% end %>
 
-#user_id 1702-1705: admins, 1706-1709: advisers, 1710-1720: students, 1721-1722: mentors 
-#for cohort 2017  
+#1700-1730 are user ids, 1731-1745 teams, 1746-1760 submissions, 1761-1775 milestones, 1776-1799 evaluatings and peer_evaluations
+#user_id 1702-1705: admins, 1706-1709: advisers, 1710-1720: students, 1721-1722: mentors
+#for cohort 2017
 <% (1702..1722).each do |n| %>
 user_<%= n %>:
   id: <%= n %>
