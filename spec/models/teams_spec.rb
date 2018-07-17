@@ -20,7 +20,7 @@ RSpec.describe Team, type: :model do
     expect(csv.first).to eql ['Team ID', 'Team Name', 'Project Level', 'Has Dropped', 'Is Pending', 'Poster Link', 'Video Link',
                               'Student 1 UserID', 'Student 1 Name', 'Student 1 Email', 'Student 2 UserID', 'Student 2 Name',
                               'Student 2 Email', 'Adviser UserID', 'Adviser Name', 'Mentor UserID', 'Mentor Name',
-                              'Average PE Score']
+                              'Average PE Score', 'Submission 1', 'Submission 2', 'Submission 3']
   end
 
   it '#set_project_level' do
@@ -198,6 +198,19 @@ RSpec.describe Team, type: :model do
     expect(peer_evals_hash[milestone3.id][evaluating2.id]).to be_nil
     expect(peer_evals_hash[milestone3.id][evaluating3.id]).to be_nil
     expect(peer_evals_hash[milestone3.id][:adviser]).to be_nil
+  end
+
+  it '#get_team_submission_status' do
+    milestone1 = FactoryGirl.create(:milestone, name: '1.team.model.spec', submission_deadline: 1.days.from_now.to_s)
+    milestone2 = FactoryGirl.create(:milestone, name: '2.team.model.spec', submission_deadline: 3.days.from_now.to_s)
+    milestone3 = FactoryGirl.create(:milestone, name: '3.team.model.spec', submission_deadline: 5.days.from_now.to_s)
+    team = FactoryGirl.create(:team, team_name: '1.team.model.spec')
+    # use nil to represent no submission for milestone 1
+    normal_submission = FactoryGirl.create(:submission, team: team, milestone: milestone2, updated_at: 2.days.from_now.to_s)
+    late_submission = FactoryGirl.create(:submission, team: team, milestone: milestone3, updated_at: 6.days.from_now.to_s)
+    expect(team.get_team_submission_status(nil)).to eql "Not Submitted"
+    expect(team.get_team_submission_status(normal_submission)).to eql "Submitted"
+    expect(team.get_team_submission_status(late_submission)).to eql "Late"
   end
 
   it '#get_feedbacks_for_others' do
