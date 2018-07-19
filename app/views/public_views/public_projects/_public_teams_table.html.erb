@@ -59,6 +59,7 @@
     <p class="text-muted">Students: <%= team.students.map{|student| student.user.user_name}.join(' & ') %></p>
     <p class="text-muted">Advised by: <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></p>
   </div>
+  <!-- ToDo: data for Modal Box is initialized even though the button is disabled. Inefficient loading page.-->
   <!-- The Modal Box -->
   <div id="modal_<%= team.id %>" class="modal">
     <div class="modal-content">
