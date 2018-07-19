@@ -45,7 +45,8 @@
     <!-- createModalBox(<%= team.team_name %>) disabled if no submission present -->
     <!-- this assumes that submission has valid poster and video links -->
     <h3>
-      <% if (Submission.where(team_id: team.id)[-1]) %>
+      <% submission_local = Submission.where(team_id: team.id)[-1] %>
+      <% if (submission_local) %>
         <button class="button button_team" onclick="createModalBox(<%= team.id %>)" id="button_<%= team.id %>">
           <%= idx + 1 %>. <strong><%= team.team_name %></strong>
         </button>
@@ -66,13 +67,13 @@
       <br><hr>
       <h4 class="text-muted">Links</h4>
       <br>
-      <% if (Submission.where(team_id: team.id)[-1]) %>
       <div class="col-md-6">
 	      <a role="button" class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].video_link %>">Watch Project Video</a>
       </div>
       <div class="col-md-6">
         <a role="button" class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].poster_link %>">View Project Poster</a>
       </div>
+      <% if (submission_local) %>
   	  <% else %>
   	  	  <span>Video is not shown/not available</span>
   	  <% end %>
