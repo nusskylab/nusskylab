@@ -42,7 +42,8 @@
         <%= image_tag("Apollo_11_Icon.png", size: "200", class: 'img-rounded inactive_link') %>
       <% end %>
     </a>
-    <!-- createModalBox(<%= team.team_name %>) -->
+    <!-- createModalBox(<%= team.team_name %>) disabled if no submission present -->
+    <!-- this assumes that submission has valid poster and video links -->
     <h3>
       <% if (Submission.where(team_id: team.id)[-1]) %>
         <button class="button button_team" onclick="createModalBox(<%= team.id %>)" id="button_<%= team.id %>">
