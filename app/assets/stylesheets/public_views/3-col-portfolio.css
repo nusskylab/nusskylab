@@ -79,6 +79,14 @@ footer {
     border-radius: 8px;
     padding: 14px 40px;
 }
+.button_team_disabled {
+  background-color: #999999;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #999999;
+  padding: 14px 40px;
+}
 
 /* Watch video button */
 .button_video {
