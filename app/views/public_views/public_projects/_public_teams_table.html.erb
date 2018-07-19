@@ -67,15 +67,27 @@
       <br><hr>
       <h4 class="text-muted">Links</h4>
       <br>
-      <div class="col-md-6">
-	      <a role="button" class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].video_link %>">Watch Project Video</a>
-      </div>
-      <div class="col-md-6">
-        <a role="button" class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].poster_link %>">View Project Poster</a>
-      </div>
       <% if (submission_local) %>
+        <% if (!submission_local.video_link.blank?) %>
+          <div class="col-md-6">
+            <a role="button" class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].video_link %>">
+              Watch Project Video
+            </a>
+          </div>
+        <% else %>
+          <div>Video link is not submitted / not available.</div>
+        <% end %>
+        <% if (!submission_local.poster_link.blank?) %>
+          <div class="col-md-6">
+            <a role="button" class="button button_video" href="<%= Submission.where(team_id: team.id)[-1].poster_link %>">
+              View Project Poster
+            </a>
+          </div>
+        <% else %>
+          <div>Poster link is not submitted / not available.</div>
+        <% end %>
   	  <% else %>
-  	  	  <span>Video is not shown/not available</span>
+	  	  <div>There is no submission available to be shown.</div>
   	  <% end %>
     </div>
   </div>
