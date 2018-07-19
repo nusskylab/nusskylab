@@ -64,9 +64,10 @@
   <div id="modal_<%= team.id %>" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <h4 class="text-muted"><%= team.team_name %></h4>
-      <br><hr>
-      <h4 class="text-muted">Links</h4>
+      <center>
+        <h4 class="text-muted"><%= team.team_name %></h4>
+      </center>
+      <hr>
       <br>
       <% if (submission_local) %>
         <% if (!submission_local.video_link.blank?) %>
