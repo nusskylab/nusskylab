@@ -10,12 +10,14 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <% images.each_with_index do |image, index| %>
-        <div class="item <%= index == 0 ? 'active' : '' %>">
-          <img src="<%= image %>" alt="<%= index %> Image">
-          <div class="carousel-caption d-md-block">
-            <h5 class="info"><%= @names[index] %><h5>
+        <% if !image.blank? %>
+          <div class="item <%= index == 0 ? 'active' : '' %>">
+            <img src="<%= image %>" alt="<%= index %> Image">
+            <div class="carousel-caption d-md-block">
+              <h5 class="info"><%= @names[index] %><h5>
+            </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
     <!-- Controls -->

@@ -6,18 +6,22 @@
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <% images.each_with_index do |image, index| %>
-      <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
+        <% if !image.blank? %>
+          <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
+        <% end %>
       <% end %>
     </ol>
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <% images.each_with_index do |image, index| %>
-        <div class="item <%= index == 0 ? 'active' : '' %>">
-          <img src="<%= image %>" alt="<%= index %> Image">
-          <div class="carousel-caption d-md-block">
-            <h5 class="info"><%= @team_names[index]%></h5>
+        <% if !image.blank? %>
+          <div class="item <%= index == 0 ? 'active' : '' %>">
+            <img src="<%= image %>" alt="<%= index %> Image">
+            <div class="carousel-caption d-md-block">
+              <h5 class="info"><%= @team_names[index]%></h5>
+            </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
     <!-- Controls -->

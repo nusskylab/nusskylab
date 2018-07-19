@@ -11,7 +11,7 @@ admin_21:
 admin_22:
   id: 22
   user_id: 22
-  slide_link: "http://cdn.slideonline.com/upload/pres/876/slide-big-1.jpg"
+  slide_link: 
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   cohort: 2018

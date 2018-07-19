@@ -107,6 +107,11 @@ footer {
   background: #F26D21;
 }
 
+.item > img {
+  margin: auto;
+  width: 100%;
+}
+
 .inactive_link {
    pointer-events: none;
    cursor: default;
