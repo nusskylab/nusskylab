@@ -111,3 +111,8 @@ footer {
   margin: auto;
   width: 100%;
 }
+
+.inactive_link {
+   pointer-events: none;
+   cursor: default;
+}
