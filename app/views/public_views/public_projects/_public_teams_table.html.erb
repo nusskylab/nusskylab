@@ -84,8 +84,8 @@
     function createModalBox(team_id) {
       var modal = document.getElementById("modal_".concat(team_id));
       var button = document.getElementById("button_".concat(team_id));
-      var span = document.getElementsByClassName("close")[0];
       console.log("Success!");
+      var span = document.getElementById("modal_".concat(team_id)).getElementsByClassName("close")[0];
       modal.style.display = "block";
       span.onclick = function() {
         modal.style.display = "none";
