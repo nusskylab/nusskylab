@@ -48,6 +48,12 @@
                         <td>
                           <%= l team_submission.updated_at %>
                         </td>
+                        <td>
+                          <a href="<%= new_mentor_mentor_comment_path(locals[:mentor].id) %>"
+                          class="btn btn-default">
+                            Start Evaluation
+                          </a>
+                        </td>
                       </tr>
                     <% else %>
                       <tr>
@@ -73,11 +79,11 @@
                 </tbody>
             </table>
           </div>
+          <% end %>
         </div>
       </div>
     </div>
     <hr>
-    <% end %>
     <br><hr>
     You can send emails to your students via
     <%= link_to 'General Mailing', general_mailing_mentor_path(locals[:mentor].id), class: 'btn btn-success' %>
