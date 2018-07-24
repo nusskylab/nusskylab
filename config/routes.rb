@@ -58,6 +58,11 @@ Rails.application.routes.draw do
   end
   resources :facilitators, only: [:index, :new, :create, :show, :destroy]
   resources :tutors, only: [:index, :new, :create, :show, :destroy]
+
+  resources :mentors do
+    resources :mentor_comments, only: [:new, :create, :edit, :update]
+  end
+  
   resources :teams do
     resources :feedbacks, only: [:new, :create, :edit, :update]
   end
