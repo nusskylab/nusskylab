@@ -8,5 +8,5 @@ class SurveyTemplate < ActiveRecord::Base
   }
 
   enum survey_type: [:survey_type_submission, :survey_type_peer_evaluation,
-                     :survey_type_feedback, :survey_type_registration]
+                     :survey_type_feedback, :survey_type_registration, :survey_type_mentor_comments]
 end
