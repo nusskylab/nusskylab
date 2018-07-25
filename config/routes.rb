@@ -74,6 +74,7 @@ Rails.application.routes.draw do
       resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
       resources :received_evals, only: [:index]
       resources :received_feedbacks, only: [:index]
+      resources :received_mentor_comments, only: [:index]
     end
     resources :advisers, only: [:show] do
       resources :received_feedbacks, only: [:index]
