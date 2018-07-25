@@ -19,6 +19,12 @@
             View milestones submitted by teams
           </a>
         </li>
+        <li role="presentation">
+          <a href="#mentor-comments-panel" aria-controls="mentor-comments-panel"
+            role="tab" data-toggle="tab">
+            Give feedback to teams
+          </a>
+        </li>
       </ul>
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="teams-panel">
@@ -48,12 +54,6 @@
                         <td>
                           <%= l team_submission.updated_at %>
                         </td>
-                        <td>
-                          <a href="<%= new_mentor_mentor_comment_path(locals[:mentor].id) %>"
-                          class="btn btn-default">
-                            Start Evaluation
-                          </a>
-                        </td>
                       </tr>
                     <% else %>
                       <tr>
@@ -80,6 +80,15 @@
             </table>
           </div>
           <% end %>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="mentor-comments-panel">
+          <br>
+          <td>
+            <a href="<%= new_mentor_mentor_comment_path(locals[:mentor].id) %>"
+            class="btn btn-success">
+              Give feedback
+            </a>
+          </td>
         </div>
       </div>
     </div>
