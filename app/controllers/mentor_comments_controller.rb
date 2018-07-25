@@ -6,7 +6,7 @@
 class MentorCommentsController < ApplicationController
     def new
       mentor = Mentor.find(params[:mentor_id]) || (record_not_found && return)
-      !authenticate_user(true, false) && return
+      !authenticate_user(true, false, [mentor.user]) && return
       @page_title = t('.page_title')
       @mentor_comment = MentorComment.new
       teams = []
@@ -25,7 +25,8 @@ class MentorCommentsController < ApplicationController
     end
   
     def create
-      !authenticate_user(true, false) && return
+      mentor = Mentor.find(params[:mentor_id]) || (record_not_found && return)
+      !authenticate_user(true, false, [mentor.user]) && return
       if create_or_update_feedback_and_responses
         redirect_to home_path, flash: {
           success: t('.success_message')
@@ -40,7 +41,7 @@ class MentorCommentsController < ApplicationController
   
     def edit
       mentor = Mentor.find(params[:mentor_id]) || (record_not_found && return)
-      !authenticate_user(true, false) && return
+      !authenticate_user(true, false, [mentor.user]) && return
       @page_title = t('.page_title')
       @mentor_comment = MentorComment.find(params[:id])
       teams = []
@@ -60,7 +61,7 @@ class MentorCommentsController < ApplicationController
   
     def update
       mentor = Mentor.find(params[:mentor_id]) || (record_not_found && return)
-      !authenticate_user(true, false) && return
+      !authenticate_user(true, false, [mentor.user]) && return
       @mentor_comment = MentorComment.find(params[:id])
       if create_or_update_feedback_and_responses(@mentor_commentdback)
         redirect_to home_path, flash: {
@@ -89,11 +90,9 @@ class MentorCommentsController < ApplicationController
     end
   
     def create_or_update_feedback_and_responses(mentor_comment = nil)
-      print "-------------------"
-      print mentor_comment_params
       if mentor_comment.nil?
         @mentor_comment = MentorComment.new(mentor_comment_params)
-        mentor_comment_template = SurveyTemplate.all[0]
+        mentor_comment_template = SurveyTemplate.all[2]
         @mentor_comment.survey_template_id = mentor_comment_template.id
       else
         mentor_comment.update(mentor_comment_params)
