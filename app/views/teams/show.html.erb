@@ -57,6 +57,12 @@
                 More information
               </a>
             </li>
+            <li role="presentation">
+              <a href="#mentor-comments-panel" aria-controls="mentor-comments-panel"
+                role="tab" data-toggle="tab">
+                Comments from mentor
+              </a>
+            </li>
           <% end %>
         </ul>
         <div class="tab-content">
@@ -136,6 +142,13 @@
                          locals: {team: @team, milestones: milestones,
                                   eval_ratings_hash: @team.get_average_evaluation_ratings,
                                   feedback_ratings_hash: @team.get_average_feedback_ratings} %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="mentor-comments-panel">
+              <div class="text-center">
+                You can view comments from your mentor
+                <a href="<%= milestone_team_received_mentor_comments_path(3, @team.id) %>"
+                  class="btn btn-success">here</a>
+              </div>
             </div>
           <% end %>
         </div>
