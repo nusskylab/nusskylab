@@ -92,8 +92,8 @@ class MentorCommentsController < ApplicationController
     def create_or_update_feedback_and_responses(mentor_comment = nil)
       if mentor_comment.nil?
         @mentor_comment = MentorComment.new(mentor_comment_params)
-        mentor_comment_template = SurveyTemplate.all[2]
-        @mentor_comment.survey_template_id = mentor_comment_template.id
+        @mentor_comment_template = SurveyTemplate.find_by(survey_type: SurveyTemplate.survey_types[:survey_type_mentor_comments])
+        @mentor_comment.survey_template_id = @mentor_comment_template.id
       else
         mentor_comment.update(mentor_comment_params)
         @mentor_comment = mentor_comment
