@@ -3,7 +3,7 @@
     <div class="text-muted"><%= t('mentor_comment.instruction_omitted_message') %></div>
   </div>
   <br>
-  <% locals[:feedback].survey_template.questions.order('questions.order ASC').each do |question| %>
+  <% locals[:mentor_comment].survey_template.questions.order('questions.order ASC').each do |question| %>
       <%= render 'questions/question_template',
                  locals: {question: question,
                           question_response: locals[:mentor_comment].get_response_for_question(question.id),
