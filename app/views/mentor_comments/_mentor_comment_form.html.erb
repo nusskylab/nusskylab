@@ -12,12 +12,6 @@
     <% if locals[:is_new] %>
         <div class="group">
           <%= f.input :target_team_id, collection: locals[:teams].map {|a| [a.team_name, a.id]}, include_blank: false %>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" checked="checked" name="feedback[feedback_to_team]">
-              Feedback to peer teams
-            </label>
-          </div>
         </div>
     <% else %>
         <input type="hidden" name="feedback[edit]" value="on">
