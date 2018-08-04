@@ -1,3 +1,59 @@
+team_31:
+  id: 31
+  adviser_id: 6
+  mentor_id: 21
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 31"
+  has_dropped: false
+  project_level: 0
+  is_pending: false
+  cohort: 2018
+  poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
+  video_link:
+
+team_32:
+  id: 32
+  adviser_id: 6
+  mentor_id: 21
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 32"
+  has_dropped: false
+  project_level: 0
+  is_pending: false
+  cohort: 2018
+  poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
+  video_link:
+
+team_33:
+  id: 33
+  adviser_id: 7
+  mentor_id: 22
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 33"
+  has_dropped: false
+  project_level: 1
+  is_pending: false
+  cohort: 2018
+  poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
+  video_link:
+
+team_34:
+  id: 34
+  adviser_id: 7
+  mentor_id: 22
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 34"
+  has_dropped: false
+  project_level: 1
+  is_pending: false
+  cohort: 2018
+  poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
+  video_link:
+    
 # fixtures for teams cohort 2017
 # 1731-1734 vostok, 1735-1737 gemini, 1738-1740 apollo_11
 <% (1731..1732).each do |n| %>
