@@ -40,10 +40,12 @@
         <td>
           <% if (adviser_feedback = locals[:team_feedbacks][:adviser]) %>
             <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:team].id, adviser_feedback.id) %>">
-              Edit feedback</a>
+              Edit feedback
+            </a>
           <% else %>
             <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:team].id) %>">
-              Submit feedback</a>
+              Create feedback
+            </a>
           <% end %>
         </td>
       </tr>
