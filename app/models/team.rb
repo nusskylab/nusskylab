@@ -189,6 +189,13 @@ class Team < ActiveRecord::Base
     feedbacks_hash
   end
 
+  def get_feedbacks_for_adviser
+    feedbacks_hash = {}
+    feedbacks_hash[adviser.user_id] = Feedback.find_by(
+      team_id: id, adviser_id: adviser.user_id)
+    feedbacks_hash
+  end
+
   def get_average_evaluation_ratings
     ratings_hash = {}
     peer_evaluations_hash = get_evaluations_for_own_team
