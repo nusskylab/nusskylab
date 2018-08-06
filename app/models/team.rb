@@ -191,8 +191,10 @@ class Team < ActiveRecord::Base
 
   def get_feedbacks_for_adviser
     feedbacks_hash = {}
-    feedbacks_hash[adviser.user_id] = Feedback.find_by(
-      team_id: id, adviser_id: adviser.user_id)
+    if !adviser.user_id.blank?
+      feedbacks_hash[adviser.user_id] = Feedback.find_by(
+        team_id: id, adviser_id: adviser.user_id)
+    end
     feedbacks_hash
   end
 
