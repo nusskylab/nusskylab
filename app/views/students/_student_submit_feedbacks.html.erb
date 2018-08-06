@@ -11,18 +11,20 @@
           </td>
           <td>
             <% if evaluator.evaluator.has_dropped %>
-                <span style="color: #ff0000;">Dropped</span>
+              <span style="color: #ff0000;">Dropped</span>
             <% else %>
-                Active
+              Active
             <% end %>
           </td>
           <td>
             <% if (team_feedback = locals[:team_feedbacks][evaluator.id]) %>
               <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:team].id, team_feedback.id) %>">
-                Edit feedback</a>
+                Edit feedback
+              </a>
             <% else %>
               <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:team].id) %>">
-                Submit feedback</a>
+                Submit feedback
+              </a>
             <% end %>
           </td>
         </tr>
@@ -36,12 +38,14 @@
           Active
         </td>
         <td>
-          <% if (adviser_feedback = locals[:team_feedbacks][:adviser]) %>
+          <% if (adviser_feedback = locals[:adviser_feedbacks][locals[:team].adviser_id]) %>
             <a class="btn btn-success" href="<%= edit_team_feedback_path(locals[:team].id, adviser_feedback.id) %>">
-              Edit feedback</a>
+              Edit feedback
+            </a>
           <% else %>
             <a class="btn btn-primary" href="<%= new_team_feedback_path(locals[:team].id) %>">
-              Submit feedback</a>
+              Create feedback
+            </a>
           <% end %>
         </td>
       </tr>
