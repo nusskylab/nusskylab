@@ -15,11 +15,10 @@
     <![endif]-->
 </head>
 <body>
-  <div class="row">
-  <div class="center"><h2><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</h2></div>
-  </div>
-  
   <!-- Page Content -->
+  <div class="row">
+    <div class="center"><h2><%= number_to_percentage(100.0 * locals[:selected_teams].length.to_f / locals[:teams].length.to_f, precision: 0) %> of the cohort</h2></div>
+  </div>
   <!-- Page Header -->
   <div class="row">
       <div class="col-lg-12">
@@ -28,22 +27,24 @@
           </h1>
       </div>
   </div>
-  <!-- /.row -->
   <% locals[:selected_teams].each_with_index do |team, idx| %>
   <!-- The Project Profile -->
   <div class="col-md-4 portfolio-item">
     <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
-      <% if locals[:selected_type] == 'Vostok' %>
-      <%= link_to image_tag("Vostok_Icon.jpg", class: 'img-rounded') %>
+      <% if !team.poster_link.blank? %>
+        <%= link_to image_tag(team.poster_link, size: "200", alt: "Team's Poster Link is not in image form",
+          title: "Click to view an enlarged version of this image."), team.poster_link %>
+      <% elsif locals[:selected_type] == 'Vostok' %>
+        <%= image_tag("Vostok_Icon.png", size: "200", class: 'img-rounded inactive_link') %>
       <% elsif locals[:selected_type] == 'Project Gemini' %>
-      <%= link_to image_tag("Project_Gemini_Icon.png", class: 'img-rounded') %>
+        <%= image_tag("Project_Gemini_Icon.png", size: "200", class: 'img-rounded inactive_link') %>
       <% elsif locals[:selected_type] == 'Apollo 11' %>
-      <%= link_to image_tag("Apollo_11_Icon.png", class: 'img-rounded') %>
+        <%= image_tag("Apollo_11_Icon.png", size: "200", class: 'img-rounded inactive_link') %>
       <% end %>
     </a>
     <!-- createModalBox(<%= team.team_name %>) -->
     <h3>
-        <button class="button button_team" onclick="createModalBox(<%= team.id %>)" id="button_<%= team.id %>"><%= idx + 1 %>. <strong><%= team.team_name %></strong></button> <!-- Clicking the link creates another layer of window that shows the team's project -->
+      <button class="button button_team" onclick="createModalBox(<%= team.id %>)" id="button_<%= team.id %>"><%= idx + 1 %>. <strong><%= team.team_name %></strong></button> <!-- Clicking the link creates another layer of window that shows the team's project -->
     </h3>
     <p class="text-muted">Students: <%= team.students.map{|student| student.user.user_name}.join(' & ') %></p>
     <p class="text-muted">Advised by: <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></p>

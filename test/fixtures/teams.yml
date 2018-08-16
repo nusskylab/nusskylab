@@ -1,1 +1,163 @@
+team_31:
+  id: 31
+  adviser_id: 6
+  mentor_id: 21
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 31"
+  has_dropped: false
+  project_level: 0
+  is_pending: false
+  cohort: 2018
+  poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
+  video_link:
 
+team_32:
+  id: 32
+  adviser_id: 6
+  mentor_id: 21
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 32"
+  has_dropped: false
+  project_level: 0
+  is_pending: false
+  cohort: 2018
+  poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
+  video_link:
+
+team_33:
+  id: 33
+  adviser_id: 7
+  mentor_id: 22
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 33"
+  has_dropped: false
+  project_level: 1
+  is_pending: false
+  cohort: 2018
+  poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
+  video_link:
+
+team_34:
+  id: 34
+  adviser_id: 7
+  mentor_id: 22
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 34"
+  has_dropped: false
+  project_level: 1
+  is_pending: false
+  cohort: 2018
+  poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
+  video_link:
+
+team_35:
+  id: 35
+  adviser_id:
+  mentor_id: 22
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 35"
+  has_dropped: false
+  project_level: 1
+  is_pending: false
+  cohort: 2018
+  poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
+  video_link:
+
+# fixtures for teams cohort 2017
+# 1731-1734 vostok, 1735-1737 gemini, 1738-1740 apollo_11
+<% (1731..1732).each do |n| %>
+team_<%= n %>:
+  id: <%= n %>
+  adviser_id: 1706
+  mentor_id:
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team <%= n %>"
+  has_dropped: false
+  project_level: 0
+  is_pending: false
+  cohort: 2017
+  poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
+  video_link: "https://www.youtube.com/watch?v=MAjY8mCTXWk"
+<% end %>
+
+<% (1733..1734).each do |n| %>
+team_<%= n %>:
+  id: <%= n %>
+  adviser_id: 1707
+  mentor_id:
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team <%= n %>"
+  has_dropped: false
+  project_level: 0
+  is_pending: false
+  cohort: 2017
+  poster_link: "http://limingu.com/wp-content/uploads/2018/01/blonde-asian.jpg"
+  video_link: "https://www.youtube.com/watch?v=kfXdP7nZIiE"
+<% end %>
+
+<% (1735..1736).each do |n| %>
+team_<%= n %>:
+  id: <%= n %>
+  adviser_id: 1708
+  mentor_id:
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team <%= n %>"
+  has_dropped: false
+  project_level: 1
+  is_pending: false
+  cohort: 2017
+  poster_link: "https://www.planwallpaper.com/static/images/funny-527.jpg"
+  video_link: "https://www.youtube.com/watch?v=TMB6-YflpA4"
+<% end %>
+
+team_1737:
+  id: 1737
+  adviser_id: 1708
+  mentor_id:
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 1737"
+  has_dropped: false
+  project_level: 1
+  is_pending: false
+  cohort: 2017
+  poster_link: null
+  video_link:
+
+<% (1738..1739).each do |n| %>
+team_<%= n %>:
+  id: <%= n %>
+  adviser_id: 1709
+  mentor_id:
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team <%= n %>"
+  has_dropped: false
+  project_level: 2
+  is_pending: false
+  cohort: 2017
+  poster_link: "https://i.pinimg.com/736x/28/3d/1d/283d1d5648c027afa6cdb6c9535ce152--funny-monday-memes-monday-quotes.jpg"
+  video_link: "https://www.youtube.com/watch?v=eS2T9IiOYbc"
+<% end %>
+
+team_1740:
+  id: 1740
+  adviser_id: 1708
+  mentor_id:
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "I am team 1740"
+  has_dropped: false
+  project_level: 2
+  is_pending: false
+  cohort: 2017
+  poster_link:
+  video_link:

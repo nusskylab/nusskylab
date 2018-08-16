@@ -50,7 +50,8 @@ class StudentsController < RolesController
       team_evaluateds_submissions: @role.team.get_others_submissions,
       team_evaluations: @role.team.get_own_evaluations_for_others,
       team_evaluators_evaluations: @role.team.get_evaluations_for_own_team,
-      team_feedbacks: @role.team.get_feedbacks_for_others
+      team_feedbacks: @role.team.get_feedbacks_for_others,
+      adviser_feedbacks: @role.team.get_feedbacks_for_adviser
     }
   end
 
