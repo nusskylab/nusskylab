@@ -135,6 +135,14 @@ class Team < ActiveRecord::Base
   def get_own_submissions
     submissions_hash = {}
     submissions.each do |submission|
+      submissions_hash[submission.milestone_id] = submission
+    end
+    submissions_hash
+  end
+
+  def get_own_submissions_in_order
+    submissions_hash = {}
+    submissions.each do |submission|
       milestone_number = get_milestone_number_from_milestone_id(submission.milestone_id)
       submissions_hash[milestone_number] = submission
     end

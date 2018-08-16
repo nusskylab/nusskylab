@@ -16,9 +16,9 @@
         <td><%= team.has_dropped %></td>
         <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
         <td><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
-        <td><%= team.get_team_submission_status(team.get_own_submissions[1]) %></td>
-        <td><%= team.get_team_submission_status(team.get_own_submissions[2]) %></td>
-        <td><%= team.get_team_submission_status(team.get_own_submissions[3]) %></td>
+        <td><%= team.get_team_submission_status(team.get_own_submissions_in_order[1]) %></td>
+        <td><%= team.get_team_submission_status(team.get_own_submissions_in_order[2]) %></td>
+        <td><%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %></td>
         <td><%= team.cohort %></td>
         <td>
           <% if can_current_user_view_team(team) %>
