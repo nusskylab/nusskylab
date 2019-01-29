@@ -5,6 +5,7 @@ sudo yum update
 sudo yum groupinstall -y "Development tools"
 sudo yum install -y vim
 sudo yum install -y wget
+sudo yum install -y screen
 
 # For nginx
 sudo yum install -y nginx
