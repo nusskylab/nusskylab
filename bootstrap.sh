@@ -53,7 +53,7 @@ sudo systemctl restart postgresql
 
 #install rails
 cd /vagrant
-gem install bundler
+gem install bundler -v 1.17.3
 bundle update
 
 echo "Inserting dummy tokens to run rails"

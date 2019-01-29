@@ -6,8 +6,8 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = 'nusskylab'
 
   # Forward the Rails server default port to the host
-  config.vm.network :forwarded_port, host: 3000, guest: 3000
-  config.vm.network :forwarded_port, host: 8000, guest: 80
+  config.vm.network "forwarded_port", host: 3000, guest: 3000
+  config.vm.network "forwarded_port", host: 8000, guest: 80
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.

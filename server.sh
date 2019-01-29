@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 killall ruby
 source ~/.bash_profile
-rbenv shell 2.2.1
+rbenv shell 2.3.3
 git checkout master
 git pull
 bundle install
