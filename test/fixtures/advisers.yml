@@ -2,18 +2,18 @@
 <% (6..9).each do |n| %>
 admin_<%= n %>:
   id: <%= n %>
-  user_id: <%= n + 100 %>
+  user_id: <%= n %>
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
-  cohort: 2018	
+  cohort: 2018
 <% end %>
 
 #cohort 2017
 <% (1706..1709).each do |n| %>
 admin_<%= n %>:
   id: <%= n %>
-  user_id: <%= n + 100 %> 
+  user_id: <%= n %>
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
-  cohort: 2017	
+  cohort: 2017
 <% end %>
