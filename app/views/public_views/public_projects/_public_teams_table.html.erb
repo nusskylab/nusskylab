@@ -35,7 +35,7 @@
         <%= link_to image_tag(team.poster_link, size: "200", alt: "Team's Poster Link is not in image form",
           title: "Click to view an enlarged version of this image."), team.poster_link %>
       <% elsif locals[:selected_type] == 'Vostok' %>
-        <%= image_tag("Vostok_Icon.png", size: "200", class: 'img-rounded inactive_link') %>
+        <%= image_tag("Vostok_Icon.jpg", size: "200", class: 'img-rounded inactive_link') %>
       <% elsif locals[:selected_type] == 'Project Gemini' %>
         <%= image_tag("Project_Gemini_Icon.png", size: "200", class: 'img-rounded inactive_link') %>
       <% elsif locals[:selected_type] == 'Apollo 11' %>
