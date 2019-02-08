@@ -60,6 +60,8 @@ bundle update
 echo "Inserting dummy tokens to run rails"
 sh ./dummyToken.sh
 
+source ~/.bash_profile
+
 #populate with rails data
 echo "Populating rails databases"
 bundle exec rake db:create
