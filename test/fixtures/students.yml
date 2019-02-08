@@ -40,9 +40,27 @@ stu_<%= n %>:
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id:
   is_pending: FALSE
-  cohort: 2018
+  cohort: 2018	
 <% end %>
 
+stu_21:
+  id: 21
+  user_id: 21 
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_id: 1801
+  is_pending: FALSE
+  cohort: 2018  
+
+stu_22:
+  id: 22
+  user_id: 11 
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_id: 1802
+  is_pending: FALSE
+  cohort: 2018  
+  
 # fixtures for students cohort 2017
 <% (1710..1712).each do |n| %>
 stu_<%= n %>:

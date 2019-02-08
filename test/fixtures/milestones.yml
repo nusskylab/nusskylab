@@ -1,1 +1,10 @@
-
+<% (1..3).each do |n| %>
+milestone_<%= n %>:
+  id: <%= n %>
+  name:  <%= "Submission #{n}" %>
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  submission_deadline: <%= 1.days.from_now.to_s :db %>
+  peer_evaluation_deadline: <%= 1.days.from_now.to_s :db %>
+  cohort: 2018
+<% end %>

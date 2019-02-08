@@ -1,3 +1,33 @@
+#includes advisor
+team_1:
+  id: 1801
+  adviser_id: 6
+  mentor_id: 22
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "with_advisor"
+  has_dropped: false
+  project_level: "vostok"
+  is_pending: false
+  invitor_student_id: 10
+  cohort: 2018
+  video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
+
+#no advisor
+team_2:
+  id: 1802
+  adviser_id: 
+  mentor_id: 23
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "missing_advisor"
+  has_dropped: false
+  project_level: "vostok"
+  is_pending: false
+  invitor_student_id: 11 
+  cohort: 2018
+  video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
+
 team_31:
   id: 31
   adviser_id: 6
