@@ -12,12 +12,12 @@
     <%= f.input :github_link %>
     <%= f.input :linkedin_link %>
     <%= f.input :blog_link, label: 'Website Link' %>
-    <% if locals[:is_new] %>
-        <%= f.input :program_of_study, collection: User.program_of_studies, include_blank: false %>
-    <% else %>
-        <%= f.input :program_of_study, collection: User.program_of_studies, include_blank: false, selected: User.program_of_studies[locals[:user].program_of_study] %>
-    <% end %>
-    <%= f.input :matric_number %>
+    <%# if locals[:is_new] %>
+        <%#= f.input :program_of_study, collection: User.program_of_studies, include_blank: false %>
+    <%# else %>
+        <%#= f.input :program_of_study, collection: User.program_of_studies, include_blank: false, selected: User.program_of_studies[locals[:user].program_of_study] %>
+    <%# end %>
+    <%#= f.input :matric_number %>
     <%= f.input :self_introduction %>
     <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>
