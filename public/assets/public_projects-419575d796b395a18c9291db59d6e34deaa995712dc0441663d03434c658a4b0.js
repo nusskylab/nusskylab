@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){$("body").on("click",".button_team",function(t){var o=$(t.target).closest(".button_team").data("team-id"),e=$("#modal_"+o),c=document.getElementsByClassName("close")[0];console.log("Success!"),e.show(),c.onclick=function(){e.hide()},window.onclick=function(t){t.target==e&&e.hide()}})});

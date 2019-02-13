@@ -1,0 +1,1 @@
+jQuery.timeago.settings.strings.gl={prefixAgo:"hai",prefixFromNow:"dentro de",suffixAgo:"",suffixFromNow:"",seconds:"menos dun minuto",minute:"un minuto",minutes:"uns %d minutos",hour:"unha hora",hours:"%d horas",day:"un d\xeda",days:"%d d\xedas",month:"un mes",months:"%d meses",year:"un ano",years:"%d anos"};

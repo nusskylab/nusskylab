@@ -1,0 +1,4 @@
+/*! Parser: jQuery Globalize - updated 5/17/2015 (v2.22.0) */
+!function(e){"use strict";/*! jQuery Globalize date parser (https://github.com/jquery/globalize#date-module) */
+e.tablesorter.addParser({id:"globalize-date",is:function(){return!1},format:function(e,r,a,i){var l=r.config,t=l.globalize&&(l.globalize[i]||l.globalize)||{},o=Globalize&&Globalize.dateParser?Globalize.dateParser(t)(e):e?new Date(e):e;return o instanceof Date&&isFinite(o)?o.getTime():e},type:"numeric"}),/*! jQuery Globalize number parser (https://github.com/jquery/globalize#number-module) */
+e.tablesorter.addParser({id:"globalize-number",is:function(){return!1},format:function(r,a,i,l){var t=a.config,o=t.globalize&&(t.globalize[l]||t.globalize)||{},n=Globalize&&Globalize.numberParser?Globalize.numberParser(o)(r):r?e.tablesorter.formatFloat((r||"").replace(/[^\w,. \-()]/g,""),a):r;return r&&"number"==typeof n?n:r},type:"numeric"})}(jQuery);

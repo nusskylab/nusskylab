@@ -1,0 +1,1 @@
+"use strict";$(document).ready(function(){function t(){$("input").attr("disabled","disabled"),$("textarea").attr("disabled","disabled")}t()});

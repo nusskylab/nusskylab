@@ -1,0 +1,1 @@
+jQuery.timeago.settings.strings.lt={prefixAgo:"prie\u0161",prefixFromNow:null,suffixAgo:null,suffixFromNow:"nuo dabar",seconds:"%d sek.",minute:"min.",minutes:"%d min.",hour:"val.",hours:"%d val.",day:"1 d.",days:"%d d.",month:"m\u0117n.",months:"%d m\u0117n.",year:"metus",years:"%d metus",wordSeparator:" ",numbers:[]};

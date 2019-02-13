@@ -1,0 +1,1 @@
+jQuery.timeago.settings.strings.tr={suffixAgo:"\xf6nce",suffixFromNow:null,seconds:"1 dakikadan",minute:"1 dakika",minutes:"%d dakika",hour:"1 saat",hours:"%d saat",day:"1 g\xfcn",days:"%d g\xfcn",month:"1 ay",months:"%d ay",year:"1 y\u0131l",years:"%d y\u0131l"};

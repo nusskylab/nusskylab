@@ -1,0 +1,1 @@
+!function(i){"use strict";i.tablesorter.addParser({id:"image",is:function(){return!1},format:function(t,r,e){return i(e).find("img").attr(r.config.imgAttr||"alt")||t},parsed:!0,type:"text"})}(jQuery);

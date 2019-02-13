@@ -1,0 +1,1 @@
+"use strict";$(function(){function r(){"0"===$("#user_provider").val()?$("#user_uid").attr("disabled",!0):$("#user_uid").attr("disabled",!1)}r(),$("#user_provider").on("change",function(){r()})});
