@@ -1,0 +1,1 @@
+jQuery.timeago.settings.strings.fi={prefixAgo:null,prefixFromNow:null,suffixAgo:"sitten",suffixFromNow:"tulevaisuudessa",seconds:"alle minuutti",minute:"minuutti",minutes:"%d minuuttia",hour:"tunti",hours:"%d tuntia",day:"p\xe4iv\xe4",days:"%d p\xe4iv\xe4\xe4",month:"kuukausi",months:"%d kuukautta",year:"vuosi",years:"%d vuotta"};

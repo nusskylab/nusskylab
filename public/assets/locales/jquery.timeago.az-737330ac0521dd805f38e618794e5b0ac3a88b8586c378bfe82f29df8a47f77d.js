@@ -1,0 +1,1 @@
+jQuery.timeago.settings.strings.az={prefixAgo:null,prefixFromNow:null,suffixAgo:"\u0259vv\u0259l",suffixFromNow:"sonra",seconds:"saniy\u0259l\u0259r",minute:"1 d\u0259qiq\u0259",minutes:"%d d\u0259qiq\u0259",hour:"1 saat",hours:"%d saat",day:"1 g\xfcn",days:"%d g\xfcn",month:"1 ay",months:"%d ay",year:"1 il",years:"%d il",wordSeparator:"",numbers:[]};

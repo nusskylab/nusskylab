@@ -1,0 +1,1 @@
+jQuery.timeago.settings.strings.sv={prefixAgo:"f\xf6r",prefixFromNow:"om",suffixAgo:"sedan",suffixFromNow:"",seconds:"mindre \xe4n en minut",minute:"ungef\xe4r en minut",minutes:"%d minuter",hour:"ungef\xe4r en timme",hours:"ungef\xe4r %d timmar",day:"en dag",days:"%d dagar",month:"ungef\xe4r en m\xe5nad",months:"%d m\xe5nader",year:"ungef\xe4r ett \xe5r",years:"%d \xe5r"};

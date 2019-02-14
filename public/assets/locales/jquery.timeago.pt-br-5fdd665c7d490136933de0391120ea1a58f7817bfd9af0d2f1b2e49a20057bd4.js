@@ -1,0 +1,1 @@
+jQuery.timeago.settings.strings["pt-br"]={prefixAgo:"h\xe1",prefixFromNow:"em",suffixAgo:null,suffixFromNow:null,seconds:"alguns segundos",minute:"um minuto",minutes:"%d minutos",hour:"uma hora",hours:"%d horas",day:"um dia",days:"%d dias",month:"um m\xeas",months:"%d meses",year:"um ano",years:"%d anos"};
