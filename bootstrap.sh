@@ -40,17 +40,20 @@ rbenv global 2.3.3
 rbenv rehash
 
 # for postgres
-sudo yum install -y postgresql-server
-sudo yum install -y postgresql-devel
-sudo postgresql-setup initdb
-sudo systemctl start postgresql
-sudo systemctl enable postgresql
-cd ~postgres/
+sudo yum install -y https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-3.noarch.rpm
+sudo yum install -y postgresql94 postgresql94-contrib postgresql94-server postgresql94-devel
+
+sudo /usr/pgsql-9.4/bin/postgresql94-setup initdb
+sudo systemctl enable postgresql-9.4
+sudo systemctl start postgresql-9.4
+
+sudo cd ~postgres/
 sudo -i -u postgres
 sudo -u postgres psql -c "create user nusskylab SUPERUSER login password 'nusskylab';"
-#exit
-sudo sed -i 's/peer/md5/g' /var/lib/pgsql/data/pg_hba.conf
-sudo systemctl restart postgresql
+sudo sed -i 's/peer/md5/g' /var/lib/pgsql/9.4/data/pg_hba.conf
+sudo systemctl restart postgresql-9.4
+source ~/.bash_profile
+sudo ln -s /usr/pgsql-9.4/bin/p* /usr/local/bin
 
 #install rails
 cd /vagrant

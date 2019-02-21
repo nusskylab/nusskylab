@@ -29,6 +29,9 @@
   </div>
   <% locals[:selected_teams].each_with_index do |team, idx| %>
   <!-- The Project Profile -->
+  <% if (idx % 3 == 0) %>
+    <div class="row"></div>
+  <% end %>
   <div class="col-md-4 portfolio-item">
     <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
       <% if !team.poster_link.blank? %>
