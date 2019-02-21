@@ -1,10 +1,25 @@
+#cohort 2017
+
 <% (1..3).each do |n| %>
 milestone_<%= n %>:
   id: <%= n %>
-  name:  <%= "Submission #{n}" %>
+  submission_deadline: <%= 0.days.from_now.to_s :db %>
+  name: Milestone <%= ((n-1) % 3) + 1 %>
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
-  submission_deadline: <%= 1.days.from_now.to_s :db %>
-  peer_evaluation_deadline: <%= 1.days.from_now.to_s :db %>
-  cohort: 2018
+  peer_evaluation_deadline: <%= 0.days.from_now.to_s :db %>
+  cohort: 2017 n
 <% end %>
+
+#cohort 2018
+
+  <% (4..6).each do |n| %>
+milestone_<%= n %>:
+  id: <%= n %>
+  submission_deadline: <%= 0.days.from_now.to_s :db %>
+  name: Milestone <%= ((n-1) % 3) + 1 %>
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  peer_evaluation_deadline: <%= 0.days.from_now.to_s :db %>
+  cohort: 2018
+  <% end %>
