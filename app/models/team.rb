@@ -272,4 +272,25 @@ class Team < ActiveRecord::Base
     end
     evaluated_members
   end
+
+  def is_poster_valid
+    require "net/http"
+    begin
+      if !poster_link.blank?
+        url = URI.parse(poster_link)
+        req = Net::HTTP.new(url.host, url.port)
+        req.use_ssl = (url.scheme == 'https')
+        res = req.request_head(url.path)
+        if res.code[0] == "4" or res.code[0] == "5"
+          return false
+        else
+          return true
+        end
+      else
+        return false
+      end
+    rescue
+      return false
+    end
+  end
 end
