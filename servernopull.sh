@@ -7,5 +7,4 @@ rbenv shell 2.3.3
 bundle install
 RAILS_ENV=production bundle exec rake db:migrate
 RAILS_ENV=production bundle exec rake assets:precompile
-puma -e production 1> log/console.log 2> log/console_err.log &
-
+bundle exec puma -e production 1> log/console.log 2> log/console_err.log &
