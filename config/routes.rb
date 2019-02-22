@@ -60,6 +60,9 @@ Rails.application.routes.draw do
   resources :tutors, only: [:index, :new, :create, :show, :destroy]
   resources :teams do
     resources :feedbacks, only: [:new, :create, :edit, :update]
+    member do
+      get 'match_mentor'
+    end
   end
   resources :evaluatings, only: [:index, :new, :create,
                                  :edit, :update, :destroy]

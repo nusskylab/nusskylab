@@ -97,6 +97,12 @@ class TeamsController < ApplicationController
     end
   end
 
+  def match_mentor
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id])
+    cohort = @team.cohort || current_cohort
+  end
+
   private
 
   def team_params

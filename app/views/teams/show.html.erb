@@ -8,7 +8,7 @@
             <a href="<%= edit_team_path(@team) %>" class="btn btn-info">Edit Team</a>
         <% end %>
         <% if !@team.mentor_id.present? %>
-          <a href="#" class="btn btn-info">Match Mentor</a>
+          <a href="<%= match_mentor_team_path() %>" class="btn btn-info">Match Mentor</a>
         <% end %>
       </h1>
     </div>
