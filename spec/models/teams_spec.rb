@@ -100,6 +100,68 @@ RSpec.describe Team, type: :model do
     expect(team_with_no_submissions.get_own_submissions.length).to eql 0
   end
 
+  it '#get_own_submissions_in_order' do
+    milestone1_1 = FactoryGirl.create(:milestone, name: '1.team.model.spec')
+    milestone1_2 = FactoryGirl.create(:milestone, name: '2.team.model.spec')
+    milestone1_3 = FactoryGirl.create(:milestone, name: '3.team.model.spec')
+    milestone2_1 = FactoryGirl.create(:milestone, name: '4.team.model.spec')
+    milestone2_2 = FactoryGirl.create(:milestone, name: '5.team.model.spec')
+    milestone2_3 = FactoryGirl.create(:milestone, name: '6.team.model.spec')
+    milestone3_1 = FactoryGirl.create(:milestone, name: '7.team.model.spec')
+    milestone3_2 = FactoryGirl.create(:milestone, name: '8.team.model.spec')
+    milestone3_3 = FactoryGirl.create(:milestone, name: '9.team.model.spec')
+    team1 = FactoryGirl.create(:team, team_name: '1.team.model.spec')
+    team2 = FactoryGirl.create(:team, team_name: '2.team.model.spec')
+    team3 = FactoryGirl.create(:team, team_name: '3.team.model.spec')
+
+    submission1 = FactoryGirl.create(:submission, team: team1, milestone: milestone1_1)
+    submission2 = FactoryGirl.create(:submission, team: team1, milestone: milestone1_2)
+
+    submission5 = FactoryGirl.create(:submission, team: team2, milestone: milestone2_2)
+    submission6 = FactoryGirl.create(:submission, team: team2, milestone: milestone2_3)
+
+    submission7 = FactoryGirl.create(:submission, team: team3, milestone: milestone3_1)
+
+    team1_submissions = team1.get_own_submissions_in_order
+    expect(team1_submissions.length).to eql 2
+    expect(team1_submissions.keys).to include 1
+    expect(team1_submissions[1]).to eql submission1
+    expect(team1_submissions.keys).to include 2
+    expect(team1_submissions[2]).to eql submission2
+    expect(team1_submissions[3]).to be_nil
+
+    team2_submissions = team2.get_own_submissions_in_order
+    expect(team2_submissions.length).to eql 2
+    expect(team2_submissions[1]).to be_nil
+    expect(team2_submissions.keys).to include 2
+    expect(team2_submissions[2]).to eql submission5
+    expect(team2_submissions.keys).to include 3
+    expect(team2_submissions[3]).to eql submission6
+
+    team3_submissions = team3.get_own_submissions_in_order
+    expect(team3_submissions.length).to eql 1
+    expect(team3_submissions.keys).to include 1
+    expect(team3_submissions[1]).to eql submission7
+    expect(team3_submissions[2]).to be_nil
+    expect(team3_submissions[3]).to be_nil
+  end
+
+  it '#get_milestone_number_from_milestone_id' do
+    team = FactoryGirl.create(:team, team_name: '1.team.model.spec')
+
+    expect(team.get_milestone_number_from_milestone_id(1)).to eql 1
+    expect(team.get_milestone_number_from_milestone_id(2)).to eql 2
+    expect(team.get_milestone_number_from_milestone_id(3)).to eql 3
+
+    expect(team.get_milestone_number_from_milestone_id(4)).to eql 1
+    expect(team.get_milestone_number_from_milestone_id(5)).to eql 2
+    expect(team.get_milestone_number_from_milestone_id(6)).to eql 3
+
+    expect(team.get_milestone_number_from_milestone_id(19)).to eql 1
+    expect(team.get_milestone_number_from_milestone_id(20)).to eql 2
+    expect(team.get_milestone_number_from_milestone_id(21)).to eql 3
+  end
+
   it '#get_others_submissions' do
     milestone1 = FactoryGirl.create(:milestone, name: '1.team.model.spec')
     milestone2 = FactoryGirl.create(:milestone, name: '2.team.model.spec')
