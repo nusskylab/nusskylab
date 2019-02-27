@@ -211,6 +211,7 @@ ActiveRecord::Schema.define(version: 20190227234500) do
     t.integer "mentor_id"
     t.integer "choice_ranking"
     t.boolean "mentor_accepted"
+    t.integer  "cohort"
   end
 
   add_index "teams", ["adviser_id"], name: "index_teams_on_adviser_id", using: :btree

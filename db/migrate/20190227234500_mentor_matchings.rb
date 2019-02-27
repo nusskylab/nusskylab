@@ -5,6 +5,7 @@ class CreateMentorMatchings < ActiveRecord::Migration
         t.integer :mentor_id
         t.integer :choice_ranking
         t.boolean :mentor_accepted
+        t.integer :cohort
       end
     end
 end 
