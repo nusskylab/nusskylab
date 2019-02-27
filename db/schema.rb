@@ -12,7 +12,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 
-ActiveRecord::Schema.define(version: 20180408182700) do
+ActiveRecord::Schema.define(version: 20190227234500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,13 @@ ActiveRecord::Schema.define(version: 20180408182700) do
     t.integer  "cohort"
     t.string   "poster_link"
     t.string   "video_link"
+  end
+
+  create_table "mentor_matchings", force: :cascade do |t|
+    t.integer "team_id"
+    t.integer "mentor_id"
+    t.integer "choice_ranking"
+    t.boolean "mentor_accepted"
   end
 
   add_index "teams", ["adviser_id"], name: "index_teams_on_adviser_id", using: :btree
