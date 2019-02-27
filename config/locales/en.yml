@@ -403,6 +403,11 @@ en:
       page_title: >
         Preview survey template and questions
   teams:
+    match_mentor_success:
+      failure_message: >
+        Please select 3 different mentors.
+      success_message: >
+        You have match mentor successfully.
     has_dropped_tooltip: >
       This team has dropped out of Skylab :(
     index:

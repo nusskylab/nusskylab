@@ -120,7 +120,7 @@ class TeamsController < ApplicationController
         )
       }
     else
-      redirect_to match_mentor_success_team_path(), flash: {
+      redirect_to team_path(@team), flash: {
         success: t('.success_message')
       } 
     end
