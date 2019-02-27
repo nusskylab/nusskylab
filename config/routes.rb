@@ -62,6 +62,7 @@ Rails.application.routes.draw do
     resources :feedbacks, only: [:new, :create, :edit, :update]
     member do
       get 'match_mentor'
+      post 'match_mentor_success'
     end
   end
   resources :evaluatings, only: [:index, :new, :create,

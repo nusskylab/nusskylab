@@ -101,6 +101,29 @@ class TeamsController < ApplicationController
     !authenticate_user(true, true) && return
     @team = Team.find(params[:id])
     cohort = @team.cohort || current_cohort
+    render locals: {
+      mentors: Mentor.joins(:user).select('users.*').where(cohort: cohort)
+    }
+  end
+
+  def match_mentor_success
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id])
+    cohort = @team.cohort || current_cohort
+    @choice_1 = params[:team][:choice_1]
+    @choice_2 = params[:team][:choice_2]
+    @choice_3 = params[:team][:choice_3]
+    if ((@choice_1 == @choice_2) || (@choice_2 == @choice_3) || (@choice_1 == @choice_3)) 
+      redirect_to match_mentor_team_path(), flash: {
+        danger: t('.failure_message', 
+          error_message: @team.errors.full_messages.join(', ') 
+        )
+      }
+    else
+      redirect_to match_mentor_success_team_path(), flash: {
+        success: t('.success_message')
+      } 
+    end
   end
 
   private

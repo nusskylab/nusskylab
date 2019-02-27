@@ -1,0 +1,14 @@
+<%= simple_form_for(locals[:team], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+                    url: {action: 'match_mentor_success'}, method: :post) do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor|[mentor.user_name, mentor.id]}, label: 'Mentor Choice 1', include_blank: false,
+    input_html: { name: 'team[choice_1]' } 
+  %>
+  <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor|[mentor.user_name, mentor.id]}, label: 'Mentor Choice 2', include_blank: false,
+    input_html: { name: 'team[choice_2]' } 
+  %>
+  <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor|[mentor.user_name, mentor.id]}, label: 'Mentor Choice 3', include_blank: false,
+    input_html: { name: 'team[choice_3]' } 
+  %>
+  <%= f.submit "Match mentor", class: 'btn btn-success center-block'%>
+<% end %>
