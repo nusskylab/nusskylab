@@ -128,7 +128,7 @@ class TeamsController < ApplicationController
         danger: t('.error_message', 
           error_message: @team.errors.full_messages.join(', ') 
         )
-      } 
+      }
       false
     end
   end 

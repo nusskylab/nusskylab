@@ -21,13 +21,12 @@ class MentorMatchings < ActiveRecord::Base
     ])
     MentorMatchings.transaction do
       begin  
-        myMentors[0].save
-        myMentors[1].save
-        myMentors[2].save
+        myMentors[0].save!
+        myMentors[1].save!
+        myMentors[2].save!
         true
       rescue  => ex
           raise ActiveRecord::Rollback, ex
-          @team.errors.add(ex)
           false
       end
     end
