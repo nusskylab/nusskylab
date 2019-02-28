@@ -110,24 +110,31 @@ class TeamsController < ApplicationController
     !authenticate_user(true, true) && return
     @team = Team.find(params[:id])
     cohort = @team.cohort || current_cohort
-    @choice_1 = params[:team][:choice_1]
-    @choice_2 = params[:team][:choice_2]
-    @choice_3 = params[:team][:choice_3]
-    if ((@choice_1 == @choice_2) || (@choice_2 == @choice_3) || (@choice_1 == @choice_3)) 
+    choices = [ params[:team][:choice_1], params[:team][:choice_2], params[:team][:choice_3] ]
+    
+    if ((choices[0] == choices[2]) || (choices[0] == choices[1]) || (choices[1] == choices[2])) 
       redirect_to match_mentor_team_path(), flash: {
-        danger: t('.failure_message', 
+        danger: t('.failure_message')
+      }
+      false
+    end
+    if MentorMatchings.match_mentor(@team, choices, cohort)
+      redirect_to team_path(@team.id), flash: {
+        success: t('.success_message')
+      }
+      true
+    else
+      redirect_to match_mentor_team_path(), flash: {
+        danger: t('.error_message', 
           error_message: @team.errors.full_messages.join(', ') 
         )
-      }
-    else
-      redirect_to team_path(@team), flash: {
-        success: t('.success_message')
       } 
+      false
     end
-  end
+  end 
 
   private
-
+  
   def team_params
     team_ps = params.require(:team).permit(:team_name, :project_level,
                                            :adviser_id, :mentor_id,

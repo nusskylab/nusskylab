@@ -408,6 +408,8 @@ en:
         Please select 3 different mentors.
       success_message: >
         You have match mentor successfully.
+      error_message: >
+        There is error in matching mentor. <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     has_dropped_tooltip: >
       This team has dropped out of Skylab :(
     index:
