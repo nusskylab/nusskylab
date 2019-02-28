@@ -102,6 +102,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     cohort = @team.cohort || current_cohort
     render locals: {
+
       mentors: Mentor.joins(:user).select('users.*').where(cohort: cohort)
     }
   end
@@ -116,20 +117,20 @@ class TeamsController < ApplicationController
       redirect_to match_mentor_team_path(), flash: {
         danger: t('.failure_message')
       }
-      false
+      return
     end
     if MentorMatchings.match_mentor(@team, choices, cohort)
       redirect_to team_path(@team.id), flash: {
         success: t('.success_message')
       }
-      true
+      return
     else
       redirect_to match_mentor_team_path(), flash: {
         danger: t('.error_message', 
           error_message: @team.errors.full_messages.join(', ') 
         )
       }
-      false
+      return
     end
   end 
 
