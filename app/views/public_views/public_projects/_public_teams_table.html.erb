@@ -29,6 +29,14 @@
           }
         }
       }
+      
+      document.addEventListener('DOMContentLoaded', function () {
+        Array.from(document.getElementsByClassName("button_team")).forEach(function(element) { 
+          element.addEventListener('click', function() {
+            createModalBox(element.id.slice(element.id.indexOf("_") + 1));
+          });
+        });
+      });
   </script>
 </head>
 <body>
@@ -67,7 +75,7 @@
     <h3>
       <% submission_local = Submission.where(team_id: team.id)[-1] %>
       <% if (submission_local) %>
-        <button class="button button_team" onclick="createModalBox(<%= team.id %>)" id="button_<%= team.id %>">
+        <button class="button button_team" id="button_<%= team.id %>">
           <%= idx + 1 %>. <strong><%= team.team_name %></strong>
         </button>
       <% else %>
