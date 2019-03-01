@@ -13,6 +13,23 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript">
+      function createModalBox(team_id) {
+        var modal = document.getElementById("modal_".concat(team_id));
+        var button = document.getElementById("button_".concat(team_id));
+        var span = document.getElementsByClassName("close")[0];
+        console.log("Success!");
+        modal.style.display = "block";
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+      }
+  </script>
 </head>
 <body>
   <!-- Page Content -->
@@ -99,21 +116,4 @@
   </div>
   <% end %>
   <!-- Projects Row -->
-  <script>
-    function createModalBox(team_id) {
-      var modal = document.getElementById("modal_".concat(team_id));
-      var button = document.getElementById("button_".concat(team_id));
-      var span = document.getElementById("modal_".concat(team_id)).getElementsByClassName("close")[0];
-      
-      modal.style.display = "block";
-      span.onclick = function() {
-        modal.style.display = "none";
-      }
-      window.onclick = function(event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-      }
-    }
-  </script>
 </body>
