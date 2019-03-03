@@ -1,4 +1,4 @@
-# fixtures submissions for cohort 2017 (1746 - 1760)
+# fixtures submissions for cohort 2019 (1746 - 1760)
 # 1731-1734 vostok, 1735-1737 gemini, 1738-1740 apollo_11
 
 submission_1746:
@@ -11,7 +11,7 @@ submission_1746:
   poster_link: "https://i.ytimg.com/vi/RTfvXkEXa-k/maxresdefault.jpg"
   video_link: "https://www.youtube.com/watch?v=Tif2a8vXeAA"
   read_me: "Hi I am testing out submission 1746"
-  project_log:
+  project_log: "project log for 1746"
   show_public: true
 
 submission_1747:
@@ -24,7 +24,7 @@ submission_1747:
   poster_link:
   video_link:
   read_me: "Hi I am testing out submission 1747"
-  project_log:
+  project_log: "project log for 1747"
   show_public: true
 
 submission_1748:
@@ -37,7 +37,7 @@ submission_1748:
   poster_link:
   video_link: https://www.youtube.com/watch?v=a7nrDN15NPE
   read_me: "Hi I am testing out submission 1748"
-  project_log:
+  project_log: "project log for 1748"
   show_public: true
 
 submission_1749:
@@ -50,7 +50,7 @@ submission_1749:
   poster_link: "https://i.ytimg.com/vi/XlUPuj2V6PM/maxresdefault.jpg"
   video_link: "https://www.youtube.com/watch?v=CyYh1raLGBs"
   read_me: "Hi I am testing out submission 1749"
-  project_log:
+  project_log: "project log for 1749"
   show_public: true
 
 submission_1750:
@@ -63,7 +63,7 @@ submission_1750:
   poster_link:
   video_link:
   read_me: "Hi I am testing out submission 1750"
-  project_log:
+  project_log: "project log for 1750"
   show_public: true
 
 submission_1751:
@@ -76,7 +76,7 @@ submission_1751:
   poster_link: "http://cdn.ebaumsworld.com/mediaFiles/picture/604025/84556534.jpg"
   video_link: "https://www.youtube.com/watch?v=rk9pHHeEaKU"
   read_me: "Hi I am testing out submission 1751"
-  project_log:
+  project_log: "project log for 1751"
   show_public: true
 
 submission_1752:
@@ -89,7 +89,7 @@ submission_1752:
   poster_link: "https://i.ytimg.com/vi/xzWEJkh800o/maxresdefault.jpg"
   video_link: "https://www.youtube.com/watch?v=kzEQNDNaSXA"
   read_me: "Hi I am testing out submission 1752"
-  project_log:
+  project_log: "project log for 1752"
   show_public: true
 
 submission_1753:
@@ -102,7 +102,7 @@ submission_1753:
   poster_link:
   video_link:
   read_me: "Hi I am testing out submission 1753"
-  project_log:
+  project_log: "project log for 1753"
   show_public: true
 
 submission_1754:
@@ -115,7 +115,7 @@ submission_1754:
   poster_link:
   video_link:
   read_me: "Hi I am testing out submission 1754"
-  project_log:
+  project_log: "project log for 1754"
   show_public: true
 
 submission_1755:
@@ -128,5 +128,5 @@ submission_1755:
   poster_link: "http://breadnmolasses.com/wp-content/uploads/2009/04/1755-logo-petit-300x260.jpg"
   video_link: "https://www.youtube.com/watch?v=__pmy8a17pM"
   read_me: "Hi I am testing out submission 1755"
-  project_log:
+  project_log: "project log for 1755"
   show_public: true

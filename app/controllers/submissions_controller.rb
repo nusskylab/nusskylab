@@ -63,6 +63,7 @@ class SubmissionsController < ApplicationController
   end
 
   def show
+    !authenticate_user(true, false, users_involved_in_submission) && return
     team = Team.find(params[:team_id]) || (record_not_found && return)
     @submission = Submission.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false,
@@ -71,6 +72,7 @@ class SubmissionsController < ApplicationController
   end
 
   def edit
+    !authenticate_user(true, false, users_involved_in_submission) && return
     team = Team.find(params[:team_id]) || (record_not_found && return)
     @submission = Submission.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false,
@@ -83,6 +85,7 @@ class SubmissionsController < ApplicationController
   end
 
   def update
+    !authenticate_user(true, false, users_involved_in_submission) && return
     team = Team.find(params[:team_id]) || (record_not_found && return)
     milestone = Milestone.find_by(id: params[:milestone_id]) ||
                 (record_not_found && return)
@@ -113,6 +116,10 @@ class SubmissionsController < ApplicationController
 
   private
 
+  def users_involved_in_submission
+    Submission.find(params[:id]).team.students.map(&:user)
+  end
+
   def update_submission
     sub_params = submission_params
     sub_params[:milestone_id] = @submission.milestone_id
@@ -121,8 +128,8 @@ class SubmissionsController < ApplicationController
   end
 
   def empty_input_field?
-    @submission.errors[:project_log].any? || 
-    @submission.errors[:read_me].any? || 
+    @submission.errors[:project_log].any? ||
+    @submission.errors[:read_me].any? ||
     @submission.errors[:video_link].any?
   end
 
