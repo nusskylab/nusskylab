@@ -286,4 +286,25 @@ class Team < ActiveRecord::Base
     end
     evaluated_members
   end
+
+  def is_poster_valid
+    require "net/http"
+    begin
+      if !poster_link.blank? #Check if there's a poster link
+        url = URI.parse(poster_link) # parse link as a URI
+        req = Net::HTTP.new(url.host, url.port)
+        req.use_ssl = (url.scheme == 'https') # use ssl if https
+        res = req.request_head(url.path) # get request code
+        if res.code[0] == "4" or res.code[0] == "5" # http error status
+          return false 
+        else
+          return true
+        end
+      else
+        return false
+      end
+    rescue # exception raised when parsing html link
+      return false
+    end
+  end
 end
