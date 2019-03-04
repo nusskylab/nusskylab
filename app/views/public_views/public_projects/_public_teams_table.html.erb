@@ -20,9 +20,11 @@
         var span = document.getElementsByClassName("close")[0];
         console.log("Success!");
         modal.style.display = "block";
+        // Close using the window close.
         span.addEventListener('click', function() {
           closeModal(modal);
         });
+        // Close modal outside of the modal
         window.addEventListener('click', function(event) {
           if (event.target == modal) {
             closeModal(modal);
