@@ -17,8 +17,7 @@
       function createModalBox(team_id) {
         var modal = document.getElementById("modal_".concat(team_id));
         var button = document.getElementById("button_".concat(team_id));
-        var span = document.getElementsByClassName("close")[0];
-        console.log("Success!");
+        var span = modal.getElementsByClassName("close")[0];
         modal.style.display = "block";
         // Close using the window close.
         span.addEventListener('click', function() {
