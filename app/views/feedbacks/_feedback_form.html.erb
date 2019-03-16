@@ -2,16 +2,16 @@
                     url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
     <%= f.error_notification %>
     <div class="form-group">
-      <div class="text-muted"><%= locals[:feedback_template].instruction.html_safe %></div>
+      <div class="text-muted"><%= locals[:feedback_template] == nil ? '' : locals[:feedback_template].instruction.html_safe %></div>
     </div>
-    <% locals[:feedback_template].questions.each do |question| %>
+    <% locals[:feedback_template] == nil ? '' : locals[:feedback_template].questions.each do |question| %>
         <%= render 'questions/question_template',
                    locals: {question: question,
                             question_response: locals[:feedback].get_response_for_question(question.id)} %>
     <% end %>
     <% if locals[:is_new] %>
         <div class="group">
-          <%= f.input :target_team_id, collection: locals[:evaluators].map {|a| [a.team_name, a.id]}, include_blank: false %>
+          <%= f.input :target_team_id, collection: locals[:evaluators].map {|a| [a.team_name, a.id]}, include_blank: false%>
           <%= f.input :adviser_id, collection: locals[:advisers].map {|a| [a.user.user_name, a.id]}, include_blank: false %>
           <div class="checkbox">
             <label>
