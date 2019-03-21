@@ -20,7 +20,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label">Deadline:</label>
     <div class="col-sm-10">
-      <p class="form-control-static"><%= l locals[:survey_template].deadline %></p>
+      <p class="form-control-static"><%= locals[:survey_template].deadline == nil ? "": l {locals[:survey_template].deadline} %></p>
     </div>
   </div>
 </div>
