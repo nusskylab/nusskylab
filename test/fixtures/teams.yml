@@ -28,6 +28,22 @@ team_2:
   cohort: 2018
   video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
 
+#no advisor and no mentor
+team_3:
+  id: 1803
+  adviser_id: 
+  mentor_id: 
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "missing_advisor and missing_mentor"
+  has_dropped: false
+  project_level: "vostok"
+  is_pending: false
+  invitor_student_id: 11 
+  cohort: 2018
+  video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
+
+
 team_31:
   id: 31
   adviser_id: 6
