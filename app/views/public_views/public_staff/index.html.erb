@@ -16,7 +16,7 @@
         <div class="panel-body">
           <% if staff %>
             <div id="facilitators">
-              <%= render 'user_roles', locals: {roles: staff[:facilitators], selected_type: 'Facilitators'} %>
+              <%= render 'user_roles', locals: {roles: staff[:facilitators].reorder(:display_order), selected_type: 'Facilitators'} %>
             </div>
             <div id="advisers">
               <%= render 'user_roles', locals: {roles: staff[:advisers], selected_type: 'Advisers'} %>
