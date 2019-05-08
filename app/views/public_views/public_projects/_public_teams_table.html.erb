@@ -6,43 +6,12 @@
     <meta name="author" content="">
 
     <title>3 Col Portfolio - Start Bootstrap Template</title>
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script type="text/javascript">
-      function createModalBox(team_id) {
-        var modal = document.getElementById("modal_".concat(team_id));
-        var button = document.getElementById("button_".concat(team_id));
-        var span = modal.getElementsByClassName("close")[0];
-        modal.style.display = "block";
-        // Close using the window close.
-        span.addEventListener('click', function() {
-          closeModal(modal);
-        });
-        // Close modal outside of the modal
-        window.addEventListener('click', function(event) {
-          if (event.target == modal) {
-            closeModal(modal);
-          }
-        });
-      }
-      
-      function closeModal(modal) {
-        modal.style.display = "none";
-      }
-
-      document.addEventListener('DOMContentLoaded', function () {
-        Array.from(document.getElementsByClassName("button_team")).forEach(function(element) { 
-          element.addEventListener('click', function() {
-            createModalBox(element.id.slice(element.id.indexOf("_") + 1));
-          });
-        });
-      });
-  </script>
 </head>
 <body>
   <!-- Page Content -->
@@ -64,7 +33,7 @@
   <% end %>
   <div class="col-md-4 portfolio-item">
     <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
-      <% if team.is_poster_valid  %>
+      <% if !team.poster_link.blank? %>
         <%= link_to image_tag(team.poster_link, size: "200", alt: "Team's Poster Link is not in image form",
           title: "Click to view an enlarged version of this image."), team.poster_link %>
       <% elsif locals[:selected_type] == 'Vostok' %>

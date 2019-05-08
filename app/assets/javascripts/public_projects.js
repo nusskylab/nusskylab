@@ -1,21 +1,29 @@
 'use strict';
-$(document).ready(function () {
-  $("body").on("click", ".button_team", function(event) {
-    //theoretically doesn't need a closest() call but chrome is weird
-    var clickedButton = $(event.target).closest(".button_team");
-    var team_id = clickedButton.data("team-id");
-    var modal_id = "#modal_" + team_id;
-    var modal = $(modal_id);
-    var span = document.getElementsByClassName("close")[0];
-    console.log("Success!");
-    modal.show();
-    span.onclick = function() {
-      modal.hide();
+function createModalBox(team_id) {
+  var modal = document.getElementById("modal_".concat(team_id));
+  var button = document.getElementById("button_".concat(team_id));
+  var span = modal.getElementsByClassName("close")[0];
+  modal.style.display = "block";
+  // Close using the window close.
+  span.addEventListener('click', function() {
+    closeModal(modal);
+  });
+  // Close modal outside of the modal
+  window.addEventListener('click', function(event) {
+    if (event.target == modal) {
+      closeModal(modal);
     }
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.hide();
-      }
-    }
+  });
+}
+
+function closeModal(modal) {
+  modal.style.display = "none";
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  Array.from(document.getElementsByClassName("button_team")).forEach(function(element) { 
+    element.addEventListener('click', function() {
+      createModalBox(element.id.slice(element.id.indexOf("_") + 1));
+    });
   });
 });
