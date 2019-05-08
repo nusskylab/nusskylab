@@ -229,19 +229,25 @@ RSpec.describe StudentsController, type: :controller do
       end
 
       it 'should redirect with success for admin user for deletion of student with team' do
-        adviser1 = FactoryGirl.create(:adviser, user_id: subject.current_user.id)
+        adv_user = FactoryGirl.create(:user, email: '1@advisor.controller.spec', uid: '5.advisor.controller.spec')        
+        adviser1 = FactoryGirl.create(:adviser, user_id: adv_user.id)
         user1 = FactoryGirl.create(:user, email: '3@student.controller.spec', uid: '3.student.controller.spec')
         user2 = FactoryGirl.create(:user, email: '4@student.controller.spec', uid: '4.student.controller.spec')
-        team1 = FactoryGirl.create(:team, adviser: adviser1, team_name: '2.team.controller.spec')
+        team1 = FactoryGirl.create(:team, adviser: adviser1, team_name: '2.student.controller.spec')
         student1 = FactoryGirl.create(:student, user_id: user1.id, team: team1)
         student2 = FactoryGirl.create(:student, user_id: user2.id, team: team1)
         delete :destroy, id: student1.id
-        expect(response).to redirect_to(students_path(cohort: controller.current_cohort))
         
+        # expect successful deletion of team
+        expect(response).to redirect_to(students_path(cohort: controller.current_cohort))
+        expect(flash[:success]).not_to be_nil
+
         # expect the team record to be deleted
         expect{ team1.reload }.to raise_error ActiveRecord::RecordNotFound
-        # expect the other user to still exist
-        expect(Student.where(id: student2.id)).to exist
+        # check that student 1 is deleted
+        expect{ student1.reload }.to raise_error ActiveRecord::RecordNotFound
+        # check second student exists and has no team 
+        expect( student2.reload.team ).to be_nil
       end
 
     end
