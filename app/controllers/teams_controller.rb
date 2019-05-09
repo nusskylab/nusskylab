@@ -129,7 +129,8 @@ class TeamsController < ApplicationController
       team_evaluateds_submissions: @team.get_others_submissions,
       team_evaluations: @team.get_own_evaluations_for_others,
       team_evaluators_evaluations: @team.get_evaluations_for_own_team,
-      team_feedbacks: @team.get_feedbacks_for_others
+      team_feedbacks: @team.get_feedbacks_for_others,
+      adviser_feedbacks: @team.get_feedbacks_for_adviser
     }
   end
 end
