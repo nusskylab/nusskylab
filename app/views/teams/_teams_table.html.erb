@@ -1,7 +1,7 @@
 <table class="table table-hover table-sortable">
   <thead>
   <tr>
-    <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th>
+    <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th><th>Student 1</th><th>Student 2</th>
     <th>Adviser</th><th>Mentor</th><th>Submission 1</th><th>Submission 2</th><th>Submission 3</th><th class="unsortable">Cohort</th><th class="unsortable">Actions</th>
   </tr>
   </thead>
@@ -14,11 +14,40 @@
         </td>
         <td><%= team.get_project_level %></td>
         <td><%= team.has_dropped %></td>
+        <td><%= team.get_team_members[1] == nil ? "": team.get_team_members[0].user_name %></td>
+        <td><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
         <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
         <td><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
-        <td><%= team.get_team_submission_status(team.get_own_submissions_in_order[1]) %></td>
-        <td><%= team.get_team_submission_status(team.get_own_submissions_in_order[2]) %></td>
-        <td><%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %></td>
+        <td>
+          <%if team.get_team_submission_status(team.get_own_submissions_in_order[1]) == "Submitted" %>
+          <!--<a class="btn btn-primary btn-xs" onClick="openModalBox(<%#= team.id %>)" href="../submissions/#modal_<%#=team.id %>"> Submission Link </a>-->
+            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[1].video_link %>"> Video Link </a>
+            <br>
+            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[1].poster_link %>"> Poster Link </a>
+          <% else %>
+            <%= team.get_team_submission_status(team.get_own_submissions_in_order[1]) %>
+          <% end %>
+        </td>
+        <td>
+          <%if team.get_team_submission_status(team.get_own_submissions_in_order[2]) == "Submitted" %>
+            <!--<a class="btn btn-primary btn-xs" onClick="openModalBox(<%#= team.id %>)" href="../submissions/#modal_<%#=team.id %>"> Submission Link </a>-->
+            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[2].video_link %>"> Video Link </a>
+            <br>
+            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[2].poster_link %>"> Poster Link </a>
+          <% else %>
+            <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
+          <% end %>
+        </td>
+        <td>
+          <%if team.get_team_submission_status(team.get_own_submissions_in_order[3]) == "Submitted" %>
+            <!-- <a class="btn btn-primary btn-xs" onClick="openModalBox(<%= team.id %>)" href="../submissions/#modal_<%=team.id %>"> Submission Link </a> -->
+            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[3].video_link %>"> Video Link </a>
+            <br>
+            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[3].poster_link %>"> Poster Link </a>
+          <% else %>
+            <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
+          <% end %>
+        </td>
         <td><%= team.cohort %></td>
         <td>
           <% if can_current_user_view_team(team) %>
