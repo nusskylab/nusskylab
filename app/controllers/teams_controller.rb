@@ -101,10 +101,11 @@ class TeamsController < ApplicationController
     !authenticate_user(true, true) && return
     @team = Team.find(params[:id])
     cohort = @team.cohort || current_cohort
-
-
+    @teamsMentorMatchings = MentorMatchings.where(:team_id => params[:id]);
+    #@matchings_1 = teamsMentorMatchings[0].mentor_id.id
+    #puts @matchings_1
     render locals: {
-      mentors: Mentor.joins(:user).select('users.*').where(cohort: cohort)
+      mentors: Mentor.joins(:user).select('users.*').where(cohort: cohort),
     }
   end
 
@@ -129,7 +130,6 @@ class TeamsController < ApplicationController
         }
         return
       else   
-        puts "Test"
         redirect_to match_mentor_team_path(), flash: {
           danger: t('.error_message', 
             error_message: @team.errors.full_messages.join(', ') 
@@ -172,7 +172,7 @@ end
     end
     basic_data = {
       milestones: milestones,
-      survey_templates: survey_templates
+      survey_templates: survey_templates,
     }
     basic_data.merge(team_related_data)
   end
