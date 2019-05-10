@@ -122,7 +122,7 @@ class TeamsController < ApplicationController
       return
     end
     #See if can edit else create
-    if teamsMentorMatchings.blank?
+    if teamsMentorMatchings.any?
       if MentorMatchings.edit_mentor_preferences(@team, choices, cohort, teamsMentorMatchings)
         redirect_to team_path(@team.id), flash: {
           success: t('.success_message')

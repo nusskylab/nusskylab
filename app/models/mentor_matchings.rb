@@ -33,12 +33,11 @@ class MentorMatchings < ActiveRecord::Base
   end 
 
 def self.edit_mentor_preferences(team, choices, cohort, teamsMentorMatchings)
-  puts teamsMentorMatchings
-  myMentors = MentorMatchings.update(teamsMentorMatchings, [
-    { :team_id => team, :mentor_id => User.find(choices[0]), :choice_ranking => 1, :mentor_accepted => false, :cohort => cohort },
-    { :team_id => team, :mentor_id => User.find(choices[1]), :choice_ranking => 2, :mentor_accepted => false, :cohort => cohort },
-    { :team_id => team, :mentor_id => User.find(choices[2]), :choice_ranking => 3, :mentor_accepted => false, :cohort => cohort }
-  ])
+  puts teamsMentorMatchings, team, choices
+  myMentors = Array.new(3)
+  for i in 0..2
+    myMentors[i] = MentorMatchings.where(:id => teamsMentorMatchings[i]).update_all(:mentor_id => User.find(choices[i]), :choice_ranking => i + 1, :mentor_accepted => false, :cohort => cohort)
+  end
   MentorMatchings.transaction do
     begin  
       myMentors[0].save!
