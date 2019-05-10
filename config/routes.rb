@@ -32,8 +32,15 @@ Rails.application.routes.draw do
       patch 'confirm_team'
     end
   end
-  resources :students
+
+  resources :students do
+    get 'new_batch', on: :collection
+    post 'create_batch', on: :collection
+  end
+
   resources :advisers, only: [:index, :new, :create, :show, :destroy] do
+    get 'new_batch', on: :collection
+    post 'create_batch', on: :collection
     member do
       get 'general_mailing'
       post 'send_general_mailing'
@@ -48,6 +55,8 @@ Rails.application.routes.draw do
     end
   end
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
+    get 'new_batch', on: :collection
+    post 'create_batch', on: :collection
     member do
       get 'toggle_registration'
       get 'toggle_project_level_swap'
@@ -56,8 +65,14 @@ Rails.application.routes.draw do
       patch 'send_general_mailing'
     end
   end
-  resources :facilitators, only: [:index, :new, :create, :show, :destroy]
-  resources :tutors, only: [:index, :new, :create, :show, :destroy]
+  resources :facilitators, only: [:index, :new, :create, :show, :destroy] do
+    get 'new_batch', on: :collection
+    post 'create_batch', on: :collection
+  end
+  resources :tutors, only: [:index, :new, :create, :show, :destroy] do
+    get 'new_batch', on: :collection
+    post 'create_batch', on: :collection
+  end
   resources :teams do
     resources :feedbacks, only: [:new, :create, :edit, :update]
   end
