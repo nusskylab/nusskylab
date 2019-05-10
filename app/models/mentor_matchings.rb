@@ -34,7 +34,6 @@ class MentorMatchings < ActiveRecord::Base
   end 
 
 def self.edit_mentor_preferences(team, choices, cohort, teamsMentorMatchings)
-  puts teamsMentorMatchings, team, choices
   MentorMatchings.transaction do
     begin  
       for i in 0..2
