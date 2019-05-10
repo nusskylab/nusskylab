@@ -32,4 +32,25 @@ class MentorMatchings < ActiveRecord::Base
     end
   end 
 
+def self.edit_mentor_preferences(team, choices, cohort, teamsMentorMatchings)
+  puts teamsMentorMatchings
+  myMentors = MentorMatchings.update(teamsMentorMatchings, [
+    { :team_id => team, :mentor_id => User.find(choices[0]), :choice_ranking => 1, :mentor_accepted => false, :cohort => cohort },
+    { :team_id => team, :mentor_id => User.find(choices[1]), :choice_ranking => 2, :mentor_accepted => false, :cohort => cohort },
+    { :team_id => team, :mentor_id => User.find(choices[2]), :choice_ranking => 3, :mentor_accepted => false, :cohort => cohort }
+  ])
+  MentorMatchings.transaction do
+    begin  
+      myMentors[0].save!
+      myMentors[1].save!
+      myMentors[2].save!
+      true
+    rescue  => ex
+        raise ActiveRecord::Rollback, ex
+        false
+    end
+  end
+end 
+
+
 end
