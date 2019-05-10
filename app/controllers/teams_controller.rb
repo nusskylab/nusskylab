@@ -129,6 +129,7 @@ class TeamsController < ApplicationController
         }
         return
       else   
+        puts "Test"
         redirect_to match_mentor_team_path(), flash: {
           danger: t('.error_message', 
             error_message: @team.errors.full_messages.join(', ') 

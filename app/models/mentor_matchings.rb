@@ -26,27 +26,24 @@ class MentorMatchings < ActiveRecord::Base
         myMentors[2].save!
         true
       rescue  => ex
-          raise ActiveRecord::Rollback, ex
-          false
+        raise ActiveRecord::Rollback, ex
+        false
       end
     end
   end 
 
 def self.edit_mentor_preferences(team, choices, cohort, teamsMentorMatchings)
   puts teamsMentorMatchings, team, choices
-  myMentors = Array.new(3)
-  for i in 0..2
-    myMentors[i] = MentorMatchings.where(:id => teamsMentorMatchings[i]).update_all(:mentor_id => User.find(choices[i]), :choice_ranking => i + 1, :mentor_accepted => false, :cohort => cohort)
-  end
   MentorMatchings.transaction do
     begin  
-      myMentors[0].save!
-      myMentors[1].save!
-      myMentors[2].save!
+      for i in 0..2
+        MentorMatchings.where(:id => teamsMentorMatchings[i]).update_all(:mentor_id => User.find(choices[i]), :choice_ranking => i + 1, :mentor_accepted => false, :cohort => cohort)
+      end
       true
     rescue  => ex
-        raise ActiveRecord::Rollback, ex
-        false
+      puts ex
+      raise ActiveRecord::Rollback, ex
+      false
     end
   end
 end 
