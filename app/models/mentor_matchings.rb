@@ -26,6 +26,7 @@ class MentorMatchings < ActiveRecord::Base
         myMentors[2].save!
         true
       rescue  => ex
+        puts ex
         raise ActiveRecord::Rollback, ex
         false
       end
