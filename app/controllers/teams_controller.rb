@@ -98,7 +98,6 @@ class TeamsController < ApplicationController
   end
 
   def match_mentor
-    !authenticate_user(true, true) && return
     @team = Team.find(params[:id])
     cohort = @team.cohort || current_cohort
     @teamsMentorMatchings = MentorMatchings.where(:team_id => params[:id]);
@@ -109,7 +108,6 @@ class TeamsController < ApplicationController
   end
 
   def match_mentor_success
-    !authenticate_user(true, true) && return
     @team = Team.find(params[:id])
     cohort = @team.cohort || current_cohort
     choices = [ params[:team][:choice_1], params[:team][:choice_2], params[:team][:choice_3] ]
