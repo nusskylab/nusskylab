@@ -1,7 +1,16 @@
 <% (1..3).each do |n| %>
 mentor_matchings_<%= n %>:
-  team_id: 1901
-  mentor_id: <%= 20 + n %>
+  team_id: 1731
+  mentor_id: <%= 1724 - n %>
+  choice_ranking: <%= n %>
+  mentor_accepted:  false
+  cohort: 2019
+<% end %>
+
+<% (1..3).each do |n| %>
+mentor_matchings_<%= n + 3 %>:
+  team_id: 1733
+  mentor_id: <%= 1720 + n %>
   choice_ranking: <%= n %>
   mentor_accepted:  false
   cohort: 2019

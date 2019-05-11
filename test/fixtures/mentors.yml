@@ -47,3 +47,19 @@ admin_1722:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   cohort: 2019
+
+admin_1723:
+  id: 1723
+  user_id: 1723
+  slide_link: "https://www.slideteam.net/media/catalog/product/cache/1/thumbnail/543x403/0e7a751fc24f39b632cb88e6c5925d9b/c/a/career_path_timeline_for_self_introduction_powerpoint_guide_Slide01.jpg"
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  cohort: 2019
+
+admin_1724:
+  id: 1724
+  user_id: 1724
+  slide_link: ""
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  cohort: 2019
