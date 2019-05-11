@@ -286,4 +286,6 @@ class Team < ActiveRecord::Base
     end
     evaluated_members
   end
+
 end
+

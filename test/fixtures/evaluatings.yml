@@ -1,1 +1,11 @@
+# Team 1732 will evaluate Team 1733
+evaluating_rel_1:
+  id: 1
+  evaluator_id: 1732
+  evaluated_id: 1733
 
+# Team 1733 will evaluate Team 1735
+evaluating_rel_2:
+  id: 2
+  evaluator_id: 1733
+  evaluated_id: 1735

@@ -6,7 +6,6 @@
     <meta name="author" content="">
 
     <title>3 Col Portfolio - Start Bootstrap Template</title>
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -50,7 +49,7 @@
     <h3>
       <% submission_local = Submission.where(team_id: team.id)[-1] %>
       <% if (submission_local) %>
-        <button class="button button_team" onclick="createModalBox(<%= team.id %>)" id="button_<%= team.id %>">
+        <button class="button button_team" id="button_<%= team.id %>">
           <%= idx + 1 %>. <strong><%= team.team_name %></strong>
         </button>
       <% else %>
@@ -99,21 +98,4 @@
   </div>
   <% end %>
   <!-- Projects Row -->
-  <script>
-    function createModalBox(team_id) {
-      var modal = document.getElementById("modal_".concat(team_id));
-      var button = document.getElementById("button_".concat(team_id));
-      var span = document.getElementById("modal_".concat(team_id)).getElementsByClassName("close")[0];
-      
-      modal.style.display = "block";
-      span.onclick = function() {
-        modal.style.display = "none";
-      }
-      window.onclick = function(event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-      }
-    }
-  </script>
 </body>

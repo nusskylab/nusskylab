@@ -118,12 +118,18 @@ class PeerEvaluationsController < ApplicationController
 
   def can_access_peer_evaluation(evaluators = false, evaluateds = false,
                                  advisees = false)
+    if params[:id]
+      team = PeerEvaluation.find(params[:id]).team
+      !authenticate_user(true, false,
+                         team.get_relevant_users(evaluators, evaluateds)) &&
+        (return false)
+    end
     if params[:team_id]
       team = Team.find(params[:team_id]) ||
              (raise ActiveRecord::RecordNotFound.new(t('application.record_not_found_message')))
       !authenticate_user(true, false,
-                         team.get_relevant_users(evaluators, evaluateds)) &&
-        (return false)
+                        team.get_relevant_users(evaluators, evaluateds)) &&
+       (return false)
     elsif params[:adviser_id]
       adviser = Adviser.find(params[:adviser_id]) ||
                (raise ActiveRecord::RecordNotFound.new(t('application.record_not_found_message')))

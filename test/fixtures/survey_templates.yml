@@ -1,0 +1,26 @@
+peer_eval_1:
+  id: 1
+  instruction: "2019 peer evaluation for milestone 1"
+  deadline: "2019-12-12 20:20:35"
+  survey_type: 1
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  milestone_id: 1
+
+peer_eval_2:
+  id: 2
+  instruction: "2019 peer evaluation for milestone 2"
+  deadline: "2019-12-12 20:20:35"
+  survey_type: 1
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  milestone_id: 2
+
+peer_eval_3:
+  id: 3
+  instruction: "2019 peer evaluation for milestone 3"
+  deadline: "2019-12-12 20:20:35"
+  survey_type: 1
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  milestone_id: 3

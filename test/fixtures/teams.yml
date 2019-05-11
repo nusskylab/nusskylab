@@ -16,7 +16,7 @@ team_1:
 #no advisor
 team_2:
   id: 1802
-  adviser_id: 
+  adviser_id:
   mentor_id: 23
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
@@ -24,7 +24,7 @@ team_2:
   has_dropped: false
   project_level: "vostok"
   is_pending: false
-  invitor_student_id: 11 
+  invitor_student_id: 11
   cohort: 2018
   video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
 
@@ -115,7 +115,7 @@ team_35:
   poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
   video_link:
 
-# fixtures for teams cohort 2017
+# fixtures for teams cohort 2019
 # 1731-1734 vostok, 1735-1737 gemini, 1738-1740 apollo_11
 <% (1731..1732).each do |n| %>
 team_<%= n %>:
@@ -128,7 +128,7 @@ team_<%= n %>:
   has_dropped: false
   project_level: 0
   is_pending: false
-  cohort: 2017
+  cohort: 2019
   poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
   video_link: "https://www.youtube.com/watch?v=MAjY8mCTXWk"
 <% end %>
@@ -144,7 +144,7 @@ team_<%= n %>:
   has_dropped: false
   project_level: 0
   is_pending: false
-  cohort: 2017
+  cohort: 2019
   poster_link: "http://limingu.com/wp-content/uploads/2018/01/blonde-asian.jpg"
   video_link: "https://www.youtube.com/watch?v=kfXdP7nZIiE"
 <% end %>
@@ -160,7 +160,7 @@ team_<%= n %>:
   has_dropped: false
   project_level: 1
   is_pending: false
-  cohort: 2017
+  cohort: 2019
   poster_link: "https://www.planwallpaper.com/static/images/funny-527.jpg"
   video_link: "https://www.youtube.com/watch?v=TMB6-YflpA4"
 <% end %>
@@ -175,7 +175,7 @@ team_1737:
   has_dropped: false
   project_level: 1
   is_pending: false
-  cohort: 2017
+  cohort: 2019
   poster_link: null
   video_link:
 
@@ -190,7 +190,7 @@ team_<%= n %>:
   has_dropped: false
   project_level: 2
   is_pending: false
-  cohort: 2017
+  cohort: 2019
   poster_link: "https://i.pinimg.com/736x/28/3d/1d/283d1d5648c027afa6cdb6c9535ce152--funny-monday-memes-monday-quotes.jpg"
   video_link: "https://www.youtube.com/watch?v=eS2T9IiOYbc"
 <% end %>
@@ -205,6 +205,6 @@ team_1740:
   has_dropped: false
   project_level: 2
   is_pending: false
-  cohort: 2017
+  cohort: 2019
   poster_link:
   video_link:
