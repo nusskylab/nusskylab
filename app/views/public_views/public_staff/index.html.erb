@@ -7,46 +7,40 @@
   </script>
   <div class="row">
     <div class="col-sm-10">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="text-center">
-            Staff in Cohort <%= cohort %>
-          </h2>
+      <h2 class="text-center">
+        Staff in Cohort <%= cohort %>
+      </h2>
+      <% if staff %>
+        <div id="facilitators">
+          <%= render 'user_roles', locals: {roles: staff[:facilitators].reorder(:display_order), selected_type: 'Facilitators'} %>
         </div>
-        <div class="panel-body">
-          <% if staff %>
-            <div id="facilitators">
-              <%= render 'user_roles', locals: {roles: staff[:facilitators].reorder(:display_order), selected_type: 'Facilitators'} %>
-            </div>
-            <div id="advisers">
-              <%= render 'user_roles', locals: {roles: staff[:advisers], selected_type: 'Advisers'} %>
-            </div>
-            <div id="mentors">
-              <%= render 'user_roles', locals: {roles: staff[:mentors], selected_type: 'Mentors'} %>
-            </div>
-            <div id="tutors">
-              <%= render 'user_roles', locals: {roles: staff[:tutors], selected_type: 'Tutors'} %>
-            </div>
-          <% else %>
-            No Data Available
-          <% end %>
+        <div id="advisers">
+          <%= render 'user_roles', locals: {roles: staff[:advisers], selected_type: 'Advisers'} %>
         </div>
-      </div>
-      <div class="col-sm-12">
+        <div id="mentors">
+          <%= render 'user_roles', locals: {roles: staff[:mentors], selected_type: 'Mentors'} %>
+        </div>
+        <div id="tutors">
+          <%= render 'user_roles', locals: {roles: staff[:tutors], selected_type: 'Tutors'} %>
+        </div>
+      <% else %>
+        No Data Available
+      <% end %>
+      <ul class="nav col-sm-12">
         <% all_cohorts.each do |cohort| %>
-        <div class="col-sm-2">
-          <%= link_to cohort, public_views_public_staff_index_path(cohort: cohort), class: 'btn btn-info' %>
-        </div>
+          <li class="nav-item col-sm-2">
+            <%= link_to cohort, public_views_public_staff_index_path(cohort: cohort), class: 'btn btn-info' %>
+          </li>
         <% end %>
-      </div>
+      </ul>
     </div>
     <div class="col-sm-2" id="nav-scroll">
-      <ul class="nav nav-pills nav-stacked" data-spy="affix" style="background: #eee;">
-        <li><a href="#facilitators"><i class="glyphicon glyphicon-chevron-left"></i> Facilitators</a></li>
-        <li><a href="#advisers"><i class="glyphicon glyphicon-chevron-left"></i> Advisers</a></li>
-        <li><a href="#mentors"><i class="glyphicon glyphicon-chevron-left"></i> Mentors</a></li>
-        <li><a href="#tutors"><i class="glyphicon glyphicon-chevron-left"></i> Tutors</a></li>
-      </ul>
+      <nav class="nav flex-column position-fixed" data-spy="scroll" style="background: #eee;">
+        <a class="nav-link" href="#facilitators"><i class="glyphicon glyphicon-chevron-left"></i> Facilitators</a>
+        <a class="nav-link" href="#advisers"><i class="glyphicon glyphicon-chevron-left"></i> Advisers</a>
+        <a class="nav-link" href="#mentors"><i class="glyphicon glyphicon-chevron-left"></i> Mentors</a>
+        <a class="nav-link" href="#tutors"><i class="glyphicon glyphicon-chevron-left"></i> Tutors</a>
+      </nav>
     </div>
   </div>
 <% end %>
