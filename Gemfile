@@ -33,7 +33,8 @@ source 'https://rubygems.org' do
   gem 'sdoc', '~> 0.4.0', group: :doc
 
   # Use bootstrap for styling
-  gem 'bootstrap-sass', '~> 3.3.4'
+  gem 'bootstrap', '~> 4.3.1'
+  gem 'sprockets-rails', :require => 'sprockets/railtie'
   # Use jquery as the JavaScript library
   gem 'jquery-rails', '~> 4.2.1'
   # simple_form for form validation
@@ -46,7 +47,7 @@ source 'https://rubygems.org' do
   gem 'rails_autolink', '~> 1.1.6'
   # datetime picker
   gem 'momentjs-rails', '>= 2.9.0'
-  gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
+  gem 'bootstrap4-datetime-picker-rails'
   # Gravatar
   gem 'gravtastic', '~> 3.2.6'
 

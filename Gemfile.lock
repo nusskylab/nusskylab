@@ -40,7 +40,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.4)
-    autoprefixer-rails (8.6.2)
+    autoprefixer-rails (9.3.1)
       execjs
     autosize-rails (1.18.17)
       rails (>= 3.1)
