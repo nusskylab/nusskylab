@@ -53,37 +53,29 @@ class RolesController < ApplicationController
 
   def create_batch
     !authenticate_user(true, false, additional_users_for_new) && return
-    post_params = batch_role_params
-    cohort = post_params[:cohort] || current_cohort
-    user_ids = post_params[:user_ids] || []
-    error_messages = ""
+    cohort = batch_role_params[:cohort] || current_cohort
+    user_ids = batch_role_params[:user_ids] || []
+    # error_messages = ""
+    users_param = user_ids.uniq.map{|u| {user_id: u, cohort: cohort}}
+    puts users_param
 
-    if user_ids.count == 0
+    if users_param.count == 0
       return redirect_to path_for_new_batch(cohort: cohort), flash: { danger: t('.missing_field_message') }
     end
 
-    role_cls.transaction do
-      for user_id in user_ids
-        user = User.find(user_id)
-        if user
-          @role = role_cls.new(user_id: user_id, cohort: cohort)
-          error_messages += t('.specific_failure_message', user_name: user.user_name,
-            error_message: @role.errors.full_messages.join(',')) if !@role.save
-        else
-          error_messages += t('.user_missing_message', user_name: user.user_name)
-        end
-      end
-      raise ActiveRecord::Rollback if !error_messages.blank?
-    end
-
-    if error_messages.blank?
+    users = role_cls.create(users_param)
+    if users.all? { |user| user.persisted? }
       redirect_to path_for_index(cohort: cohort), flash: {
-        success: t('.success_message', user_count: user_ids.count)
+        success: t('.success_message', user_count: users_param.count)
       }
     else
+      success_count = users.select{|u| u.persisted?}.count
+      errors = users.map { |u| u.errors.full_messages.empty? ? nil
+        : t('.specific_failure_message', user_name: User.find(u.user_id).user_name,
+            error_message: u.errors.full_messages.join('. '))}.compact.join('')
+
       redirect_to path_for_new_batch(cohort: cohort), flash: {
-        danger: t('.failure_message',
-                  error_messages: error_messages)
+        danger: t('.failure_message', success_count: success_count, error_messages: errors)
       }
     end
   end
