@@ -41,6 +41,7 @@ class StudentsController < RolesController
     basic_data.merge(team_related_data_for_student)
   end
 
+
   def team_related_data_for_student
     return {} if @role.team_id.blank?
     {
