@@ -55,9 +55,7 @@ class RolesController < ApplicationController
     !authenticate_user(true, false, additional_users_for_new) && return
     cohort = batch_role_params[:cohort] || current_cohort
     user_ids = batch_role_params[:user_ids] || []
-    # error_messages = ""
     users_param = user_ids.uniq.map{|u| {user_id: u, cohort: cohort}}
-    puts users_param
 
     if users_param.count == 0
       return redirect_to path_for_new_batch(cohort: cohort), flash: { danger: t('.missing_field_message') }
