@@ -1,11 +1,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require bootstrap-select
 //= require jquery.tablesorter
 //= require select2
 //= require autosize
 //= require thredded
+//= require bootstrap-select
 
 /**
  * Customization for table sorter

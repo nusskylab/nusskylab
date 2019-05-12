@@ -1,0 +1,20 @@
+<div id="batch_create_mentors_form">
+  <fieldset class="batch_create_mentors_fieldset">
+    <div class="col-sm-11">
+      <%= f.input :user_id, input_html: { class: "selectpicker", "data-live-search": true, name: "users[][user_id]" },
+      collection: users.map {|user| [user.user_name, user.id]}, include_blank: false, include_hidden: false, required: true %>
+
+      <%= f.input :slide_link, input_html: { name: "users[][slide_link]" }, placeholder: true,
+        placeholder: 'Enter in url form e.g. https//...', required: false %>
+
+      <input type="hidden" name="users[][cohort]" value="<%= cohort %>">
+    <hr />
+    </div>
+    <div class="col-sm-1" style="margin-top: 25px">
+      <div>
+        <button type="button" class="btn btn-warning mentor-form-delete-btn hide" data-toggle="tooltip" data-placement="top" title="Remove">
+          <i class="state-icon 	glyphicon glyphicon-trash"></i>
+        </button>
+      </div>
+  </fieldset>
+</div>

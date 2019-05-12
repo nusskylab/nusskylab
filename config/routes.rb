@@ -48,6 +48,8 @@ Rails.application.routes.draw do
     end
   end
   resources :mentors, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
+    get 'new_batch', on: :collection
+    post 'create_batch', on: :collection
     member do
       get 'general_mailing'
       post 'send_general_mailing'

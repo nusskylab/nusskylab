@@ -51,7 +51,7 @@ en:
         User with specified ID could not be found. Please provide a valid user ID.
     create_batch:
       success_message: >
-        %{user_count} Admin(s) created successfully created
+        %{user_count} Admin(s) successfully created
       failure_message: >
         Error occured during batch creation. %{error_messages}
       specific_failure_message: >
@@ -97,7 +97,7 @@ en:
         User with specified ID could not be found. Please provide a valid user ID.
     create_batch:
       success_message: >
-        %{user_count} Adviser(s) created successfully created
+        %{user_count} Adviser(s) successfully created
       failure_message: >
         Error occured during batch creation. %{error_messages}
       specific_failure_message: >
@@ -177,7 +177,7 @@ en:
         User with specified ID could not be found. Please provide a valid user ID.
     create_batch:
       success_message: >
-        %{user_count} Facilitators(s) created successfully created
+        %{user_count} Facilitators(s) successfully created
       failure_message: >
         Error occured during batch creation. %{error_messages}
       specific_failure_message: >
@@ -224,6 +224,9 @@ en:
     new:
       page_title: >
         Create a new mentor
+    new_batch:
+      page_title: >
+        Create mentors
     create:
       success_message: >
         Mentor %{user_name} has been successfully created
@@ -231,6 +234,17 @@ en:
         Mentor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
+    create_batch:
+      success_message: >
+        %{user_count} Mentors(s) successfully created
+      failure_message: >
+        %{success_count} Mentor(s) successfully created.<br> The following mentors were not created: %{error_messages}
+      specific_failure_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name}: %{error_message}
+      user_missing_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name} could not be found.
+      missing_field_message: >
+        Please specify the user id(s) to be a mentor.
     show:
       page_title: >
         View mentor %{user_name}'s page
@@ -360,7 +374,7 @@ en:
         User with specified ID could not be found. Please provide a valid user ID.
     create_batch:
       success_message: >
-        %{user_count} Students(s) created successfully created
+        %{user_count} Students(s) successfully created
       failure_message: >
         Error occured during batch creation. %{error_messages}
       specific_failure_message: >
@@ -515,7 +529,7 @@ en:
         User with specified ID could not be found. Please provide a valid user ID.
     create_batch:
       success_message: >
-        %{user_count} Tutor(s) created successfully created
+        %{user_count} Tutor(s) successfully created
       failure_message: >
         Error occured during batch creation. %{error_messages}
       specific_failure_message: >
