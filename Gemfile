@@ -35,7 +35,7 @@ source 'https://rubygems.org' do
   # Use bootstrap for styling
   gem 'bootstrap', '~> 4.3.1'
   gem 'sprockets-rails', :require => 'sprockets/railtie'
-  gem 'octicons', '~> 3.0', '>= 3.0.1'
+  gem 'octicons_helper'
   # Use jquery as the JavaScript library
   gem 'jquery-rails', '~> 4.2.1'
   # simple_form for form validation
