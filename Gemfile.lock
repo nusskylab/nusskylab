@@ -345,7 +345,6 @@ GEM
       sprockets-es6
     tilt (2.0.9)
     tinymce-rails (4.2.8)
-      coffee-rails
       railties (>= 3.1.1)
     turbolinks (2.5.4)
       coffee-rails
@@ -370,7 +369,7 @@ PLATFORMS
 DEPENDENCIES
   backport_new_renderer (~> 1.0.0)!
   bootstrap (~> 4.3.1)!
-  bootstrap4-datetime-picker-rails!
+  bootstrap4-datetime-picker-rails (~> 0.3.1)!
   capybara (~> 2.5.0)!
   capybara-webkit (~> 1.7.1)!
   codeclimate-test-reporter!
