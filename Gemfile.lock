@@ -345,8 +345,9 @@ GEM
       sprockets-es6
     tilt (2.0.9)
     tinymce-rails (4.2.8)
+      coffee-rails
       railties (>= 3.1.1)
-     turbolinks (2.5.4)
+    turbolinks (2.5.4)
       coffee-rails
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
@@ -381,7 +382,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)!
   jquery-rails (~> 4.2.1)!
   momentjs-rails (>= 2.9.0)!
-  octicons_helper!
+  octicons_helper (~> 8.5.0)!
   omniauth (~> 1.6.1)!
   omniauth-openid (~> 1.0.1)!
   pg (~> 0.18.3)!
@@ -403,7 +404,7 @@ DEPENDENCIES
   sprockets-rails!
   thredded (~> 0.9.4)!
   tinymce-rails (~> 4.2.5)!
-  turbolinks (~> 2.5.3)!
+  turbolinks (~> 2.5.4)!
   uglifier (>= 1.3.0)!
   web-console (~> 2.0)!
 
