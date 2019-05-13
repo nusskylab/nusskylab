@@ -24,7 +24,7 @@
       </div>
     </div>
   </nav>
-  <div class="container" id="main-content">
+  <div class="container pt-3" id="main-content">
     <%= render 'shared/flash_messages' %>
     <%= content_for?(:main_content) ? yield(:main_content) : yield %>
     <a href="javascript:" id="return-to-top"><i class="glyphicon glyphicon-chevron-up"></i></a>

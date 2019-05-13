@@ -31,7 +31,7 @@
   <% if (idx % 3 == 0) %>
     <div class="row"></div>
   <% end %>
-  <div class="col-md-4 portfolio-item">
+  <div class="col-md-3 portfolio-item">
     <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
       <% if !team.poster_link.blank? %>
         <%= link_to image_tag(team.poster_link, size: "200", alt: "Team's Poster Link is not in image form",
