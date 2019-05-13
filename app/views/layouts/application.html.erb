@@ -27,7 +27,7 @@
   <div class="container pt-3" id="main-content">
     <%= render 'shared/flash_messages' %>
     <%= content_for?(:main_content) ? yield(:main_content) : yield %>
-    <a href="javascript:" id="return-to-top"><i class="glyphicon glyphicon-chevron-up"></i></a>
+    <a href="javascript:" id="return-to-top"><%= octicon "chevron-up", :height => 32,  :class => "ml-3 mt-2", :"aria-label" => "return-to-top" %></a>
   </div>
   <footer class="col-xl-12 footer text-muted" id="main-footer">
     <div class="container">
