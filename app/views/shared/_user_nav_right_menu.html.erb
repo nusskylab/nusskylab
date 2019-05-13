@@ -1,11 +1,11 @@
-<ul class="navbar-nav navbar-right">
+<ul class="navbar-nav float-right">
   <% if current_user %>
-      <li>
+      <li class="nav-item">
         <p class="navbar-text user-name-text">
           Welcome, <%= current_user.user_name %>
         </p>
       </li>
-      <li>
+      <li class="nav-item">
         <div class="dropdown">
           <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"
                   id="settings-dropdown" aria-expanded="true">
@@ -16,12 +16,12 @@
           </ul>
         </div>
       </li>
-      <li>
+      <li class="nav-item">
         <%= link_to 'Logout', destroy_user_session_path,
                     method: :delete, class: 'btn btn-default btn-sm navbar-btn' %>
       </li>
   <% else %>
-      <li>
+      <li class="nav-item">
         <%= link_to 'Login', new_user_session_path,
                     method: :get, class: 'btn btn-default btn-sm navbar-btn' %>
       </li>
