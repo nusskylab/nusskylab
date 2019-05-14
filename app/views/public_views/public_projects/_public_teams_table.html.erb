@@ -23,10 +23,10 @@
       </div>
   </div>
   
-  <div class="card-columns">
+  <div class="row">
   <% locals[:selected_teams].each_with_index do |team, idx| %>
     <!-- The Project Profile -->
-    <div class="card">
+    <div class="card col-lg-4 border-0">
       <div class="card-body">
         <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
           <% if !team.poster_link.blank? %>
