@@ -26,18 +26,18 @@
   <div class="row">
   <% locals[:selected_teams].each_with_index do |team, idx| %>
     <!-- The Project Profile -->
-    <div class="card col-lg-4 border-0">
+    <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
       <div class="card-body">
         <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
           <% if !team.poster_link.blank? %>
-            <%= link_to image_tag(team.poster_link, class: 'img-fluid', alt: "Team's Poster Link is not in image form",
+            <%= link_to image_tag(team.poster_link, size: "200", alt: "Team's Poster Link is not in image form",
               title: "Click to view an enlarged version of this image."), team.poster_link %>
           <% elsif locals[:selected_type] == 'Vostok' %>
-            <%= image_tag("Vostok_Icon.jpg", class: 'img-fluid rounded inactive_link') %>
+            <%= image_tag("Vostok_Icon.jpg", size: "200", class: 'rounded inactive_link') %>
           <% elsif locals[:selected_type] == 'Project Gemini' %>
-            <%= image_tag("Project_Gemini_Icon.png", class: 'img-fluid rounded inactive_link') %>
+            <%= image_tag("Project_Gemini_Icon.png", size: "200", class: 'rounded inactive_link') %>
           <% elsif locals[:selected_type] == 'Apollo 11' %>
-            <%= image_tag("Apollo_11_Icon.png", class: 'img-fluid rounded inactive_link') %>
+            <%= image_tag("Apollo_11_Icon.png", size: "200", class: 'rounded inactive_link') %>
           <% end %>
         </a>
         <!-- createModalBox(<%= team.team_name %>) disabled if no submission present -->
@@ -45,7 +45,8 @@
         <h3 class="card-title"> <%= idx + 1 %>. <strong><%= team.team_name %></strong> </h3>
         <p class="card-text text-muted">Students: <%= team.students.map{|student| student.user.user_name}.join(' & ') %></p>
         <p class="card-text text-muted">Advised by: <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></p>
-
+      </div>
+      <div class="card-footer bg-white border-top-0">
         <% submission_local = Submission.where(team_id: team.id)[-1] %>    
         <button data-toggle="modal" data-target="#modal_<%= team.id %>" class="btn btn-primary button_team text-center" id="button_<%= team.id %>" <% if (!submission_local) %> disabled <% end %>>
           View submission
