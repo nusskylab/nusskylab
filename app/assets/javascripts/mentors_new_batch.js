@@ -33,10 +33,10 @@ $(document).ready(function () {
 
   function addMentorForm() {
     mentor_forms_idx++;
-    const clone = $(".batch_create_mentors_fieldset:first").clone();
+    var clone = $(".batch_create_mentors_fieldset:first").clone();
 
-    const new_user_select_id = `users_user_id${mentor_forms_idx}`;
-    const new_slide_link_id = `users_slide_link${mentor_forms_idx}`;
+    var new_user_select_id = `users_user_id${mentor_forms_idx}`;
+    var new_slide_link_id = `users_slide_link${mentor_forms_idx}`;
 
     clone.find('[id^=users_user_id]').prop('id', new_user_select_id);
     clone.find('[id^=users_slide_link]').prop('id', new_slide_link_id);
