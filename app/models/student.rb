@@ -8,7 +8,7 @@ class Student < ActiveRecord::Base
   before_validation :fill_current_cohort
 
   belongs_to :user
-  belongs_to :team
+  belongs_to :team, dependent: :destroy
 
   def self.student?(user_id, extra = nil)
     if extra
