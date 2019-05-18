@@ -34,18 +34,6 @@
   <div class="col-md-4 portfolio-item">
     <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
       <% if !team.poster_link.blank? %>
-      <script>
-          function replaceImg(image, team_level) {
-            alert(team_level)
-            if (team_level == 'vostok') {
-              return $(image).attr('src', "/assets/Vostok_Icon.jpg");
-            } else if (team_level == 'project_gemini') {
-              return $(image).attr('src', "/assets/Project_Gemini_Icon.png");
-            } else {
-              return $(image).attr('src', "/assets/Apollo_11_Icon.png");
-            }
-          }
-        </script>
         <%= link_to image_tag(team.poster_link, size: "200", alt: "Team's Poster Link is not in image form", 
           title: "Click to view an enlarged version of this image.", id: "img_#{team.team_name}", onerror: "onerror=null;replaceImg(this, '#{team.project_level}')"), team.poster_link %>
       <% elsif locals[:selected_type] == 'Vostok' %>
