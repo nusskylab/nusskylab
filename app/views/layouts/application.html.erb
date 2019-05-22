@@ -26,7 +26,9 @@
   </nav>
   <div class="container py-3" id="main-content">
     <%= render 'shared/flash_messages' %>
-    <%= content_for?(:main_content) ? yield(:main_content) : yield %>
+    <div class="container">
+      <%= content_for?(:main_content) ? yield(:main_content) : yield %>
+    </div>
     <a href="javascript:" id="return-to-top"><%= octicon "chevron-up", :height => 32,  :class => "ml-3 mt-2", :"aria-label" => "return-to-top" %></a>
   </div>
   <footer class="col-xl-12 footer text-muted" id="main-footer">
