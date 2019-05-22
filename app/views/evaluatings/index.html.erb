@@ -1,23 +1,19 @@
 <% content_for :main_content do %>
-    <% javascript 'evaluatings.js' %>
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <h3 class="text-center">Evaluating relations in cohort <%= cohort %></h3>
-      </div>
-      <div class="panel-body">
-        <div class="col-sm-2 col-sm-offset-4">
-          <%= link_to 'Create New Evaluation Relationship', new_evaluating_path(cohort: cohort), class: 'btn btn-success' %>
-        </div>
-        <br><hr>
-        <%= render 'evaluatings_table', locals: {evaluatings: @evaluatings} %>
-        <hr>
-        <div class="col-sm-12">
-        <% all_cohorts.each do |cohort| %>
-          <div class="col-sm-2">
-            <%= link_to cohort, evaluatings_path(cohort: cohort), class: 'btn btn-info' %>
-          </div>
-        <% end %>
-      </div>
-      </div>
+  <% javascript 'evaluatings.js' %>
+  <div class="row">
+    <h3 class="col text-right">Evaluating relations in cohort <%= cohort %></h3>
+    <div class="col text-right">
+      <%= link_to 'Create New Evaluation Relationship', new_evaluating_path(cohort: cohort), class: 'btn btn-success' %>
     </div>
+  </div>
+  <div class="row">
+    <%= render 'evaluatings_table', locals: {evaluatings: @evaluatings} %>
+  </div>
+  <ul class="nav col-sm-12">
+    <% all_cohorts.each do |cohort| %>
+      <li class="nav-item col-sm-2">
+        <%= link_to cohort, evaluatings_path(cohort: cohort), class: 'btn btn-info' %>
+      </li>
+    <% end %>
+  </ul>
 <% end %>
