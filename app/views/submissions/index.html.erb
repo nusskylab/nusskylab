@@ -1,17 +1,21 @@
-<ul class="nav nav-pills nav-stacked col-md-2" id="current_cohorts">
-  <li class="active"><a data-toggle="pill" href="#vostok">Vostok</a></li>
-  <li><a data-toggle="pill" href="#project_gemini">Project Gemini</a></li>
-  <li><a data-toggle="pill" href="#apollo_11">Apollo 11</a></li>
-</ul>
-<div class="tab-content col-md-10">
-  <% @teams_table.each do |project_level, teams| %>
-    <div id="<%= project_level %>" class="tab-pane fade in active">
-      <% if teams.length > 0 %>
-        <%= render 'submissions_display', locals: {teams: teams,
-                                                   selected_type: project_level} %>
-      <% else %>
-        <h3>This level currently has no submissions</h3>
-      <% end %>
-    </div>
-  <% end %>
+<div class="row">
+  <div class="col-md-2">
+    <ul class="nav nav-pills" id="current_cohorts">
+      <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#vostok">Vostok</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#project_gemini">Project Gemini</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#apollo_11">Apollo 11</a></li>
+    </ul>
+  </div>
+  <div class="tab-content col-md-10">
+    <% @teams_table.each do |project_level, teams| %>
+      <div id="<%= project_level %>" class="tab-pane fade show active">
+        <% if teams.length > 0 %>
+          <%= render 'submissions_display', locals: {teams: teams,
+                                                    selected_type: project_level} %>
+        <% else %>
+          <h3>This level currently has no submissions</h3>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
