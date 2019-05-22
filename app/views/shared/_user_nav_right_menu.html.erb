@@ -16,12 +16,12 @@
       </li>
       <li class="nav-item">
         <%= link_to 'Logout', destroy_user_session_path,
-                    method: :delete, class: 'btn btn-default btn-sm navbar-btn' %>
+                    method: :delete, class: 'nav-link' %>
       </li>
   <% else %>
       <li class="nav-item">
         <%= link_to 'Login', new_user_session_path,
-                    method: :get, class: 'btn btn-default btn-sm navbar-btn' %>
+                    method: :get, class: 'nav-link' %>
       </li>
   <% end %>
 </ul>
