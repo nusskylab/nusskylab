@@ -1,23 +1,23 @@
 <%= simple_form_for(locals[:user], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
                     url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
     <%= f.error_notification %>
-    <%= f.input :user_name %>
-    <%= f.input :email %>
+    <%= f.input :user_name, wrapper_html: { class: 'row' } %>
+    <%= f.input :email, wrapper_html: { class: 'row' } %>
     <% if locals[:is_new] %>
-        <%= f.input :provider, collection: User.providers, include_blank: false%>
+        <%= f.input :provider, collection: User.providers, include_blank: false, wrapper_html: { class: 'row' }%>
     <% else %>
-        <%= f.input :provider, collection: User.providers, include_blank: false, disabled: true %>
+        <%= f.input :provider, collection: User.providers, include_blank: false, disabled: true, wrapper_html: { class: 'row' } %>
     <% end %>
-    <%= f.input :uid %>
-    <%= f.input :github_link %>
-    <%= f.input :linkedin_link %>
-    <%= f.input :blog_link, label: 'Website Link' %>
+    <%= f.input :uid, wrapper_html: { class: 'row' } %>
+    <%= f.input :github_link, wrapper_html: { class: 'row' } %>
+    <%= f.input :linkedin_link, wrapper_html: { class: 'row' } %>
+    <%= f.input :blog_link, label: 'Website Link', wrapper_html: { class: 'row' } %>
     <% if locals[:is_new] %>
-        <%= f.input :program_of_study, collection: User.program_of_studies, include_blank: false %>
+        <%= f.input :program_of_study, collection: User.program_of_studies, include_blank: false, wrapper_html: { class: 'row' } %>
     <% else %>
-        <%= f.input :program_of_study, collection: User.program_of_studies, include_blank: false, selected: User.program_of_studies[locals[:user].program_of_study] %>
+        <%= f.input :program_of_study, collection: User.program_of_studies, include_blank: false, selected: User.program_of_studies[locals[:user].program_of_study], wrapper_html: { class: 'row' } %>
     <% end %>
-    <%= f.input :matric_number %>
-    <%= f.input :self_introduction %>
-    <%= f.button :submit_centred, class: 'btn-success' %>
+    <%= f.input :matric_number, wrapper_html: { class: 'row' } %>
+    <%= f.input :self_introduction, wrapper_html: { class: 'row' } %>
+    <%= f.button :submit_centred, class: 'btn-success', wrapper_html: { class: 'row' } %>
 <% end %>
