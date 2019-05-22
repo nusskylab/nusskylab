@@ -9,7 +9,7 @@
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-    <div class="col-sm-8 col-sm-offset-4">
+    <div class="col-sm-8 offset-sm-4">
       <%= link_to 'Forgot your password?', new_password_path(resource_name) %>
     </div>
 <% end -%>
@@ -28,6 +28,6 @@
   <% end -%>
 <% end -%>
 <br><hr>
-<div class="col-sm-8 col-sm-offset-4">
+<div class="col-sm-8 offset-sm-4">
   Or you can <%= link_to 'Sign in with NUS',  nus_openid_login_path, class: 'btn btn-info' %>
 </div>
