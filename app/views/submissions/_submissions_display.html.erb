@@ -10,9 +10,9 @@
       <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
         <div class="card-body">
 
-          <%= link_to image_tag(image_tag_string(locals[:selected_type]), class: 'rounded') %>
+          
           <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= idx %>">
-              <%= idx + 1 %>. <%= team.team_name %>
+            <%= link_to image_tag(image_tag_string(locals[:selected_type]), class: 'rounded'), size: "200" %>
           </a>
           
           <h3 class="card-title"> <%= idx + 1 %>. <strong><%= team.team_name %></strong> </h3>
@@ -39,18 +39,20 @@
             </div>
             <div class="modal-body">
               <!-- Tab Content -->
+              <% first_loop = true; %>
               <% team_submission = Submission.where(team_id: team.id); %>
               <% if (team_submission.length > 0) %>
                 <ul class="nav nav-tabs">
                   <% team_submission.order(:milestone_id).each do |submission| %>
-                    <li>
-                      <a data-toggle="tab" href="#team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>">Milestone <%= submission.milestone_id %></a>
+                    <li class="nav-item">
+                      <a class="nav-link <% if first_loop %>active<% first_loop = false; end %>" data-toggle="tab" href="#team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>">Milestone <%= submission.milestone_id %></a>
                     </li>
                   <% end %>
                 </ul>
                 <div class="tab-content">
+                  <% first_loop = true; %>
                   <% team_submission.order(:milestone_id).each do |submission| %>
-                    <div id="team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>" class="tab-pane fade in">
+                    <div id="team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>" class="tab-pane fade show <% if first_loop %>active<% first_loop = false; end %>">
                       <!--                      Team <%#= submission.team_id %>-->
                       <!--                      Milestone <%#= submission.milestone_id %>-->
                       <%= render 'submission_details', locals: {submission: submission} %>
