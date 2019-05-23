@@ -28,16 +28,16 @@
       <!-- End of thumbnail display -->
 
       <!-- Modal box: Display all the team's submissions -->
-      <div id="modal_<%= team.id %>" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-          <!-- Modal content-->
+      <div id="modal_<%= team.id %>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_<%= team.id %>Label" aria-hidden="true">
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title"><%= team.team_name %>'s submissions</h4>
+              <h4 class="modal-title text-muted"><%= team.team_name %></h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
             <div class="modal-body">
-
               <!-- Tab Content -->
               <% team_submission = Submission.where(team_id: team.id); %>
               <% if (team_submission.length > 0) %>
@@ -61,10 +61,6 @@
                 <h3>No submissions submitted</h3>
               <% end %>
               <!-- End of Tab Content -->
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
