@@ -9,9 +9,11 @@
     <%= render 'questions/question_template_form', locals: {
       question: locals[:question], is_new: false
     } %>
-    <div class="col-sm-offset-4 col-sm-8">
-      <%= link_to "Delete question", question_path(locals[:question]), remote: true, method: :delete, class: 'btn btn-danger question-delete-link' %>
+    <div class="row">
+      <div class="offset-sm-4 col-sm-8">
+        <%= link_to "Delete question", question_path(locals[:question]), remote: true, method: :delete, class: 'btn btn-danger question-delete-link' %>
+      </div>
     </div>
   </div>
-  <a class="btn btn-primary toggle-view-edit-question-link" role="button">Edit-question Form</a>
+  <a class="btn btn-primary toggle-view-edit-question-link" role="button" href="#">Edit-question Form</a>
 </div>
