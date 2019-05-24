@@ -1,29 +1,27 @@
 <% content_for :main_content do %>
   <% javascript 'users.js' %>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h2>
-        <span>Hi, <%= @user.user_name %> </span>
-      </h2>
-    </div>
-    <div class="panel-body">
+  <div class="row">
+    <h2>
+      <span>Hi, <%= @user.user_name %> </span>
+    </h2>
+  </div>
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
+          <li role="presentation" class="nav-item">
             <a href="#user-details" aria-controls="user-details"
-               role="tab" data-toggle="tab">
+               role="tab" data-toggle="tab" class="nav-link active">
               User details
             </a>
           </li>
-          <li role="presentation">
+          <li role="presentation" class="nav-item">
             <a href="#user-roles" aria-controls="user-roles"
-               role="tab" data-toggle="tab">
+               role="tab" data-toggle="tab" class="nav-link">
               User roles
             </a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane fade in active" id="user-details">
+          <div role="tabpanel" class="tab-pane fade show active" id="user-details">
             <div class="col-sm-12">
               <%= render 'user_details', locals: {user: @user} %>
               <div class="panel panel-info">
