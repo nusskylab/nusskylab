@@ -1,18 +1,22 @@
 <div id="private-part-compiled">
   <% locals[:evals_table].values.each do |eval| %>
-      <% if not eval.nil? %>
+    <div class="card">
+      <div class="card-body">
+        <% if not eval.nil? %>
           <div>
             <h3>From anonymous</h3>
             <div class="eval-private-part">
               <% locals[:survey_template].questions.each do |question| %>
-                <% if not question.is_public %>
+                <% if not question.is_public %>  
                   <%= render 'questions/question_template',
-                             locals: {question: question, view_template: true,
-                                      question_response: eval.get_response_for_question(question.id)} %>
+                      locals: {question: question, view_template: true,
+                      question_response: eval.get_response_for_question(question.id)} %>
                 <% end %>
               <% end %>
             </div>
           </div>
-      <% end %>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 </div>
