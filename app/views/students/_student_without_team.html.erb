@@ -1,19 +1,18 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h1>
-      <% if (not locals[:student]) %>
-          <span class="text-danger">Not a student </span>
-      <% else %>
-          <span><%= locals[:student].user.user_name %> </span>
-      <% end %>
-      <% if (not locals[:student]) %>
-          <span class="text-danger"> (Not a student)</span>
-      <% elsif locals[:student] and (not locals[:student].team_id) %>
-          <span class="text-muted"> (Currently no team)</span>
-      <% end %>
-    </h1>
-  </div>
-  <div class="panel-body">
-    <%= t ('students.show.no_team_instruction') %>
-  </div>
+<div class="row">
+  <h1>
+    <% if (not locals[:student]) %>
+        <span class="text-danger">Not a student </span>
+    <% else %>
+        <span><%= locals[:student].user.user_name %> </span>
+    <% end %>
+    <% if (not locals[:student]) %>
+        <span class="text-danger"> (Not a student)</span>
+    <% elsif locals[:student] and (not locals[:student].team_id) %>
+        <span class="text-muted"> (Currently no team)</span>
+    <% end %>
+  </h1>
 </div>
+<div class="row">
+  <%= t ('students.show.no_team_instruction') %>
+</div>
+
