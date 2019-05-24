@@ -5,6 +5,6 @@
     <%= f.input :survey_type, collection: SurveyTemplate.survey_types, include_blank: false,
         selected: SurveyTemplate.survey_types[locals[:survey_template].survey_type] %>
     <%= f.input :instruction, input_html: {rows: 10} %>
-    <%= f.input :deadline, as: :string, input_html: { value: (l(f.object.deadline) if f.object.deadline), class: 'datetime-picker' } %>
+    <%= f.input :deadline, as: :string, input_html: { value: (l(f.object.deadline) if f.object.deadline), class: 'datetime-picker', placeholder: "e.g. 2019-12-13 4:20 AM" } %>
     <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>
