@@ -1,20 +1,24 @@
 <% content_for :main_content do %>
   <% javascript 'survey_templates.js' %>
-  <div class="panel panel-info preview-survey-template">
-    <div class="panel-heading">
-      <h3 class="text-center">Preview Survey Template</h3>
+  <div class="row">
+    <h3 class="col text-center">Preview Survey Template</h3>
+  </div>
+  <div id="survey_template_view" class="card">
+    <div class="card-body">
+      <%= render 'survey_template_view', locals: {survey_template: @survey_template} %>
     </div>
-    <div class="panel-body">
-      <div id="survey_template_view" class="well">
-        <%= render 'survey_template_view', locals: {survey_template: @survey_template} %>
+  </div>
+  <br/>
+  <% @survey_template.questions.order('questions.order ASC').each do |question| %>
+    <div id="survey-template-questions" class="card">
+      <div class="card-body">
+        <%= render 'questions/question_template', locals: {
+            question: question,
+            question_response: nil
+        } %>
       </div>
-      <div id="survey-template-questions">
-        <% @survey_template.questions.order('questions.order ASC').each do |question| %>
-           <%= render 'questions/question_template', locals: {
-              question: question,
-              question_response: nil
-            } %>
-        <% end %>
-      </div>
+    </div>
+    <br/>
+  <% end %>
   </div>
 <% end %>

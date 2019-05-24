@@ -10,15 +10,17 @@
       </div>
     </div>
     <br/>
-    <div id="survey-template-questions" class="card">
+    <div id="survey-template-questions">
       <% @survey_template.questions.order('questions.order ASC').each do |question| %>
-        <%= render 'questions/view_edit_question_template', locals: {
-            question: question,
-            question_response: nil
-        } %>
+        <div class="card">
+          <%= render 'questions/view_edit_question_template', locals: {
+              question: question,
+              question_response: nil
+          } %>
+        </div>
+        <br/>
       <% end %>
     </div>
-    <br/>
     <div class="col-sm-12 text-right">
       <a class="btn btn-primary" id="new-template-toggle" role="button" data-toggle="collapse" href="#create-question-form" aria-expanded="false" aria-controls="create-question-form">
         Create-question Form
