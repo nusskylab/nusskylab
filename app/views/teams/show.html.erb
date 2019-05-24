@@ -73,7 +73,7 @@
           <div role="tabpanel" class="tab-pane fade" id="project-panel">
             <h2 class="text-center">Submissions</h2>
             <div class="alert alert-secondary">
-              <p class="small"><%= t '.submit_submission_instruction' %></p>
+              <span class="small"><%= t '.submit_submission_instruction' %></span>
             </div>
             <%= render 'students/student_submissions', locals: {
               team: @team,
@@ -84,7 +84,7 @@
           <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
             <h2 class="text-center">Evaluations</h2>
             <div class="alert alert-secondary">
-              <p class="small"><%= t '.submit_evaluation_instruction' %></p>
+              <span class="small"><%= t '.submit_evaluation_instruction' %></span>
             </div>
             <%= render 'students/student_submit_evaluations', locals: {
               milestones: milestones,
@@ -96,7 +96,7 @@
           <div role="tabpanel" class="tab-pane fade" id="view-evaluation-panel">
             <h2 class="text-center">View all evaluations</h2>
             <div class="alert alert-secondary">
-              <p class="small"><%= t '.view_evaluation_instruction' %></p>
+              <span class="small"><%= t '.view_evaluation_instruction' %></span>
             </div>
             <%= render 'students/student_view_others_evaluations', locals: {
               team: @team,
@@ -108,7 +108,7 @@
           <div role="tabpanel" class="tab-pane fade" id="submit-feedback-panel">
             <h2 class="text-center">Submit feedback</h2>
             <div class="alert alert-secondary">
-              <p class="small"><%= t '.submit_feedback_instruction' %></p>
+              <span class="small"><%= t '.submit_feedback_instruction' %></span>
             </div>
             <%= render 'students/student_submit_feedbacks', locals: {
               team: @team,
@@ -121,7 +121,7 @@
           <div role="tabpanel" class="tab-pane fade" id="preview-survey-template-panel">
             <h2 class="text-center">Preview Peer Evaluations and Feedback Forms</h2>
             <div class="alert alert-secondary">
-              <p class="small"><%= t '.preview_survey_template_instruction' %></p>
+              <span class="small"><%= t '.preview_survey_template_instruction' %></span>
             </div>
             <%= render 'students/student_preview_survey_template', locals: {
               milestones: milestones,
@@ -131,7 +131,7 @@
           <div role="tabpanel" class="tab-pane fade" id="more-info-panel">
             <h2 class="text-center">More information</h2>
             <div class="alert alert-secondary">
-              <p class="small"><%= t '.more_info_instruction' %></p>
+              <span class="small"><%= t '.more_info_instruction' %></span>
             </div>
             <%= render 'calculated_team_info',
                        locals: {team: @team, milestones: milestones,
