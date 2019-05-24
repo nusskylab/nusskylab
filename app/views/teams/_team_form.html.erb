@@ -1,7 +1,7 @@
 <%= simple_form_for(locals[:team], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
                     url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
   <%= f.error_notification %>
-  <%= f.input :team_name %>
+  <%= f.input :team_name, wrapper_html: {class: "row"}%>
   <% if is_project_level_locked? %>
     <div class="form-group string required team_team_name">
       <label class="string required col-sm-3 control-label"> Project level </label>
@@ -14,21 +14,27 @@
                                             'Project Gemini'.to_sym => 'Project Gemini',
                                             'Apollo 11'.to_sym => 'Apollo 11'},
                                 selected: locals[:team].get_project_level,
-                                include_blank: false, required: true %>
+                                include_blank: false, required: true, wrapper_html: {class: "row"} %>
   <% end %>
   <% if current_user_admin? %>
-    <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Not assigned', required: true %>
-    <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Not assigned' %>
+    <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Not assigned', required: true, wrapper_html: {class: "row"} %>
+    <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Not assigned', wrapper_html: {class: "row"} %>
   <% end %>
   <% if current_user_admin? or current_user_adviser? or current_user_student? %>
-    <%= f.input :poster_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
+    <%= f.input :poster_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...', wrapper_html: {class: "row"} %>
   <% end %>
   <% if current_user_admin? or current_user_adviser? %>
-    <%= f.input :video_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
+    <%= f.input :video_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...', wrapper_html: {class: "row"} %>
   <% end %>
   <% if locals[:is_new] %>
     <input type="hidden" name="team[cohort]" value="<%= locals[:cohort] %>">
   <% end %>
-  <%= f.input :has_dropped %>
+  <div class="form-group row">
+    <div class="offset-md-3 col-md-9">
+      <div class="form-check">
+        <%= f.input_field :has_dropped, inline_label: "Has dropped" %>
+      </div>
+    </div>
+  </div>
   <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>
