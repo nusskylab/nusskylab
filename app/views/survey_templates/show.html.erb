@@ -1,30 +1,31 @@
 <% content_for :main_content do %>
     <% javascript 'survey_templates.js' %>
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <h3 class="text-center">Survey Template</h3>
+    <div class="row">
+      <h3 class="col text-center">Survey Template</h3>
+    </div>
+    <div id="survey_template_view" class="card">
+      <div class="card-body">
+        <%= render 'survey_template_view', locals: {survey_template: @survey_template} %>
       </div>
-      <div class="panel-body">
-        <div id="survey_template_view" class="well">
-          <%= render 'survey_template_view', locals: {survey_template: @survey_template} %>
+    </div>
+    <br/>
+    <div id="survey-template-questions" class="card">
+      <% @survey_template.questions.order('questions.order ASC').each do |question| %>
+        <%= render 'questions/view_edit_question_template', locals: {
+            question: question,
+            question_response: nil
+        } %>
+      <% end %>
+    </div>
+    <br/>
+    <div class="col-sm-12 text-right">
+      <a class="btn btn-primary" id="new-template-toggle" role="button" data-toggle="collapse" href="#create-question-form" aria-expanded="false" aria-controls="create-question-form">
+        Create-question Form
+      </a>
+      <div class="collapse text-left" id="create-question-form">
+        <div>
+          <%= render 'questions/question_template_form', locals: {question: new_question, is_new: true} %>
         </div>
-        <div id="survey-template-questions">
-          <% @survey_template.questions.order('questions.order ASC').each do |question| %>
-              <%= render 'questions/view_edit_question_template', locals: {
-                question: question,
-                question_response: nil
-              } %>
-          <% end %>
-        </div>
-        <div class="col-sm-12 text-right">
-          <a class="btn btn-primary" id="new-template-toggle" role="button" data-toggle="collapse" href="#create-question-form" aria-expanded="false" aria-controls="create-question-form">
-            Create-question Form
-          </a>
-          <div class="collapse text-left" id="create-question-form">
-            <div>
-              <%= render 'questions/question_template_form', locals: {question: new_question, is_new: true} %>
-            </div>
-          </div>
-        </div>
+      </div>
     </div>
 <% end %>
