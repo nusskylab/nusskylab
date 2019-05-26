@@ -1,84 +1,86 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h2>
-      <span><%= locals[:mentor].user.user_name %></span>
-    </h2>
-  </div>
-  <div class = "panel-body">
-    <div role="tabpanel">
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-          <a href="#teams-panel" aria-controls="teams-panel"
-            role="tab" data-toggle="tab">
-            View all your teams
-          </a>
-        </li>
-        <li role="presentation">
-          <a href="#milestones-panel" aria-controls="milestones-panel"
-            role="tab" data-toggle="tab">
-            View milestones submitted by teams
-          </a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade in active" id="teams-panel">
-          <h2 class="text-center">Teams</h2>
-            <%= render 'mentors_teams', locals: {mentor: @role} %>
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="milestones-panel">
-          <h2 class="text-center">Teams</h2>
+<div class="row">
+  <h2 class="col">
+    <span><%= locals[:mentor].user.user_name %></span>
+  </h2>
+</div>
+<div class="panel-body">
+  <div role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="nav-item">
+        <a href="#teams-panel" aria-controls="teams-panel"
+            role="tab" data-toggle="tab" class="nav-link active">
+          View all your teams
+        </a>
+      </li>
+      <li role="presentation" class="nav-item">
+        <a href="#milestones-panel" aria-controls="milestones-panel"
+            role="tab" data-toggle="tab" class="nav-link">
+          View milestones submitted by teams
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade show active" id="teams-panel">
+        <h2 class="text-center">Teams</h2>
+        <%= render 'mentors_teams', locals: {mentor: @role} %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="milestones-panel">
+        <h2 class="text-center">Teams</h2>
           <% locals[:milestones].each do |milestone| %>
-          <h3 class="text-center"><%= milestone.name %></h3>
-          <div class="table-responsive">
+            <h3 class="text-center"><%= milestone.name %></h3>
+            <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr><th>Team Name</th><th>Status</th><th>Last updated at</th></tr>
               </thead>
-                <tbody>
-                  <% locals[:mentor].teams.each do |team| %>
-                    <% if (team_submission = locals[:teams_submissions][milestone.id][team.id]) %>
-                      <tr>
-                        <td><%= team.team_name %></td>
-                        <td>
-                          <a href="<%= milestone_team_submission_path(milestone.id, team.id, team_submission.id) %>"
-                             class="btn btn-success">
-                            View
-                          </a>
-                        </td>
-                        <td>
-                          <%= l team_submission.updated_at %>
-                        </td>
-                      </tr>
-                    <% else %>
-                      <tr>
-                        <td>
-                          <span data-toggle="tooltip" data-placement="top" title="The team has not submitted project log yet">
-                            <%= team.team_name %>
-                          </span>
-                        </td>
-                        <td>
-                          <a href="#" class="btn btn-default" disabled="disabled">
-                            View
-                          </a>
-                        </td>
-                        <td>
-                          Not submitted yet
-                        </td>
-                      </tr>
-                    <% end %>
+              <tbody>
+                <% locals[:mentor].teams.each do |team| %>
+                  <% if (team_submission = locals[:teams_submissions][milestone.id][team.id]) %>
+                    <tr>
+                      <td><%= team.team_name %></td>
+                      <td>
+                        <a href="<%= milestone_team_submission_path(milestone.id, team.id, team_submission.id) %>"
+                            class="btn btn-success">
+                          View
+                        </a>
+                      </td>
+                      <td>
+                        <%= l team_submission.updated_at %>
+                      </td>
+                    </tr>
+                  <% else %>
+                    <tr>
+                      <td>
+                        <span data-toggle="tooltip" data-placement="top" title="The team has not submitted project log yet">
+                          <%= team.team_name %>
+                        </span>
+                      </td>
+                      <td>
+                        <a href="#" class="btn btn-default" disabled="disabled">
+                          View
+                        </a>
+                      </td>
+                      <td>
+                        Not submitted yet
+                      </td>
+                    </tr>
                   <% end %>
-                  <% if locals[:mentor].teams.length <= 0 %>
-                    <tr><td colspan="3">No teams to display yet</td></tr>
-                  <% end %>
-                </tbody>
+                <% end %>
+                <% if locals[:mentor].teams.length <= 0 %>
+                  <tr><td colspan="3">No teams to display yet</td></tr>
+                <% end %>
+              </tbody>
             </table>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>
-    <hr>
-    <% end %>
-    <br><hr>
+  </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col text-center">
+    <hr/>
     You can send emails to your students via
     <%= link_to 'General Mailing', general_mailing_mentor_path(locals[:mentor].id), class: 'btn btn-success' %>
   </div>
