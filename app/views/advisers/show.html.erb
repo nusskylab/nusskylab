@@ -1,67 +1,65 @@
 <% content_for :main_content do %>
   <% javascript 'advisers.js' %>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h2>
-        <span><%= @role.user.user_name %> </span>
-      </h2>
-    </div>
-    <div class="panel-body">
-      <div role="tabpanel">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#teams-panel" aria-controls="teams-panel"
-               role="tab" data-toggle="tab">
-              View all your teams
-            </a>
-          </li>
-          <li role="presentation">
-            <a href="#evaluations-panel" aria-controls="evaluations-panel"
-               role="tab" data-toggle="tab">
-              Submit evaluations
-            </a>
-          </li>
-          <li role="presentation">
-            <a href="#evaluatings-panel" aria-controls="evaluatings-panel"
-               role="tab" data-toggle="tab">
-              View more info
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane fade in active" id="teams-panel">
-            <h2 class="text-center">Teams</h2>
-            <div class="well">
-              <p class="small"><%= t '.view_teams_instruction' %></p>
-            </div>
-            <%= render 'adviser_teams', locals: {adviser: @role} %>
+  <div class="row">
+    <h2>
+      <span><%= @role.user.user_name %> </span>
+    </h2>
+  </div>
+  <div class="panel-body">
+    <div role="tabpanel">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="nav-item">
+          <a href="#teams-panel" aria-controls="teams-panel"
+              role="tab" data-toggle="tab" class="nav-link active">
+            View all your teams
+          </a>
+        </li>
+        <li role="presentation" class="nav-item">
+          <a href="#evaluations-panel" aria-controls="evaluations-panel"
+             role="tab" data-toggle="tab" class="nav-link">
+            Submit evaluations
+          </a>
+        </li>
+        <li role="presentation" class="nav-item">
+          <a href="#evaluatings-panel" aria-controls="evaluatings-panel"
+              role="tab" data-toggle="tab" class="nav-link">
+            View more info
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade show active" id="teams-panel">
+          <h2 class="text-center">Teams</h2>
+          <div class="alert alert-secondary">
+            <span class="small"><%= t '.view_teams_instruction' %></span>
           </div>
-          <div role="tabpanel" class="tab-pane fade" id="evaluations-panel">
-            <h2 class="text-center">Evaluations</h2>
-            <div class="well">
-              <p class="small"><%= t '.evaluation_instruction' %></p>
-            </div>
-            <%= render 'adviser_milestones', locals: {
-              adviser: @role,
-              milestones: role_data[:milestones],
-              teams_submissions: role_data[:teams_submissions],
-              own_evaluations: role_data[:own_evaluations]
-            } %>
+          <%= render 'adviser_teams', locals: {adviser: @role} %>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="evaluations-panel">
+          <h2 class="text-center">Evaluations</h2>
+          <div class="alert alert-secondary">
+            <span class="small"><%= t '.evaluation_instruction' %></span>
           </div>
-          <div role="tabpanel" class="tab-pane fade" id="evaluatings-panel">
-            <h2 class="text-center">More info</h2>
-            <div class="well">
-              <p class="small"><%= t '.more_info_instruction' %></p>
-            </div>
-            <hr>
-            <div class="text-center">
-              You can view feedbacks for you
-              <a href="<%= milestone_adviser_received_feedbacks_path(3, @role.id) %>"
-                 class="btn btn-success">here</a>
-              <br><hr>
-              You can send emails to your students via
-              <%= link_to 'General Mailing', general_mailing_adviser_path(@role.id), class: 'btn btn-success' %>
-            </div>
+          <%= render 'adviser_milestones', locals: {
+            adviser: @role,
+            milestones: role_data[:milestones],
+            teams_submissions: role_data[:teams_submissions],
+            own_evaluations: role_data[:own_evaluations]
+          } %>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="evaluatings-panel">
+          <h2 class="text-center">More info</h2>
+          <div class="alert alert-secondary">
+            <span class="small"><%= t '.more_info_instruction' %></span>
+          </div>
+          <hr>
+          <div class="text-center">
+            You can view feedbacks for you
+            <a href="<%= milestone_adviser_received_feedbacks_path(3, @role.id) %>"
+               class="btn btn-success">here</a>
+            <br><hr>
+            You can send emails to your students via
+            <%= link_to 'General Mailing', general_mailing_adviser_path(@role.id), class: 'btn btn-success' %>
           </div>
         </div>
       </div>
