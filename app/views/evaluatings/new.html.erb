@@ -1,11 +1,7 @@
 <% content_for :main_content do %>
-    <% javascript 'evaluatings.js' %>
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <h3 class="text-center">Create evaluation relationship</h3>
-      </div>
-      <div class="panel-body">
-        <%= render 'evaluating_form', locals: {evaluating: @evaluating, teams: teams, is_new: true} %>
-      </div>
-    </div>
+  <% javascript 'evaluatings.js' %>
+  <div class="row">
+    <h3 class="col text-center">Create evaluation relationship</h3>
+  </div>
+  <%= render 'evaluating_form', locals: {evaluating: @evaluating, teams: teams, is_new: true} %>
 <% end %>
