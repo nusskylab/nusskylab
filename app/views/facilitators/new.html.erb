@@ -1,15 +1,11 @@
 <% content_for :main_content do %>
   <% javascript 'facilitators.js' %>
-  <div class="panel panel-default">
-    <div class="panel-heading text-center">
-      <h2>
-        Create an facilitator in cohort <%= cohort %>
-      </h2>
-    </div>
-    <div class="panel-body">
-      <%= render 'facilitator_form', locals: {
-        facilitator: @role, users: users, cohort: cohort, is_new: true
-      } %>
-    </div>
+  <div class="row">
+    <h2 class="col text-center">
+      Create an facilitator in cohort <%= cohort %>
+    </h2>
   </div>
+  <%= render 'facilitator_form', locals: {
+      facilitator: @role, users: users, cohort: cohort, is_new: true
+  } %>
 <% end %>
