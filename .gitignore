@@ -108,3 +108,11 @@ exec/
 *.mtc1
 *.out
 *.synctex.gz
+
+# can't delete these files, just ignore them instead
+db/backups/
+db_backup_20160216.dump
+dbbackup/
+public/assets/
+serverstatus.sh
+
