@@ -20,30 +20,24 @@
         <td><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
         <td>
           <%if team.get_team_submission_status(team.get_own_submissions_in_order[1]) == "Submitted" %>
-          <!--<a class="btn btn-primary btn-xs" onClick="openModalBox(<%#= team.id %>)" href="../submissions/#modal_<%#=team.id %>"> Submission Link </a>-->
-            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[1].video_link %>"> Video Link </a>
-            <br>
-            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[1].poster_link %>"> Poster Link </a>
+            <% submission = team.get_own_submissions_in_order[1] %>
+          <a class="btn btn-primary btn-s" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
           <% else %>
             <%= team.get_team_submission_status(team.get_own_submissions_in_order[1]) %>
           <% end %>
         </td>
         <td>
           <%if team.get_team_submission_status(team.get_own_submissions_in_order[2]) == "Submitted" %>
-            <!--<a class="btn btn-primary btn-xs" onClick="openModalBox(<%#= team.id %>)" href="../submissions/#modal_<%#=team.id %>"> Submission Link </a>-->
-            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[2].video_link %>"> Video Link </a>
-            <br>
-            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[2].poster_link %>"> Poster Link </a>
+            <% submission = team.get_own_submissions_in_order[2] %>
+            <a class="btn btn-primary btn-s" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
           <% else %>
             <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
           <% end %>
         </td>
         <td>
           <%if team.get_team_submission_status(team.get_own_submissions_in_order[3]) == "Submitted" %>
-            <!-- <a class="btn btn-primary btn-xs" onClick="openModalBox(<%= team.id %>)" href="../submissions/#modal_<%=team.id %>"> Submission Link </a> -->
-            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[3].video_link %>"> Video Link </a>
-            <br>
-            <a class="btn btn-primary btn-xs" href="<%#=team.get_own_submissions_in_order[3].poster_link %>"> Poster Link </a>
+            <% submission = team.get_own_submissions_in_order[3] %>
+            <a class="btn btn-primary btn-s" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
           <% else %>
             <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
           <% end %>
