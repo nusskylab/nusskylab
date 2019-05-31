@@ -63,7 +63,7 @@ class SubmissionsController < ApplicationController
   end
 
   def show
-    !authenticate_user(true, false, users_involved_in_submission) && return
+    !authenticate_user(true, false, users_involved_in_evaluation) && return
     team = Team.find(params[:team_id]) || (record_not_found && return)
     @submission = Submission.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false,
@@ -118,6 +118,17 @@ class SubmissionsController < ApplicationController
 
   def users_involved_in_submission
     Submission.find(params[:id]).team.students.map(&:user)
+  end
+
+  def users_involved_in_evaluation
+    submission_team = Submission.find(params[:id]).team
+
+    evaluatees = submission_team.students.map(&:user)
+    evaluating_rel = Evaluating.find_by(evaluated_id: submission_team.id)
+    evaluators = evaluating_rel ? Team.find(evaluating_rel.evaluator_id).students.map(&:user) : []
+    adviser = [submission_team.adviser.user]
+
+    evaluatees + evaluators + adviser
   end
 
   def update_submission
