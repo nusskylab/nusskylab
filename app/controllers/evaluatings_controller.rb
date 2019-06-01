@@ -42,7 +42,7 @@ class EvaluatingsController < ApplicationController
     #   teams = adviser.teams.where(cohort: cohort)
     end
     @page_title = t('.page_title')
-    render locals: { teams: teams }
+    render locals: { teams: teams, adviser: adviser}
   end
 
   def create
