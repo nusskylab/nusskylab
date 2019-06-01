@@ -118,15 +118,14 @@ class PeerEvaluationsController < ApplicationController
 
   def can_access_peer_evaluation(evaluators = false, evaluateds = false,
                                  advisees = false)
-    if params[:id]
-      team = PeerEvaluation.find(params[:id]).team
-      !authenticate_user(true, false,
-                         team.get_relevant_users(evaluators, evaluateds)) &&
-        (return false)
-    end
     if params[:team_id]
       team = Team.find(params[:team_id]) ||
              (raise ActiveRecord::RecordNotFound.new(t('application.record_not_found_message')))
+      if params[:id] # If accessing an existing peer evaluation
+        peer_eval = PeerEvaluation.find(params[:id]) ||
+                (raise ActiveRecord::RecordNotFound.new(t('application.record_not_found_message')))
+        team = peer_eval.team # To prevent unauthorized access through URL manipulation.
+      end
       !authenticate_user(true, false,
                         team.get_relevant_users(evaluators, evaluateds)) &&
        (return false)

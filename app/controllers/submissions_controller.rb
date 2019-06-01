@@ -63,18 +63,18 @@ class SubmissionsController < ApplicationController
   end
 
   def show
-    !authenticate_user(true, false, users_involved_in_evaluation) && return
     team = Team.find(params[:team_id]) || (record_not_found && return)
     @submission = Submission.find(params[:id]) || (record_not_found && return)
+    team = @submission.team # To prevent unauthorized access through URL manipulation.
     !authenticate_user(true, false,
                        team.get_relevant_users(true, false)) && return
     @page_title = t('.page_title')
   end
 
   def edit
-    !authenticate_user(true, false, users_involved_in_submission) && return
     team = Team.find(params[:team_id]) || (record_not_found && return)
     @submission = Submission.find(params[:id]) || (record_not_found && return)
+    team = @submission.team # To prevent unauthorized access through URL manipulation.
     !authenticate_user(true, false,
                        team.get_relevant_users(false, false)) && return
     @page_title = t('.page_title')
@@ -85,11 +85,11 @@ class SubmissionsController < ApplicationController
   end
 
   def update
-    !authenticate_user(true, false, users_involved_in_submission) && return
     team = Team.find(params[:team_id]) || (record_not_found && return)
     milestone = Milestone.find_by(id: params[:milestone_id]) ||
                 (record_not_found && return)
     @submission = Submission.find(params[:id]) || (record_not_found && return)
+    team = @submission.team # To prevent unauthorized access through URL manipulation.
     !authenticate_user(true, false,
                        team.get_relevant_users(false, false)) && return
     if update_submission
@@ -115,21 +115,6 @@ class SubmissionsController < ApplicationController
   end
 
   private
-
-  def users_involved_in_submission
-    Submission.find(params[:id]).team.students.map(&:user)
-  end
-
-  def users_involved_in_evaluation
-    submission_team = Submission.find(params[:id]).team
-
-    evaluatees = submission_team.students.map(&:user)
-    evaluating_rel = Evaluating.find_by(evaluated_id: submission_team.id)
-    evaluators = evaluating_rel ? Team.find(evaluating_rel.evaluator_id).students.map(&:user) : []
-    adviser = [submission_team.adviser.user]
-
-    evaluatees + evaluators + adviser
-  end
 
   def update_submission
     sub_params = submission_params
