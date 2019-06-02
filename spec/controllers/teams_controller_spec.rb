@@ -286,6 +286,7 @@ RSpec.describe TeamsController, type: :controller do
     end
 
     context 'user logged in but not admin' do
+      login_user
       it 'should render the match mentor form for current student' do
         team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
         get :match_mentor, id: team.id
@@ -294,6 +295,7 @@ RSpec.describe TeamsController, type: :controller do
     end
 
     context 'user logged in and admin' do
+      login_admin
       it 'should render the match mentor form for current student' do
         team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
         get :match_mentor, id: team.id
