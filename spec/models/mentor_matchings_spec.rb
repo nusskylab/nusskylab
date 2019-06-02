@@ -29,7 +29,7 @@ RSpec.describe MentorMatchings, type: :model do
         
         FactoryGirl.create(:mentor_matchings, team: team1, mentor: mentor1, choice_ranking: 1)
         FactoryGirl.create(:mentor_matchings, team: team1, mentor: mentor2, choice_ranking: 2)
-        FactoryGirl.create(:mentor_matchings, team: team1, mentor: mentor3, choice_ranking: 2)
+        FactoryGirl.create(:mentor_matchings, team: team1, mentor: mentor3, choice_ranking: 3)
         
         expect(FactoryGirl.build(:mentor_matchings, team: team1, mentor: mentor4, choice_ranking: 1)).not_to be_valid
         expect(FactoryGirl.build(:mentor_matchings, team: team1, mentor: mentor4, choice_ranking: 2)).not_to be_valid
