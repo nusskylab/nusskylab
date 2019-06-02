@@ -11,7 +11,7 @@ class MentorMatchings < ActiveRecord::Base
   }
 
   belongs_to :team, foreign_key: :team_id, class_name: Team
-  belongs_to :mentor, foreign_key: :mentor_id, class_name: User
+  belongs_to :mentor, foreign_key: :mentor_id, class_name: Mentor
   
   def self.match_mentor(team, choices, cohort)
     myMentors = MentorMatchings.create([
