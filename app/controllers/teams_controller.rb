@@ -134,7 +134,7 @@ class TeamsController < ApplicationController
         }
         return  
       end
-    else if MentorMatchings.match_mentor(@team, choices, cohort)
+    elsif MentorMatchings.match_mentor(@team, choices, cohort)
       redirect_to team_path(@team.id), flash: {
         success: t('.success_message')
       }
@@ -148,7 +148,6 @@ class TeamsController < ApplicationController
       return
     end
   end 
-end
 
   private
   

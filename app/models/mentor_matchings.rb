@@ -15,9 +15,9 @@ class MentorMatchings < ActiveRecord::Base
   
   def self.match_mentor(team, choices, cohort)
     myMentors = MentorMatchings.create([
-      { :team_id => team, :mentor_id => User.find(choices[0]), :choice_ranking => 1, :mentor_accepted => false, :cohort => cohort },
-      { :team_id => team, :mentor_id => User.find(choices[1]), :choice_ranking => 2, :mentor_accepted => false, :cohort => cohort },
-      { :team_id => team, :mentor_id => User.find(choices[2]), :choice_ranking => 3, :mentor_accepted => false, :cohort => cohort }
+      { :team_id => team.id, :mentor_id => User.find(choices[0]).id, :choice_ranking => 1, :mentor_accepted => false, :cohort => cohort },
+      { :team_id => team.id, :mentor_id => User.find(choices[1]).id, :choice_ranking => 2, :mentor_accepted => false, :cohort => cohort },
+      { :team_id => team.id, :mentor_id => User.find(choices[2]).id, :choice_ranking => 3, :mentor_accepted => false, :cohort => cohort }
     ])
     MentorMatchings.transaction do
       begin  
