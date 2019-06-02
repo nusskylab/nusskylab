@@ -275,4 +275,30 @@ RSpec.describe TeamsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #match_mentor' do
+    context 'user not logged in' do
+      it 'should redirect to root path' do
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        get :match_mentor, id: team.id
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in but not admin' do
+      it 'should render the match mentor form for current student' do
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        get :match_mentor, id: team.id
+        expect(response).to render_template(:match_mentor)
+      end
+    end
+
+    context 'user logged in and admin' do
+      it 'should render the match mentor form for current student' do
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        get :match_mentor, id: team.id
+        expect(response).to render_template(:match_mentor)
+      end
+    end
+  end
 end
