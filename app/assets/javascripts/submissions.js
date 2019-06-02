@@ -76,4 +76,3 @@ $(function () {
     plugins: 'link image table autosave paste textcolor emoticons autoresize'
   });
 });
-
