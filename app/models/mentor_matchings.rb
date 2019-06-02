@@ -10,8 +10,8 @@ class MentorMatchings < ActiveRecord::Base
     message: "Can only have 1 option for either 1st, 2nd and 3rd"
   }
 
-  belongs_to :team_id, foreign_key: :team_id, class_name: Team
-  belongs_to :mentor_id, foreign_key: :mentor_id, class_name: User
+  belongs_to :team, foreign_key: :team_id, class_name: Team
+  belongs_to :mentor, foreign_key: :mentor_id, class_name: User
   
   def self.match_mentor(team, choices, cohort)
     myMentors = MentorMatchings.create([
