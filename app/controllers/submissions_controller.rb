@@ -92,7 +92,7 @@ class SubmissionsController < ApplicationController
     team = @submission.team # To prevent unauthorized access through URL manipulation.
     !authenticate_user(true, false,
                        team.get_relevant_users(false, false)) && return
-    if update_submission
+    if update_submission(milestone)
       redirect_to home_path, flash: {
         success: t('.success_message')
       }
@@ -116,11 +116,10 @@ class SubmissionsController < ApplicationController
 
   private
 
-  def update_submission
-    sub_params = submission_params
+  def update_submission(milestone)
+    sub_params = submission_params(milestone)
     sub_params[:milestone_id] = @submission.milestone_id
     sub_params[:team_id] = @submission.team_id
-    sub_params[:milestone_number] = get_milestone_number(milestone) 
     @submission.update(sub_params) ? @submission : nil
   end
 
