@@ -31,7 +31,7 @@
             <% submission = team.get_own_submissions_in_order[2] %>
             <a class="btn btn-primary btn-s" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
           <% else %>
-            <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
+            <%= team.get_team_submission_status(team.get_own_submissions_in_order[2]) %>
           <% end %>
         </td>
         <td>
