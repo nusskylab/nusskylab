@@ -120,6 +120,7 @@ class SubmissionsController < ApplicationController
     sub_params = submission_params
     sub_params[:milestone_id] = @submission.milestone_id
     sub_params[:team_id] = @submission.team_id
+    sub_params[:milestone_number] = get_milestone_number(milestone) 
     @submission.update(sub_params) ? @submission : nil
   end
 
