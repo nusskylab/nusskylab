@@ -43,7 +43,7 @@ class SubmissionsController < ApplicationController
                 (record_not_found && return)
     !authenticate_user(true, false,
                        team.get_relevant_users(false, false)) && return
-    @submission = Submission.new(submission_params)
+    @submission = Submission.new(submission_params(milestone))
     if @submission.save
       redirect_to home_path, flash: {
         success: t('.success_message')
@@ -133,14 +133,20 @@ class SubmissionsController < ApplicationController
     @submission.errors[:video_link].any?
   end
 
-  def submission_params
+  def submission_params(milestone)
     submission_params = params.require(:submission).permit(:milestone_id,
                                                            :read_me,
                                                            :project_log,
                                                            :video_link,
-                                                           :poster_link)
+                                                           :poster_link,
+                                                           :milestone_number)
     submission_params[:team_id] = params[:team_id]
     submission_params[:milestone_id] = params[:milestone_id]
+    submission_params[:milestone_number] = get_milestone_number(milestone) 
     submission_params
+  end
+
+  def get_milestone_number(milestone)
+    milestone.name[-1].to_i
   end
 end
