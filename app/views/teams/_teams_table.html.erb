@@ -18,30 +18,18 @@
         <td><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
         <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
         <td><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
-        <td>
-          <%if team.get_team_submission_status(team.get_own_submissions_in_order[1]) == "Submitted" %>
-            <% submission = team.get_own_submissions_in_order[1] %>
-          <a class="btn btn-primary btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
-          <% else %>
-            <%= team.get_team_submission_status(team.get_own_submissions_in_order[1]) %>
-          <% end %>
-        </td>
-        <td>
-          <%if team.get_team_submission_status(team.get_own_submissions_in_order[2]) == "Submitted" %>
-            <% submission = team.get_own_submissions_in_order[2] %>
-            <a class="btn btn-primary btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
-          <% else %>
-            <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
-          <% end %>
-        </td>
-        <td>
-          <%if team.get_team_submission_status(team.get_own_submissions_in_order[3]) == "Submitted" %>
-            <% submission = team.get_own_submissions_in_order[3] %>
-            <a class="btn btn-primary btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
-          <% else %>
-            <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
-          <% end %>
-        </td>
+          <% for i in 1..3 do %>
+            <td>
+            <% submission = team.get_own_submissions_in_order[i] %>
+            <%if team.get_team_submission_status(submission) == "Submitted" %>
+              <a class="btn btn-primary btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
+            <% elsif team.get_team_submission_status(submission) == "Late" %>
+              <a class="btn btn-warning btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Late Submission </a>
+            <% else %>
+              <%= team.get_team_submission_status(team.get_own_submissions_in_order[1]) %>
+            <% end %>
+          </td>
+         <% end %>
         <td><%= team.cohort %></td>
         <td>
           <% if can_current_user_view_team(team) %>
