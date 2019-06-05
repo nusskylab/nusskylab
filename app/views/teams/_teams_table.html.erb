@@ -22,9 +22,9 @@
             <td>
             <% submission = team.get_own_submissions_in_order[i] %>
             <%if team.get_team_submission_status(submission) == "Submitted" %>
-              <a class="btn btn-primary btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
+              <a class="btn btn-primary btn-xs" href="<%=new_milestone_adviser_peer_evaluation_path({milestone_id: submission.milestone_id, adviser_id: team.adviser.id, submission_id: submission.id})%>"> Evaluate submission </a>
             <% elsif team.get_team_submission_status(submission) == "Late" %>
-              <a class="btn btn-warning btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Late Submission </a>
+              <a class="btn btn-warning btn-xs" href="<%=new_milestone_adviser_peer_evaluation_path({milestone_id: submission.milestone_id, adviser_id: team.adviser.id, submission_id: submission.id})%>"> Evaluate late submission </a>
             <% else %>
               <%= team.get_team_submission_status(team.get_own_submissions_in_order[1]) %>
             <% end %>
