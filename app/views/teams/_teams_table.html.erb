@@ -21,7 +21,7 @@
         <td>
           <%if team.get_team_submission_status(team.get_own_submissions_in_order[1]) == "Submitted" %>
             <% submission = team.get_own_submissions_in_order[1] %>
-          <a class="btn btn-primary btn-s" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
+          <a class="btn btn-primary btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
           <% else %>
             <%= team.get_team_submission_status(team.get_own_submissions_in_order[1]) %>
           <% end %>
@@ -29,7 +29,7 @@
         <td>
           <%if team.get_team_submission_status(team.get_own_submissions_in_order[2]) == "Submitted" %>
             <% submission = team.get_own_submissions_in_order[2] %>
-            <a class="btn btn-primary btn-s" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
+            <a class="btn btn-primary btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
           <% else %>
             <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
           <% end %>
@@ -37,7 +37,7 @@
         <td>
           <%if team.get_team_submission_status(team.get_own_submissions_in_order[3]) == "Submitted" %>
             <% submission = team.get_own_submissions_in_order[3] %>
-            <a class="btn btn-primary btn-s" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
+            <a class="btn btn-primary btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
           <% else %>
             <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
           <% end %>
