@@ -291,7 +291,7 @@ class Team < ActiveRecord::Base
   def get_team_status
     team_status = "No Status"
     if status != "no_status"
-      team_status << status.upcase
+      team_status = status.upcase
     end
     team_status
   end
