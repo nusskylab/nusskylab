@@ -1,7 +1,7 @@
 <table class="table table-hover table-sortable table-condensed">
   <thead>
   <tr>
-    <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th><th>Student 1</th><th>Student 2</th>
+    <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th><th>Status</th><th>Student 1</th><th>Student 2</th>
     <th>Adviser</th><th>Mentor</th><th>Submission 1</th><th>Submission 2</th><th>Submission 3</th><th class="unsortable">Cohort</th><th class="unsortable">Actions</th>
   </tr>
   </thead>
@@ -14,6 +14,9 @@
         </td>
         <td><%= team.get_project_level %></td>
         <td><%= team.has_dropped %></td>
+        <td title="<%= team.get_team_comment %>">
+          <%= team.get_team_status %>
+        </td>
         <td><%= team.get_team_members[1] == nil ? "": team.get_team_members[0].user_name %></td>
         <td><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
         <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
