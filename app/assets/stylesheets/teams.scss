@@ -1,3 +1,18 @@
 // Place all the styles related to the teams controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.good_status {
+  color: green;
+}
+
+.ok_status {
+  color: yellow;
+}
+
+.poor_status {
+  color: red;
+}
+
+.tbr_status {
+  color: blue;
+}
