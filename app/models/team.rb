@@ -20,7 +20,7 @@ class Team < ActiveRecord::Base
   PROJECT_GEMINI_REGEX = /\A(?:project gemini)|(?:gemini)|(?:g)\z/
   APOLLO_11_REGEX = /\A(?:apollo 11)|(?:apollo)|(?:a)\z/
   enum project_level: [:vostok, :project_gemini, :apollo_11]
-  enum status: [:good, :ok, :poor, :tbr]
+  enum status: [:no_status, :good, :ok, :poor, :tbr]
 
   def self.to_csv(**options)
     require 'csv'
@@ -289,7 +289,11 @@ class Team < ActiveRecord::Base
   end
 
   def get_team_status
-    status.upcase
+    team_status = "No Status"
+    if status != "no_status"
+      team_status << status.upcase
+    end
+    team_status
   end
 
   def get_team_comment
@@ -308,4 +312,3 @@ class Team < ActiveRecord::Base
     team_comment
   end
 end
-
