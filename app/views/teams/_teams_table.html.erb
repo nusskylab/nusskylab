@@ -14,8 +14,8 @@
         </td>
         <td><%= team.get_project_level %></td>
         <td><%= team.has_dropped %></td>
-        <td class="<%= team.status + '_status' %>", title="<%= team.get_team_comment %>">
-          <%= team.get_team_status %>
+        <td class="<%= team.get_team_status_short + '_status' %>", title='<%= team.get_team_status + "\n" %><%= team.get_team_comment %>'>
+          <%= team.get_team_status_short %>
         </td>
         <td><%= team.get_team_members[1] == nil ? "": team.get_team_members[0].user_name %></td>
         <td><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
