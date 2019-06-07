@@ -25,6 +25,8 @@
   <% end %>
   <% if current_user_admin? or current_user_adviser? %>
     <%= f.input :video_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
+    <%= f.input :status, collection: %w[Contactable\ and\ doing\ well Contactable\ but\ lack\ of\ progress Uncontactable To\ be\ re-evaluated], include_blank: false %>
+    <%= f.input :comment %>
   <% end %>
   <% if locals[:is_new] %>
     <input type="hidden" name="team[cohort]" value="<%= locals[:cohort] %>">
