@@ -106,6 +106,7 @@ class TeamsController < ApplicationController
                                            :video_link, :status, :comment)
     team_ps[:project_level] = Team.get_project_level_from_raw(
       team_ps[:project_level]) if team_ps[:project_level]
+    team_ps[:status] = get_team_status_from_input(team_ps[:status])
     team_ps
   end
 
@@ -133,5 +134,10 @@ class TeamsController < ApplicationController
       team_feedbacks: @team.get_feedbacks_for_others,
       adviser_feedbacks: @team.get_feedbacks_for_adviser
     }
+  end
+
+  def get_team_status_from_input(status)
+    status_array = ["No Status", "Contactable and doing well", "Contactable but lack of progress", "Uncontactable", "To be re-evaluated"]
+    status_array.index(status)
   end
 end
