@@ -26,7 +26,7 @@
             <% elsif team.get_team_submission_status(submission) == "Late" %>
               <a class="btn btn-warning btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id) %>" target="_blank"> Evaluate late submission </a>
             <% else %>
-              <%= team.get_team_submission_status(team.get_own_submissions_in_order[1]) %>
+              <%= team.get_team_submission_status(team.get_own_submissions_in_order[i]) %>
             <% end %>
           </td>
          <% end %>
