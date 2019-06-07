@@ -20,7 +20,6 @@ class Team < ActiveRecord::Base
   PROJECT_GEMINI_REGEX = /\A(?:project gemini)|(?:gemini)|(?:g)\z/
   APOLLO_11_REGEX = /\A(?:apollo 11)|(?:apollo)|(?:a)\z/
   enum project_level: [:vostok, :project_gemini, :apollo_11]
-  enum status: [:no_status, :good, :ok, :poor, :tbr]
 
   def self.to_csv(**options)
     require 'csv'
@@ -288,27 +287,17 @@ class Team < ActiveRecord::Base
     evaluated_members
   end
 
+  def get_team_status_short
+    team_status_short_array = ["No Status", "Good", "OK", "Uncontactable", "TBR"]
+    team_status_short_array[status]
+  end
+
   def get_team_status
-    team_status = "No Status"
-    if status != "no_status"
-      team_status = status.upcase
-    end
-    team_status
+    team_status_short_array = ["No Status", "Contactable and doing well", "Contactable but lack of progress", "Uncontactable", "To be re-evaluated"]
+    team_status_short_array[status]
   end
 
   def get_team_comment
-    team_comment = ""
-    case status
-    when 'good'
-      team_comment << "Contactable and doing well\n"
-    when 'ok'
-      team_comment << "Contactable but lack of progress\n"
-    when 'poor' 
-      team_comment << "Uncontactable\n"
-    when 'tbr'
-      team_comment << "To be re-evaluated\n"
-    end
-    team_comment << comment unless comment.nil?
-    team_comment
+    comment
   end
 end
