@@ -25,8 +25,11 @@
   <% end %>
   <% if current_user_admin? or current_user_adviser? %>
     <%= f.input :video_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
-    <%= f.input :status, collection: %w[Contactable\ and\ doing\ well Contactable\ but\ lack\ of\ progress Uncontactable To\ be\ re-evaluated], include_blank: false %>
-    <%= f.input :comment %>
+    <%= f.input :status, collection: {'No Status'.to_sym => 0, 'Contactable and doing well'.to_sym => 1, 'Contactable but lack of progress'.to_sym => 2,
+                                      Uncontactable: 3, 'To be re-evaluated': 4},
+                                      selected: locals[:team].status,
+                                      include_blank: false, required: true %>
+    <%= f.input :comment, placeholder: true, placeholder: 'Enter comments and include your name' %>
   <% end %>
   <% if locals[:is_new] %>
     <input type="hidden" name="team[cohort]" value="<%= locals[:cohort] %>">
