@@ -143,7 +143,13 @@ class Team < ActiveRecord::Base
   def get_own_submissions_in_order
     submissions_hash = {}
     submissions.each do |submission|
-      milestone_number = get_milestone_number_from_milestone_id(submission.milestone_id)
+      milestone_number = submission.milestone_number
+      
+      # for older cohorts, i.e. milestone_number = 0, will use back old formula to calculate milestone_number from milestone_id
+      if milestone_number == 0
+        milestone_number = get_milestone_number_from_milestone_id(submission.milestone_id)
+      end
+
       submissions_hash[milestone_number] = submission
     end
     submissions_hash
