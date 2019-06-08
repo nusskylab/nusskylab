@@ -293,5 +293,17 @@ class Team < ActiveRecord::Base
     evaluated_members
   end
 
-end
+  def get_team_status_short
+    team_status_short_array = ["No Status", "Good", "OK", "Uncontactable", "TBR"]
+    team_status_short_array[status]
+  end
 
+  def get_team_status
+    team_status_short_array = ["No Status", "Contactable and doing well", "Contactable but lack of progress", "Uncontactable", "To be re-evaluated"]
+    team_status_short_array[status]
+  end
+
+  def get_team_comment
+    comment
+  end
+end
