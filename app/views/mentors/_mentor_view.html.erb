@@ -19,6 +19,12 @@
             View milestones submitted by teams
           </a>
         </li>
+        <li role="presentation">
+          <a href="#mentor-comments-panel" aria-controls="mentor-comments-panel"
+            role="tab" data-toggle="tab">
+            Give feedback to teams
+          </a>
+        </li>
       </ul>
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="teams-panel">
@@ -73,11 +79,20 @@
                 </tbody>
             </table>
           </div>
+          <% end %>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="mentor-comments-panel">
+          <br>
+          <td>
+            <a href="<%= new_mentor_mentor_comment_path(locals[:mentor].id) %>"
+            class="btn btn-success">
+              Give feedback
+            </a>
+          </td>
         </div>
       </div>
     </div>
     <hr>
-    <% end %>
     <br><hr>
     You can send emails to your students via
     <%= link_to 'General Mailing', general_mailing_mentor_path(locals[:mentor].id), class: 'btn btn-success' %>

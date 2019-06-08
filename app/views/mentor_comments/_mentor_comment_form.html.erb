@@ -1,0 +1,20 @@
+<%= simple_form_for(locals[:mentor_comment], wrapper: :vertical_form,
+                    url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
+    <%= f.error_notification %>
+    <div class="form-group">
+      <div class="text-muted"><%= locals[:feedback_template].instruction.html_safe %></div>
+    </div>
+    <% locals[:feedback_template].questions.each do |question| %>
+        <%= render 'questions/question_template',
+                   locals: {question: question,
+                            question_response: locals[:mentor_comment].get_response_for_question(question.id)} %>
+    <% end %>
+    <% if locals[:is_new] %>
+        <div class="group">
+          <%= f.input :target_team_id, collection: locals[:teams].map {|a| [a.team_name, a.id]}, include_blank: false %>
+        </div>
+    <% else %>
+        <input type="hidden" name="feedback[edit]" value="on">
+    <% end %>
+    <%= f.button :submit_centred, class: 'btn-success' %>
+<% end %>
