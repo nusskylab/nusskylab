@@ -1,4 +1,4 @@
-<table class="table table-hover table-sortable table-condensed">
+<table id = "teams-table" class="table tablesorter">
   <thead>
   <tr>
     <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th><th>Status</th><th>Student 1</th><th>Student 2</th>
@@ -6,7 +6,7 @@
   </tr>
   </thead>
   <tbody>
-  <% locals[:teams].each_with_index do |team, idx| %>
+    <% locals[:teams].each_with_index do |team, idx| %>
       <tr>
         <td><%= idx + 1 %></td>
         <td>
@@ -21,44 +21,32 @@
         <td><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
         <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
         <td><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
-        <td>
-          <%if team.get_team_submission_status(team.get_own_submissions_in_order[1]) == "Submitted" %>
-            <% submission = team.get_own_submissions_in_order[1] %>
-          <a class="btn btn-primary btn-s" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
-          <% else %>
-            <%= team.get_team_submission_status(team.get_own_submissions_in_order[1]) %>
-          <% end %>
-        </td>
-        <td>
-          <%if team.get_team_submission_status(team.get_own_submissions_in_order[2]) == "Submitted" %>
-            <% submission = team.get_own_submissions_in_order[2] %>
-            <a class="btn btn-primary btn-s" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
-          <% else %>
-            <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
-          <% end %>
-        </td>
-        <td>
-          <%if team.get_team_submission_status(team.get_own_submissions_in_order[3]) == "Submitted" %>
-            <% submission = team.get_own_submissions_in_order[3] %>
-            <a class="btn btn-primary btn-s" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id)%>"> View Submission </a>
-          <% else %>
-            <%= team.get_team_submission_status(team.get_own_submissions_in_order[3]) %>
-          <% end %>
-        </td>
+        <% for i in 1..3 do %>
+          <td>
+            <% submission = team.get_own_submissions_in_order[i] %>
+            <%if team.get_team_submission_status(submission) == "Submitted" %>
+              <a class="btn btn-primary btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id) %>" target="_blank"> Evaluate submission </a>
+            <% elsif team.get_team_submission_status(submission) == "Late" %>
+              <a class="btn btn-warning btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id) %>" target="_blank"> Evaluate late submission </a>
+            <% else %>
+              <%= team.get_team_submission_status(team.get_own_submissions_in_order[i]) %>
+            <% end %>
+          </td>
+        <% end %>
         <td><%= team.cohort %></td>
         <td>
           <% if can_current_user_view_team(team) %>
-              <a class="btn btn-primary btn-xs" href="<%=  team_path(team.id) %>">View</a>
+            <a class="btn btn-primary btn-xs" href="<%=  team_path(team.id) %>">View</a>
           <% end %>
           <% if can_current_user_edit_team(team) %>
-              <a class="btn btn-default btn-xs" href="<%= edit_team_path(team.id) %>">Edit</a>
+            <a class="btn btn-default btn-xs" href="<%= edit_team_path(team.id) %>">Edit</a>
           <% end %>
           <% if can_current_user_delete_team(team) %>
-              <%= link_to 'Delete', team_path(team.id), method: :delete, class: 'btn btn-danger btn-xs',
-                data: { confirm: 'Are you sure you want to delete this team and all associated resources?' } %>
+            <%= link_to 'Delete', team_path(team.id), method: :delete, class: 'btn btn-danger btn-xs',
+              data: { confirm: 'Are you sure you want to delete this team and all associated resources?' } %>
           <% end %>
         </td>
       </tr>
-  <% end %>
+    <% end %>
   </tbody>
 </table>

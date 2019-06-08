@@ -165,16 +165,17 @@ ActiveRecord::Schema.define(version: 20190604024654) do
   add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "milestone_id",                 null: false
-    t.integer  "team_id",                      null: false
-    t.boolean  "published",    default: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "milestone_id",                     null: false
+    t.integer  "team_id",                          null: false
+    t.boolean  "published",        default: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "video_link"
     t.text     "read_me"
     t.text     "project_log"
-    t.boolean  "show_public",  default: true
+    t.boolean  "show_public",      default: true
     t.string   "poster_link"
+    t.integer  "milestone_number", default: 0,     null: false 
   end
 
   add_index "submissions", ["milestone_id"], name: "index_submissions_on_milestone_id", using: :btree
