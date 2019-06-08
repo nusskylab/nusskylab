@@ -360,6 +360,23 @@ RSpec.describe TeamsController, type: :controller do
         expect(flash[:success]).not_to be_nil
       end
       
+      it 'should not match mentor successfully for current student' do
+        user1 = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
+        team = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
+        
+        #Create mentors
+        user2 = FactoryGirl.create(:user, email: '2@team.controller.spec', uid: '2.team.controller.spec')
+        user3 = FactoryGirl.create(:user, email: '3@team.controller.spec', uid: '3.team.controller.spec')
+        user4 = FactoryGirl.create(:user, email: '4@team.controller.spec', uid: '4.team.controller.spec')
+        mentor1 = FactoryGirl.create(:mentor, user_id: user2.id)
+        mentor2 = FactoryGirl.create(:mentor, user_id: user3.id)
+        mentor3 = FactoryGirl.create(:mentor, user_id: user4.id)
+        teams_params = {choice_1: mentor1.user_id, choice_2: mentor1.user_id, choice_3: mentor3.user_id}
+        post :match_mentor_success, id: team.id, team: teams_params
+        expect(flash[:danger]).not_to be_nil
+      end
+
       it 'should redirect to home_path for non_admin and non_current_user' do
         user1 = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
         adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
@@ -396,6 +413,23 @@ RSpec.describe TeamsController, type: :controller do
         post :match_mentor_success, id: team.id, team: teams_params 
         expect(response).to redirect_to(team_path(team))
         expect(flash[:success]).not_to be_nil
+      end
+
+      it 'should not match mentor successfully for admin' do
+        user1 = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
+        team = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
+        
+        #Create mentors
+        user2 = FactoryGirl.create(:user, email: '2@team.controller.spec', uid: '2.team.controller.spec')
+        user3 = FactoryGirl.create(:user, email: '3@team.controller.spec', uid: '3.team.controller.spec')
+        user4 = FactoryGirl.create(:user, email: '4@team.controller.spec', uid: '4.team.controller.spec')
+        mentor1 = FactoryGirl.create(:mentor, user_id: user2.id)
+        mentor2 = FactoryGirl.create(:mentor, user_id: user3.id)
+        mentor3 = FactoryGirl.create(:mentor, user_id: user4.id)
+        teams_params = {choice_1: mentor1.user_id, choice_2: mentor1.user_id, choice_3: mentor3.user_id}
+        post :match_mentor_success, id: team.id, team: teams_params 
+        expect(flash[:danger]).not_to be_nil
       end
     end
   end
