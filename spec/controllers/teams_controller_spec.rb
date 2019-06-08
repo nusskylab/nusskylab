@@ -288,16 +288,29 @@ RSpec.describe TeamsController, type: :controller do
     context 'user logged in but not admin' do
       login_user
       it 'should render the match mentor form for current student' do
-        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        user1 = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
+        team = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
+        student = FactoryGirl.create(:student, user_id: subject.current_user.id, team: team)
         get :match_mentor, id: team.id
         expect(response).to render_template(:match_mentor)
+      end
+      
+      it 'should redirect to home_path for non_admin and non_current_user' do
+        user1 = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
+        team = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
+        get :match_mentor, id: team.id
+        expect(response).to redirect_to(controller.home_path)
       end
     end
 
     context 'user logged in and admin' do
       login_admin
       it 'should render the match mentor form for current student' do
-        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        user1 = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        adviser1 = FactoryGirl.create(:adviser, user_id: user1.id)
+        team = FactoryGirl.create(:team, adviser: adviser1, team_name: '1.team.controller.spec')
         get :match_mentor, id: team.id
         expect(response).to render_template(:match_mentor)
       end
