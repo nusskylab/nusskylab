@@ -85,7 +85,7 @@ class Team < ActiveRecord::Base
   def export_submission_status(csv_row)
     submission_status_array = []
     (1..3).each do |submission_number|
-      submission = get_own_submissions[submission_number]
+      submission = get_own_submissions_in_order[submission_number]
       status = get_team_submission_status(submission)
       submission_status_array.push(status)
     end
