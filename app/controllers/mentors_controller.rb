@@ -32,9 +32,11 @@ class MentorsController < RolesController
         )
       end
     end
+    teamsMentorMatchings = MentorMatchings.where(:mentor_id => params[:id]).order(:choice_ranking);
     {
       milestones: milestones,
-      teams_submissions: teams_submissions
+      teams_submissions: teams_submissions,
+      teamsMentorMatchings: teamsMentorMatchings
     }
   end
 
@@ -53,5 +55,25 @@ class MentorsController < RolesController
     {
       users: users
     }
+  end
+
+  def accept_team 
+    @mentor = Mentor.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@mentor]) && return
+    cohort = @mentor.cohort || current_cohort
+    puts @mentor
+    if false
+      redirect_to mentor_path(@mentor.id), flash: {
+        success: t('.success_message')
+      }
+      return
+    else
+      redirect_to mentor_path(@mentor.id), flash: {
+        danger: t('.error_message', 
+          error_message: @mentor.errors.full_messages.join(', ') 
+        )
+      }
+      return
+    end
   end
 end

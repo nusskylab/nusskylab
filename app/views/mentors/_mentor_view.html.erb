@@ -30,7 +30,11 @@
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="teams-panel">
           <h2 class="text-center">Teams</h2>
-            <%= render 'mentors_teams', locals: {mentor: @role} %>
+          <%= render 'mentors_teams', locals: {mentor: @role} %>
+          <hr/>
+          <br/>
+          You can send emails to your students via
+          <%= link_to 'General Mailing', general_mailing_mentor_path(locals[:mentor].id), class: 'btn btn-success' %>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="milestones-panel">
           <h2 class="text-center">Teams</h2>
@@ -82,11 +86,38 @@
             </div>
           <% end %>
         </div>
+        <div role="tabpanel" class="tab-pane fade" id="mentor-matchings-panel">
+          <h2 class="text-center"> View matchings </h2> 
+          <table class="table table-hover table-condensed table-responsive">    
+            <thead>
+                <tr>
+                    <th> Choice </td>
+                    <th> Team </th>
+                    <th> Status </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <% locals[:teamsMentorMatchings].each do |choice| %>
+                <tbody>
+                    <tr>
+                        <td>
+                            <%= choice.choice_ranking %>
+                        </td>
+                        <td> 
+                            <%= choice.team.team_name %>
+                        </td>
+                        <td> 
+                            <%=choice.mentor_accepted ? 'Accepted' : 'Awaiting' %>
+                        </td>
+                        <td>
+                          <%= link_to 'Accept', accept_team_mentor_path(choice.mentor.id), method: :post, class: 'btn btn-primary btn-xs' %>
+                        </td>
+                    </tr>
+                <tbody>
+            <% end %>
+        </table> 
+        </div>
       </div>
     </div>
-    <hr>
-    <br><hr>
-    You can send emails to your students via
-    <%= link_to 'General Mailing', general_mailing_mentor_path(locals[:mentor].id), class: 'btn btn-success' %>
   </div>
 </div>
