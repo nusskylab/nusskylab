@@ -20,7 +20,7 @@ RSpec.describe Team, type: :model do
     expect(csv.first).to eql ['Team ID', 'Team Name', 'Project Level', 'Has Dropped', 'Is Pending', 'Poster Link', 'Video Link',
                               'Student 1 UserID', 'Student 1 Name', 'Student 1 Email', 'Student 2 UserID', 'Student 2 Name',
                               'Student 2 Email', 'Adviser UserID', 'Adviser Name', 'Mentor UserID', 'Mentor Name',
-                              'Average PE Score', 'Submission 1', 'Submission 2', 'Submission 3']
+                              'Average PE Score', 'Submission 1', 'Submission 2', 'Submission 3', 'Team Status', 'Comments']
   end
 
   it '#set_project_level' do
