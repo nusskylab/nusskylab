@@ -176,6 +176,11 @@ en:
       page_title: >
         Home | Orbital
   mentors:
+    accept_team:
+      success_message: >
+        You have accept team successfully.
+      failure_message: >
+        Unable to accept team.
     index:
       page_title: >
         View all mentors
@@ -213,11 +218,6 @@ en:
         Mentor %{user_name} has been successfully deleted
       failure_message: >
         Mentor could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
-    accept_team: >
-      success_message: >
-        You have accept team successfully.
-      failure_message: >
-        Unable to accept team: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   milestones:
     index:
       page_title: >
