@@ -143,7 +143,13 @@ class Team < ActiveRecord::Base
   def get_own_submissions_in_order
     submissions_hash = {}
     submissions.each do |submission|
-      milestone_number = get_milestone_number_from_milestone_id(submission.milestone_id)
+      milestone_number = submission.milestone_number
+      
+      # for older cohorts, i.e. milestone_number = 0, will use back old formula to calculate milestone_number from milestone_id
+      if milestone_number == 0
+        milestone_number = get_milestone_number_from_milestone_id(submission.milestone_id)
+      end
+
       submissions_hash[milestone_number] = submission
     end
     submissions_hash
@@ -287,5 +293,17 @@ class Team < ActiveRecord::Base
     evaluated_members
   end
 
-end
+  def get_team_status_short
+    team_status_short_array = ["No Status", "Good", "OK", "Uncontactable", "TBR"]
+    team_status_short_array[status]
+  end
 
+  def get_team_status
+    team_status_short_array = ["No Status", "Contactable and doing well", "Contactable but lack of progress", "Uncontactable", "To be re-evaluated"]
+    team_status_short_array[status]
+  end
+
+  def get_team_comment
+    comment
+  end
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190506181849) do
+ActiveRecord::Schema.define(version: 20190604024654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,16 +165,17 @@ ActiveRecord::Schema.define(version: 20190506181849) do
   add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "milestone_id",                 null: false
-    t.integer  "team_id",                      null: false
-    t.boolean  "published",    default: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "milestone_id",                     null: false
+    t.integer  "team_id",                          null: false
+    t.boolean  "published",        default: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "video_link"
     t.text     "read_me"
     t.text     "project_log"
-    t.boolean  "show_public",  default: true
+    t.boolean  "show_public",      default: true
     t.string   "poster_link"
+    t.integer  "milestone_number", default: 0,     null: false 
   end
 
   add_index "submissions", ["milestone_id"], name: "index_submissions_on_milestone_id", using: :btree
@@ -204,6 +205,8 @@ ActiveRecord::Schema.define(version: 20190506181849) do
     t.integer  "cohort"
     t.string   "poster_link"
     t.string   "video_link"
+    t.integer  "status",             default: 0
+    t.text     "comment"
   end
 
   add_index "teams", ["adviser_id"], name: "index_teams_on_adviser_id", using: :btree

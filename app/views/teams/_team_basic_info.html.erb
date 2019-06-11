@@ -66,4 +66,12 @@
       <%= locals[:team].video_link ? locals[:team].video_link : 'Nil' %>
     </a>
   </p>
+  <p class="col-sm-6 text-sm-right">Status:</p>
+  <p class="col-sm-6">
+    <%= locals[:team].get_team_status %>
+  </p>
+  <p class="col-sm-6 text-sm-right">Comment:</p>
+  <p class="col-sm-6">
+    <%= locals[:team].comment %>
+  </p>
 </div>
