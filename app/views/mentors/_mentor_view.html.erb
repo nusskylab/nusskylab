@@ -20,6 +20,12 @@
             View milestones submitted by teams
           </a>
         </li>
+        <li role="presentation">
+          <a href="#mentor-matchings-panel" aria-controls="mentor-matchings-panel"
+            role="tab" data-toggle="tab">
+            View matchings by prospective teams
+          </a>
+        </li>
       </ul>
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="teams-panel">
@@ -29,12 +35,12 @@
         <div role="tabpanel" class="tab-pane fade" id="milestones-panel">
           <h2 class="text-center">Teams</h2>
           <% locals[:milestones].each do |milestone| %>
-          <h3 class="text-center"><%= milestone.name %></h3>
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr><th>Team Name</th><th>Status</th><th>Last updated at</th></tr>
-              </thead>
+            <h3 class="text-center"><%= milestone.name %></h3>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr><th>Team Name</th><th>Status</th><th>Last updated at</th></tr>
+                </thead>
                 <tbody>
                   <% locals[:mentor].teams.each do |team| %>
                     <% if (team_submission = locals[:teams_submissions][milestone.id][team.id]) %>
@@ -72,13 +78,13 @@
                     <tr><td colspan="3">No teams to display yet</td></tr>
                   <% end %>
                 </tbody>
-            </table>
-          </div>
+              </table>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
     <hr>
-    <% end %>
     <br><hr>
     You can send emails to your students via
     <%= link_to 'General Mailing', general_mailing_mentor_path(locals[:mentor].id), class: 'btn btn-success' %>
