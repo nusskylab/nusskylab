@@ -86,8 +86,8 @@ class Team < ActiveRecord::Base
     submission_status_array = []
     (1..3).each do |submission_number|
       submission = get_own_submissions_in_order[submission_number]
-      status = get_team_submission_status(submission)
-      submission_status_array.push(status)
+      submission_status = get_team_submission_status(submission)
+      submission_status_array.push(submission_status)
     end
     csv_row.concat(submission_status_array)
     csv_row
@@ -123,13 +123,13 @@ class Team < ActiveRecord::Base
 
   def get_team_submission_status(submission)
     if submission.nil?
-      status = "Not Submitted"
+      submission_status = "Not Submitted"
     elsif submission.submitted_late?
-      status = "Late"
+      submission_status = "Late"
     else
-      status = "Submitted"
+      submission_status = "Submitted"
     end
-    status
+    submission_status
   end
 
   def get_own_submissions
