@@ -216,8 +216,8 @@ en:
     accept_team: >
       success_message: >
         You have accept team successfully.
-      error_message: >
-        There is error in matching mentor. <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
+      failure_message: >
+        Unable to accept team: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   milestones:
     index:
       page_title: >

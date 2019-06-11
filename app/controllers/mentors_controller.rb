@@ -61,7 +61,6 @@ class MentorsController < RolesController
     @mentor = Mentor.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@mentor]) && return
     cohort = @mentor.cohort || current_cohort
-    puts @mentor
     if false
       redirect_to mentor_path(@mentor.id), flash: {
         success: t('.success_message')
@@ -69,9 +68,7 @@ class MentorsController < RolesController
       return
     else
       redirect_to mentor_path(@mentor.id), flash: {
-        danger: t('.error_message', 
-          error_message: @mentor.errors.full_messages.join(', ') 
-        )
+        danger: t('.failure_message')
       }
       return
     end

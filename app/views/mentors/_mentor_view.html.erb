@@ -110,7 +110,7 @@
                             <%=choice.mentor_accepted ? 'Accepted' : 'Awaiting' %>
                         </td>
                         <td>
-                          <%= link_to 'Accept', accept_team_mentor_path(choice.mentor.id), method: :post, class: 'btn btn-primary btn-xs' %>
+                          <%= link_to 'Accept', accept_team_mentor_path(choice.mentor.id, team: choice.team.id), method: :post, class: 'btn btn-primary btn-xs' %>
                         </td>
                     </tr>
                 <tbody>
