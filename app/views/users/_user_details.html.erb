@@ -1,28 +1,21 @@
-<head>
-  <style>
-    img {
-      width: 50%;
-      height: auto;
-      max-width: 50%;
-    }
-  </style>
-</head>
 <div class="panel panel-info">
   <div class="panel-heading"><h3 class="text-center">User details</h3></div>
   <div class="panel-body">
     <div class="row">
-    <div class="col-md-3">
-      <%= image_tag locals[:user].gravatar_url(size: 150) %>
-    </div>
-    <div class="col-md-9">
-      <div>Name: <strong><%= locals[:user].user_name %></strong></div>
-      <div>Email: <%= auto_link(locals[:user].email) %></div>
-      <div>GitHub: <%= auto_link(locals[:user].github_link) %></div>
-      <div>LinkedIn: <%= auto_link(locals[:user].linkedin_link) %></div>
-      <div>Personal website: <%= auto_link(locals[:user].blog_link) %></div>
-      <div>Self Introduction: <%= auto_link(locals[:user].self_introduction) %></div>
-    </div>
-    <div class="col-sm-12"><br><i>You may change your profile picture with <a href="http://www.gravatar.org/">Gravatar</a>.</i></div>
+      <div class="col-md-3">
+        <%= image_tag locals[:user].gravatar_url(size: "200") %>
+      </div>
+      <div class="col-md-9">
+        <p>Name: <strong><%= locals[:user].user_name %></strong></p>
+        <p>Email: <%= auto_link(locals[:user].email) %></p>
+        <p>GitHub: <%= auto_link(locals[:user].github_link) %></p>
+        <p>LinkedIn: <%= auto_link(locals[:user].linkedin_link) %></p>
+        <p>Personal website: <%= auto_link(locals[:user].blog_link) %></p>
+        <p>Self Introduction: <%= auto_link(locals[:user].self_introduction) %></p>
+      </div>
+      <div class="col-sm-12">
+        <i>You may change your profile picture with <a href="http://www.gravatar.org/">Gravatar</a>.</i>
+      </div>
     </div>
   </div>
 </div>

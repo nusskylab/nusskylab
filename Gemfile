@@ -26,14 +26,16 @@ source 'https://rubygems.org' do
 
   # Turbolinks makes following links in your web application faster.
   # Read more: https://github.com/rails/turbolinks
-  gem 'turbolinks', '~> 2.5.3'
+  gem 'turbolinks', '~> 2.5.4'
   # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
   gem 'jbuilder', '~> 2.0'
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0', group: :doc
 
   # Use bootstrap for styling
-  gem 'bootstrap-sass', '~> 3.3.4'
+  gem 'bootstrap', '~> 4.3.1'
+  gem 'sprockets-rails', :require => 'sprockets/railtie'
+  gem 'octicons_helper', '~> 8.5.0'
   # Use jquery as the JavaScript library
   gem 'jquery-rails', '~> 4.2.1'
   # simple_form for form validation
@@ -46,7 +48,7 @@ source 'https://rubygems.org' do
   gem 'rails_autolink', '~> 1.1.6'
   # datetime picker
   gem 'momentjs-rails', '>= 2.9.0'
-  gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
+  gem 'bootstrap4-datetime-picker-rails', '~> 0.3.1'
   # Gravatar
   gem 'gravtastic', '~> 3.2.6'
 

@@ -1,8 +1,8 @@
 <%= simple_form_for(locals[:milestone], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
                     url: {action: (locals[:is_new] ? 'create' : 'update')}) do |f| %>
     <%= f.error_notification %>
-    <%= f.input :name, :collection => %w[Milestone\ 1 Milestone\ 2 Milestone\ 3], include_blank: false, required: true %>
-    <%= f.input :submission_deadline, as: :string, input_html: { value: (l(f.object.submission_deadline) if f.object.submission_deadline), class: 'datetime-picker' } %>
-    <%= f.input :peer_evaluation_deadline, as: :string, input_html: { value: (l(f.object.peer_evaluation_deadline) if f.object.peer_evaluation_deadline), class: 'datetime-picker' } %>
+    <%= f.input :name, :collection => %w[Milestone\ 1 Milestone\ 2 Milestone\ 3], include_blank: false, required: true, wrapper_html: {class:"row"} %>
+    <%= f.input :submission_deadline, as: :string, input_html: { value: (l(f.object.submission_deadline) if f.object.submission_deadline), class: 'datetime-picker' }, wrapper_html: {class:"row"} %>
+    <%= f.input :peer_evaluation_deadline, as: :string, input_html: { value: (l(f.object.peer_evaluation_deadline) if f.object.peer_evaluation_deadline), class: 'datetime-picker' }, wrapper_html: {class:"row"} %>
     <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>

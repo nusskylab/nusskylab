@@ -1,29 +1,27 @@
-<ul class="nav navbar-nav navbar-right">
+<ul class="navbar-nav justify-content-end">
   <% if current_user %>
-      <li>
+      <li class="nav-item">
         <p class="navbar-text user-name-text">
           Welcome, <%= current_user.user_name %>
         </p>
       </li>
-      <li>
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"
-                  id="settings-dropdown" aria-expanded="true">
-            <span class="glyphicon glyphicon-cog"></span><span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="settings-dropdown">
-            <li><a href="<%= edit_user_path(current_user.id) %>">Edit User Settings</a></li>
-          </ul>
+      <li class="nav-item dropdown">
+        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button"
+            id="settings-dropdown" aria-expanded="true">
+          <%= octicon "settings", :height => 32,  :class => "", :"aria-label" => "settings" %><span class="caret"></span>
+        </a>
+        <div class="dropdown-menu" role="menu" aria-labelledby="settings-dropdown">
+          <a class="dropdown-item" href="<%= edit_user_path(current_user.id) %>">Edit User Settings</a>
         </div>
       </li>
-      <li>
+      <li class="nav-item">
         <%= link_to 'Logout', destroy_user_session_path,
-                    method: :delete, class: 'btn btn-default btn-sm navbar-btn' %>
+                    method: :delete, class: 'nav-link' %>
       </li>
   <% else %>
-      <li>
+      <li class="nav-item">
         <%= link_to 'Login', new_user_session_path,
-                    method: :get, class: 'btn btn-default btn-sm navbar-btn' %>
+                    method: :get, class: 'nav-link' %>
       </li>
   <% end %>
 </ul>

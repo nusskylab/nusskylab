@@ -8,6 +8,6 @@
     <%= f.input :content, input_html: {rows: 10}, hint: 'Use """["option 1", "option 2"]""" as format for multiple choice/select questions. Write placefolder text for text questions.' %>
     <%= f.input :extras, input_html: {rows: 10}, hint: 'Use """{"attr 1": "value 1", "attr 2": "value 2"}""" as format' %>
     <%= f.input :order %>
-    <%= f.input :is_public %>
+    <%= f.input_field :is_public, inline_label: "Is public" %>
     <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>

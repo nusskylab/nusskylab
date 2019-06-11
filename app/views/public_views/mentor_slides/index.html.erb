@@ -4,16 +4,18 @@
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <% images.each_with_index do |image, index| %>
-      <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
+        <% if !image.blank? %>
+          <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %> bg-dark"></li>
+        <% end %>
       <% end %>
     </ol>
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <% images.each_with_index do |image, index| %>
         <% if !image.blank? %>
-          <div class="item <%= index == 0 ? 'active' : '' %>">
-            <img src="<%= image %>" alt="<%= index %> Image">
-            <div class="carousel-caption d-md-block">
+          <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+            <img src="<%= image %>" alt="<%= index %> Image" class="w-100">
+            <div class="carousel-caption d-none d-md-block">
               <h5 class="info"><%= @names[index] %><h5>
             </div>
           </div>
@@ -21,12 +23,16 @@
       <% end %>
     </div>
     <!-- Controls -->
-    <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <a class="left carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true">
+        <%= octicon "chevron-left", :height => 32 %>
+      </span>
       <span class="sr-only">Previous</span >
     </a>
-    <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <a class="right carousel-control-next" href="#carousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true">
+        <%= octicon "chevron-right", :height => 32 %>
+      </span>
       <span class="sr-only">Next</span>
     </a>
   </div>

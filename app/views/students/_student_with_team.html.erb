@@ -1,106 +1,104 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h1>
-      <span><%= locals[:student].user.user_name %> </span>
-      <span class="text-muted"> in </span>
-      <a href="<%= team_path(locals[:student].team) %>" class="btn btn-info">
-        <%= locals[:student].team.team_name %>
-      </a>
-    </h1>
-  </div>
-  <div class="panel-body">
-    <div role="tabpanel">
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-          <a href="#project-panel" aria-controls="project-panel"
-             role="tab" data-toggle="tab">
-            Submit project log
-          </a>
-        </li>
-        <li role="presentation">
-          <a href="#evaluation-panel" aria-controls="evaluation-panel"
-             role="tab" data-toggle="tab">
-            Evaluate other teams
-          </a>
-        </li>
-        <li role="presentation">
-          <a href="#view-evaluation-panel" aria-controls="view-evaluation-panel"
-             role="tab" data-toggle="tab">
-            View peer evaluations
-          </a>
-        </li>
-        <li role="presentation">
-          <a href="#submit-feedback-panel" aria-controls="submit-feedback-panel"
-             role="tab" data-toggle="tab">
-            Submit feedback
-          </a>
-        </li>
-        <li role="presentation">
-          <a href="#preview-survey-template-panel" aria-controls="preview-survey-template-panel"
-             role="tab" data-toggle="tab">
-            Preview Forms
-          </a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade in active" id="project-panel">
-          <h2 class="text-center">Submissions</h2>
-          <div class="well">
-            <p class="small"><%= t '.submit_submission_instruction' %></p>
-          </div>
-          <%= render 'student_submissions', locals: {
-            team: locals[:student].team,
-            milestones: locals[:role_data][:milestones],
-            team_submissions: locals[:role_data][:team_submissions]
-          } %>
+<div class="row">
+  <h1>
+    <span><%= locals[:student].user.user_name %> </span>
+    <span class="text-muted"> in </span>
+    <a href="<%= team_path(locals[:student].team) %>" class="btn btn-info">
+      <%= locals[:student].team.team_name %>
+    </a>
+  </h1>
+</div>
+
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="nav-item">
+      <a href="#project-panel" aria-controls="project-panel"
+          role="tab" data-toggle="tab" class="nav-link active">
+        Submit project log
+        </a>
+      </li>
+      <li role="presentation" class="nav-item">
+        <a href="#evaluation-panel" aria-controls="evaluation-panel"
+            role="tab" data-toggle="tab" class="nav-link">
+          Evaluate other teams
+        </a>
+      </li>
+      <li role="presentation" class="nav-item">
+        <a href="#view-evaluation-panel" aria-controls="view-evaluation-panel"
+            role="tab" data-toggle="tab" class="nav-link">
+          View peer evaluations
+        </a>
+      </li>
+      <li role="presentation" class="nav-item">
+        <a href="#submit-feedback-panel" aria-controls="submit-feedback-panel"
+            role="tab" data-toggle="tab" class="nav-link">
+          Submit feedback
+        </a>
+      </li>
+      <li role="presentation" class="nav-item">
+        <a href="#preview-survey-template-panel" aria-controls="preview-survey-template-panel"
+            role="tab" data-toggle="tab" class="nav-link">
+          Preview Forms
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content py-3">
+      <div role="tabpanel" class="tab-pane fade show active" id="project-panel">
+        <h2 class="text-center">Submissions</h2>
+        <div class="alert alert-secondary">
+          <span class="small align-middle"><%= t '.submit_submission_instruction' %></span>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
-          <h2 class="text-center">Evaluations</h2>
-          <div class="well">
-            <p class="small"><%= t '.submit_evaluation_instruction' %></p>
-          </div>
-          <%= render 'student_submit_evaluations', locals: {
-            milestones: locals[:role_data][:milestones],
-            evaluateds: locals[:role_data][:evaluateds],
-            team_evaluateds_submissions: locals[:role_data][:team_evaluateds_submissions],
-            team_evaluations: locals[:role_data][:team_evaluations]
-          } %>
+        <%= render 'student_submissions', locals: {
+          team: locals[:student].team,
+          milestones: locals[:role_data][:milestones],
+          team_submissions: locals[:role_data][:team_submissions]
+        } %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
+        <h2 class="text-center">Evaluations</h2>
+        <div class="alert alert-secondary">
+          <span class="small align-middle"><%= t '.submit_evaluation_instruction' %></span>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="view-evaluation-panel">
-          <h2 class="text-center">View all evaluations</h2>
-          <div class="well">
-            <p class="small"><%= t '.view_evaluation_instruction' %></p>
-          </div>
-          <%= render 'student_view_others_evaluations', locals: {
-            team: locals[:student].team,
-            milestones: locals[:role_data][:milestones],
-            evaluators: locals[:role_data][:evaluators],
-            team_evaluators_evaluations: locals[:role_data][:team_evaluators_evaluations]
-          } %>
+        <%= render 'student_submit_evaluations', locals: {
+          milestones: locals[:role_data][:milestones],
+          evaluateds: locals[:role_data][:evaluateds],
+          team_evaluateds_submissions: locals[:role_data][:team_evaluateds_submissions],
+          team_evaluations: locals[:role_data][:team_evaluations]
+        } %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="view-evaluation-panel">
+        <h2 class="text-center">View all evaluations</h2>
+        <div class="alert alert-secondary">
+          <span class="small align-middle"><%= t '.view_evaluation_instruction' %></span>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="submit-feedback-panel">
-          <h2 class="text-center">Submit feedback</h2>
-          <div class="well">
-            <p class="small"><%= t '.submit_feedback_instruction' %></p>
-          </div>
-          <%= render 'student_submit_feedbacks', locals: {
-            team: locals[:student].team,
-            milestones: locals[:role_data][:milestones],
-            evaluators: locals[:role_data][:evaluators],
-            team_feedbacks: locals[:role_data][:team_feedbacks],
-            adviser_feedbacks: locals[:role_data][:adviser_feedbacks]
-          } %>
+        <%= render 'student_view_others_evaluations', locals: {
+          team: locals[:student].team,
+          milestones: locals[:role_data][:milestones],
+          evaluators: locals[:role_data][:evaluators],
+          team_evaluators_evaluations: locals[:role_data][:team_evaluators_evaluations]
+        } %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="submit-feedback-panel">
+        <h2 class="text-center">Submit feedback</h2>
+        <div class="alert alert-secondary">
+          <span class="small align-middle"><%= t '.submit_feedback_instruction' %></span>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="preview-survey-template-panel">
-          <h2 class="text-center">Preview Peer Evaluations and Feedback Forms</h2>
-          <div class="well">
-            <p class="small"><%= t '.preview_survey_template_instruction' %></p>
+        <%= render 'student_submit_feedbacks', locals: {
+          team: locals[:student].team,
+          milestones: locals[:role_data][:milestones],
+          evaluators: locals[:role_data][:evaluators],
+          team_feedbacks: locals[:role_data][:team_feedbacks],
+          adviser_feedbacks: locals[:role_data][:adviser_feedbacks]
+        } %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="preview-survey-template-panel">
+        <h2 class="text-center">Preview Peer Evaluations and Feedback Forms</h2>
+          <div class="alert alert-secondary">
+            <span class="small align-middle"><%= t '.preview_survey_template_instruction' %></span>
           </div>
           <%= render 'student_preview_survey_template', locals: {
             milestones: locals[:role_data][:milestones],
             survey_templates: locals[:role_data][:survey_templates]
-          } %>
-        </div>
+        } %>
       </div>
     </div>
   </div>

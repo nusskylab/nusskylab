@@ -3,44 +3,56 @@
     <div class="col-lg-12">
       <h1 class="page-header"><%= project_level_header(project_level_text(locals[:selected_type]), locals[:teams].length) %></h1>
     </div>
+  </div>
+  <div class="row">
     <% locals[:teams].each_with_index do |team, idx| %>
       <!-- Thumbnail display for each team -->
-      <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-        <%= link_to image_tag(image_tag_string(locals[:selected_type]), class: 'img-rounded') %>
-        <h3>
-          <button type="button" class="btn button_team btn-lg" id="button_<%= idx %>" data-toggle="modal" data-target="#modal_<%= team.id %>">
-            <%= idx + 1 %>. <%= team.team_name %>
+      <div class="card col-sm-12 col-md-6 col-lg-4 border-0">
+        <div class="card-body">
+
+          
+          <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= idx %>">
+            <%= link_to image_tag(image_tag_string(locals[:selected_type]), class: 'rounded'), size: "200" %>
+          </a>
+          
+          <h3 class="card-title"> <%= idx + 1 %>. <strong><%= team.team_name %></strong> </h3>
+          <p class="card-text text-muted">Students: <%= team.students.map{|student| student.user.user_name}.join(' & ') %></p>
+          <p class="card-text text-muted">Advised by: <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></p>
+        </div>
+        <div class="card-footer bg-white border-top-0">
+          <button data-toggle="modal" data-target="#modal_<%= team.id %>" class="btn btn-primary button_team text-center" id="button_<%= team.id %>">
+            View submission
           </button>
-        </h3>
-        <p class="text-muted">Students: <%= team.students.map {|student| student.user.user_name}.join(' & ') %></p>
-        <p class="text-muted">Advised by: <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></p>
+        </div>
       </div>
       <!-- End of thumbnail display -->
 
       <!-- Modal box: Display all the team's submissions -->
-      <div id="modal_<%= team.id %>" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-          <!-- Modal content-->
+      <div id="modal_<%= team.id %>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal_<%= team.id %>Label" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title"><%= team.team_name %>'s submissions</h4>
+              <h4 class="modal-title text-muted"><%= team.team_name %></h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <div class="modal-body">
-
+            <div class="modal-body overflow-auto">
               <!-- Tab Content -->
+              <% first_loop = true; %>
               <% team_submission = Submission.where(team_id: team.id); %>
               <% if (team_submission.length > 0) %>
                 <ul class="nav nav-tabs">
                   <% team_submission.order(:milestone_id).each do |submission| %>
-                    <li>
-                      <a data-toggle="tab" href="#team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>">Milestone <%= submission.milestone_id %></a>
+                    <li class="nav-item">
+                      <a class="nav-link <% if first_loop %>active<% first_loop = false; end %>" data-toggle="tab" href="#team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>">Milestone <%= submission.milestone_id %></a>
                     </li>
                   <% end %>
                 </ul>
                 <div class="tab-content">
+                  <% first_loop = true; %>
                   <% team_submission.order(:milestone_id).each do |submission| %>
-                    <div id="team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>" class="tab-pane fade in">
+                    <div id="team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>" class="tab-pane fade show <% if first_loop %>active<% first_loop = false; end %>">
                       <!--                      Team <%#= submission.team_id %>-->
                       <!--                      Milestone <%#= submission.milestone_id %>-->
                       <%= render 'submission_details', locals: {submission: submission} %>
@@ -51,10 +63,6 @@
                 <h3>No submissions submitted</h3>
               <% end %>
               <!-- End of Tab Content -->
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>

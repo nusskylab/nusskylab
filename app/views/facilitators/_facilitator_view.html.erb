@@ -1,11 +1,7 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
+<div class="row">
     <h2>
       <span>Hi, <%= locals[:facilitator].user.user_name %> </span>
     </h2>
-  </div>
-  <div class="panel-body">
-    <div class="well">Welcome to Orbital.</div>
-    <%= render 'users/user_details', locals: {user: locals[:facilitator].user} %>
-  </div>
 </div>
+<div class="alert alert-secondary">Welcome to Orbital.</div>
+<%= render 'users/user_details', locals: {user: locals[:facilitator].user} %>

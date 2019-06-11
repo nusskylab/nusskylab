@@ -1,52 +1,55 @@
 <% javascript 'public_projects.js' %>
-<% first_loop = true; %>
-<ul class="nav nav-pills nav-stacked col-md-2" id="all_cohorts">
-	<% @teams_table.each do | cohort, teams | %>
-	<li>
-		<a role="button" data-toggle="pill" href="#<%=cohort%>" class="<% if first_loop %>active<% first_loop = false; end %>">
-			Cohort <%= cohort %>
-		</a>
-	</li>
-	<% end %>
-</ul>
-<% first_loop = true; %>
-<div class="tab-content col-md-10">
-	<% @teams_table.each do | cohort, teams | %>
-	<div class="tab-pane fade <% if first_loop %>in active<% first_loop = false; end %>" id="<%=cohort%>">
-		<ul class="nav nav-pills">
-			<li class="active"><a data-toggle="pill" href="#vostok<%=cohort%>">Vostok</a></li>
-			<li><a data-toggle="pill" href="#project_gemini<%=cohort%>">Project Gemini</a></li>
-			<li><a data-toggle="pill" href="#apollo_11<%=cohort%>">Apollo 11</a></li>
-		</ul>
-		<div class="tab-content">
-			<div id="vostok<%=cohort%>" class="tab-pane fade in active">
-				<% if teams.select{|team| team.vostok?}.length > 0 %>
-					<%= render 'public_teams_table', locals: {teams: teams,
-						selected_teams: teams.select{|team| team.vostok?},
-						selected_type: 'Vostok'} %>
-				<% else %>
-					No Data Available
-				<% end %>
-			</div>
-			<div id="project_gemini<%=cohort%>" class="tab-pane fade">
-				<% if teams.select{|team| team.project_gemini?}.length > 0 %>
-					<%= render 'public_teams_table', locals: {teams: teams,
-						selected_teams: teams.select{|team| team.project_gemini?},
-						selected_type: 'Project Gemini'} %>
-				<% else %>
-					No Data Available
-				<% end %>
-			</div>
-			<div id="apollo_11<%=cohort%>" class="tab-pane fade">
-				<% if teams.select{|team| team.apollo_11?}.length > 0 %>
-					<%= render 'public_teams_table', locals: {teams: teams,
-						selected_teams: teams.select{|team| team.apollo_11?},
-						selected_type: 'Apollo 11'} %>
-				<% else %>
-					No Data Available
-				<% end %>
+
+<div class="row">
+	<% first_loop = true; %>
+	<ul class="nav flex-column nav-pills col-md-2" id="all_cohorts" role="tablist">
+		<% @teams_table.each do | cohort, teams | %>
+		<li class="nav-item">
+			<a id="<%= cohort %>-tab" role="tab" data-toggle="pill" href="#cohort-<%=cohort%>" class="nav-link <% if first_loop %>show active<% first_loop = false; end %>" aria-controls="<%=cohort%>" aria-selected="<% if first_loop %> true <% first_loop = false;else %> false <% end %>">
+				Cohort <%= cohort %>
+			</a>
+		</li>
+		<% end %>
+	</ul>
+	<% first_loop = true; %>
+	<div class="tab-content col-md-10 float-right">
+		<% @teams_table.each do | cohort, teams | %>
+		<div class="tab-pane fade show <% if first_loop %>active<% first_loop = false; end %>" id="cohort-<%= cohort %>" aria-labelledby="<%= cohort %>-tab">
+			<ul class="nav nav-pills" role="tablist">
+				<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#vostok<%=cohort%>">Vostok</a></li>
+				<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#project_gemini<%=cohort%>">Project Gemini</a></li>
+				<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#apollo_11<%=cohort%>">Apollo 11</a></li>
+			</ul>
+			<div class="tab-content">
+				<div id="vostok<%=cohort%>" class="tab-pane fade show active" role="tabpanel">
+					<% if teams.select{|team| team.vostok?}.length > 0 %>
+						<%= render 'public_teams_table', locals: {teams: teams,
+							selected_teams: teams.select{|team| team.vostok?},
+							selected_type: 'Vostok'} %>
+					<% else %>
+						No Data Available
+					<% end %>
+				</div>
+				<div id="project_gemini<%=cohort%>" class="tab-pane fade">
+					<% if teams.select{|team| team.project_gemini?}.length > 0 %>
+						<%= render 'public_teams_table', locals: {teams: teams,
+							selected_teams: teams.select{|team| team.project_gemini?},
+							selected_type: 'Project Gemini'} %>
+					<% else %>
+						No Data Available
+					<% end %>
+				</div>
+				<div id="apollo_11<%=cohort%>" class="tab-pane fade">
+					<% if teams.select{|team| team.apollo_11?}.length > 0 %>
+						<%= render 'public_teams_table', locals: {teams: teams,
+							selected_teams: teams.select{|team| team.apollo_11?},
+							selected_type: 'Apollo 11'} %>
+					<% else %>
+						No Data Available
+					<% end %>
+				</div>
 			</div>
 		</div>
+	<% end %>
 	</div>
-<% end %>
 </div>

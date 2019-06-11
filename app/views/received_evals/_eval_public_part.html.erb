@@ -1,20 +1,22 @@
 <div id="<%= locals[:eval].id %>_public">
-  <div>
-    <% if locals[:eval].updated_at %>
+  <div class="card">
+    <div class="card-body">
+      <% if locals[:eval].updated_at %>
         <span class="text-muted pull-right">
           Last modified at: <%= l locals[:eval].updated_at %>
         </span>
-    <% end %>
-    <h3>From <%= locals[:evaluator_name] %></h3>
-  </div>
-  <div class="eval-public-part">
-    <% locals[:survey_template].questions.each do |question| %>
-      <% if question.is_public %>
-        <%= render 'questions/question_template',
-                   locals: {question: question, view_template: true,
-                            question_response: locals[:eval].get_response_for_question(question.id)} %>
       <% end %>
-    <% end %>
+      <h3>From <%= locals[:evaluator_name] %></h3>
+      <div class="eval-public-part">
+        <% locals[:survey_template].questions.each do |question| %>
+          <% if question.is_public %>
+            <%= render 'questions/question_template',
+                locals: {question: question, view_template: true,
+                question_response: locals[:eval].get_response_for_question(question.id)} %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 <br>

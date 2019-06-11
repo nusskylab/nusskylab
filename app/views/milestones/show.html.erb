@@ -1,12 +1,12 @@
 <% content_for :main_content do %>
     <% javascript 'milestones.js' %>
-    <div class="panel panel-info">
-      <div class="panel-heading">
+    <div class="card">
+      <div class="card-header">
         <h2 class="text-center">
           <%= @milestone.name %>
         </h2>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <%= render 'milestone_info', locals: {milestone: @milestone} %>
       </div>
     </div>

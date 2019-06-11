@@ -1,19 +1,12 @@
 <% content_for :main_content do %>
-  <div class="container">
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <h3 class="text-center">Register</h3>
-      </div>
-      <div class="panel-body">
-        <% if is_registration_open? || current_user_admin? %>
-          <p class="text-muted">You can further <a class="btn btn-info" href="<%= edit_user_path(@user.id) %>" target="_blank">complete</a> your profile for registration</p>
-          <%= render 'registration_form', locals: {user: @user, survey_template: survey_template, registration: registration, questions: questions} %>
-        <% else %>
-          <p>
-            Registration for Orbital <%=current_cohort%> has closed. Thank you for your interest.
-          </p>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <div class="row">
+    <h3 class="col text-center">Register</h3>
+    <% if is_registration_open? || current_user_admin? %>
+      <p class="text-muted">You can further <a class="btn btn-info" href="<%= edit_user_path(@user.id) %>" target="_blank">complete</a> your profile for registration</p>
+      <%= render 'registration_form', locals: {user: @user, survey_template: survey_template, registration: registration, questions: questions} %>
+    <% else %>
+    <p>
+      Registration for Orbital <%=current_cohort%> has closed. Thank you for your interest.
+    </p>
+  <% end %>
 <% end %>

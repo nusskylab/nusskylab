@@ -1,11 +1,10 @@
-@import "bootstrap-sprockets";
 @import "bootstrap";
 @import "select2";
 @import "jquery.tablesorter/theme.bootstrap";
-@import "bootstrap-datetimepicker";
+@import "tempusdominus-bootstrap-4";
 @import "public_views/3-col-portfolio.css";
 @import "submissions/thumbnail-gallery.css";
-
+//*= require octicons
 // Forum style
 $thredded-base-font-size: 1.6rem;
 $thredded-font-size-small: 1.5rem;
@@ -119,7 +118,7 @@ $thredded-button-font-size: 1.25rem;
   bottom: 50px;
   right: 20px;
   background: rgb(0, 0, 0);
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.2);
   width: 50px;
   height: 50px;
   display: block;
