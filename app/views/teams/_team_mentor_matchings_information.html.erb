@@ -1,6 +1,7 @@
 <table class="table table-hover table-condensed table-responsive">    
     <thead>
         <tr>
+            <th> Choice </td>
             <th> Mentor </th>
             <th> Status </th>
         </tr>
@@ -8,6 +9,9 @@
     <% locals[:teamsMentorMatchings].each do |choice| %>
         <tbody>
             <tr>
+                <td>
+                    <%= choice.choice_ranking %>
+                </td>
                 <td> 
                     <%= choice.mentor.user.user_name %>
                 </td>
