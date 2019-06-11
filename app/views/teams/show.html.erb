@@ -45,12 +45,14 @@
                 View peer evaluations
               </a>
             </li>
-            <li role="presentation">
-              <a href="#mentor-matching-status-panel" aria-controls="mentor-matching-status-panel"
-                 role="tab" data-toggle="tab">
-                View mentor matchings
-              </a>
-            </li>
+            <% if @teamsMentorMatchings.length > 0 %>
+              <li role="presentation">
+                <a href="#mentor-matching-status-panel" aria-controls="mentor-matching-status-panel"
+                  role="tab" data-toggle="tab">
+                  View mentor matchings
+                </a>
+              </li>
+            <% end %>
             <li role="presentation">
               <a href="#submit-feedback-panel" aria-controls="submit-feedback-panel"
                  role="tab" data-toggle="tab">
