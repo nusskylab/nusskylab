@@ -46,6 +46,12 @@
               </a>
             </li>
             <li role="presentation">
+              <a href="#mentor-matching-status-panel" aria-controls="mentor-matching-status-panel"
+                 role="tab" data-toggle="tab">
+                View mentor matchings
+              </a>
+            </li>
+            <li role="presentation">
               <a href="#submit-feedback-panel" aria-controls="submit-feedback-panel"
                  role="tab" data-toggle="tab">
                 Submit feedback
@@ -71,7 +77,7 @@
             <div class="well">
               <p class="small"><%= t '.basic_info_instruction' %></p>
             </div>
-            <%= render 'team_basic_info', locals: {team: @team} %>
+            <%= render 'team_basic_info', locals: {team: @team, teamsMentorMatchings: @teamsMentorMatchings} %>
           </div>
           <% if current_user_student? &&
                 current_user_student?.team_id &&
@@ -122,6 +128,15 @@
                 evaluators: evaluators,
                 team_feedbacks: team_feedbacks,
                 adviser_feedbacks: adviser_feedbacks
+              } %>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="mentor-matching-status-panel">
+              <h2 class="text-center">View Mentor Matching</h2>
+              <div class="well">
+                <p class="small"><%= t '.view_mentor_matchings_instruction' %></p>
+              </div>
+              <%= render 'team_mentor_matchings_information', locals: {
+                teamsMentorMatchings: @teamsMentorMatchings
               } %>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="preview-survey-template-panel">

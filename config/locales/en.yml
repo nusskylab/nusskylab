@@ -437,6 +437,8 @@ en:
       basic_info_instruction: >
         Team's basic information including team name, aimed project levels, members, peer teams,
         adviser and mentor is listed here.
+      view_mentor_matchings_instruction: >
+        View your current mentor matchings status. 
       submission_instruction: >
         Team's submissions to milestones are listed here.
       more_info_instruction: >

@@ -50,6 +50,7 @@ class TeamsController < ApplicationController
                        @team.get_relevant_users(true, true)) && return
     @page_title = t('.page_title', team_name: @team.team_name)
     cohort = @team.cohort || current_cohort
+    @teamsMentorMatchings = MentorMatchings.where(:team_id => params[:id]).order(:choice_ranking);
     render locals: data_for_display
   end
 
