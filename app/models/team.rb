@@ -43,7 +43,7 @@ class Team < ActiveRecord::Base
     ['Team ID', 'Team Name', 'Project Level', 'Has Dropped', 'Is Pending', 'Poster Link', 'Video Link',
      'Student 1 UserID', 'Student 1 Name', 'Student 1 Email', 'Student 2 UserID', 'Student 2 Name',
      'Student 2 Email', 'Adviser UserID', 'Adviser Name', 'Mentor UserID',
-     'Mentor Name', 'Average PE Score', 'Submission 1', 'Submission 2', 'Submission 3']
+     'Mentor Name', 'Average PE Score', 'Submission 1', 'Submission 2', 'Submission 3', 'Team Status', 'Comments']
   end
 
   def to_csv_row
@@ -53,6 +53,7 @@ class Team < ActiveRecord::Base
     ratings_hash = get_average_evaluation_ratings
     csv_row.append(ratings_hash[:all])
     export_submission_status(csv_row)
+    export_team_status(csv_row)
     csv_row
   end
 
@@ -85,11 +86,17 @@ class Team < ActiveRecord::Base
   def export_submission_status(csv_row)
     submission_status_array = []
     (1..3).each do |submission_number|
-      submission = get_own_submissions[submission_number]
-      status = get_team_submission_status(submission)
-      submission_status_array.push(status)
+      submission = get_own_submissions_in_order[submission_number]
+      submission_status = get_team_submission_status(submission)
+      submission_status_array.push(submission_status)
     end
     csv_row.concat(submission_status_array)
+    csv_row
+  end
+
+  def export_team_status(csv_row)
+    csv_row.push(get_team_status)
+    csv_row.push(comment)
     csv_row
   end
 
@@ -123,18 +130,18 @@ class Team < ActiveRecord::Base
 
   def get_team_submission_status(submission)
     if submission.nil?
-      status = "Not Submitted"
+      submission_status = "Not Submitted"
     elsif submission.submitted_late?
-      status = "Late"
+      submission_status = "Late"
     else
-      status = "Submitted"
+      submission_status = "Submitted"
     end
-    status
+    submission_status
   end
 
   def get_own_submissions
     submissions_hash = {}
-    submissions.each do |submission|
+    submissions.each do |submission|  
       submissions_hash[submission.milestone_id] = submission
     end
     submissions_hash
