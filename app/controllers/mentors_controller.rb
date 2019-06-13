@@ -64,7 +64,7 @@ class MentorsController < RolesController
     team = Team.find(params[:team])
     puts "Team #{team.team_name}"
     acceptedMentorMatchings = MentorMatchings.find_by(:team_id => team.id, :mentor_id => @mentor.id)
-    if ((MentorMatchings.update(acceptedMentorMatchings.id, :mentor_accepted => true)) && (!acceptedMentorMatchings.mentor_accepted)
+    if ((MentorMatchings.update(acceptedMentorMatchings.id, :mentor_accepted => true)) && (!acceptedMentorMatchings.mentor_accepted))
       redirect_to mentor_path(@mentor.id), flash: {
         success: t('.success_message', team_name: team.team_name)
       }
