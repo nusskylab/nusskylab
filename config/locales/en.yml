@@ -178,9 +178,9 @@ en:
   mentors:
     accept_team:
       success_message: >
-        You have accept team successfully.
+        You have accept %{team_name} successfully.
       failure_message: >
-        Unable to accept team.
+        Unable to accept %{team_name}.
     index:
       page_title: >
         View all mentors
