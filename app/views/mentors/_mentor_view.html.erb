@@ -19,12 +19,14 @@
             View milestones submitted by teams
           </a>
         </li>
-        <li role="presentation">
-          <a href="#mentor-matchings-panel" aria-controls="mentor-matchings-panel"
-            role="tab" data-toggle="tab">
-            View matchings by prospective teams
-          </a>
-        </li>
+        <% if (locals[:teamsMentorMatchings].length > 0) %>
+          <li role="presentation">
+            <a href="#mentor-matchings-panel" aria-controls="mentor-matchings-panel"
+              role="tab" data-toggle="tab">
+              View matchings by prospective teams
+            </a>
+          </li>
+        <% end %>
       </ul>
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="teams-panel">
@@ -106,10 +108,12 @@
                             <%= choice.team.team_name %>
                         </td>
                         <td> 
-                            <%=choice.mentor_accepted ? 'Accepted' : 'Awaiting' %>
+                            <%= choice.mentor_accepted ? 'Accepted' : 'Awaiting' %>
                         </td>
                         <td>
-                          <%= link_to 'Accept', accept_team_mentor_path(choice.mentor.id, team: choice.team.id), method: :post, class: 'btn btn-primary btn-xs' %>
+                          <% if (!choice.mentor_accepted) %>
+                            <%= link_to 'Accept', accept_team_mentor_path(choice.mentor.id, team: choice.team.id), method: :post, class: 'btn btn-primary btn-xs' %>
+                          <% end%>
                         </td>
                     </tr>
                 <tbody>
