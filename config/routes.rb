@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       post 'send_general_mailing'
       patch 'send_general_mailing'
       post 'accept_team'
+      patch 'accept_team'
     end
   end
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
