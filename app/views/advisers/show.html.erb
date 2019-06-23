@@ -34,7 +34,7 @@
             <div class="well">
               <p class="small"><%= t '.view_teams_instruction' %></p>
             </div>
-            <%= render 'adviser_teams', locals: {adviser: @role} %>
+            <%= render 'adviser_teams', locals: { adviser: @role, milestones: role_data[:milestones]} %>
           </div>
           <div role="tabpanel" class="tab-pane fade" id="evaluations-panel">
             <h2 class="text-center">Evaluations</h2>
