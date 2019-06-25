@@ -1,16 +1,8 @@
 class TeamNameValidator < ActiveModel::EachValidator
-  # team name validator simply checks to ensure that the first name is not 
-  # implement this validator class in order to ensure scalability in the future
-  # future custom regex can be used. 
+  # for scalability, this is used instead of format
   def validate_each(record, attribute, value)
-    if value.to_s.match(/^[0-9]+$/)
-      puts value      
-      puts record.id
-      # puts "true"
-    end
-    unless value.to_s.match(/[^0-9]+.*/) || (value.to_s.match(/[0-9]*/) && value.to_i == record.id.to_i)
-      record.errors.add(attribute, \
-        "must start with an non-numeric character or be team id")
+    if value.to_s.match(/^[0-9]+$/) 
+      record.errors.add(attribute, "must contain at least one non-numeric character")
     end
   end
 end
