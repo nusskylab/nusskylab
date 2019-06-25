@@ -4,7 +4,9 @@
     <tr>
       <th>Team Name</th>
       <th>Level of achievement</th>
-      <th>Evaluated teams</th>
+      <% locals[:milestones].each do |milestone| %>
+      <th><%= milestone.name %> evaluations </th>
+      <% end %>
       <th>Action</th>
     </tr>
     </thead>
@@ -17,11 +19,23 @@
           <td>
             <%= team.get_project_level %>
           </td>
+          <%locals[:milestones].each do |milestone| %>
           <td>
             <% team.evaluateds.each do |evaluated| %>
-                <%= evaluated.evaluated.team_name %><br>
-            <% end %>
+                <% peer_evaluation_id = nil %>
+                <% for peer_evaluation in team.peer_evaluations do %>
+                    <%  if peer_evaluation.submission.team_id == evaluated.evaluated_id %>
+                        <% peer_evaluation_id = peer_evaluation.id%>
+                    <% end %>
+                <% end %>
+                <% if peer_evaluation_id != nil %>
+                    <a href="<%= milestone_team_peer_evaluation_path(milestone.id, evaluated.evaluator_id, peer_evaluation_id) %>" class="btn btn-info"><%= evaluated.evaluated.team_name %></a> <br> <br>
+                <% else %>
+                    <a class="btn btn-default" disabled="disabled"><%= evaluated.evaluated.team_name %></a> <br><br>
+                 <% end %>
+             <% end %>
           </td>
+          <% end %>
           <td>
             <a href="<%= edit_team_path(team) %>" class="btn btn-success">Edit</a>
           </td>
