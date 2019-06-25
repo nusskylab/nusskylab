@@ -1,10 +1,20 @@
+class TeamNameValidator < ActiveModel::EachValidator
+  # team name validator simply checks to ensure that the first name is not 
+  # implement this validator class in order to ensure scalability in the future
+  def validate_each(record, attribute, value)
+    unless value.match(/[^0-9]+.*/)
+      record.errors.add(attribute, "name must start with an non-numeric character")
+    end
+  end
+end
+
 # Team: team modeling
 class Team < ActiveRecord::Base
   include ModelHelper
   validates :team_name, presence: true, uniqueness: {
     scope: :cohort,
     message: ': Team name should be unique'
-  }
+  }, team_name: true
   before_validation :fill_current_cohort
 
   belongs_to :adviser
