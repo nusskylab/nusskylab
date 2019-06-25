@@ -93,9 +93,9 @@ RSpec.describe Team, type: :model do
     expect(FactoryGirl.build(:team, team_name: '1111')).not_to be_valid
 
     # positive example
-    expect(FactoryGirl.build(:team, team_name: "yeeta_skeeta")).to be_valid
-    expect(FactoryGirl.build(:team, team_name: "team1")).to be_valid
-    expect(FactoryGirl.build(:team, team_name: "4head")).to be_valid
+    expect(FactoryGirl.build(:team, team_name: "teamtwo")).to be_valid
+    expect(FactoryGirl.build(:team, team_name: "team2")).to be_valid
+    expect(FactoryGirl.build(:team, team_name: "2team")).to be_valid
   end
 
   it '#get_own_submissions' do
