@@ -1,10 +1,19 @@
+class TeamNameValidator < ActiveModel::EachValidator
+  # for scalability, this is used instead of format
+  def validate_each(record, attribute, value)
+    if value.to_s.match(/^[0-9]+$/) 
+      record.errors.add(attribute, "must contain at least one non-numeric character")
+    end
+  end
+end
+
 # Team: team modeling
 class Team < ActiveRecord::Base
   include ModelHelper
   validates :team_name, presence: true, uniqueness: {
     scope: :cohort,
     message: ': Team name should be unique'
-  }
+  }, team_name: true
   before_validation :fill_current_cohort
 
   belongs_to :adviser
