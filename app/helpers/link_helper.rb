@@ -69,16 +69,32 @@ def print_dict(dict_to_print)
 end
 
 def is_google_drive_link?(url)
-  google_drive_prefix = "https://drive.google.com/"
-  url[0..google_drive_prefix.length] == google_drive_prefix
-  puts url[0..google_drive_prefix.length]
+  gdrive_prefix = "https://drive.google.com/"
+  is_gdrive_link = url[0..gdrive_prefix.length - 1] == gdrive_prefix
+  return is_gdrive_link
+end
+
+def get_google_drive_view_link(url)
+  raise "not a google drive link" unless is_google_drive_link? url
+  gdrive_id = url.to_s.scan(/id=.*/)[0].to_s
+  if gdrive_id.include? "&"
+    gdrive_id = (gdrive_id.split('&'))[0]
+    gdrive_id = gdrive_id.to_s.scan(/id=.*/)[0].to_s
+  end
+  
+  gdrive_view_link = "https://drive.google.com/uc?#{gdrive_id}&export=view"
+  puts gdrive_view_link
+  return gdrive_view_link
 end
 
 test_url = "https://www.smashbros.com/images/og/link.jpg"
 # test_url = "https://drive.google.com/open?id=12gYWVnvY_A0v66hY-9zFQMzoZ-j4Tsqf"
 # is_google_drive_link? test_url
-# test_url = 'https://drive.google.com/open?id=12gYWVnvY_A0v66hY-9zFQMzoZ-j4Tsqf'
+test_url = 'https://drive.google.com/open?id=12gYWVnvY_A0v66hY-9zFQMzoZ-j4Tsqf'
 # test_url = 'https://drive.google.com/uc?id=12gYWVnvY_A0v66hY-9zFQMzoZ-j4Tsqf&export=view'
 # is_valid_image_url?(test_url)
 
-is_direct_image_link? test_url  
+# is_direct_image_link? test_url  
+# is_google_drive_link? test_url
+get_google_drive_view_link(test_url)
+
