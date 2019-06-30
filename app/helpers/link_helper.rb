@@ -87,14 +87,26 @@ def get_google_drive_view_link(url)
   return gdrive_view_link
 end
 
-test_url = "https://www.smashbros.com/images/og/link.jpg"
+def is_valid_link?(url)
+  # puts url
+  url = URI.parse(url.to_s)
+  req = Net::HTTP.start(url.host, url.port, :use_ssl => url.scheme == 'https')
+  res = Net::HTTP.get_response(url)
+  valid_link = (res.code[0] == "2") || (res.code[0] == "3")
+  # puts res.body
+  return valid_link
+end
+
+direct_url = "https://www.smashbros.com/images/og/link.jpg"
 # test_url = "https://drive.google.com/open?id=12gYWVnvY_A0v66hY-9zFQMzoZ-j4Tsqf"
 # is_google_drive_link? test_url
 test_url = 'https://drive.google.com/open?id=12gYWVnvY_A0v66hY-9zFQMzoZ-j4Tsqf'
 # test_url = 'https://drive.google.com/uc?id=12gYWVnvY_A0v66hY-9zFQMzoZ-j4Tsqf&export=view'
 # is_valid_image_url?(test_url)
 
+deleted_test_url = 'https://drive.google.com/open?id=1cxFm-oQ8WQygVB-Mj7IixP0QveMH77eL'
+
 # is_direct_image_link? test_url  
 # is_google_drive_link? test_url
-get_google_drive_view_link(test_url)
-
+gdrive_link = get_google_drive_view_link(test_url)
+is_valid_link?(gdrive_link)
