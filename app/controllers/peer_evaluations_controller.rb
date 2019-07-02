@@ -12,7 +12,7 @@ class PeerEvaluationsController < ApplicationController
         submission_id: submission.id
       )
     elsif params[:adviser_id]
-      submission = Submission.find_by(id: params[:submission_id])
+      submission = Submission.find_by(id: params[:target]) || (record_not_found && return)
       peer_evaluation = PeerEvaluation.find_by(
         adviser_id: params[:adviser_id],
         submission_id: submission.id
