@@ -34,7 +34,7 @@
                 <ul class="nav nav-tabs">
                   <% team_submission.order(:milestone_id).each do |submission| %>
                     <li>
-                      <a data-toggle="tab" href="#team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>">Milestone <%= submission.milestone_id %></a>
+                      <a data-toggle="tab" href="#team_<%= submission.team_id %>_milestone_<%= submission.milestone_id %>">Milestone <%= submission.get_milestone_number %></a>
                     </li>
                   <% end %>
                 </ul>
