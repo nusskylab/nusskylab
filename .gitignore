@@ -5,9 +5,6 @@ capybara-*.html
 /public/system
 /coverage/
 /spec/tmp
-/shared/log/
-/shared/pids/
-/shared/sockets/
 **.orig
 rerun.txt
 pickle-email-*.html
