@@ -37,6 +37,47 @@ class RolesController < ApplicationController
     }
   end
 
+  def new_batch
+    !authenticate_user(true, false, additional_users_for_new) && return
+    @page_title = t('.page_title')
+    @role = role_cls.new
+    cohort = params[:cohort] || current_cohort
+    existing_roles = role_cls.where(cohort: cohort)
+    occupied_user_ids = existing_roles.map(&:user_id)
+    render locals: {
+      users: User.where.not(id: occupied_user_ids),
+      cohort: cohort,
+      role_data: data_for_role_new
+    }
+  end
+
+  def create_batch
+    !authenticate_user(true, false, additional_users_for_new) && return
+    cohort = batch_role_params[:cohort] || current_cohort
+    user_ids = batch_role_params[:user_ids] || []
+    users_param = user_ids.uniq.map{|u| {user_id: u, cohort: cohort}}
+
+    if users_param.count == 0
+      return redirect_to path_for_new_batch(cohort: cohort), flash: { danger: t('.missing_field_message') }
+    end
+
+    users = role_cls.create(users_param)
+    if users.all? { |user| user.persisted? }
+      redirect_to path_for_index(cohort: cohort), flash: {
+        success: t('.success_message', user_count: users_param.count)
+      }
+    else
+      success_count = users.select{|u| u.persisted?}.count
+      errors = users.map { |u| u.errors.full_messages.empty? ? nil
+        : t('.specific_failure_message', user_name: User.find(u.user_id).user_name,
+            error_message: u.errors.full_messages.join('. '))}.compact.join('')
+
+      redirect_to path_for_new_batch(cohort: cohort), flash: {
+        danger: t('.failure_message', success_count: success_count, error_messages: errors)
+      }
+    end
+  end
+
   def create
     !authenticate_user(true, false, additional_users_for_new) && return
     post_params = role_params
@@ -154,6 +195,11 @@ class RolesController < ApplicationController
     User
   end
 
+  # Returns params needed for batch creation of roles
+  def batch_role_params
+    params.require(:users).permit(:cohort, user_ids: [])
+  end
+
   # Returns params needed for creating/updating role
   def role_params
     {}
@@ -226,6 +272,11 @@ class RolesController < ApplicationController
 
   # Returns paths: new for current controller
   def path_for_new(ps = {})
+    home_path
+  end
+
+  # Returns paths: new_batch for current controller
+  def path_for_new_batch(ps = {})
     home_path
   end
 

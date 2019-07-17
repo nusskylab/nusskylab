@@ -1,0 +1,22 @@
+<% content_for :main_content do %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2 class="text-center">
+        Create advisers
+      </h2>
+    </div>
+    <div class="panel-body">
+      <%= simple_form_for(@role, wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+                          url: {action: 'create_batch'}) do |f| %>
+        <%= f.error_notification %>
+        <%= simple_fields_for :users do |u| %>
+          <%= u.input :user_ids, input_html: { class: 'selectpicker', "data-live-search": true, multiple: true },
+          collection: users.map {|user| [user.user_name, user.id]}, include_blank: false, include_hidden: false, required: true %>
+
+          <input type="hidden" name="users[cohort]" value="<%= cohort %>">
+        <% end %>
+        <%= f.button :submit_centred, class: 'btn-success' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
