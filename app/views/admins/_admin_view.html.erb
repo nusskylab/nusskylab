@@ -34,14 +34,14 @@
       <div role="tabpanel" class="tab-pane fade" id="registration-management">
         <div class="col-sm-12">
           <div class="well">
-            <h5>Registration Status: <%= registration_status %></h5>
+            <h5>Registration Status: <%= is_registration_open? ? 'Open' : 'Close' %></h5>
             <% if is_registration_open? %>
               <%= link_to 'Close', toggle_registration_admin_path(locals[:admin].id), class: 'btn btn-danger', data: {confirm: 'Are you sure you want to close registration?'} %>
             <% else %>
               <%= link_to 'Open', toggle_registration_admin_path(locals[:admin].id), class: 'btn btn-success', data: {confirm: 'Are you sure you want to open registration?'} %>
             <% end %>
             <br>
-            <h5>Project Level Swap Status: <%= project_level_swap_status %></h5>
+            <h5>Project Level Swap Status: <%= is_project_level_locked? ? 'Locked' : 'Unlocked' %></h5>
             <% if is_project_level_locked? %>
               <%= link_to 'Unlock', toggle_project_level_swap_admin_path(locals[:admin].id), class: 'btn btn-success', data: {confirm: 'Are you sure you want to unlock project level?'} %>
             <% else %>
