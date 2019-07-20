@@ -16,6 +16,10 @@ class AdvisersController < RolesController
     new_adviser_path(ps)
   end
 
+  def path_for_new_batch(ps ={})
+    new_batch_advisers_path(ps)
+  end
+
   def path_for_show(role_id)
     adviser_path(role_id)
   end

@@ -16,6 +16,10 @@ class AdminsController < RolesController
     new_admin_path(ps)
   end
 
+  def path_for_new_batch(ps ={})
+    new_batch_admins_path(ps)
+  end
+
   def path_for_show(role_id)
     admin_path(role_id)
   end

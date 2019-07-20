@@ -16,6 +16,10 @@ class FacilitatorsController < RolesController
     new_facilitator_path(ps)
   end
 
+  def path_for_new_batch(ps ={})
+    new_batch_facilitators_path(ps)
+  end
+
   def path_for_show(role_id)
     facilitator_path(role_id)
   end

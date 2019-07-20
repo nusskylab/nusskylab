@@ -16,6 +16,10 @@ class TutorsController < RolesController
     new_tutor_path(ps)
   end
 
+  def path_for_new_batch(ps ={})
+    new_batch_tutors_path(ps)
+  end
+
   def path_for_show(role_id)
     tutor_path(role_id)
   end

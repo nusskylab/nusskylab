@@ -1,0 +1,29 @@
+<% content_for :main_content do %>
+  <% javascript 'mentors_new_batch.js' %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2 class="text-center">
+        Create mentors
+      </h2>
+    </div>
+    <div class="panel-body">
+      <%= simple_form_for(@role, wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+                          url: {action: 'create_batch'}) do |f| %>
+        <%= f.error_notification %>
+        <%= simple_fields_for 'users' do |user_form| %>
+          <%= render partial: 'new_batch_mentors_form', locals: {
+            users: users, cohort: cohort, f: user_form
+          } %>
+        <% end %>
+
+        <div class="col-sm-offset-4 col-sm-8" style="margin-bottom: 15px; padding-left: 45px">
+          <button id="add_mentor" type="button" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Add a mentor">
+            <i class="state-icon glyphicon glyphicon-plus"></i>
+          </button>
+        </div>
+
+        <%= f.button :submit_centred, class: 'btn-success' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
