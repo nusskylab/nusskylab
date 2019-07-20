@@ -7,6 +7,7 @@
 # Implementation:
 #   The Config model is implemented with 2 columns in the database table.
 #   1 representing the name, another representing the value of the configuration.
+#   Hence, each row in the database will represent a single configuration.
 #
 # Usage:
 #   The Config model must be used from it's declared methods.
