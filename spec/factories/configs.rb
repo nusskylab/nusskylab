@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :configuration do
+  factory :config do
     
   end
 
