@@ -438,6 +438,9 @@ en:
     edit:
       page_title: >
         Edit a submission
+    index:
+      page_title: >
+        View all submissions
     update:
       success_message: >
         Submission has been updated successfully
@@ -445,7 +448,7 @@ en:
         Submission could not be updated: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
     show:
       page_title: >
-        View a submission
+        View submission of team %{team_name}
   survey_templates:
     index:
       page_title: >

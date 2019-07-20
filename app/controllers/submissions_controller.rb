@@ -68,7 +68,7 @@ class SubmissionsController < ApplicationController
     team = @submission.team # To prevent unauthorized access through URL manipulation.
     !authenticate_user(true, false,
                        team.get_relevant_users(true, false)) && return
-    @page_title = t('.page_title')
+    @page_title = t('.page_title', team_name: team.team_name)
   end
 
   def edit
@@ -138,7 +138,7 @@ class SubmissionsController < ApplicationController
                                                            :milestone_number)
     submission_params[:team_id] = params[:team_id]
     submission_params[:milestone_id] = params[:milestone_id]
-    submission_params[:milestone_number] = get_milestone_number(milestone) 
+    submission_params[:milestone_number] = get_milestone_number(milestone)
     submission_params
   end
 
