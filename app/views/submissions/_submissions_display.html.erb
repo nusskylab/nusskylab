@@ -12,7 +12,7 @@
             <%= idx + 1 %>. <%= team.team_name %>
           </button>
         </h3>
-        <div style="max-height: 42px">
+        <div style="max-height: 42px; overflow-y: auto">
           <p class="text-muted">Students: <%= team.students.map {|student| student.user.user_name}.join(' & ') %></p>
           <p class="text-muted">Advised by: <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></p>
         </div>
