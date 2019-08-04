@@ -1,0 +1,34 @@
+<ul class="nav nav-pills">
+  <li class="active"><a data-toggle="pill" href="#vostok<%=locals[:cohort]%>">Vostok</a></li>
+  <li><a data-toggle="pill" href="#project_gemini<%=locals[:cohort]%>">Project Gemini</a></li>
+  <li><a data-toggle="pill" href="#apollo_11<%=locals[:cohort]%>">Apollo 11</a></li>
+</ul>
+<div class="tab-content">
+  <div id="vostok<%=locals[:cohort]%>" class="tab-pane fade in active">
+    <% if locals[:teams].select{|team| team.vostok?}.length > 0 %>
+      <%= render 'public_teams_table', locals: {teams: locals[:teams],
+        selected_teams: locals[:teams].select{|team| team.vostok?},
+        selected_type: 'Vostok'} %>
+    <% else %>
+      No Data Available
+    <% end %>
+  </div>
+  <div id="project_gemini<%=locals[:cohort]%>" class="tab-pane fade">
+    <% if locals[:teams].select{|team| team.project_gemini?}.length > 0 %>
+      <%= render 'public_teams_table', locals: {teams: locals[:teams],
+        selected_teams: locals[:teams].select{|team| team.project_gemini?},
+        selected_type: 'Project Gemini'} %>
+    <% else %>
+      No Data Available
+    <% end %>
+  </div>
+  <div id="apollo_11<%=locals[:cohort]%>" class="tab-pane fade">
+    <% if locals[:teams].select{|team| team.apollo_11?}.length > 0 %>
+      <%= render 'public_teams_table', locals: {teams: locals[:teams],
+        selected_teams: locals[:teams].select{|team| team.apollo_11?},
+        selected_type: 'Apollo 11'} %>
+    <% else %>
+      No Data Available
+    <% end %>
+  </div>
+</div>

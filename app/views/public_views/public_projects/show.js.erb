@@ -1,0 +1,39 @@
+/**
+ * This function will replace the "link_to" button (which does an ajax query to the server)
+ * with a non-ajax button. Doing so, will reduce the number of calls to the server.
+ */
+function switchToRenderedButton() {
+  $(`#toggle-${cohort}`).css('display', 'none');
+  $(`#rendered-toggle-${cohort}`).css('display', 'block');
+}
+
+var cohort = "<%=cohort%>";
+
+// Cohort toggle buttons
+$('.tab-button').each(function() {
+  if ($(this).children(`#toggle-${cohort}`).length > 0) {
+    $(this).addClass('active');
+  } else {
+    $(this).removeClass('active');
+  }
+})
+
+// Toggle between different cohort's project display
+var cohortIsRendered = false;
+$('#project-display').children('.tab-pane').each(function() {
+  if ($(this).attr('id') === cohort) {
+    cohortIsRendered = true;
+    $(this).addClass('in active');
+    switchToRenderedButton();
+  } else {
+    $(this).removeClass('in active');
+  }
+})
+if (!cohortIsRendered) {
+  $('#project-display').append(`
+    <div class='tab-pane fade in active' id=${cohort}>
+      <%=j render('public_cohort_projects', locals: {cohort: cohort, teams: teams}) %>
+    </div>
+  `);
+  switchToRenderedButton()
+}
