@@ -43,7 +43,7 @@ RSpec.describe QuestionsController, type: :controller do
           extras: '',
           survey_template_id: survey_template.id
         }
-        expect(response.status).to eql 201
+        expect(response.status).to eql 200
       end
     end
   end
