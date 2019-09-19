@@ -4,6 +4,10 @@ rvm:
 
 addons:
   postgresql: "9.3"
+    apt:
+    packages:
+      - libqtwebkit-dev
+      - libqtwebkit4
 
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
