@@ -4,7 +4,7 @@ rvm:
 
 addons:
   postgresql: "9.3"
-    apt:
+  apt:
     packages:
       - libqtwebkit-dev
       - libqtwebkit4
