@@ -2,39 +2,38 @@
   <thead>
   <tr>
     <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th><th>Status</th><th>Student 1</th><th>Student 2</th>
-    <th>Adviser</th><th>Mentor</th><th>Submission 1</th><th>Submission 2</th><th>Submission 3</th><th class="unsortable">Cohort</th><th class="unsortable">Actions</th>
+    <th>Adviser</th><th>Mentor</th><th>Mil. 1</th><th>Mil. 2</th><th>Mil. 3</th><th class="unsortable">Actions</th>
   </tr>
   </thead>
   <tbody>
     <% locals[:teams].each_with_index do |team, idx| %>
       <tr>
-        <td><%= idx + 1 %></td>
-        <td>
+        <td class="col-md-1"><%= idx + 1 %></td>
+        <td class="col-md-1">
           <%= render 'team_name_representation', locals: {team: team} %>
         </td>
-        <td><%= team.get_project_level %></td>
-        <td><%= team.has_dropped %></td>
-        <td class="<%= team.get_team_status_short + '_status' %>", title='<%= team.get_team_status + "\n" %><%= team.get_team_comment %>'>
+        <td class="col-md-1"><%= team.get_project_level %></td>
+        <td class="col-md-1"><%= team.has_dropped %></td>
+        <td class="col-md-1 <%= team.get_team_status_short + '_status' %>", title='<%= team.get_team_status + "\n" %><%= team.get_team_comment %>'>
           <%= team.get_team_status_short %>
         </td>
-        <td><%= team.get_team_members[1] == nil ? "": team.get_team_members[0].user_name %></td>
-        <td><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
-        <td><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
-        <td><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
+        <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[0].user_name %></td>
+        <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
+        <td class="col-md-1"><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
+        <td class="col-md-1"><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
         <% for i in 1..3 do %>
-          <td>
+          <td class="col-md-1">
             <% submission = team.get_own_submissions_in_order[i] %>
             <%if team.get_team_submission_status(submission) == "Submitted" %>
-              <a class="btn btn-primary btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id) %>" target="_blank"> Evaluate submission </a>
+              <a class="btn btn-info btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id) %>" target="_blank"> Submitted </a>
             <% elsif team.get_team_submission_status(submission) == "Late" %>
-              <a class="btn btn-warning btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id) %>" target="_blank"> Evaluate late submission </a>
+              <a class="btn btn-warning btn-xs" href="<%= milestone_team_submission_path(submission.milestone_id, submission.team_id, submission.id) %>" target="_blank"> Submitted Late </a>
             <% else %>
               <%= team.get_team_submission_status(team.get_own_submissions_in_order[i]) %>
             <% end %>
           </td>
         <% end %>
-        <td><%= team.cohort %></td>
-        <td>
+        <td class="col-md-1">
           <% if can_current_user_view_team(team) %>
             <a class="btn btn-primary btn-xs" href="<%=  team_path(team.id) %>">View</a>
           <% end %>
