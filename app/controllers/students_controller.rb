@@ -20,6 +20,10 @@ class StudentsController < RolesController
     new_student_path(ps)
   end
 
+  def path_for_new_batch(ps ={})
+    new_batch_students_path(ps)
+  end
+
   def path_for_edit(role_id)
     edit_student_path(role_id)
   end

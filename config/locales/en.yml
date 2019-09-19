@@ -39,6 +39,9 @@ en:
     new:
       page_title: >
         Create a new admin
+    new_batch:
+      page_title: >
+        Create admins
     create:
       success_message: >
         Admin %{user_name} has been successfully created
@@ -46,6 +49,17 @@ en:
         Admin could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
+    create_batch:
+      success_message: >
+        %{user_count} Admin(s) successfully created
+      failure_message: >
+        %{success_count} Admin(s) successfully created.<br> The following admins were not created: %{error_messages}
+      specific_failure_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name}: %{error_message}
+      user_missing_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name} could not be found.
+      missing_field_message: >
+        Please specify the user id(s) to be an admin.
     general_mailing:
       page_title: >
         Send emails to students
@@ -71,6 +85,9 @@ en:
     new:
       page_title: >
         Create a new adviser
+    new_batch:
+      page_title: >
+        Create advisers
     create:
       success_message: >
         Adviser %{user_name} has been successfully created
@@ -78,6 +95,17 @@ en:
         Adviser could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
+    create_batch:
+      success_message: >
+        %{user_count} Adviser(s) successfully created
+      failure_message: >
+        %{success_count} Advisers(s) successfully created.<br> The following advisers were not created: %{error_messages}
+      specific_failure_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name}: %{error_message}
+      user_missing_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name} could not be found.
+      missing_field_message: >
+        Please specify the user id(s) to be an adviser.
     show:
       page_title: >
         View adviser %{user_name}'s page
@@ -137,6 +165,9 @@ en:
     new:
       page_title: >
         Create a new facilitator
+    new_batch:
+      page_title: >
+        Create facilitators
     create:
       success_message: >
         Facilitator %{user_name} has been successfully created
@@ -144,6 +175,17 @@ en:
         Facilitator could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
+    create_batch:
+      success_message: >
+        %{user_count} Facilitators(s) successfully created
+      failure_message: >
+        %{success_count} Facilitator(s) successfully created.<br> The following facilitators were not created: %{error_messages}
+      specific_failure_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name}: %{error_message}
+      user_missing_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name} could not be found.
+      missing_field_message: >
+        Please specify the user id(s) to be a facilitator.
     show:
       page_title: >
         View facilitator %{user_name}'s page
@@ -182,6 +224,9 @@ en:
     new:
       page_title: >
         Create a new mentor
+    new_batch:
+      page_title: >
+        Create mentors
     create:
       success_message: >
         Mentor %{user_name} has been successfully created
@@ -189,6 +234,17 @@ en:
         Mentor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
+    create_batch:
+      success_message: >
+        %{user_count} Mentors(s) successfully created
+      failure_message: >
+        %{success_count} Mentor(s) successfully created.<br> The following mentors were not created: %{error_messages}
+      specific_failure_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name}: %{error_message}
+      user_missing_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name} could not be found.
+      missing_field_message: >
+        Please specify the user id(s) to be a mentor.
     show:
       page_title: >
         View mentor %{user_name}'s page
@@ -306,6 +362,9 @@ en:
     new:
       page_title: >
         Create a new student
+    new_batch:
+      page_title: >
+        Create students
     create:
       success_message: >
         Student %{user_name} has been created successfully.
@@ -313,6 +372,17 @@ en:
         Student could not be saved: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
+    create_batch:
+      success_message: >
+        %{user_count} Students(s) successfully created
+      failure_message: >
+        %{success_count} Student(s) successfully created.<br> The following students were not created: %{error_messages}
+      specific_failure_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name}: %{error_message}
+      user_missing_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name} could not be found.
+      missing_field_message: >
+        Please specify the user id(s) to be a student.
     edit:
       page_title: >
         Edit Student %{user_name}'s info
@@ -368,6 +438,9 @@ en:
     edit:
       page_title: >
         Edit a submission
+    index:
+      page_title: >
+        View all submissions
     update:
       success_message: >
         Submission has been updated successfully
@@ -375,7 +448,7 @@ en:
         Submission could not be updated: <br>&nbsp;&nbsp;&nbsp;&nbsp; %{error_message}
     show:
       page_title: >
-        View a submission
+        View submission of team %{team_name}
   survey_templates:
     index:
       page_title: >
@@ -447,6 +520,9 @@ en:
     new:
       page_title: >
         Create a new tutor
+    new_batch:
+      page_title: >
+        Create tutors
     create:
       success_message: >
         Tutor %{user_name} has been successfully created
@@ -454,6 +530,17 @@ en:
         Tutor could not be created: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
       user_missing_message: >
         User with specified ID could not be found. Please provide a valid user ID.
+    create_batch:
+      success_message: >
+        %{user_count} Tutor(s) successfully created
+      failure_message: >
+        %{success_count} Tutor(s) successfully created.<br> The following tutors were not created: %{error_messages}
+      specific_failure_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name}: %{error_message}
+      user_missing_message: >
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;%{user_name} could not be found.
+      missing_field_message: >
+        Please specify the user id(s) to be a tutor.
     show:
       page_title: >
         View tutor %{user_name}'s page

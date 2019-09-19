@@ -10,7 +10,7 @@ RSpec.describe Team, type: :model do
     mentor_user = FactoryGirl.create(:user, email: 'user2@team.model.spec', uid: 'uid2.team.model.spec')
     adviser = FactoryGirl.create(:adviser, user: adviser_user)
     mentor = FactoryGirl.create(:mentor, user: mentor_user)
-    team1 = FactoryGirl.create(:team, team_name: '1.team.model.spec', adviser: adviser, mentor: mentor)
+    team1 = FactoryGirl.create(:team, team_name: 't1.team.model.spec', adviser: adviser, mentor: mentor)
     student1_user = FactoryGirl.create(:user, email: 'user3@team.model.spec', uid: 'uid3.team.model.spec')
     student2_user = FactoryGirl.create(:user, email: 'user4@team.model.spec', uid: 'uid4.team.model.spec')
     FactoryGirl.create(:student, user: student1_user, team: team1)
@@ -20,7 +20,7 @@ RSpec.describe Team, type: :model do
     expect(csv.first).to eql ['Team ID', 'Team Name', 'Project Level', 'Has Dropped', 'Is Pending', 'Poster Link', 'Video Link',
                               'Student 1 UserID', 'Student 1 Name', 'Student 1 Email', 'Student 2 UserID', 'Student 2 Name',
                               'Student 2 Email', 'Adviser UserID', 'Adviser Name', 'Mentor UserID', 'Mentor Name',
-                              'Average PE Score', 'Submission 1', 'Submission 2', 'Submission 3']
+                              'Average PE Score', 'Submission 1', 'Submission 2', 'Submission 3', 'Team Status', 'Comments']
   end
 
   it '#set_project_level' do
@@ -80,6 +80,22 @@ RSpec.describe Team, type: :model do
     expect(related).to include user_adviser
     expect(related).to include user_mentor
     expect(related).to include user_evaluated
+  end
+
+  it '#team_name unique' do
+    # check that default unique validation is not altered by custom validator 
+    team1 = FactoryGirl.create(:team, team_name: 'team_1.team.model.spec')
+    expect(FactoryGirl.build(:team, team_name: 'team_1.team.model.spec')).not_to be_valid    
+  end
+
+  it '#team_name custom validation test' do
+    # negative example
+    expect(FactoryGirl.build(:team, team_name: '1111')).not_to be_valid
+
+    # positive example
+    expect(FactoryGirl.build(:team, team_name: "teamtwo")).to be_valid
+    expect(FactoryGirl.build(:team, team_name: "team2")).to be_valid
+    expect(FactoryGirl.build(:team, team_name: "2team")).to be_valid
   end
 
   it '#get_own_submissions' do

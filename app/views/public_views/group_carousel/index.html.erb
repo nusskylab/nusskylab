@@ -5,22 +5,28 @@
   <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
     <!-- Indicators -->
     <ol class="carousel-indicators">
+      <% counter = 0 %>
       <% images.each_with_index do |image, index| %>
         <% if !image.blank? %>
-          <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index == 0 ? 'active' : '' %>"></li>
+          <li data-target="#carousel" data-slide-to="<%= index %>" class="<%= index - counter == 0 ? 'active' : '' %>"></li>
+        <% else %>
+          <% counter += 1 %>
         <% end %>
       <% end %>
     </ol>
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
+      <% counter = 0 %>
       <% images.each_with_index do |image, index| %>
         <% if !image.blank? %>
-          <div class="item <%= index == 0 ? 'active' : '' %>">
+          <div class="item <%= index - counter == 0 ? 'active' : '' %>">
             <img src="<%= image %>" alt="<%= index %> Image">
             <div class="carousel-caption d-md-block">
               <h5 class="info"><%= @team_names[index]%></h5>
             </div>
           </div>
+        <% else %>
+          <% counter += 1 %>
         <% end %>
       <% end %>
     </div>

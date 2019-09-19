@@ -34,6 +34,7 @@ source 'https://rubygems.org' do
 
   # Use bootstrap for styling
   gem 'bootstrap-sass', '~> 3.3.4'
+	gem 'bootstrap-select-rails'
   # Use jquery as the JavaScript library
   gem 'jquery-rails', '~> 4.2.1'
   # simple_form for form validation

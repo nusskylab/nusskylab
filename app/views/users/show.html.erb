@@ -40,19 +40,20 @@
             <div class="col-sm-12">
               <br>
               <div class="jumbotron">
-                <% if (adm = user_admin?) or (adv = user_adviser?) or (men = user_mentor?) or (stu = user_student?) %>
+                <% adm, adv, men, stu = user_admin?, user_adviser?, user_mentor?, user_student? %>
+                <% if adm or adv or men or stu %>
                   <p>Use Skylab as:</p>
                   <p>
-                    <% if adm %>
+                    <% if adm and adv %>
                       <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>
-                    <% end %>
-                    <% if adv %>
                       <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>
-                    <% end %>
-                    <% if men %>
+                    <% elsif adm %>
+                      <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>
+                    <% elsif adv %>
+                      <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>
+                    <% elsif men %>
                       <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">A Mentor</a>
-                    <% end %>
-                    <% if stu %>
+                    <% else %>
                       <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">A Student</a>
                       <% if stu.team && stu.team.is_pending && stu.team.invitor_student_id != stu.id %>
                         <p>
@@ -68,7 +69,7 @@
                         </p>
                       <% end %>
                     <% end %>
-                  </p>
+                    </p>
                 <% else %>
                   <% if (pending_stu = (user_pending_student?)) %>
                     <% if pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id != pending_stu.id %>
@@ -106,12 +107,12 @@
                         form </a>.</p>
                   <% else %>
                     <% if is_registration_open? %>
-                    <!-- Registration opened -->
+                      <!-- Registration opened -->
                       <p>
                         Please fill in the <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration form </a>. After you fill out the registration, you will be able to invite a teammate to participate in Orbital with you.
                       </p>
                     <% else %>
-                    <!-- Registration closed -->
+                      <!-- Registration closed -->
                       <p>
                         Registration for Orbital <%=current_cohort%> has closed. Thank you for your interest.
                       </p>

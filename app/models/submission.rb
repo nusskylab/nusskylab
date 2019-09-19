@@ -13,4 +13,12 @@ class Submission < ActiveRecord::Base
   def submitted_late?
     updated_at > milestone.submission_deadline
   end
+
+  def get_milestone_number
+    if milestone_number == 0
+      (milestone_id - 1) % 3 + 1
+    else
+      milestone_number
+    end
+  end
 end

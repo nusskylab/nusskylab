@@ -5,6 +5,7 @@
 //= require select2
 //= require autosize
 //= require thredded
+//= require bootstrap-select
 
 /**
  * Customization for table sorter
