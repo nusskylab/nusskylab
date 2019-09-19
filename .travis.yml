@@ -1,6 +1,10 @@
+dist: trusty
 language: ruby
 rvm:
   - 2.3.3
+
+services:
+  - postgresql
 
 addons:
   postgresql: "9.3"
