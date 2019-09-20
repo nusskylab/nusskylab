@@ -3,8 +3,8 @@
  * with a non-ajax button. Doing so, will reduce the number of calls to the server.
  */
 function switchToRenderedButton() {
-  $(`#toggle-${cohort}`).css('display', 'none');
-  $(`#rendered-toggle-${cohort}`).css('display', 'block');
+  $(`#toggle-${cohort}`).addClass('hidden');
+  $(`#rendered-toggle-${cohort}`).removeClass('hidden');
 }
 
 var cohort = "<%=cohort%>";

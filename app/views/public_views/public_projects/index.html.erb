@@ -7,7 +7,7 @@
     <%= link_to "Cohort #{cohort}", public_views_public_project_path(cohort),
       id: "toggle-#{cohort}", remote: true, role: 'button'%>
 		<a id="rendered-toggle-<%=cohort%>", role="button" data-toggle="pill"
-      href="#<%=cohort%>" style="display: none">
+      href="#<%=cohort%>" class="hidden">
 			Cohort <%= cohort %>
 		</a>
 	</li>
