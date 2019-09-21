@@ -3,37 +3,38 @@
  * with a non-ajax button. Doing so, will reduce the number of calls to the server.
  */
 function switchToRenderedButton() {
-  $(`#toggle-${cohort}`).addClass('hidden');
-  $(`#rendered-toggle-${cohort}`).removeClass('hidden');
+  document.getElementById(`toggle-${cohort}`).classList.add('hidden');
+  document.getElementById(`rendered-toggle-${cohort}`).classList.remove('hidden');
 }
 
 var cohort = "<%=cohort%>";
 
 // Cohort toggle buttons
-$('.tab-button').each(function() {
-  if ($(this).children(`#toggle-${cohort}`).length > 0) {
-    $(this).addClass('active');
+var tabButtons = document.getElementsByClassName('tab-button');
+for (let button of tabButtons) {
+  if (button.querySelector(`#toggle-${cohort}`) !== null) {
+    button.classList.add('active');
   } else {
-    $(this).removeClass('active');
+    button.classList.remove('active')
   }
-})
+}
 
 // Toggle between different cohort's project display
 var cohortIsRendered = false;
-$('#project-display').children('.tab-pane').each(function() {
-  if ($(this).attr('id') === cohort) {
+document.querySelectorAll('#project-display > .tab-pane').forEach(function(pane) {
+  if (pane.id === cohort) {
     cohortIsRendered = true;
-    $(this).addClass('in active');
+    pane.classList.add('in', 'active');
     switchToRenderedButton();
   } else {
-    $(this).removeClass('in active');
+    pane.classList.remove('in', 'active');
   }
 })
 if (!cohortIsRendered) {
-  $('#project-display').append(`
+  document.getElementById('project-display').innerHTML += `
     <div class='tab-pane fade in active' id=${cohort}>
       <%=j render('public_cohort_projects', locals: {cohort: cohort, teams: teams}) %>
     </div>
-  `);
+  `;
   switchToRenderedButton()
 }
