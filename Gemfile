@@ -12,7 +12,7 @@ source 'https://rubygems.org' do
   # Use CoffeeScript for .coffee assets and views
   gem 'coffee-rails', '~> 4.1.0'
   # Use Puma as the app server
-  gem 'puma', '~> 2.11.2'
+  gem 'puma', '~> 3.12.2'
   # Use Thredded as the forum engine
   gem 'thredded', '~> 0.9.4'
   # Use Backport render for Thredded
