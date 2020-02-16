@@ -1,0 +1,1 @@
+$('#facilitators').html("<%= escape_javascript(render(partial: 'user_roles', locals: { roles: @staff[:facilitators], selected_type: 'Facilitators' })) %>");

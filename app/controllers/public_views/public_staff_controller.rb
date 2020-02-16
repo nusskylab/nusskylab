@@ -4,9 +4,14 @@ class PublicViews::PublicStaffController < ApplicationController
     !authenticate_user(false, false) && return
     @page_title = t('.page_title')
     cohort = params[:cohort] || current_cohort
-    facilitators = Facilitator.where(
-      cohort: cohort
-    ).joins(:user).order('user_name')
+    sort_by = params[:sort_by]
+    if sort_by.nil?
+      facilitators = Facilitator.where(
+          cohort: cohort
+        ).joins(:user).order('user_name')
+    else
+      facilitators = Facilitator.sort(sort_by)
+    end
     advisers = Adviser.where(
       cohort: cohort
     ).joins(:user).order('user_name')
@@ -21,10 +26,13 @@ class PublicViews::PublicStaffController < ApplicationController
     staff_table[:advisers] = advisers
     staff_table[:mentors] = mentors
     staff_table[:tutors] = tutors
-    render locals: {
-      staff: staff_table,
-      cohort: cohort,
-      all_cohorts: all_cohorts
-    }
+    @staff = staff_table
+    @cohort = cohort
+    @all_cohorts = all_cohorts
+
+    respond_to do |format|
+        format.html
+        format.js
+    end
   end
 end
