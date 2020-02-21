@@ -29,10 +29,5 @@ class PublicViews::PublicStaffController < ApplicationController
     @staff = staff_table
     @cohort = cohort
     @all_cohorts = all_cohorts
-
-    respond_to do |format|
-        format.html
-        format.js
-    end
   end
 end

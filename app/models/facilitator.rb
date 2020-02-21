@@ -22,6 +22,10 @@ class Facilitator < ActiveRecord::Base
       Facilitator.where(
         cohort: 2020
       ).joins(:user).order(created_at: :desc)
+    when 'display_order'
+      Facilitator.where(
+        cohort: 2020
+      ).joins(:user).order(display_order: :asc)
     end
   end
 end
