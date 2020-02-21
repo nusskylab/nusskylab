@@ -14,13 +14,12 @@
 	<% @teams_table.each do | cohort, teams | %>
 	<div class="tab-pane fade <% if first_loop %>in active<% first_loop = false; end %>" id="<%=cohort%>">
 		<ul class="nav nav-pills">
-			<li><a data-toggle="pill" href="#vostok<%=cohort%>">Vostok</a></li>
+			<li class="active"><a data-toggle="pill" href="#vostok<%=cohort%>">Vostok</a></li>
 			<li><a data-toggle="pill" href="#project_gemini<%=cohort%>">Project Gemini</a></li>
-			<li class="active"><a data-toggle="pill" href="#apollo_11<%=cohort%>">Apollo 11</a></li>
-
+			<li><a data-toggle="pill" href="#apollo_11<%=cohort%>">Apollo 11</a></li>
 		</ul>
 		<div class="tab-content">
-			<div id="vostok<%=cohort%>" class="tab-pane fade">
+			<div id="vostok<%=cohort%>" class="tab-pane fade in active">
 				<% if teams.select{|team| team.vostok?}.length > 0 %>
 					<%= render 'public_teams_table', locals: {teams: teams,
 						selected_teams: teams.select{|team| team.vostok?},
@@ -38,7 +37,7 @@
 					No Data Available
 				<% end %>
 			</div>
-			<div id="apollo_11<%=cohort%>" class="tab-pane fade in active">
+			<div id="apollo_11<%=cohort%>" class="tab-pane fade">
 				<% if teams.select{|team| team.apollo_11?}.length > 0 %>
 					<%= render 'public_teams_table', locals: {teams: teams,
 						selected_teams: teams.select{|team| team.apollo_11?},
