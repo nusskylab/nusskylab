@@ -17,7 +17,7 @@
                                 include_blank: false, required: true %>
   <% end %>
   <% if current_user_admin? %>
-    <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Not assigned', required: true %>
+    <%= f.input :adviser_id, collection: locals[:advisers].map {|adviser| [adviser.user.user_name, adviser.id]}, include_blank: 'Not assigned' %>
     <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor| [mentor.user.user_name, mentor.id]}, include_blank: 'Not assigned' %>
   <% end %>
   <% if current_user_admin? or current_user_adviser? or current_user_student? %>
@@ -28,7 +28,7 @@
     <%= f.input :status, collection: {'No Status'.to_sym => 0, 'Contactable and doing well'.to_sym => 1, 'Contactable but lack of progress'.to_sym => 2,
                                       Uncontactable: 3, 'To be re-evaluated': 4},
                                       selected: locals[:team].status,
-                                      include_blank: false, required: true %>
+                                      include_blank: false %>
     <%= f.input :comment, placeholder: true, placeholder: 'Enter comments and include your name' %>
   <% end %>
   <% if locals[:is_new] %>
