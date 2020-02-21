@@ -10,7 +10,7 @@
     <% if locals[:roles] && locals[:roles].length > 0 %>
       <% locals[:roles].each do |role| %>
         <!-- Filters out sample data ending with @example.com -->
-        <% #if not role.user.email.end_with? "@example.com" %>
+        <% if not role.user.email.end_with? "@example.com" %>
           <div class="row">
             <div class="col-md-3">
               <%= image_tag role.user.gravatar_url(size: 150) %>
@@ -28,7 +28,7 @@
             </div>
           </div>
           <br><hr><br>
-        <% #end %>
+        <% end %>
       <% end %>
     <% else %>
       No data to show

@@ -10,11 +10,11 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h2 class="text-center">
-            Staff in Cohort <%= @cohort %>
+            Staff in Cohort <%= cohort %>
           </h2>
         </div>
         <div class="panel-body">
-          <% if @staff %>
+          <% if staff %>
             <div class="dropdown" align="right">
               <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort By
@@ -27,16 +27,16 @@
               </div>
             </div>
             <div id="facilitators">
-              <%= render 'user_roles', locals: {roles: @staff[:facilitators].reorder(:display_order), selected_type: 'Facilitators'} %>
+              <%= render 'user_roles', locals: {roles: staff[:facilitators].reorder(:display_order), selected_type: 'Facilitators'} %>
             </div>
             <div id="advisers">
-              <%= render 'user_roles', locals: {roles: @staff[:advisers], selected_type: 'Advisers'} %>
+              <%= render 'user_roles', locals: {roles: staff[:advisers], selected_type: 'Advisers'} %>
             </div>
             <div id="mentors">
-              <%= render 'user_roles', locals: {roles: @staff[:mentors], selected_type: 'Mentors'} %>
+              <%= render 'user_roles', locals: {roles: staff[:mentors], selected_type: 'Mentors'} %>
             </div>
             <div id="tutors">
-              <%= render 'user_roles', locals: {roles: @staff[:tutors], selected_type: 'Tutors'} %>
+              <%= render 'user_roles', locals: {roles: staff[:tutors], selected_type: 'Tutors'} %>
             </div>
           <% else %>
             No Data Available
@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="col-sm-12">
-        <% @all_cohorts.each do |cohort| %>
+        <% all_cohorts.each do |cohort| %>
         <div class="col-sm-2">
           <%= link_to cohort, public_views_public_staff_index_path(cohort: cohort), class: 'btn btn-info' %>
         </div>

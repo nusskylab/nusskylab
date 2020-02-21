@@ -26,8 +26,10 @@ class PublicViews::PublicStaffController < ApplicationController
     staff_table[:advisers] = advisers
     staff_table[:mentors] = mentors
     staff_table[:tutors] = tutors
-    @staff = staff_table
-    @cohort = cohort
-    @all_cohorts = all_cohorts
+    render locals: {
+      staff: staff_table,
+      cohort: cohort,
+      all_cohorts: all_cohorts
+    }
   end
 end
