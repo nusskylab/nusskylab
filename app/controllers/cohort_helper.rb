@@ -5,6 +5,10 @@ module CohortHelper
   end
 
   def all_cohorts
-    [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013]
+    arr = []
+    for year in 2013 .. current_cohort do
+      arr.push(year)
+    end
+    return arr.reverse()
   end
 end
