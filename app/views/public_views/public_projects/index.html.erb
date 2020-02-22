@@ -17,6 +17,7 @@
 			<li class="active"><a data-toggle="pill" href="#vostok<%=cohort%>">Vostok</a></li>
 			<li><a data-toggle="pill" href="#project_gemini<%=cohort%>">Project Gemini</a></li>
 			<li><a data-toggle="pill" href="#apollo_11<%=cohort%>">Apollo 11</a></li>
+			<li><a data-toggle="pill" href="#artemis<%=cohort%>">Artemis</a></li>
 		</ul>
 		<div class="tab-content">
 			<div id="vostok<%=cohort%>" class="tab-pane fade in active">
@@ -42,6 +43,15 @@
 					<%= render 'public_teams_table', locals: {teams: teams,
 						selected_teams: teams.select{|team| team.apollo_11?},
 						selected_type: 'Apollo 11'} %>
+				<% else %>
+					No Data Available
+				<% end %>
+			</div>
+			<div id="artemis<%=cohort%>" class="tab-pane fade">
+				<% if teams.select{|team| team.artemis?}.length > 0 %>
+					<%= render 'public_teams_table', locals: {teams: teams,
+						selected_teams: teams.select{|team| team.artemis?},
+						selected_type: 'Artemis'} %>
 				<% else %>
 					No Data Available
 				<% end %>
