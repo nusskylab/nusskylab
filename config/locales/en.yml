@@ -79,6 +79,8 @@ en:
       failure_message: >
         Admin could not be deleted: <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
   advisers:
+    evaluator_has_dropped_tooltip: >
+      This evaluator team has dropped from Orbital.
     index:
       page_title: >
         View all advisers
