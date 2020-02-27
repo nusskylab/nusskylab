@@ -8,6 +8,7 @@
     <% else %>
         <%= f.input :provider, collection: User.providers, include_blank: false, disabled: true %>
     <% end %>
+    <%= f.input :blog_link, label: 'Website Link' %>
     <%= f.input :uid %>
     <%= f.input :github_link %>
     <%= f.input :linkedin_link %>
