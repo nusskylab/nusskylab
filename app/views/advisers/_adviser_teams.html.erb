@@ -1,20 +1,26 @@
 <div class="table-responsive">
   <table class="table table-hover">
     <thead>
-    <tr>
-      <th>Team Name</th>
-      <th>Level of achievement</th>
-      <% locals[:milestones].each do |milestone| %>
-        <th><%= milestone.name %> evaluations</th>
-      <% end %>
-      <th>Action</th>
-    </tr>
+      <tr>
+        <th>Team Name</th>
+        <th>Level of achievement</th>
+        <% locals[:milestones].each do |milestone| %>
+          <th><%= milestone.name %> evaluations</th>
+        <% end %>
+        <th>Action</th>
+      </tr>
     </thead>
     <tbody>
     <% locals[:adviser].teams.each do |team| %>
       <tr>
         <td>
-          <a href="<%= team_path(team) %>" class="btn btn-info"><%= team.team_name %></a>
+          <% if team.has_dropped %>
+            <a class="btn btn-info" data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>" disabled>
+              <del><%= team.team_name %></del>
+            </a>
+          <% else %>
+            <a href="<%= team_path(team) %>" class="btn btn-info"><%= team.team_name %></a>
+          <% end %>
         </td>
         <td>
           <%= team.get_project_level %>
@@ -33,7 +39,14 @@
                 <a href="<%= milestone_team_peer_evaluation_path(milestone.id, evaluated.evaluator_id, peer_evaluation_id) %>" class="btn btn-info"><%= evaluated.evaluated.team_name %></a>
                 <br> <br>
               <% else %>
-                <a class="btn btn-default" disabled="disabled"><%= evaluated.evaluated.team_name %></a> <br><br>
+                <% if evaluated.evaluated.has_dropped %>
+                  <a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>" disabled>
+                    <del><%= evaluated.evaluated.team_name %></del>
+                  </a>
+                  <br><br>
+                <% else %>
+                  <a class="btn btn-default" disabled="disabled"><%= evaluated.evaluated.team_name %></a> <br><br>
+                <% end %>
               <% end %>
             <% end %>
           </td>
