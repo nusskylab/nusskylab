@@ -12,7 +12,6 @@
         <td><%= user.email %></td>
         <td>
           <a class="btn btn-primary btn-xs" href="<%=  user_path(user.id) %>">View</a>
-          <a class="btn btn-primary btn-xs" href="<%= register_as_student_user_path(user.id) %>">Reg Form</a>
           <a class="btn btn-default btn-xs" href="<%= edit_user_path(user.id) %>">Edit</a>
           <%= link_to 'Preview as', preview_as_user_path(user.id), method: :post, class: 'btn btn-warning btn-xs' %>
           <%= link_to 'Delete', user_path(user.id), method: :delete, class: 'btn btn-danger btn-xs',

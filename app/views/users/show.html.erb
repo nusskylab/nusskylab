@@ -15,12 +15,6 @@
               User details
             </a>
           </li>
-          <li role="presentation">
-            <a href="#user-roles" aria-controls="user-roles"
-               role="tab" data-toggle="tab">
-              User roles
-            </a>
-          </li>
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active" id="user-details">
@@ -37,90 +31,6 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane fade" id="user-roles">
-            <div class="col-sm-12">
-              <br>
-              <div class="jumbotron">
-                <% adm, adv, men, stu = user_admin?, user_adviser?, user_mentor?, user_student? %>
-                <% if adm or adv or men or stu %>
-                  <p>Use Skylab as:</p>
-                  <p>
-                    <% if adm and adv %>
-                      <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>
-                      <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>
-                    <% elsif adm %>
-                      <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>
-                    <% elsif adv %>
-                      <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>
-                    <% elsif men %>
-                      <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">A Mentor</a>
-                    <% else %>
-                      <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">A Student</a>
-                      <% if stu.team && stu.team.is_pending && stu.team.invitor_student_id != stu.id %>
-                        <p>
-                          You have been invited to participate in Orbital as a team with <strong><%= stu.team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the invitation </a> now?
-                        </p>
-                      <% elsif stu.team && stu.team.is_pending && stu.team.invitor_student_id == stu.id %>
-                        <p>
-                          You have invited <strong><%= stu.team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
-                        </p>
-                      <% elsif !stu.team %>
-                        <p>
-                          You have yet to form a team. You may <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary">invite</a> a teammate now.
-                        </p>
-                      <% end %>
-                    <% end %>
-                    </p>
-                <% else %>
-                  <% if (pending_stu = (user_pending_student?)) %>
-                    <% if pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id != pending_stu.id %>
-                      <p>
-                        You have been invited to participate in Orbital as a team with
-                        <strong><%= pending_stu.team.invitor_student.user.user_name %></strong>. Respond to
-                        <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the
-                          invitation </a> now?
-                      </p>
-                    <% elsif pending_stu.team && pending_stu.team.is_pending && pending_stu.team.invitor_student_id == pending_stu.id %>
-                      <p>
-                        You have invited <strong><%= pending_stu.team.invitee_student.user.user_name %></strong> to your
-                        team and we are waiting for his/her confirmation.
-                      </p>
-                    <% elsif pending_stu.team && !pending_stu.team.is_pending %>
-                      <p>
-                        We have registered you and your teammate's interest for Orbital. You're all done. Please log in
-                        again when we notify you later that you have been accepted for this year's Orbital cohort.
-                      </p>
-                    <% elsif !pending_stu.team %>
-                      <p>
-                        You have not invited a teammate nor been invited to be a teammate for Orbital yet.
-                        <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> Invite a
-                          teammate </a>.
-                        <br/>
-                        If you do not have anyone in mind, that is OK. At a later date, we will have a matchmaking
-                        session to help you find a suitable teammate. Please log in again when we notify you later that
-                        you have been accepted for this year's Orbital cohort.
-                      </p>
-                    <% end %>
-                    <br>
-                    <p class="text-muted">
-                      You can still further modify your submission to
-                      <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration
-                        form </a>.</p>
-                  <% else %>
-                    <% if is_registration_open? %>
-                      <!-- Registration opened -->
-                      <p>
-                        Please fill in the <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration form </a>. After you fill out the registration, you will be able to invite a teammate to participate in Orbital with you.
-                      </p>
-                    <% else %>
-                      <!-- Registration closed -->
-                      <p>
-                        Registration for Orbital <%=current_cohort%> has closed. Thank you for your interest.
-                      </p>
-                    <% end %>
-                  <% end %>
-                <% end %>
-              </div>
-            </div>
           </div>
         </div>
       </div>
