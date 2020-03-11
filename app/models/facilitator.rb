@@ -14,14 +14,6 @@ class Facilitator < ActiveRecord::Base
       Facilitator.where(
         cohort: cohort
       ).joins(:user).order('user_name')
-    when 'oldest'
-      Facilitator.where(
-        cohort: cohort
-      ).joins(:user).order('created_at ASC')
-    when 'newest'
-      Facilitator.where(
-        cohort: cohort
-      ).joins(:user).order('created_at DESC')
     when 'display_order'
       Facilitator.where(
         cohort: cohort
