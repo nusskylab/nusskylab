@@ -23,12 +23,12 @@ def parseExcel()
     counter = 2
     mainSheet.each_row_streaming(offset: 1) do |row|
 	userName1 = mainSheet.cell('D',counter)
-        userName2 = mainSheet.cell('I',counter)
-        nusnetId1 = mainSheet.cell('G',counter)
+    userName2 = mainSheet.cell('I',counter)
+    nusnetId1 = mainSheet.cell('G',counter)
 	nusnetId2 = mainSheet.cell('L',counter)
-        studentNo1 = mainSheet.cell('H',counter)
+    studentNo1 = mainSheet.cell('H',counter)
 	studentNo2 = mainSheet.cell('M',counter)
-        teamName = mainSheet.cell('N',counter)
+    teamName = mainSheet.cell('N',counter)
 	cohort = mainSheet.cell('F',counter)
 	info = Array.new
 	info << userName1
