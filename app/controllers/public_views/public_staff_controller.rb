@@ -6,11 +6,9 @@ class PublicViews::PublicStaffController < ApplicationController
     cohort = params[:cohort] || current_cohort
     sort_by = params[:sort_by]
     if sort_by.nil?
-      facilitators = Facilitator.where(
-        cohort: cohort
-      ).joins(:user).order('user_name')
+      facilitators = Facilitator.sort('display_order', cohort)
     else
-      facilitators = Facilitator.sort(sort_by)
+      facilitators = Facilitator.sort(sort_by, cohort)
     end
     advisers = Adviser.where(
       cohort: cohort
