@@ -16,6 +16,10 @@ class AdminsController < RolesController
     new_admin_path(ps)
   end
 
+  def path_for_new_batch(ps ={})
+    new_batch_admins_path(ps)
+  end
+
   def path_for_show(role_id)
     admin_path(role_id)
   end
@@ -33,20 +37,12 @@ class AdminsController < RolesController
   end
 
   def toggle_registration
-    if ENV['REGISTRATION_STATUS'] == 'open'
-      ENV['REGISTRATION_STATUS'] = 'closed'
-    else
-      ENV['REGISTRATION_STATUS'] = 'open'
-    end
+    Config.toggle_registration()
     redirect_to admin_path(params[:id])
   end
 
   def toggle_project_level_swap
-    if ENV['PROJECT_LEVEL_SWAP_STATUS'] == 'locked'
-      ENV['PROJECT_LEVEL_SWAP_STATUS'] = 'unlocked'
-    else
-      ENV['PROJECT_LEVEL_SWAP_STATUS'] = 'locked'
-    end
+    Config.toggle_project_level_swap()
     redirect_to admin_path(params[:id])
   end
 end

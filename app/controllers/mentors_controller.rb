@@ -16,8 +16,38 @@ class MentorsController < RolesController
     new_mentor_path(ps)
   end
 
+  def path_for_new_batch(ps ={})
+    new_batch_mentors_path(ps)
+  end
+
   def path_for_show(role_id)
     mentor_path(role_id)
+  end
+
+  def create_batch
+    !authenticate_user(true, false, additional_users_for_new) && return
+    post_params = batch_role_params
+    cohort = post_params[:users][0][:cohort]
+    mentor_params = post_params[:users]
+
+    # Remove duplicates, retaining the last duplicated item.
+    mentor_params = mentor_params.reverse.uniq{|u| u[:user_id]}.reverse
+    mentors = Mentor.create(mentor_params)
+
+    if mentors.all? { |mentor| mentor.persisted? }
+      redirect_to path_for_index(cohort: cohort), flash: {
+        success: t('.success_message', user_count: mentor_params.count)
+      }
+    else
+      success_count = mentors.select{|m| m.persisted?}.count
+      errors = mentors.map { |mentor| mentor.errors.full_messages.empty? ? nil
+        : t('.specific_failure_message', user_name: User.find(mentor.user_id).user_name,
+            error_message: mentor.errors.full_messages.join('. '))}.compact.join('')
+
+      redirect_to path_for_new_batch(cohort: cohort), flash: {
+        danger: t('.failure_message', success_count: success_count, error_messages: errors)
+      }
+    end
   end
 
   def data_for_role_show
@@ -74,6 +104,10 @@ class MentorsController < RolesController
         danger: t('.failure_message', team_name: team.team_name)
       }
       return
-    end
+  end
+  
+  # Returns params needed for batch creation of roles
+  def batch_role_params
+    params.permit(users: [:user_id, :cohort, :slide_link])
   end
 end

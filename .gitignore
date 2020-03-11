@@ -5,9 +5,6 @@ capybara-*.html
 /public/system
 /coverage/
 /spec/tmp
-/shared/log/
-/shared/pids/
-/shared/sockets/
 **.orig
 rerun.txt
 pickle-email-*.html
@@ -108,3 +105,12 @@ exec/
 *.mtc1
 *.out
 *.synctex.gz
+
+# can't delete these files, just ignore them instead
+db/backups/
+db_backup_20160216.dump
+dbbackup/
+public/assets/
+serverstatus.sh
+
+.DS_Store

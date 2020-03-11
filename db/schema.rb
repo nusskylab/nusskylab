@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190506181849) do
+ActiveRecord::Schema.define(version: 20190720031527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(version: 20190506181849) do
   end
 
   add_index "advisers", ["user_id"], name: "index_advisers_on_user_id", using: :btree
+
+  create_table "configs", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.string   "value",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "evaluatings", force: :cascade do |t|
     t.integer "evaluator_id", null: false
@@ -165,16 +172,17 @@ ActiveRecord::Schema.define(version: 20190506181849) do
   add_index "students", ["user_id"], name: "index_students_on_user_id", using: :btree
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "milestone_id",                 null: false
-    t.integer  "team_id",                      null: false
-    t.boolean  "published",    default: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "milestone_id",                     null: false
+    t.integer  "team_id",                          null: false
+    t.boolean  "published",        default: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "video_link"
     t.text     "read_me"
     t.text     "project_log"
-    t.boolean  "show_public",  default: true
+    t.boolean  "show_public",      default: true
     t.string   "poster_link"
+    t.integer  "milestone_number", default: 0,     null: false 
   end
 
   add_index "submissions", ["milestone_id"], name: "index_submissions_on_milestone_id", using: :btree
@@ -204,6 +212,8 @@ ActiveRecord::Schema.define(version: 20190506181849) do
     t.integer  "cohort"
     t.string   "poster_link"
     t.string   "video_link"
+    t.integer  "status",             default: 0
+    t.text     "comment"
   end
 
   create_table "mentor_matchings", force: :cascade do |t|

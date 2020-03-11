@@ -4,10 +4,11 @@ class QuestionsController < ApplicationController
     !authenticate_user(true, true) && return
     @question = Question.new(question_params)
     if @question.save
-      render 'question_response', layout: false, status: :created
+      flash[:success] = "Question Created"
     else
-      render json: @question.errors, status: :unprocessable_entity
+      flash[:error] = "Failed to create question"
     end
+    render :js => 'window.location.reload()'
   end
 
   def update
@@ -16,20 +17,22 @@ class QuestionsController < ApplicationController
     q_params = question_params
     q_params.except!(:survey_template_id)
     if @question.update(q_params)
-      render 'question_response', layout: false, status: :ok
+      flash[:success] = "Question Updated"
     else
-      render json: @question.errors, status: :unprocessable_entity
+      flash[:error] = "Failed to update question"
     end
+    render :js => 'window.location.reload()'
   end
 
   def destroy
     !authenticate_user(true, true) && return
     @question = Question.find(params[:id])
     if @question.destroy
-      render json: @question, status: :ok
+      flash[:success] = "Question Deleted"
     else
-      render json: @question.errors, status: :unprocessable_entity
+      flash[:error] = "Failed to delete question"
     end
+    render :js => 'window.location.reload()'
   end
 
   private

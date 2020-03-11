@@ -77,6 +77,17 @@ $(function () {
   });
 });
 
+/**
+ * Link to submissions modal box
+ */
+function openModalBox(team_id) {
+  console.log("Open Modal Box");
+  var link = "modal_".concat(team_id);
+  if (window.location.hash === link) {
+    $(window.location.hash).modal();
+  }
+}
+
 function createModalBox(team_id) {
       var modal = document.getElementById("modal_".concat(team_id));
       var button = document.getElementById("button_".concat(team_id));
