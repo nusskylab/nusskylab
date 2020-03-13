@@ -6,6 +6,52 @@
     el.setAttribute('data-target', '#nav-scroll');
   </script>
   <div class="row">
+  <div class="col-sm-2" id="nav-scroll">
+      <div class="side-nav-bar" data-spy="affix">
+        <div class="select-cohort-panel">
+          <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width: 100%;">
+              Select cohort
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" style="top: 16%;">
+            <% all_cohorts.each do |cohort| %>
+              <li>
+                <%= link_to cohort, public_views_public_staff_index_path(cohort: cohort) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="roles-menu" style="margin-top: 1rem;">
+          <ul class="nav nav-pills nav-stacked" style="background: #eee;">
+            <li>
+              <a href="#facilitators"> 
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                Facilitators 
+              </a>
+            </li>
+            <li>
+              <a href="#advisers"> 
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                Advisers
+              </a>
+            </li>
+            <li>
+              <a href="#mentors"> 
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                Mentors
+              </a>
+            </li>
+            <li>
+              <a href="#tutors"> 
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                Tutors 
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <div class="col-sm-10">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -41,21 +87,6 @@
           <% end %>
         </div>
       </div>
-      <div class="col-sm-12">
-        <% all_cohorts.each do |cohort| %>
-        <div class="col-sm-2">
-          <%= link_to cohort, public_views_public_staff_index_path(cohort: cohort), class: 'btn btn-info' %>
-        </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="col-sm-2" id="nav-scroll">
-      <ul class="nav nav-pills nav-stacked" data-spy="affix" style="background: #eee;">
-        <li><a href="#facilitators"><i class="glyphicon glyphicon-chevron-left"></i> Facilitators</a></li>
-        <li><a href="#advisers"><i class="glyphicon glyphicon-chevron-left"></i> Advisers</a></li>
-        <li><a href="#mentors"><i class="glyphicon glyphicon-chevron-left"></i> Mentors</a></li>
-        <li><a href="#tutors"><i class="glyphicon glyphicon-chevron-left"></i> Tutors</a></li>
-      </ul>
     </div>
   </div>
 <% end %>
