@@ -1,0 +1,18 @@
+<%= simple_form_for(locals[:team], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+                    url: {action: 'match_mentor_success'}, method: :post) do |f| %>
+  <%= f.error_notification %>
+  <% if locals[:mentors].length >= 3 %>
+    <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor|[mentor.user_name, mentor.id]}, label: 'Mentor Choice 1', include_blank: false,
+                input_html: { name: 'team[choice_1]' }, selected: @teamsMentorMatchings.any? ? @teamsMentorMatchings[0].mentor_id : ""
+    %>
+    <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor|[mentor.user_name, mentor.id]}, label: 'Mentor Choice 2', include_blank: false,
+                input_html: { name: 'team[choice_2]' }, selected: @teamsMentorMatchings.any? ? @teamsMentorMatchings[1].mentor_id : ""
+    %>
+    <%= f.input :mentor_id, collection: locals[:mentors].map {|mentor|[mentor.user_name, mentor.id]}, label: 'Mentor Choice 3', include_blank: false,
+                input_html: { name: 'team[choice_3]' }, selected: @teamsMentorMatchings.any? ? @teamsMentorMatchings[2].mentor_id : ""
+    %>
+    <%= f.submit "Match mentor", class: 'btn btn-success center-block'%>
+  <% else %>
+    <p class="text-center"> There is not enough mentors for matching. 3 mentors are required in order to match mentors.</p>
+  <% end %>
+<% end %>

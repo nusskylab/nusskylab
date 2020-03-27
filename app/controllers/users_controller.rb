@@ -115,7 +115,7 @@ class UsersController < ApplicationController
       danger: t('.cannot_register_team_message')
     } if !invitor_student || invitor_student.team
     team = Team.new(
-      team_name: (Team.order('id').last.id + 1), is_pending: true,
+      team_name: ("I am team #{Team.order('id').last.id + 1}"), is_pending: true,
       cohort: current_cohort, invitor_student_id: invitor_student.id,
       project_level: Team.get_project_level_from_raw("Project Gemini"))
     team.save
