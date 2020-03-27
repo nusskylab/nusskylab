@@ -1,0 +1,15 @@
+INSERT INTO users (uid, email, user_name, matric_number, provider) VALUES ('https://openid.nus.edu.sg/e0123245', 'e0123245@u.nus.edu', 'Hello', 'A0192828X', 1);
+INSERT INTO users (uid, email, user_name, matric_number, provider) VALUES ('https://openid.nus.edu.sg/e087654', 'e087654@u.nus.edu', 'Kitty', 'A0192837X', 1);
+INSERT INTO teams (id, created_at, updated_at, cohort, team_name) VALUES (2500, current_timestamp, current_timestamp, 2019, "Loaf");
+INSERT INTO students (user_id, created_at, updated_at, team_id) SELECT cast(id as integer), current_timestamp, current_timestamp,2500 FROM users WHERE matric_number = 'A0192828X';
+INSERT INTO students (user_id, created_at, updated_at, team_id) SELECT cast(id as integer), current_timestamp, current_timestamp,2500 FROM users WHERE matric_number = 'A0192837X';
+INSERT INTO users (uid, email, user_name, matric_number, provider) VALUES ('https://openid.nus.edu.sg/e0234567', 'e0234567@u.nus.edu', 'Kate', 'A0192827X', 1);
+INSERT INTO users (uid, email, user_name, matric_number, provider) VALUES ('https://openid.nus.edu.sg/e0319999', 'e0319999@u.nus.edu', 'Bob', 'A0192856X', 1);
+INSERT INTO teams (id, created_at, updated_at, cohort, team_name) VALUES (2501, current_timestamp, current_timestamp, 2019, "Cake");
+INSERT INTO students (user_id, created_at, updated_at, team_id) SELECT cast(id as integer), current_timestamp, current_timestamp,2501 FROM users WHERE matric_number = 'A0192827X';
+INSERT INTO students (user_id, created_at, updated_at, team_id) SELECT cast(id as integer), current_timestamp, current_timestamp,2501 FROM users WHERE matric_number = 'A0192856X';
+INSERT INTO users (uid, email, user_name, matric_number, provider) VALUES ('https://openid.nus.edu.sg/e0234999', 'e0234999@u.nus.edu', 'friend', 'A0192826X', 1);
+INSERT INTO users (uid, email, user_name, matric_number, provider) VALUES ('https://openid.nus.edu.sg/e0318998', 'e0318998@u.nus.edu', 'hikari', 'A0187777W', 1);
+INSERT INTO teams (id, created_at, updated_at, cohort, team_name) VALUES (2502, current_timestamp, current_timestamp, 2019, "Cheesecake");
+INSERT INTO students (user_id, created_at, updated_at, team_id) SELECT cast(id as integer), current_timestamp, current_timestamp,2502 FROM users WHERE matric_number = 'A0192826X';
+INSERT INTO students (user_id, created_at, updated_at, team_id) SELECT cast(id as integer), current_timestamp, current_timestamp,2502 FROM users WHERE matric_number = 'A0187777W';
