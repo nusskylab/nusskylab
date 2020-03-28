@@ -9,7 +9,6 @@ Bundler.require(*Rails.groups)
 module Vagrant
   class Application < Rails::Application
     config.time_zone = 'Singapore'
-    #config.web_console.whitelisted_ips = '10.0.2.2'
 
     I18n.available_locales = [:en]
     config.i18n.default_locale = :en
