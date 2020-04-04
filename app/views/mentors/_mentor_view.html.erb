@@ -112,7 +112,7 @@
                 </td>
                 <td>
                   <% if (!choice.mentor_accepted) %>
-                    <%= link_to 'Accept', accept_team_mentor_path(Mentor.find_by(user_id: choice.mentor_id).id, team: choice.team.id), method: :post, class: 'btn btn-primary btn-xs' %>
+                    <%= link_to 'Accept', accept_team_mentor_path(Mentor.find_by(id: choice.mentor_id).id, team: choice.team.id), method: :post, class: 'btn btn-primary btn-xs' %>
                   <% end%>
                 </td>
               </tr>
