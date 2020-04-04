@@ -13,7 +13,7 @@
         <%= choice.choice_ranking %>
       </td>
       <td>
-        <%= User.find_by(id: choice.mentor_id).user_name %>
+        <%= Mentor.find_by(id: choice.mentor_id).user.user_name %>
       </td>
       <td>
         <%=choice.mentor_accepted ? 'Accepted' : 'Awaiting' %>

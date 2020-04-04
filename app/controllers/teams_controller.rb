@@ -104,9 +104,8 @@ class TeamsController < ApplicationController
                        @team.get_relevant_users(true, true)) && return
     cohort = @team.cohort || current_cohort
     @teamsMentorMatchings = MentorMatchings.where(:team_id => params[:id])
-
     render locals: {
-      mentors: Mentor.joins(:user).select('users.*').where(cohort: cohort),
+      mentors: Mentor.where(cohort: cohort),
     }
   end
 

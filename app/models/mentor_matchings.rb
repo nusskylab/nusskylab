@@ -15,9 +15,9 @@ class MentorMatchings < ActiveRecord::Base
 
   def self.match_mentor(team, choices, cohort)
     myMentors = MentorMatchings.create([
-       { :team_id => team.id, :mentor_id => User.find(choices[0]).id, :choice_ranking => 1, :mentor_accepted => false, :cohort => cohort },
-       { :team_id => team.id, :mentor_id => User.find(choices[1]).id, :choice_ranking => 2, :mentor_accepted => false, :cohort => cohort },
-       { :team_id => team.id, :mentor_id => User.find(choices[2]).id, :choice_ranking => 3, :mentor_accepted => false, :cohort => cohort }
+       { :team_id => team.id, :mentor_id => Mentor.find(choices[0]).id, :choice_ranking => 1, :mentor_accepted => false, :cohort => cohort },
+       { :team_id => team.id, :mentor_id => Mentor.find(choices[1]).id, :choice_ranking => 2, :mentor_accepted => false, :cohort => cohort },
+       { :team_id => team.id, :mentor_id => Mentor.find(choices[2]).id, :choice_ranking => 3, :mentor_accepted => false, :cohort => cohort }
                                        ])
     MentorMatchings.transaction do
       begin
@@ -37,7 +37,7 @@ class MentorMatchings < ActiveRecord::Base
     MentorMatchings.transaction do
       begin
         for i in 0..2
-          MentorMatchings.where(:id => teamsMentorMatchings[i]).update_all(:mentor_id => User.find(choices[i]), :choice_ranking => i + 1, :mentor_accepted => false, :cohort => cohort)
+          MentorMatchings.where(:id => teamsMentorMatchings[i]).update_all(:mentor_id => Mentor.find(choices[i]), :choice_ranking => i + 1, :mentor_accepted => false, :cohort => cohort)
         end
         true
       rescue  => ex
