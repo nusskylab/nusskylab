@@ -4,9 +4,12 @@ class PublicViews::PublicStaffController < ApplicationController
     !authenticate_user(false, false) && return
     @page_title = t('.page_title')
     cohort = params[:cohort] || current_cohort
-    facilitators = Facilitator.where(
-      cohort: cohort
-    ).joins(:user).order('user_name')
+    sort_by = params[:sort_by]
+    if sort_by.nil?
+      facilitators = Facilitator.sort('display_order', cohort)
+    else
+      facilitators = Facilitator.sort(sort_by, cohort)
+    end
     advisers = Adviser.where(
       cohort: cohort
     ).joins(:user).order('user_name')
