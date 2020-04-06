@@ -47,3 +47,11 @@ admin_1722:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   cohort: 2019
+
+admin_1723:
+  id: 1723
+  user_id: 1723
+  slide_link: ""
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  cohort: 2019

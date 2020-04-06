@@ -191,3 +191,20 @@ team_1740:
   cohort: 2019
   poster_link:
   video_link:
+
+#no advisor and no mentor
+<% (1901..1910).each do |n| %>
+team_<%= n %>:
+  id: <%= n %>
+  adviser_id:
+  mentor_id:
+  created_at: <%= 0.days.from_now.to_s :db %>
+  updated_at: <%= 0.days.from_now.to_s :db %>
+  team_name: "missing_advisor and missing_mentor"
+  has_dropped: false
+  project_level: "vostok"
+  is_pending: false
+  invitor_student_id: 11
+  cohort: 2019
+  video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
+<% end %>

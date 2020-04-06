@@ -24,6 +24,14 @@
               Basic information
             </a>
           </li>
+          <% if current_user_admin? %>
+            <li role="presentation">
+              <a href="#mentor-matching-status-panel" aria-controls="mentor-matching-status-panel"
+                 role="tab" data-toggle="tab">
+                View mentor matchings
+              </a>
+            </li>
+          <% end %>
           <% if current_user_student? &&
                 current_user_student?.team_id &&
                 current_user_student?.team_id == @team.id %>
@@ -45,7 +53,7 @@
                 View peer evaluations
               </a>
             </li>
-            <% if @teamsMentorMatchings.length > 0 %>
+            <% if !@team.mentor_id.present? && @teamsMentorMatchings.length > 0 %>
               <li role="presentation">
                 <a href="#mentor-matching-status-panel" aria-controls="mentor-matching-status-panel"
                    role="tab" data-toggle="tab">
@@ -81,6 +89,17 @@
             </div>
             <%= render 'team_basic_info', locals: {team: @team, teamsMentorMatchings: @teamsMentorMatchings} %>
           </div>
+          <% if current_user_admin? %>
+            <div role="tabpanel" class="tab-pane fade" id="mentor-matching-status-panel">
+              <h2 class="text-center">View Mentor Matching</h2>
+              <div class="well">
+                <p class="small"><%= t '.view_mentor_matchings_instruction' %></p>
+              </div>
+              <%= render 'team_mentor_matchings_information', locals: {
+                teamsMentorMatchings: @teamsMentorMatchings
+              } %>
+            </div>
+          <% end %>
           <% if current_user_student? &&
                 current_user_student?.team_id &&
                 current_user_student?.team_id == @team.id %>

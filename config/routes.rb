@@ -58,6 +58,7 @@ Rails.application.routes.draw do
       patch 'accept_team'
     end
   end
+  resources :mentor_matchings, only: :index
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
     get 'new_batch', on: :collection
     post 'create_batch', on: :collection
@@ -82,6 +83,7 @@ Rails.application.routes.draw do
     member do
       get 'match_mentor'
       post 'match_mentor_success'
+      post 'accept_mentor'
     end
   end
   resources :evaluatings, only: [:index, :new, :create,

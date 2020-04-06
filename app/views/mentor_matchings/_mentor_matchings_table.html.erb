@@ -1,0 +1,28 @@
+<table id = "mentor-matchings-table" class="table tablesorter">
+  <thead>
+  <tr>
+    <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Mentor Name</th><th>Status</th><th>Choice ranking</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% locals[:mentor_matchings].each_with_index do |mentor_matching, idx| %>
+    <tr>
+      <td class="col-md-1"><%= idx + 1 %></td>
+      <td class="col-md-1">
+        <%= mentor_matching.team.team_name %>
+      </td>
+      <td class="col-md-1"><%= mentor_matching.mentor.user.user_name %></td>
+      <td class="col-md-1">
+        <% if mentor_matching.mentor_accepted? && mentor_matching.team.mentor_id.present? %>
+          <%= 'Team has confirmed the mentor' %>
+        <% elsif mentor_matching.mentor_accepted?%>
+          <%= 'Waiting for team\'s confirmation' %>
+        <% else %>
+          <%= 'Waiting for mentor\'s confirmation' %>
+        <% end %>
+      </td>
+      <td class="col-md-1"><%= mentor_matching.choice_ranking %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
