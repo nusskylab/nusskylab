@@ -483,11 +483,14 @@ en:
       page_title: >
         Preview survey template and questions
   teams:
+    accept_mentor:
+      success_message: >
+        Your official mentor is %{mentor_name}
     match_mentor_success:
       failure_message: >
         Please select 3 different mentors.
       success_message: >
-        You have match mentor successfully.
+        You have matched mentor successfully.
       error_message: >
         There is error in matching mentor. <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     has_dropped_tooltip: >
@@ -529,6 +532,10 @@ en:
         Team %{team_name} has been deleted successfully.
       failure_message: >
         Team %{team_name} could not be deleted :(
+  mentor_matchings:
+    index:
+      page_title: >
+        View all mentor matchings
   tutors:
     index:
       page_title: >

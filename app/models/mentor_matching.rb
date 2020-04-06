@@ -1,5 +1,5 @@
 # MentorMatchings: mentor modeling
-class MentorMatchings < ActiveRecord::Base
+class MentorMatching < ActiveRecord::Base
   validates :team_id, presence: true, uniqueness: {
     scope: :mentor_id,
     message: "Cannot have 2 similar mentor in a team"
@@ -14,12 +14,12 @@ class MentorMatchings < ActiveRecord::Base
   belongs_to :mentor, foreign_key: :mentor_id, class_name: Mentor
 
   def self.match_mentor(team, choices, cohort)
-    myMentors = MentorMatchings.create([
+    myMentors = MentorMatching.create([
        { :team_id => team.id, :mentor_id => Mentor.find(choices[0]).id, :choice_ranking => 1, :mentor_accepted => false, :cohort => cohort },
        { :team_id => team.id, :mentor_id => Mentor.find(choices[1]).id, :choice_ranking => 2, :mentor_accepted => false, :cohort => cohort },
        { :team_id => team.id, :mentor_id => Mentor.find(choices[2]).id, :choice_ranking => 3, :mentor_accepted => false, :cohort => cohort }
                                        ])
-    MentorMatchings.transaction do
+    MentorMatching.transaction do
       begin
         myMentors[0].save!
         myMentors[1].save!
@@ -34,10 +34,10 @@ class MentorMatchings < ActiveRecord::Base
   end
 
   def self.edit_mentor_preferences(team, choices, cohort, teamsMentorMatchings)
-    MentorMatchings.transaction do
+    MentorMatching.transaction do
       begin
         for i in 0..2
-          MentorMatchings.where(:id => teamsMentorMatchings[i]).update_all(:mentor_id => Mentor.find(choices[i]), :choice_ranking => i + 1, :mentor_accepted => false, :cohort => cohort)
+          MentorMatching.where(:id => teamsMentorMatchings[i]).update_all(:mentor_id => Mentor.find(choices[i]), :choice_ranking => i + 1, :mentor_accepted => false, :cohort => cohort)
         end
         true
       rescue  => ex
@@ -48,5 +48,30 @@ class MentorMatchings < ActiveRecord::Base
     end
   end
 
+  def self.to_csv(**options)
+    require 'csv'
+    if options[:cohort].nil?
+      exported_mentor_matchings = all
+    else
+      exported_mentor_matchings = where(cohort: options[:cohort])
+      options.delete(:cohort)
+    end
+
+    attributes = %w{team_name mentor_name mentor_accepted choice_ranking cohort}
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      exported_mentor_matchings.each do |mentor_matching|
+          csv << attributes.map{ |attr|
+            if attr.eql?"mentor_name"
+              mentor_matching.mentor.user.user_name
+            elsif attr.eql?"team_name"
+              mentor_matching.team.team_name
+            else
+              mentor_matching.send(attr)
+            end
+          }
+      end
+    end
+  end
 
 end
