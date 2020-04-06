@@ -18,7 +18,8 @@
   <% else %>
     <%= f.input :project_level, collection: {Vostok: 'Vostok',
                                             'Project Gemini'.to_sym => 'Project Gemini',
-                                            'Apollo 11'.to_sym => 'Apollo 11'},
+                                            'Apollo 11'.to_sym => 'Apollo 11',
+                                            'Artemis'.to_sym => 'Artemis'},
                                 selected: locals[:team].get_project_level,
                                 include_blank: false, required: true %>
   <% end %>
