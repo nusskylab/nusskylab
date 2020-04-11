@@ -7,8 +7,6 @@ module SubmissionsHelper
       text = 'Project Gemini'
     elsif project_level == 'apollo_11'
       text = 'Apollo 11'
-    elsif project_level == 'artemis'
-      text = 'Artemis'
     end
     text
   end
