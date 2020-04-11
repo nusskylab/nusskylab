@@ -3,11 +3,12 @@
   <%= f.error_notification %>
   <%= f.input :team_name %>
   <% if locals[:is_new] %>
-    <%= f.input :project_level, collection: {Vostok: 'Vostok',
-                                            'Project Gemini'.to_sym => 'Project Gemini',
-                                            'Apollo 11'.to_sym => 'Apollo 11'},
-                                selected: locals[:team].get_project_level,
-                                include_blank: false, required: true %>
+  <%= f.input :project_level, collection: {Vostok: 'Vostok',
+                                          'Project Gemini'.to_sym => 'Project Gemini',
+                                          'Apollo 11'.to_sym => 'Apollo 11',
+                                          'Artemis'.to_sym => 'Artemis'},
+                              selected: locals[:team].get_project_level,
+                              include_blank: false, required: true %>
   <% elsif is_project_level_locked? %>
     <div class="form-group string required team_team_name">
       <label class="string required col-sm-3 control-label"> Project level </label>

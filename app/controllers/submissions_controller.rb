@@ -13,6 +13,7 @@ class SubmissionsController < ApplicationController
     @teams_table["vostok"] = teams.select{|team| team.vostok?}
     @teams_table["project_gemini"] = teams.select{|team| team.project_gemini?}
     @teams_table["apollo_11"] = teams.select{|team| team.apollo_11?}
+    @teams_table["artemis"] = teams.select{|team| team.artemis?}
   end
 
   def new
