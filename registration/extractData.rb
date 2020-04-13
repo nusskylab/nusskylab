@@ -3,21 +3,17 @@
 require 'rubygems'
 require 'roo'
 
-FILENAME = 'Orbital Registration (Responses).xlsx'
+REGFILE = 'Orbital Registration (Responses).xlsx'
+PROCESSEDFILE = 'PROCESSED.xlsx'
 SQLFILE = 'sql.txt'
-$studid = 20
 $teamid = 2500
+$advisersList = Array.new
 
-def parseExcel()
+def parseExcelUsers()
     # open spreadsheet with extension .xlxs
-    workbook = Roo::Spreadsheet.open(FILENAME, extension: :xlsx)
-    workbook = Roo::Excelx.new(FILENAME)
-
+    workbook = Roo::Spreadsheet.open(PROCESSEDFILE, extension: :xlsx)
+    workbook = Roo::Excelx.new(PROCESSEDFILE)
     mainSheet = workbook.sheet(0)
-
-    # parsing method for unique headers
-    #mainSheet = mainSheet.parse(Matric1: "Matric No of Team Member 1", Matric2: "Matric No of Team Member 2", Member1: "Your name? (As shown in your student card)", Member2: "Name of Team Member 2", Level: "Desired Level of Achievement", clean: true);
-
     teamInfo = {}
 
     counter = 2
@@ -30,6 +26,7 @@ def parseExcel()
         studentNo2 = mainSheet.cell('J',counter)
         teamName = mainSheet.cell('N',counter)
         cohort = mainSheet.cell('G',counter)
+        adviserName = mainSheet.cell('X',counter)
         info = Array.new
         info << userName1
         info << nusnetId1
@@ -38,7 +35,9 @@ def parseExcel()
         info << nusnetId2
         info << studentNo2
         info << cohort
+	info << adviserName
         teamInfo[teamName] = info
+	if not $advisersList.include?(adviserName) then $advisersList << adviserName end
         counter += 1 
     end
     return teamInfo
@@ -47,9 +46,10 @@ end
 def sqlCreator(teamInfo)
 
     allSqlStmts = Array.new
+    puts "...Generating user sqls..."
 
     teamInfo.each do |teamName, values|
-    # create sql for table users
+        # create sql for table users
 	allSqlStmts << (createInsertIntoUsers(values[0], values[1], values[2]))
 	allSqlStmts << (createInsertIntoUsers(values[3],  values[4], values[5]))
 	
@@ -61,16 +61,30 @@ def sqlCreator(teamInfo)
 	allSqlStmts << (createInsertIntoStudent values[5])
 	$teamid += 1
     end
+
+    #puts "...generating advisers sql..."
+    #$advisersList.each do |adviserName|
+	#allSqlStmts << (createInsertIntoAdvisers adviserName)
+    #end
+
+    puts "...generating updates to teams..."
+    teamInfo.each do |teamName, values|
+	allSqlStmts << (createUpdateTeamWithAdvisor(teamName, values[7]))
+    end
     return allSqlStmts
 end
 
 def createInsertIntoUsers(userName, nusnetId, matricNo)
- stmt = "INSERT INTO users (uid, email, user_name, matric_number, provider) VALUES (\'https://openid.nus.edu.sg/"+ nusnetId +"\', \'"+nusnetId+"@u.nus.edu', \'"+userName+"\', \'"+matricNo+"\', 1);"
+    stmt = "INSERT INTO users (uid, email, user_name, matric_number, provider) VALUES (\'https://openid.nus.edu.sg/"
+    stmt += nusnetId.to_s
+    stmt += ("\', \'" + nusnetId.to_s + "@u.nus.edu', \'" + userName.to_s + "\', \'" + matricNo.to_s + "\', 1);")
     return stmt
 end
 
 def createInsertIntoTeams(teamName, cohort)
-    stmt = "INSERT INTO teams (id, created_at, updated_at, cohort, team_name) VALUES (#{$teamid}, current_timestamp, current_timestamp, #{cohort}, \"" + teamName + "\");"
+    stmt = "INSERT INTO teams (id, created_at, updated_at, cohort, team_name) VALUES (#{$teamid}, current_timestamp, current_timestamp, #{cohort}, \'"
+    stmt += teamName.to_s
+    stmt += "\');"
     return stmt
 end
 
@@ -78,8 +92,24 @@ def createInsertIntoStudent(matricNo)
     stmt = "INSERT INTO students (user_id, created_at, updated_at, team_id) SELECT cast(id as integer), current_timestamp, current_timestamp," + $teamid.to_s + " FROM users WHERE matric_number = \'"
     stmt2 = "\';"
     finalStmt = ""
-    finalStmt += stmt + matricNo + stmt2
+    finalStmt += stmt
+    finalStmt += matricNo.to_s
+    finalStmt += stmt2
     return finalStmt
+end
+
+def createInsertIntoAdvisers(adviserName)
+    stmt = "INSERT INTO advisers (user_id, created_at, updated_at) SELECT id, current_timestamp, current_timestamp FROM users where user_name LIKE '%"
+    stmt += adviserName
+    stmt += "%';"
+end
+
+def createUpdateTeamWithAdvisor(teamName, adviserName)
+    stmt = "UPDATE teams SET adviser_id = (SELECT advisers.id FROM users INNER JOIN advisers ON users.id=advisers.user_id WHERE users.user_name LIKE '%"
+    stmt += adviserName
+    stmt += "%') WHERE team_name = '"
+    stmt += teamName 
+    stmt += "';" 
 end
 
 def writeSqlToFile(stmts)
@@ -96,17 +126,17 @@ end
 
 # MAIN PROGRAM
 # extract data from excel sheet
-puts "|| Extraction in progress ... ||"
-extracted = parseExcel
+puts "|| Extraction in progress ... ||\n"
+extracted = parseExcelUsers
 
 # create insertion sql statements
-puts "|| Crunching SQL Statements ... ||"
+puts "\n|| Crunching SQL Statements .. ||\n"
 allSqlStmts = Array.new
 allSqlStmts = sqlCreator extracted
 
 # print sql statements
-#printSqlStmts allSqlStmts
+# printSqlStmts $advisersList
 
 # write sql to file 'sql.txt'
-puts "|| Writing SQL to sql.txt ... ||"
+puts "\n|| Writing SQL to sql.txt ... ||"
 writeSqlToFile allSqlStmts
