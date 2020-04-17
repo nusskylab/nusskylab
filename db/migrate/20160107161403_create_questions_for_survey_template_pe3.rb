@@ -328,7 +328,7 @@ class CreateQuestionsForSurveyTemplatePe3 < ActiveRecord::Migration
                '"3 of 4 stars. Definitely intermediate level (Gemini). Maybe'\
                 ' good enough for advanced level (Apollo 11)",' \
                '"4 of 4 stars. Definitely good enough for advanced level (Apollo 11).",' \
-               '"5. Wow! (Bonus point)"]',
+               '"5. Wow! (Artemis)"]',
       instruction: 'Please choose one option',
       question_type: 2,
       survey_template_id: survey_template.id,

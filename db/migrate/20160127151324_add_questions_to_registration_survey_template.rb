@@ -21,7 +21,7 @@ class AddQuestionsToRegistrationSurveyTemplate < ActiveRecord::Migration
       content: '["Beginner (Восто́к; Vostok)",' \
                '"Intermediate (Project Gemini)",' \
                '"Advanced (Apollo 11)",' \
-               '"Advanced with mentorship (Apollo 11)"]',
+               '"Advanced with mentorship (Artemis)"]',
       instruction: 'Not sure of the correct level? Read '\
                 'http://orbital.comp.nus.edu.sg/?p=45 for a rough guide.',
       question_type: 2,

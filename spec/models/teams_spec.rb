@@ -31,12 +31,16 @@ RSpec.describe Team, type: :model do
     expect(team1.project_gemini?).to be true
     team1.set_project_level('apollo 11')
     expect(team1.apollo_11?).to be true
+    team1.set_project_level('artemis')
+    expect(team1.artemis?).to be true
     team1.set_project_level('v')
     expect(team1.vostok?).to be true
     team1.set_project_level('gemini')
     expect(team1.project_gemini?).to be true
     team1.set_project_level('apollo')
     expect(team1.apollo_11?).to be true
+    team1.set_project_level('ar')
+    expect(team1.artemis?).to be true
   end
 
   it '#get_relevant_users' do
