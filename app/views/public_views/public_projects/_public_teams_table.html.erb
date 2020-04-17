@@ -42,6 +42,8 @@
         <%= image_tag("Project_Gemini_Icon.png", size: "200", class: 'img-rounded inactive_link') %>
       <% elsif locals[:selected_type] == 'Apollo 11' %>
         <%= image_tag("Apollo_11_Icon.png", size: "200", class: 'img-rounded inactive_link') %>
+        <% elsif locals[:selected_type] == 'Artemis' %>
+        <%= image_tag("Artemis_Icon.png", size: "200", class: 'img-rounded inactive_link') %>
       <% end %>
     </a>
     <!-- createModalBox(<%= team.team_name %>) disabled if no submission present -->

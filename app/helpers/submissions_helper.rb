@@ -7,6 +7,8 @@ module SubmissionsHelper
       text = 'Project Gemini'
     elsif project_level == 'apollo_11'
       text = 'Apollo 11'
+    elsif project_level == 'artemis'
+      text = 'Artemis'
     end
     text
   end
@@ -22,6 +24,8 @@ module SubmissionsHelper
       tag_string = "Project_Gemini_Icon.png"
     elsif project_level == 'apollo_11'
       tag_string = "Apollo_11_Icon.png"
+    elsif project_level == 'artemis'
+      tag_string = "Artemis_Icon.png"
     end
     tag_string
   end
