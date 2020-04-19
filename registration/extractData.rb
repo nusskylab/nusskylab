@@ -119,13 +119,13 @@ end
 
 def findTypeOfAchievement(achievementLevel)
     if achievementLevel.downcase.include? "beginner"
-	return 1
+	return 0
     elsif achievementLevel.downcase.include? "intermediate"
-	return 2
+	return 1
     elsif achievementLevel.downcase.include? "advanced"
-	return 3
+	return 2
     else
-	return 4
+	return 3
     end
 end
 
