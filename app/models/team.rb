@@ -28,7 +28,8 @@ class Team < ActiveRecord::Base
   VOSTOK_REGEX = /\A(?:v)|(?:vostok)\z/
   PROJECT_GEMINI_REGEX = /\A(?:project gemini)|(?:gemini)|(?:g)\z/
   APOLLO_11_REGEX = /\A(?:apollo 11)|(?:apollo)|(?:a)\z/
-  enum project_level: [:vostok, :project_gemini, :apollo_11]
+  ARTEMIS_REGEX = /\A(?:ar)|(?:artemis)\z/
+  enum project_level: [:vostok, :project_gemini, :apollo_11, :artemis]
 
   def self.to_csv(**options)
     require 'csv'
@@ -117,6 +118,8 @@ class Team < ActiveRecord::Base
       Team.project_levels[:project_gemini]
     elsif project_level[APOLLO_11_REGEX]
       Team.project_levels[:apollo_11]
+    elsif project_level[ARTEMIS_REGEX]
+      Team.project_levels[:artemis]
     end
   end
 

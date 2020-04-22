@@ -25,8 +25,10 @@ function replaceImg(image, team_level) {
     return $(image).attr('src', "/assets/Vostok_Icon.jpg");
   } else if (team_level == 'project_gemini') {
     return $(image).attr('src', "/assets/Project_Gemini_Icon.png");
-  } else {
+  } else if (team_level == 'apollo_11') {
     return $(image).attr('src', "/assets/Apollo_11_Icon.png");
+  } else {
+    return $(image).attr('src',"/assets/Artemis_Icon.png");
   }
 }
 
