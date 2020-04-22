@@ -38,7 +38,7 @@
 					No Data Available
 				<% end %>
 			</div>
-			<div id="apollo_11<%=cohort%>" class="tab-pane fade in active">
+			<div id="apollo_11<%=cohort%>" class="tab-pane fade">
 				<% if teams.select{|team| team.apollo_11?}.length > 0 %>
 					<%= render 'public_teams_table', locals: {teams: teams,
 						selected_teams: teams.select{|team| team.apollo_11?},
@@ -47,7 +47,7 @@
 					No Data Available
 				<% end %>
 			</div>
-			<div id="artemis<%=cohort%>" class="tab-pane fade">
+			<div id="artemis<%=cohort%>" class="tab-pane fade in active">
 				<% if teams.select{|team| team.artemis?}.length > 0 %>
 					<%= render 'public_teams_table', locals: {teams: teams,
 						selected_teams: teams.select{|team| team.artemis?},
