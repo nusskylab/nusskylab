@@ -7,6 +7,7 @@ REGFILE = 'Orbital Registration (Responses).xlsx'
 PROCESSEDFILE = 'PROCESSED.xlsx'
 SQLFILE = 'sql.txt'
 $teamid = 2500
+$cohort = 2020
 $advisersList = Array.new
 
 def parseExcelUsers()
@@ -25,8 +26,8 @@ def parseExcelUsers()
         studentNo1 = mainSheet.cell('E',counter)
         studentNo2 = mainSheet.cell('J',counter)
         teamName = mainSheet.cell('N',counter)
-        cohort = mainSheet.cell('G',counter)
-        adviserName = mainSheet.cell('X',counter)
+        adviserName = mainSheet.cell('S',counter)
+	achievementLevel = mainSheet.cell('P', counter)
         info = Array.new
         info << userName1
         info << nusnetId1
@@ -34,8 +35,8 @@ def parseExcelUsers()
         info << userName2
         info << nusnetId2
         info << studentNo2
-        info << cohort
 	info << adviserName
+	info << achievementLevel
         teamInfo[teamName] = info
 	if not $advisersList.include?(adviserName) then $advisersList << adviserName end
         counter += 1 
@@ -64,12 +65,12 @@ def sqlCreator(teamInfo)
 
     #puts "...generating advisers sql..."
     #$advisersList.each do |adviserName|
-	#allSqlStmts << (createInsertIntoAdvisers adviserName)
+	#allSqlStmts << (createInsertIntoAdvisers values[6])
     #end
 
     puts "...generating updates to teams..."
     teamInfo.each do |teamName, values|
-	allSqlStmts << (createUpdateTeamWithAdvisor(teamName, values[7]))
+	allSqlStmts << (createUpdateTeamWithAdvisor(teamName, values[6], values[7]))
     end
     return allSqlStmts
 end
@@ -82,8 +83,8 @@ def createInsertIntoUsers(userName, nusnetId, matricNo)
 end
 
 def createInsertIntoTeams(teamName, cohort)
-    stmt = "INSERT INTO teams (id, created_at, updated_at, cohort, team_name) VALUES (#{$teamid}, current_timestamp, current_timestamp, #{cohort}, \'"
-    stmt += teamName.to_s
+    stmt = "INSERT INTO teams (id, created_at, updated_at, cohort, team_name) VALUES (#{$teamid}, current_timestamp, current_timestamp, #{$cohort}, \'"
+    stmt += teamName.to_s.gsub(/'/){ "\''" }
     stmt += "\');"
     return stmt
 end
@@ -104,12 +105,27 @@ def createInsertIntoAdvisers(adviserName)
     stmt += "%';"
 end
 
-def createUpdateTeamWithAdvisor(teamName, adviserName)
-    stmt = "UPDATE teams SET adviser_id = (SELECT advisers.id FROM users INNER JOIN advisers ON users.id=advisers.user_id WHERE users.user_name LIKE '%"
-    stmt += adviserName
-    stmt += "%') WHERE team_name = '"
-    stmt += teamName 
+def createUpdateTeamWithAdvisor(teamName, adviserName, achievementLevel)
+    levelNum = findTypeOfAchievement achievementLevel
+    stmt = "UPDATE teams SET adviser_id = (SELECT advisers.id FROM users INNER JOIN advisers ON users.id=advisers.user_id WHERE advisers.cohort = #{$cohort} AND users.user_name LIKE '%"
+    stmt += adviserName.to_s
+    stmt += "%'), project_level = "
+    stmt += levelNum.to_s
+    stmt += " WHERE team_name = '"
+    stmt += teamName.to_s.gsub(/'/){ "\''" }
     stmt += "';" 
+end
+
+def findTypeOfAchievement(achievementLevel)
+    if achievementLevel.downcase.include? "beginner"
+	return 0
+    elsif achievementLevel.downcase.include? "intermediate"
+	return 1
+    elsif achievementLevel.downcase.include? "advanced"
+	return 2
+    else
+	return 3
+    end
 end
 
 def writeSqlToFile(stmts)

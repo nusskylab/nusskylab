@@ -19,4 +19,4 @@ A few assumptions was made during the development of the script
 * Students are registering orbital for the first time.
 * Students are NUS students with a working nusnet account.
 * The column headers remain unchanged from the sample as the order of columns matter due to repeated headers.
-* Advisors have been added to the users table.
+* Advisors have been added to the users table with cohort indicated.
