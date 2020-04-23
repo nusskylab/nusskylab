@@ -3,7 +3,6 @@
 require 'rubygems'
 require 'roo'
 
-REGFILE = 'Orbital Registration (Responses).xlsx'
 PROCESSEDFILE = 'PROCESSED.xlsx'
 SQLFILE = 'sql.txt'
 $teamid = 2500
@@ -90,7 +89,7 @@ def createInsertIntoTeams(teamName, cohort)
 end
 
 def createInsertIntoStudent(matricNo)
-    stmt = "INSERT INTO students (user_id, created_at, updated_at, team_id) SELECT cast(id as integer), current_timestamp, current_timestamp," + $teamid.to_s + " FROM users WHERE matric_number = \'"
+    stmt = "INSERT INTO students (user_id, created_at, updated_at, team_id, cohort) SELECT cast(id as integer), current_timestamp, current_timestamp," + $teamid.to_s + " , #{$cohort} FROM users WHERE matric_number = \'"
     stmt2 = "\';"
     finalStmt = ""
     finalStmt += stmt
