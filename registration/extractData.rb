@@ -76,9 +76,9 @@ def sqlCreator(teamInfo)
 end
 
 def createInsertIntoUsers(userName, nusnetId, matricNo)
-    stmt = "INSERT INTO users (uid, email, user_name, matric_number, provider) SELECT \'https://openid.nus.edu.sg/"
+    stmt = "INSERT INTO users (uid, email, user_name, matric_number, created_at, updated_at, provider) SELECT \'https://openid.nus.edu.sg/"
     stmt += nusnetId.to_s
-    stmt += ("\', \'" + nusnetId.to_s + "@u.nus.edu', \'" + userName.to_s + "\', \'" + matricNo.to_s + "\', 1 WHERE NOT EXISTS (SELECT * FROM users WHERE matric_number = \'")
+    stmt += ("\', \'" + nusnetId.to_s + "@u.nus.edu', \'" + userName.to_s + "\', \'" + matricNo.to_s + "\', current_timestamp, current_timestamp, 1 WHERE NOT EXISTS (SELECT * FROM users WHERE matric_number = \'")
     stmt += matricNo.to_s
     stmt += "\');"
     return stmt
