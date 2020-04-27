@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'roo'
 
+REGFILE = 'Orbital Registration (Responses).xlsx'
 PROCESSEDFILE = 'PROCESSED.xlsx'
 SQLFILE = 'sql.txt'
 $teamid = 2500
@@ -75,9 +76,11 @@ def sqlCreator(teamInfo)
 end
 
 def createInsertIntoUsers(userName, nusnetId, matricNo)
-    stmt = "INSERT INTO users (uid, email, user_name, matric_number, provider) VALUES (\'https://openid.nus.edu.sg/"
+    stmt = "INSERT INTO users (uid, email, user_name, matric_number, created_at, updated_at, provider) SELECT \'https://openid.nus.edu.sg/"
     stmt += nusnetId.to_s
-    stmt += ("\', \'" + nusnetId.to_s + "@u.nus.edu', \'" + userName.to_s + "\', \'" + matricNo.to_s + "\', 1);")
+    stmt += ("\', \'" + nusnetId.to_s + "@u.nus.edu', \'" + userName.to_s + "\', \'" + matricNo.to_s + "\', current_timestamp, current_timestamp, 1 WHERE NOT EXISTS (SELECT * FROM users WHERE matric_number = \'")
+    stmt += matricNo.to_s
+    stmt += "\');"
     return stmt
 end
 
@@ -90,11 +93,14 @@ end
 
 def createInsertIntoStudent(matricNo)
     stmt = "INSERT INTO students (user_id, created_at, updated_at, team_id, cohort) SELECT cast(id as integer), current_timestamp, current_timestamp," + $teamid.to_s + " , #{$cohort} FROM users WHERE matric_number = \'"
-    stmt2 = "\';"
+    stmt2 = "\' AND NOT EXISTS (SELECT * FROM students INNER JOIN users ON users.id=students.user_id WHERE users.matric_number = \'"
+    stmt3 = "\');"
     finalStmt = ""
     finalStmt += stmt
     finalStmt += matricNo.to_s
     finalStmt += stmt2
+    finalStmt += matricNo.to_s
+    finalStmt += stmt3
     return finalStmt
 end
 

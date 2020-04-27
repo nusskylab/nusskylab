@@ -15,7 +15,7 @@ This file will only be created when the script has run at least once.
 
 ### Notes
 A few assumptions was made during the development of the script
-* The students do not have an account in skylab and the generation of account and insertion into users, teams, students
+* The generation of account (if not created) and insertion into users, teams, students
 * Students are registering orbital for the first time.
 * Students are NUS students with a working nusnet account.
 * The column headers remain unchanged from the sample as the order of columns matter due to repeated headers.
