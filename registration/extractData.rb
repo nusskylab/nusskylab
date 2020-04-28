@@ -58,8 +58,8 @@ def sqlCreator(teamInfo)
 	allSqlStmts << (createInsertIntoTeams(teamName, values[6]))    	
 	
 	# create sql for table students
-	allSqlStmts << (createInsertIntoStudent values[2])
-	allSqlStmts << (createInsertIntoStudent values[5])
+	allSqlStmts << (createInsertIntoStudent values[1], values[2])
+	allSqlStmts << (createInsertIntoStudent values[4], values[5])
 	$teamid += 1
     end
 
@@ -78,8 +78,8 @@ end
 def createInsertIntoUsers(userName, nusnetId, matricNo)
     stmt = "INSERT INTO users (uid, email, user_name, matric_number, created_at, updated_at, provider) SELECT \'https://openid.nus.edu.sg/"
     stmt += nusnetId.to_s
-    stmt += ("\', \'" + nusnetId.to_s + "@u.nus.edu', \'" + userName.to_s + "\', \'" + matricNo.to_s + "\', current_timestamp, current_timestamp, 1 WHERE NOT EXISTS (SELECT * FROM users WHERE matric_number = \'")
-    stmt += matricNo.to_s
+    stmt += ("\', \'" + nusnetId.to_s + "@u.nus.edu', \'" + userName.to_s + "\', \'" + matricNo.to_s + "\', current_timestamp, current_timestamp, 1 WHERE NOT EXISTS (SELECT * FROM users WHERE uid = \'https://openid.nus.edu.sg/")
+    stmt += nusnetId.to_s
     stmt += "\');"
     return stmt
 end
@@ -91,15 +91,15 @@ def createInsertIntoTeams(teamName, cohort)
     return stmt
 end
 
-def createInsertIntoStudent(matricNo)
+def createInsertIntoStudent(nusnetId, matricNo)
     stmt = "INSERT INTO students (user_id, created_at, updated_at, team_id, cohort) SELECT cast(id as integer), current_timestamp, current_timestamp," + $teamid.to_s + " , #{$cohort} FROM users WHERE matric_number = \'"
-    stmt2 = "\' AND NOT EXISTS (SELECT * FROM students INNER JOIN users ON users.id=students.user_id WHERE users.matric_number = \'"
+    stmt2 = "\' AND NOT EXISTS (SELECT * FROM students INNER JOIN users ON users.id=students.user_id WHERE users.uid = \'https://openid.nus.edu.sg/"
     stmt3 = "\');"
     finalStmt = ""
     finalStmt += stmt
     finalStmt += matricNo.to_s
     finalStmt += stmt2
-    finalStmt += matricNo.to_s
+    finalStmt += nusnetId.to_s
     finalStmt += stmt3
     return finalStmt
 end
