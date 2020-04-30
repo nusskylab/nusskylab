@@ -156,4 +156,50 @@ RSpec.describe MentorsController, type: :controller do
       end
     end
   end
+
+  describe 'POST #accept_team' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        user = FactoryGirl.create(:user, email: '1@mentor.controller.spec', uid: '1.mentor.controller.spec')
+        mentor = FactoryGirl.create(:mentor, user_id: user.id)
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        post :accept_team, params: {team: team.id}, id: mentor.id
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in but not admin' do
+      login_user
+      # it 'should accept team successfully for non-mentor user' do
+      #   user = FactoryGirl.create(:user, email: '1@mentor.controller.spec', uid: '1.mentor.controller.spec')
+      #   mentor = FactoryGirl.create(:mentor, user_id: subject.current_user.id)
+      #   team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+      #   mentor_matching = FactoryGirl.create(:mentor_matching, team_id: team.id, mentor_id: mentor.id)
+      #   post :accept_team, params: {team: team.id}, id: mentor.id
+      #   expect(flash[:success]).to be_present
+      #   expect(response.status).to eq(302) #redirected
+      # end
+
+      it 'should not accept team successfully for non-mentor user' do
+        user = FactoryGirl.create(:user, email: '1@mentor.controller.spec', uid: '1.mentor.controller.spec')
+        mentor = FactoryGirl.create(:mentor, user_id: user.id)
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        post :accept_team, params: {team: team.id}, id: mentor.id
+        expect(flash[:danger]).to be_present
+        expect(response).to redirect_to(controller.home_path) #redirected
+      end
+    end
+
+    # context 'user logged in and admin' do
+    #   login_admin
+    #   it 'should accept team successfully for admins' do
+    #     user = FactoryGirl.create(:user, email: '1@mentor.controller.spec', uid: '1.mentor.controller.spec')
+    #     mentor = FactoryGirl.create(:mentor, user_id: user.id)
+    #     team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+    #     post :accept_team, params: {team: team.id}, id: mentor.id
+    #     expect(flash[:success]).to_not be_nil
+    #     expect(response.status).to eq(302)
+    #   end
+    # end
+  end
 end
