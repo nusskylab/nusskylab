@@ -155,17 +155,25 @@ class TeamsController < ApplicationController
 
   def accept_mentor
     @team = Team.find(params[:id]) || (record_not_found && return)
-    mentor = Mentor.find(params[:mentor_id])
     !authenticate_user(true, false,
                        @team.get_relevant_users(false, false)) && return
     #establish the mentorship
-    @team.update(mentor_id: mentor.id)
-    mentor.teams << @team
-    redirect_to team_path(@team.id), flash: {
-      success: t('.success_message',
-                 mentor_name: mentor.user.user_name)
-    }
-    return
+    @mentor = Mentor.find(params[:mentor_id])
+    teamsMentorMatching = MentorMatching.find_by(:team_id => params[:id], :mentor_id => params[:mentor_id])
+    if !@mentor.nil? && !teamsMentorMatching.nil? && teamsMentorMatching.mentor_accepted
+      @team.update(mentor_id: @mentor.id)
+      @mentor.teams << @team
+      redirect_to team_path(@team.id), flash: {
+        success: t('.success_message',
+                   mentor_name: @mentor.user.user_name)
+      }
+      return
+    else
+      redirect_to team_path(@team.id), flash: {
+        danger: t('.error_message')
+      }
+      return
+    end
   end
 
   private

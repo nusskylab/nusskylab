@@ -177,6 +177,7 @@ RSpec.describe MentorsController, type: :controller do
         post :accept_team, team: team.id, id: mentor.id
         expect(flash[:success]).to be_present
         expect(response).to redirect_to(mentor_path(mentor)) #redirected
+        expect(MentorMatching.find_by(:team_id => team.id, :mentor_id => mentor.id).mentor_accepted).to eq(true)
       end
 
       it 'should not accept team successfully for non-mentor user' do
@@ -198,7 +199,8 @@ RSpec.describe MentorsController, type: :controller do
         mentor_matching = FactoryGirl.create(:mentor_matching, team_id: team.id, mentor_id: mentor.id)
         post :accept_team, team: team.id, id: mentor.id
         expect(flash[:success]).to_not be_nil
-        expect(response.status).to eq(302)
+        expect(response).to redirect_to(mentor_path(mentor)) #redirected
+        expect(MentorMatching.find_by(:team_id => team.id, :mentor_id => mentor.id).mentor_accepted).to eq(true)
       end
     end
   end

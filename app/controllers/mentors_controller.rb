@@ -99,7 +99,6 @@ class MentorsController < RolesController
       redirect_to mentor_path(@mentor.id), flash: {
         success: t('.success_message', team_name: team.team_name)
       }
-      puts "success?"
       return
     else
       redirect_to mentor_path(@mentor.id), flash: {

@@ -486,6 +486,8 @@ en:
     accept_mentor:
       success_message: >
         Your official mentor is %{mentor_name}
+      error_message: >
+        Something went wrong, please contact admin for more information
     match_mentor_success:
       failure_message: >
         Please select 3 different mentors.

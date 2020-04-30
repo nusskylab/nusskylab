@@ -12,6 +12,7 @@ pickle-email-*.html
 config/initializers/secret_token.rb
 config/secrets.yml
 .rbenv-vars
+config/initializers/devise.rb
 
 ## Environment normalisation:
 /.bundle
@@ -114,3 +115,5 @@ public/assets/
 serverstatus.sh
 
 .DS_Store
+
+

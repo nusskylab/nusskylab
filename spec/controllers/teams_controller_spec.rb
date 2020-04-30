@@ -434,4 +434,97 @@ RSpec.describe TeamsController, type: :controller do
       end
     end
   end
+
+  describe 'POST #accept_mentor' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        user = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        mentor = FactoryGirl.create(:mentor, user_id: user.id)
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        post :accept_mentor, id: team.id, mentor_id: mentor.id
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in but not admin' do
+      login_user
+      it 'should accept mentor for current student' do
+        user = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        mentor = FactoryGirl.create(:mentor, user_id: user.id)
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        student = FactoryGirl.create(:student, user_id: subject.current_user.id, team: team)
+        team.students << student
+        mentor_matching = FactoryGirl.create(:mentor_matching, team_id: team.id, mentor_id: mentor.id, mentor_accepted: true)
+        post :accept_mentor, id: team.id, mentor_id: mentor.id
+        expect(flash[:success]).to be_present
+        expect(response).to redirect_to(team_path(team)) #redirected
+        team1 = Team.find(team.id)
+        expect(team1.mentor_id).to eq(mentor.id)
+      end
+
+      it 'should not accept mentor for non current student' do
+        user = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        user1 = FactoryGirl.create(:user, email: '2@team.controller.spec', uid: '2.team.controller.spec')
+        mentor = FactoryGirl.create(:mentor, user_id: user.id)
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        student = FactoryGirl.create(:student, user_id: user1.id, team: team)
+        team.students << student
+        mentor_matching = FactoryGirl.create(:mentor_matching, team_id: team.id, mentor_id: mentor.id, mentor_accepted: true)
+        post :accept_mentor, id: team.id, mentor_id: mentor.id
+        expect(flash[:danger]).to be_present
+        expect(response).to redirect_to(root_path) #redirected
+        team1 = Team.find(team.id)
+        expect(team1.mentor_id).to be_nil
+      end
+    end
+
+    context 'user logged in and belongs to team' do
+      login_user
+      it 'should not accept mentor for non existing mentor matching request' do
+        user = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        mentor = FactoryGirl.create(:mentor, user_id: user.id)
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        student = FactoryGirl.create(:student, user_id: subject.current_user.id, team: team)
+        team.students << student
+        post :accept_mentor, id: team.id, mentor_id: mentor.id
+        expect(flash[:danger]).to be_present
+        expect(response).to redirect_to(team_path(team)) #redirected
+      end
+    end
+
+    context 'user logged in and belongs to team' do
+      login_user
+      it 'should accept mentor for incorrect mentor id' do
+        user = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        mentor = FactoryGirl.create(:mentor, user_id: user.id)
+        user1 = FactoryGirl.create(:user, email: '2@team.controller.spec', uid: '2.team.controller.spec')
+        mentor1 = FactoryGirl.create(:mentor, user_id: user1.id)
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        student = FactoryGirl.create(:student, user_id: subject.current_user.id, team: team)
+        team.students << student
+        mentor_matching = FactoryGirl.create(:mentor_matching, team_id: team.id, mentor_id: mentor.id, mentor_accepted: true)
+        post :accept_mentor, id: team.id, mentor_id: mentor1.id
+        expect(flash[:danger]).to be_present
+        expect(response).to redirect_to(team_path(team)) #redirected
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should accept mentor' do
+        user = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        user1 = FactoryGirl.create(:user, email: '2@team.controller.spec', uid: '2.team.controller.spec')
+        mentor = FactoryGirl.create(:mentor, user_id: user.id)
+        team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+        student = FactoryGirl.create(:student, user_id: user1.id, team: team)
+        team.students << student
+        mentor_matching = FactoryGirl.create(:mentor_matching, team_id: team.id, mentor_id: mentor.id, mentor_accepted: true)
+        post :accept_mentor, id: team.id, mentor_id: mentor.id
+        expect(flash[:success]).to be_present
+        expect(response).to redirect_to(team_path(team)) #redirected
+        team1 = Team.find(team.id)
+        expect(team1.mentor_id).to eq(mentor.id)
+      end
+    end
+  end
 end
