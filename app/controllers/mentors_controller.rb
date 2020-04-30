@@ -91,15 +91,15 @@ class MentorsController < RolesController
   def accept_team
     @mentor = Mentor.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@mentor.user]) && return
-    cohort = @mentor.cohort || current_cohort
     team = Team.find(params[:team])
-    puts "Team #{team.team_name}"
+    cohort = @mentor.cohort || current_cohort
 
     acceptedMentorMatchings = MentorMatching.find_by(:team_id => team.id, :mentor_id => @mentor.id)
-    if ((MentorMatching.update(acceptedMentorMatchings.id, :mentor_accepted => true)) && (!acceptedMentorMatchings.mentor_accepted))
+    if (!acceptedMentorMatchings.nil? && (MentorMatching.update(acceptedMentorMatchings.id, :mentor_accepted => true)) && (!acceptedMentorMatchings.mentor_accepted))
       redirect_to mentor_path(@mentor.id), flash: {
         success: t('.success_message', team_name: team.team_name)
       }
+      puts "success?"
       return
     else
       redirect_to mentor_path(@mentor.id), flash: {
