@@ -220,6 +220,11 @@ en:
       page_title: >
         Home | Orbital
   mentors:
+    accept_team:
+      success_message: >
+        You have accept %{team_name} successfully.
+      failure_message: >
+        Unable to accept %{team_name}.
     index:
       page_title: >
         View all mentors
@@ -478,6 +483,13 @@ en:
       page_title: >
         Preview survey template and questions
   teams:
+    match_mentor_success:
+      failure_message: >
+        Please select 3 different mentors.
+      success_message: >
+        You have match mentor successfully.
+      error_message: >
+        There is error in matching mentor. <br>&nbsp;&nbsp;&nbsp;&nbsp;%{error_message}
     has_dropped_tooltip: >
       This team has dropped out of Skylab :(
     index:
@@ -505,6 +517,8 @@ en:
       basic_info_instruction: >
         Team's basic information including team name, aimed project levels, members, peer teams,
         adviser and mentor is listed here.
+      view_mentor_matchings_instruction: >
+        View your current mentor matchings status. 
       submission_instruction: >
         Team's submissions to milestones are listed here.
       more_info_instruction: >

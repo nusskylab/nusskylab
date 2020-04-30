@@ -216,6 +216,14 @@ ActiveRecord::Schema.define(version: 20190720031527) do
     t.text     "comment"
   end
 
+  create_table "mentor_matchings", force: :cascade do |t|
+    t.integer "team_id"
+    t.integer "mentor_id"
+    t.integer "choice_ranking"
+    t.boolean "mentor_accepted"
+    t.integer  "cohort"
+  end
+
   add_index "teams", ["adviser_id"], name: "index_teams_on_adviser_id", using: :btree
   add_index "teams", ["mentor_id"], name: "index_teams_on_mentor_id", using: :btree
 

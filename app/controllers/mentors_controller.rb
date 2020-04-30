@@ -62,9 +62,11 @@ class MentorsController < RolesController
         )
       end
     end
+    teamsMentorMatchings = MentorMatchings.where(:mentor_id => params[:id]).order(:choice_ranking);
     {
       milestones: milestones,
-      teams_submissions: teams_submissions
+      teams_submissions: teams_submissions,
+      teamsMentorMatchings: teamsMentorMatchings
     }
   end
 
@@ -85,6 +87,25 @@ class MentorsController < RolesController
     }
   end
 
+  def accept_team 
+    @mentor = Mentor.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@mentor]) && return
+    cohort = @mentor.cohort || current_cohort
+    team = Team.find(params[:team])
+    puts "Team #{team.team_name}"
+    acceptedMentorMatchings = MentorMatchings.find_by(:team_id => team.id, :mentor_id => @mentor.id)
+    if ((MentorMatchings.update(acceptedMentorMatchings.id, :mentor_accepted => true)) && (!acceptedMentorMatchings.mentor_accepted))
+      redirect_to mentor_path(@mentor.id), flash: {
+        success: t('.success_message', team_name: team.team_name)
+      }
+      return
+    else
+      redirect_to mentor_path(@mentor.id), flash: {
+        danger: t('.failure_message', team_name: team.team_name)
+      }
+      return
+  end
+  
   # Returns params needed for batch creation of roles
   def batch_role_params
     params.permit(users: [:user_id, :cohort, :slide_link])

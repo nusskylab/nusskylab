@@ -54,6 +54,8 @@ Rails.application.routes.draw do
       get 'general_mailing'
       post 'send_general_mailing'
       patch 'send_general_mailing'
+      post 'accept_team'
+      patch 'accept_team'
     end
   end
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
@@ -77,6 +79,10 @@ Rails.application.routes.draw do
   end
   resources :teams do
     resources :feedbacks, only: [:new, :create, :edit, :update]
+    member do
+      get 'match_mentor'
+      post 'match_mentor_success'
+    end
   end
   resources :evaluatings, only: [:index, :new, :create,
                                  :edit, :update, :destroy]
