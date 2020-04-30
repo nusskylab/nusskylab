@@ -113,7 +113,7 @@ def createUpdateTeamWithAdvisor(teamName, adviserName, achievementLevel)
     stmt += adviserName.to_s
     stmt += "%'), project_level = "
     stmt += levelNum.to_s
-    stmt += " WHERE team_name = '"
+    stmt += " WHERE cohort = #{$cohort} AND team_name = '"
     stmt += teamName.to_s.gsub(/'/){ "\''" }
     stmt += "';" 
 end
