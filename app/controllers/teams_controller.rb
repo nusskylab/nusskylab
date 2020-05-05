@@ -50,6 +50,7 @@ class TeamsController < ApplicationController
                        @team.get_relevant_users(true, true)) && return
     @page_title = t('.page_title', team_name: @team.team_name)
     cohort = @team.cohort || current_cohort
+    @teamsMentorMatchings = MentorMatching.where(:team_id => params[:id]).order(:choice_ranking);
     render locals: data_for_display
   end
 
@@ -97,6 +98,84 @@ class TeamsController < ApplicationController
     end
   end
 
+  def match_mentor
+    @team = Team.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false,
+                       @team.get_relevant_users(true, true)) && return
+    cohort = @team.cohort || current_cohort
+    @teamsMentorMatchings = MentorMatching.where(:team_id => params[:id])
+    render locals: {
+      mentors: Mentor.where(cohort: cohort),
+    }
+  end
+
+  def match_mentor_success
+    @team = Team.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false,
+                       @team.get_relevant_users(false, false)) && return
+    cohort = @team.cohort || current_cohort
+    choices = [ params[:team][:choice_1], params[:team][:choice_2], params[:team][:choice_3] ]
+    teamsMentorMatchings = MentorMatching.where(:team_id => params[:id]).ids;
+
+    if ((choices[0] == choices[2]) || (choices[0] == choices[1]) || (choices[1] == choices[2]))
+      redirect_to match_mentor_team_path(), flash: {
+        danger: t('.failure_message')
+      }
+      return
+    end
+    #See if can edit else create
+    if teamsMentorMatchings.any?
+      if MentorMatching.edit_mentor_preferences(@team, choices, cohort, teamsMentorMatchings)
+        redirect_to team_path(@team.id), flash: {
+          success: t('.success_message')
+        }
+        return
+      else
+        redirect_to match_mentor_team_path(), flash: {
+          danger: t('.error_message',
+                    error_message: @team.errors.full_messages.join(', ')
+          )
+        }
+        return
+      end
+    elsif MentorMatching.match_mentor(@team, choices, cohort)
+      redirect_to team_path(@team.id), flash: {
+        success: t('.success_message')
+      }
+      return
+    else
+      redirect_to match_mentor_team_path(), flash: {
+        danger: t('.error_message',
+                  error_message: @team.errors.full_messages.join(', ')
+        )
+      }
+      return
+    end
+  end
+
+  def accept_mentor
+    @team = Team.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false,
+                       @team.get_relevant_users(false, false)) && return
+    #establish the mentorship
+    @mentor = Mentor.find(params[:mentor_id])
+    teamsMentorMatching = MentorMatching.find_by(:team_id => params[:id], :mentor_id => params[:mentor_id])
+    if !@mentor.nil? && !teamsMentorMatching.nil? && teamsMentorMatching.mentor_accepted
+      @team.update(mentor_id: @mentor.id)
+      @mentor.teams << @team
+      redirect_to team_path(@team.id), flash: {
+        success: t('.success_message',
+                   mentor_name: @mentor.user.user_name)
+      }
+      return
+    else
+      redirect_to team_path(@team.id), flash: {
+        danger: t('.error_message')
+      }
+      return
+    end
+  end
+
   private
 
   def team_params
@@ -115,9 +194,11 @@ class TeamsController < ApplicationController
     milestones.each do |milestone|
       survey_templates = survey_templates.concat(milestone.survey_templates)
     end
+    teamsMentorMatchings = MentorMatching.where(:team_id => @team.id).order(:choice_ranking);
     basic_data = {
       milestones: milestones,
-      survey_templates: survey_templates
+      survey_templates: survey_templates,
+      teamsMentorMatchings: teamsMentorMatchings
     }
     basic_data.merge(team_related_data)
   end

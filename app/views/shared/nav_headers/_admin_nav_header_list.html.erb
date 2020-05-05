@@ -17,7 +17,14 @@
   </li>
   <li><a href="<%= milestones_path %>">Milestones</a></li>
   <li><a href="<%= survey_templates_path %>">Survey Templates</a></li>
-  <li><a href="<%= teams_path %>">Teams</a></li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teams <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a href="<%= teams_path %>">Teams</a></li>
+      <li role="separator" class="divider"></li>
+      <li><a href="<%= mentor_matchings_path %>">Mentor matchings</a></li>
+    </ul>
+  </li>
   <li><a href="<%= evaluatings_path %>">Evaluating relations</a></li>
   <li><a href="<%= forum_path %>">Forum</a></li>
   <li><a href="<%= submissions_path %>">All Teams</a></li>

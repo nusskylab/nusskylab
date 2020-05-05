@@ -1,0 +1,34 @@
+<table class="table table-hover table-condensed table-responsive">
+  <thead>
+  <tr>
+    <th> Choice </td>
+    <th> Mentor </th>
+    <th> Status </th>
+    <th> Action </th>
+  </tr>
+  </thead>
+  <% locals[:teamsMentorMatchings].each do |choice| %>
+    <tbody>
+    <tr>
+      <td>
+        <%= choice.choice_ranking %>
+      </td>
+      <td>
+        <%= Mentor.find_by(id: choice.mentor_id).user.user_name %>
+      </td>
+      <td>
+        <%= choice.mentor_accepted ? 'Accepted' : 'Awaiting' %>
+      </td>
+      <td>
+        <% if @team.mentor_id.present? && @team.mentor_id == choice.mentor_id %>
+          <button disabled class="btn btn-primary btn-xs">Team has confirmed the mentor</button>
+        <% elsif choice.mentor_accepted %>
+          <%= link_to 'Accept', accept_mentor_team_path(@team, mentor_id: choice.mentor_id), method: :post, class: 'btn btn-primary btn-xs' %>
+        <% else %>
+          <button disabled class="btn btn-primary btn-xs">No action required</button>
+        <% end %>
+      </td>
+    </tr>
+    <tbody>
+  <% end %>
+</table>

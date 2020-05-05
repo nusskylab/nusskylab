@@ -51,6 +51,7 @@ class MentorsController < RolesController
   end
 
   def data_for_role_show
+    @mentor = Mentor.find(params[:id]) || (record_not_found && return)
     milestones = Milestone.order(:id).where(cohort: @role.cohort)
     teams_submissions = {}
     milestones.each do |milestone|
@@ -62,9 +63,11 @@ class MentorsController < RolesController
         )
       end
     end
+    teamsMentorMatchings = MentorMatching.where(:mentor_id => @mentor.id).order(:choice_ranking);
     {
       milestones: milestones,
-      teams_submissions: teams_submissions
+      teams_submissions: teams_submissions,
+      teamsMentorMatchings: teamsMentorMatchings
     }
   end
 
@@ -83,6 +86,26 @@ class MentorsController < RolesController
     {
       users: users
     }
+  end
+
+  def accept_team
+    @mentor = Mentor.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@mentor.user]) && return
+    team = Team.find(params[:team])
+    cohort = @mentor.cohort || current_cohort
+
+    acceptedMentorMatchings = MentorMatching.find_by(:team_id => team.id, :mentor_id => @mentor.id)
+    if (!acceptedMentorMatchings.nil? && (MentorMatching.update(acceptedMentorMatchings.id, :mentor_accepted => true)) && (!acceptedMentorMatchings.mentor_accepted))
+      redirect_to mentor_path(@mentor.id), flash: {
+        success: t('.success_message', team_name: team.team_name)
+      }
+      return
+    else
+      redirect_to mentor_path(@mentor.id), flash: {
+        danger: t('.failure_message', team_name: team.team_name)
+      }
+      return
+    end
   end
 
   # Returns params needed for batch creation of roles
