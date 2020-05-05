@@ -92,13 +92,10 @@ def createInsertIntoTeams(teamName, cohort)
 end
 
 def createInsertIntoStudent(nusnetId, matricNo)
-    stmt = "INSERT INTO students (user_id, created_at, updated_at, team_id, cohort) SELECT cast(id as integer), current_timestamp, current_timestamp," + $teamid.to_s + " , #{$cohort} FROM users WHERE matric_number = \'"
-    stmt2 = "\' AND NOT EXISTS (SELECT * FROM students INNER JOIN users ON users.id=students.user_id WHERE users.uid = \'https://openid.nus.edu.sg/"
-    stmt3 = "\');"
+    stmt = "INSERT INTO students (user_id, created_at, updated_at, team_id, cohort) SELECT cast(id as integer), current_timestamp, current_timestamp," + $teamid.to_s + " , #{$cohort} FROM users WHERE uid = \'https://openid.nus.edu.sg/"
+    stmt3 = "\';"
     finalStmt = ""
     finalStmt += stmt
-    finalStmt += matricNo.to_s
-    finalStmt += stmt2
     finalStmt += nusnetId.to_s
     finalStmt += stmt3
     return finalStmt
@@ -116,7 +113,7 @@ def createUpdateTeamWithAdvisor(teamName, adviserName, achievementLevel)
     stmt += adviserName.to_s
     stmt += "%'), project_level = "
     stmt += levelNum.to_s
-    stmt += " WHERE team_name = '"
+    stmt += " WHERE cohort = #{$cohort} AND team_name = '"
     stmt += teamName.to_s.gsub(/'/){ "\''" }
     stmt += "';" 
 end
