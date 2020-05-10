@@ -30,9 +30,9 @@
   <% end %>
   <% if current_user_admin? or current_user_adviser? or current_user_student? %>
     <%= f.input :poster_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
+    <%= f.input :video_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
   <% end %>
   <% if current_user_admin? or current_user_adviser? %>
-    <%= f.input :video_link, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
     <%= f.input :status, collection: {'No Status'.to_sym => 0, 'Contactable and doing well'.to_sym => 1, 'Contactable but lack of progress'.to_sym => 2,
                                       Uncontactable: 3, 'To be re-evaluated': 4},
                                       selected: locals[:team].status,
