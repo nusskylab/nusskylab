@@ -19,7 +19,7 @@ source 'https://rubygems.org' do
   gem 'backport_new_renderer', '~> 1.0.0'
 
   # Use devise for email sign-up and sign-in
-  gem 'devise', '~> 3.5.2'
+  gem 'devise', '~> 4.7.1'
   # Use omniauth for openid authentication
   gem 'omniauth', '~> 1.6.1'
   gem 'omniauth-openid', '~> 1.0.1'
