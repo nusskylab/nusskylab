@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1>
+            <span><%= locals[:student].user.user_name %> </span>
+            <span class="text-muted"> in </span>
+            <a href="<%= team_path(locals[:student].team) %>" class="btn btn-info">
+                <%= locals[:student].team.team_name %>
+            </a>
+        </h1>
+    </div>
+    <div class="panel-body">
+        <div role="tabpanel">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#project-panel" aria-controls="project-panel"
+                        role="tab" data-toggle="tab">
+                    Submit proposal
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#evaluation-panel" aria-controls="evaluation-panel"
+                        role="tab" data-toggle="tab">
+                        Evaluate other teams
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="project-panel">
+                    <h2 class="text-center">Submissions</h2>
+                    <div class="well">
+                    <p class="small"><%= t '.submit_submission_instruction' %></p>
+                    </div>
+                    <p>submission</p>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
+                    <h2 class="text-center">Evaluations</h2>
+                        <div class="well">
+                            <p class="small"><%= t '.submit_evaluation_instruction' %></p>
+                        </div>
+                        <p>evaluation</p>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
