@@ -8,7 +8,7 @@ class StudentsController < RolesController
     stu = params.require(:student).permit(
       :user_id, :team_id, :is_pending, :cohort
     )
-    stu.delete(:is_pending) unless stu[:is_pending] && @role.is_pending
+    #stu.delete(:is_pending) unless stu[:is_pending] && @role.is_pending
     stu
   end
 

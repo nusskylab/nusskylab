@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     adviser = Adviser.adviser?(current_user.id, cohort: current_cohort)
     mentor = Mentor.mentor?(current_user.id, cohort: current_cohort)
     admin = Admin.admin?(current_user.id, cohort: current_cohort)
-    if student && !student.is_pending && adviser.nil? && mentor.nil? &&
+    if student && adviser.nil? && mentor.nil? &&
        admin.nil?
       main_app.student_path(student.id)
     elsif student.nil? && adviser && mentor.nil? && admin.nil?
