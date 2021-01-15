@@ -14,19 +14,18 @@
     </h1>
   </div>
   <div class="panel-body">
-    <%= t ('students.show.no_team_instruction') %>
-    <ul class="list-group" style="margin-top: 8px;">
+    <%= t ('students.show.no_team_instruction')
+    <ul class="list-group" style="margin-top: 8px; padding: 20px;">
       <li class="list-group-item">
-        <span style="vertical-align: middle;">Team 1 </span><!--contact detail, join or create only one team. cannot join and create at the same time-->
-        <span style="margin-left:5em;">Open<span>
+        <button style="vertical-align: middle;" data-toggle="tooltip" data-placement="top" title="Current member: helloKKM">Team 1 </button><!--contact detail, join or create only one team. cannot join and create at the same time-->
         <button type="button" class="btn btn-default pull-right" style="padding: 2px; font-size:5px;">Join Team</button>
       </li>
       <li class="list-group-item">
-        <span style="vertical-align: middle;">Team 2 </span>
-        <span style="margin-left:5em;">Private<span> <!--explain with additional pop-up-->
+        <button style="vertical-align: middle;" data-toggle="tooltip" data-placement="top" title="Current member: helloKKM">Team 40 </button><!--contact detail, join or create only one team. cannot join and create at the same time-->
         <button type="button" class="btn btn-default pull-right" style="padding: 2px; font-size:5px;">Join Team</button>
       </li>
     </ul>
-    <button type="button" class="btn btn-default">Create new team</button>
+    <%# <p>You have joined team <strong>40</strong> with user <strong>klm666</strong></p>
+    <button type="button" class="btn btn-default">Quit the team</button> %>
   </div>
 </div>

@@ -9,7 +9,7 @@
         </h1>
     </div>
     <div class="panel-body">
-        <div role="tabpanel">
+        <%# <div role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                     <a href="#project-panel" aria-controls="project-panel"
@@ -23,23 +23,23 @@
                         Evaluate other teams
                     </a>
                 </li>
-            </ul>
+            </ul> 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="project-panel">
-                    <h2 class="text-center">Submissions</h2>
-                    <div class="well">
-                    <p class="small"><%= t '.submit_submission_instruction' %></p>
+                <div role="tabpanel" class="tab-pane fade in active" id="project-panel">%>
+                <%# <h2 class="text-center">Submission</h2>
+                <div class="well">
+                <p class="small">Please upload your project proposal to google drive in <strong>pdf format</strong>. Get the <strong>read-only</strong> sharable link and submit it via the input box below. Your coursemates will use the link to read your proposal.</p>
+                </div>
+                <label for="link" style="padding-left:1em;">Google Drive Link</label>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="link" placeholder="Enter the read-only google drive link to your project proposal.">
                     </div>
-                    <p>submission</p>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
-                    <h2 class="text-center">Evaluations</h2>
-                        <div class="well">
-                            <p class="small"><%= t '.submit_evaluation_instruction' %></p>
-                        </div>
-                        <p>evaluation</p>
-                </div>
-            </div>
-        </div> 
+                    <button type="submit" class="btn btn-primary col-sm-1 pull-right" style="margin-right: 1em;">Submit</button>
+                </div> %>
+                <%# </div> %>
+                <%# <h2 class="text-center">Evaluations</h2>       %>
+            <%# </div> %>
+        <%# </div>  %>
     </div>
 </div>

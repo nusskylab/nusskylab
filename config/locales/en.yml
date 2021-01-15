@@ -409,8 +409,7 @@ en:
       pending_instruction: >
         You registration as a student is currently still pending. Be patient for the great to come :)
       no_team_instruction: >
-        If you decide to team up with a stranger, you may create an "open team" and wait for someone to join.
-        Else, you may create a "private team" and invite your friend to join the same team.
+        You may either create a new team and invite your friend to join the same team, or directly join the team created by your friend.
       submit_submission_instruction: >
         Submissions to milestones are listed here.
         You can submit for a milestone or edit a previously created submission.

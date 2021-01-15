@@ -18,7 +18,7 @@
           <li role="presentation">
             <a href="#user-roles" aria-controls="user-roles"
                role="tab" data-toggle="tab">
-              User roles
+              User access
             </a>
           </li>
         </ul>
@@ -41,29 +41,41 @@
             <br>	
               <div class="jumbotron">	
                 <% adm, adv, men, stu = user_admin?, user_adviser?, user_mentor?, user_student? || user_pending_student? %>	
-                <% if adm or adv or men or stu %>	
-                  <p>Use Skylab as:</p>	
-                  <p>	
-                    <% if adm and adv %>	
-                      <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>	
-                      <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>	
-                    <% elsif adm %>	
-                      <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>	
-                    <% elsif adv %>	
-                      <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>	
-                    <% elsif men %>	
-                      <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">A Mentor</a>	
-                    <% else %>	
-                      <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">A Student</a>	
-                    <% end %>	
-                  </p>		
+                <% if adm or adv or men or stu %>
+                  <% if !stu %>
+                    <p>Use Skylab as:</p>	
+                    <p>	
+                      <% if adm and adv %>	
+                        <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>	
+                        <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>	
+                      <% elsif adm %>	
+                        <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>	
+                      <% elsif adv %>	
+                        <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>	
+                      <% else %>	
+                        <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">A Mentor</a>			
+                      <% end %>	
+                    </p>		
+                  <% else %>
+                    <% pending_stu = (user_pending_student?) %>
+                      <% if !pending_stu %>
+                        <p>Use Skylab as:</p>	
+                        <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">A Student</a>
+                      <% else %>
+                        <% if pending_stu.team %>
+                          <p>You application to Orbital is pending. Please <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">use skylab</a> to submit project proposals or evaluate other teams if you have not done so.</p>
+                        <% else %>
+                          <p>You have yet formed a team. Please <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">use skylab</a> to get teamed up first :p</p>
+                        <% end%>
+                      <% end %>
+                  <% end %>
                   <br>	
                   <p class="text-muted">	
                     You can still further modify your submission to	
                     <a href="<%= register_as_student_user_path(@user.id) %>" class="btn btn-primary"> registration	
                       form </a>.
                   </p>	
-                <% else %>	
+                <% else%>	
                   <% if is_registration_open? %>	
                     <!-- Registration opened -->	
                     <p>	
