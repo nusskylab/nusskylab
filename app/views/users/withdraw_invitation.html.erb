@@ -1,0 +1,19 @@
+<%= simple_form_for student_team, wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+    url: withdraw_user_path(@user) do |f| %>
+    <%= render 'shared/error_messages', locals: {target_model: student_team} %>
+    <div class="form-group">
+      <label class="radio required col-sm-3 control-label">
+        <abbr title="required">*</abbr> Confirm to withdraw invitation to <%= student_team.invitor_student.user.user_name %>
+      </label>
+      <div class="col-sm-9">
+        <label class="radio-inline"><input type="radio" name="team[withdraw]" value="true">Yes</label>
+        <label class="radio-inline"><input type="radio" name="team[withdraw]" value="false">No</label>
+      </div>
+    </div>
+    <br><br>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-9">
+        <%= f.submit 'Submit', class: 'btn btn-success' %>
+      </div>
+    </div>
+<% end %>
