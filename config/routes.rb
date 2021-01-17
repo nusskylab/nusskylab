@@ -28,10 +28,13 @@ Rails.application.routes.draw do
       get 'register_as_team'
       post 'register_team'
       patch 'register_team'
+      get 'withdraw_invitation'
       post 'confirm_team'
       patch 'confirm_team'
     end
   end
+
+  get "users/withdraw_invitation" => "users#withdraw_invitation"
 
   resources :students do
     get 'new_batch', on: :collection

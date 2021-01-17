@@ -62,11 +62,26 @@
                         <p>Use Skylab as:</p>	
                         <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">A Student</a>
                       <% else %>
-                        <% if pending_stu.team %>
-                          <p>You application to Orbital is pending. Please <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">use skylab</a> to submit project proposals or evaluate other teams if you have not done so.</p>
-                        <% else %>
-                          <p>You have yet formed a team. Please <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">use skylab</a> to get teamed up first :p</p>
-                        <% end%>
+                        <% if stu.team %>
+                          <% if stu.team.is_pending && stu.team.invitor_student_id != stu.id %>	
+                            <p>	
+                            You have been invited to participate in Orbital as a team with <strong><%= stu.team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the invitation </a> now?	
+                            </p>	
+                          <% elsif stu.team.is_pending && stu.team.invitor_student_id == stu.id %>	
+                            <p>	
+                            You have invited <strong><%= stu.team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
+                            </p>	
+                            <p>
+                            You may withdraw your invitation at <a href="<%= withdraw_invitation_user_path(@user.id) %>" class="btn btn-warning">Withdraw</a>.
+                            </p>
+                          <% else %>
+                            <p>You application to Orbital is pending. Please <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">use skylab</a> to submit project proposals or evaluate other teams if you have not done so.</p>
+                          <% end %>
+                        <% elsif !stu.team %>	
+                          <p>	
+                          You have not formed a team. You may <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary">invite</a> a teammate now.	
+                          </p>	
+                        <% end %>
                       <% end %>
                   <% end %>
                   <br>	

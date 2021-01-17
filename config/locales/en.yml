@@ -603,8 +603,16 @@ en:
         No currently registered student with specified email
       student_found_team_message: >
         Student with specified email has found a team
+      student_invited_by_others: >
+        Student with specified email has already received an invitation from others
       cannot_register_team_message: >
         Seems you cannot register a team any more
+      cannot_withdraw_invitation_message: >
+        Unsuccessful withdrawal of invitation
+      withdrawal_cancelled_message: >
+        Withdrawal of invitation cancelled
+      invitation_withdrawn_message: >
+        Invitation successfully withdrawn
       team_invitation_success_message: >
         Team invitation sent successfully
     confirm_team:
