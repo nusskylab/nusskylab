@@ -1,45 +1,54 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h1>
-            <span><%= locals[:student].user.user_name %> </span>
-            <span class="text-muted"> in </span>
-            <a href="<%= team_path(locals[:student].team) %>" class="btn btn-info">
-                <%= locals[:student].team.team_name %>
-            </a>
-        </h1>
+  <div class="panel-heading">
+    <h1>
+      <span><%= locals[:student].user.user_name %> </span>
+      <span class="text-muted"> in </span>
+      <a href="<%= team_path(locals[:student].team) %>" class="btn btn-info">
+        <%= locals[:student].team.team_name %>
+      </a>
+    </h1>
+  </div>
+  <div class="panel-body">
+    <div role="tabpanel">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#project-panel" aria-controls="project-panel"
+             role="tab" data-toggle="tab">
+            Submit project proposal
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#evaluation-panel" aria-controls="evaluation-panel"
+             role="tab" data-toggle="tab">
+            Evaluate other teams
+          </a>
+        </li>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="project-panel">
+          <h2 class="text-center">Submissions</h2>
+          <div class="well">
+            <p class="small">Please upload your project proposal to google drive in <strong>pdf format</strong>. Get the <strong>read-only</strong> sharable link and submit it via the input box below. Your coursemates will use the link to read your proposal.</p>
+          </div>
+          <!--if else: submit late, submitted, resubmit-->
+          <label for="link" style="padding-left:1em;">Google Drive Link</label>
+          <div class="form-group row">
+              <div class="col-sm-10">
+                  <input type="text" name="team[proposal_link]" class="form-control" id="link" placeholder="Enter the read-only google drive link to your project proposal.">
+              </div>
+              <button type="submit" class="btn btn-primary col-sm-1 pull-right" style="margin-right: 1em;">Submit</button>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="evaluation-panel">
+          <h2 class="text-center">Evaluations</h2>
+          <div class="well">
+            <p class="small"><%= t '.submit_evaluation_instruction' %></p>
+          </div>
+          <p>evaluations</p>
+          <!--call a function, then display-->
+          <% (proposal_link = get_proposal_link(@role))%>
+          <%= proposal_link %>
+        </div>
+      </div>
     </div>
-    <div class="panel-body">
-        <%# <div role="tabpanel">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#project-panel" aria-controls="project-panel"
-                        role="tab" data-toggle="tab">
-                    Submit proposal
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#evaluation-panel" aria-controls="evaluation-panel"
-                        role="tab" data-toggle="tab">
-                        Evaluate other teams
-                    </a>
-                </li>
-            </ul> 
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="project-panel">%>
-                <%# <h2 class="text-center">Submission</h2>
-                <div class="well">
-                <p class="small">Please upload your project proposal to google drive in <strong>pdf format</strong>. Get the <strong>read-only</strong> sharable link and submit it via the input box below. Your coursemates will use the link to read your proposal.</p>
-                </div>
-                <label for="link" style="padding-left:1em;">Google Drive Link</label>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="link" placeholder="Enter the read-only google drive link to your project proposal.">
-                    </div>
-                    <button type="submit" class="btn btn-primary col-sm-1 pull-right" style="margin-right: 1em;">Submit</button>
-                </div> %>
-                <%# </div> %>
-                <%# <h2 class="text-center">Evaluations</h2>       %>
-            <%# </div> %>
-        <%# </div>  %>
-    </div>
+  </div>
 </div>
