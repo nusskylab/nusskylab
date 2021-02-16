@@ -1,4 +1,4 @@
-module applicantEvaluationHelper
+module ApplicantEvaluationHelper
     # input args: arrays of IDs
     # returns: applicant to teams hashes 
     def getEvaluatedTeams(beginI, endI, teamIDs)

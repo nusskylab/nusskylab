@@ -131,14 +131,38 @@ class UsersController < ApplicationController
     }
   end
 
+  # def withdraw_invitation
+  #   student_user = Student.student?(@user.id, cohort: current_cohort)
+  #   return redirect_to user_path(@user.id), flash: {
+  #     danger: t('.cannot_withdraw_invitation_message')
+  #   } if !student_user
+  #   team = student_user.team
+  #   team.destroy
+  #   flash[:success] = t('.team_invitation_withdrawn_message')
+  #   # if team_params[:withdraw] == 'false'
+  #   #   flash_message = t('.team_withdrawal_cancelled_message')
+  #   # else
+  #   #   team.destroy
+  #   #   flash_message = t('.team_invitation_withdrawn_message')
+  #   # end
+  #   # redirect_to user_path(@user.id), flash: {
+  #   #   success: flash_message
+  #   # }
+  # end
+
   def withdraw_invitation ##try remove
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id, cohort: current_cohort)
     student_team = student.team
+    @page_title = t('.page_title')
+    render locals: {
+      student: student,
+      student_team: student_team
+    }
   end
 
-  def withdraw
+  def confirm_withdraw
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     team_params = params.require(params[:team]).permit(:withdraw) #student_team vs team

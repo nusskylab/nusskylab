@@ -1,7 +1,7 @@
 <% content_for :main_content do %>
   <% javascript 'students.js' %>
   <% if @role.team_id%>
-    <%= render 'pending_with_team', locals: { student: @role } %>%
+    <%= render 'pending_with_team', locals: { student: @role } %>
   <% elsif @role.team_id.blank? %>
     <%= render 'student_without_team', locals: { student: @role } %>
   <% else %>
