@@ -45,7 +45,6 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.name = "nusskylab"
     vb.memory = "1024"
-    vb.gui = true
   end
   #
   # View the documentation for the provider you are using for more
