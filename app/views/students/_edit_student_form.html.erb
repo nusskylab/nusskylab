@@ -2,8 +2,8 @@
                     url: {action: 'update'}) do |f| %>
   <%= f.error_notification %>
   <%= f.input :team_id, collection: locals[:teams].map {|team| [team.team_name, team.id]}, include_blank: true, required: true %>
-  <% if locals[:student].is_pending %>
-  <%= f.input :is_pending %>
+  <% if locals[:student].application_status %>
+  <%= f.input :application_status %>
   <% end %>
   <%= f.button :submit_centred, class: 'btn-success' %>
 <% end %>

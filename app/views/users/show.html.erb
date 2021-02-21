@@ -61,26 +61,48 @@
                       <% if !pending_stu %>
                         <p>Use Skylab as:</p>	
                         <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">A Student</a>
-                      <% else %>
+                      <% else %> <!--a student-->
+                        <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                        <br>
+                        <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                          <div style="background: #0066cc; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                          <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0066cc;"></div>
+                          <div style="background: #0066cc; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                          <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0066cc;"></div>
+                          <div style="background: #0066cc; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                          <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0066cc;"></div>
+                          <div style="background: #0066cc; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                        </div>
+                        <br>
                         <% if stu.team %>
-                          <% if stu.team.is_pending && stu.team.invitor_student_id != stu.id %>	
-                            <p>	
-                            You have been invited to participate in Orbital as a team with <strong><%= stu.team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the invitation </a> now?	
-                            </p>	
-                          <% elsif stu.team.is_pending && stu.team.invitor_student_id == stu.id %>	
-                            <p>	
-                            You have invited <strong><%= stu.team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
-                            </p>	
-                            <p>
-                            You may withdraw your invitation at <a href="<%= withdraw_invitation_user_path(@user.id) %>" class="btn btn-warning">Withdraw</a>.
-                            </p>
-                          <% else %>
-                            <p>You application to Orbital is pending. Please <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">use skylab</a> to submit project proposals or evaluate other teams if you have not done so.</p>
+                          <% case stu.team.application_status%>
+                          <!-- successful applicants-->
+                          <% when 0 %>
+                          <!-- stage 1, form teams -->
+                          <% when 1 %>
+                            <% if stu.team.invitor_student_id != stu.id %>	
+                              <p>	
+                              You have been invited to participate in Orbital as a team with <strong><%= stu.team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the invitation </a> now?	
+                              </p>	
+                            <% elsif stu.team.invitor_student_id == stu.id %>	
+                              <p>	
+                              You have invited <strong><%= stu.team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
+                              </p>	
+                              <p>
+                              You may withdraw your invitation at <a href="<%= withdraw_invitation_user_path(@user.id) %>" class="btn btn-warning">Withdraw</a>.
+                              </p>
+                            <% end %>
+                          <!-- stage 2, submit proposal -->
+                          <% when 2 %>
+                          <!-- stage 3, peer evaluation -->
+                          <% when 3 %>
+                          <!-- stage 4, release result -->
+                          <% when 4 %>
                           <% end %>
-                        <% elsif !stu.team %>	
+                        <% else %>	
                           <p>	
-                          You have not formed a team. You may <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary">invite</a> a teammate now.	
-                          </p>	
+                          You have not formed a team. You may <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary">invite</a> a teammate now.
+                          </p>
                         <% end %>
                       <% end %>
                   <% end %>

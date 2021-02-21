@@ -1,11 +1,11 @@
 class AddPendingToStudentsAndTeams < ActiveRecord::Migration
   def up
-    add_column :students, :is_pending, :boolean, default: true
-    add_column :teams, :is_pending, :boolean, default: true
+    add_column :students, :application_status, :boolean, default: 1
+    add_column :teams, :application_status, :boolean, default: 1
   end
 
   def down
-    remove_column :students, :is_pending, :boolean, default: true
-    remove_column :teams, :is_pending, :boolean, default: true
+    remove_column :students, :application_status, :boolean, default: 1
+    remove_column :teams, :application_status, :boolean, default: 1
   end
 end

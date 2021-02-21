@@ -72,7 +72,7 @@ class UsersController < ApplicationController
     registration.save
     student = Student.student?(@user.id, cohort: current_cohort) ||
               Student.new(user_id: @user.id, cohort: current_cohort,
-                          is_pending: true)
+                          application_status: 1)
     student.save
     redirect_to user_path(@user.id)
   end
@@ -118,7 +118,8 @@ class UsersController < ApplicationController
       danger: t('.cannot_register_team_message')
     } if !invitor_student || invitor_student.team
     team = Team.new(
-      team_name: ("I am team #{Team.order('id').last.id + 1}"), is_pending: true,
+      team_name: ("I am team temp"), application_status: 1,
+      # team_name: ("I am team #{Team.order('id').last.id + 1}"), application_status: true,
       cohort: current_cohort, invitor_student_id: invitor_student.id,
       project_level: Team.get_project_level_from_raw("Project Gemini"))
     team.save
@@ -165,17 +166,17 @@ class UsersController < ApplicationController
   def confirm_withdraw
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
-    team_params = params.require(params[:team]).permit(:withdraw) #student_team vs team
+    team_params = params.require(:team).permit(:withdraw) #student_team vs team
     student_user = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.cannot_withdraw_invitation_message')
-    } if !student_user || student_user.team
+    } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:withdraw] == 'false'
-      flash_message = t('.team_withdrawal_cancelled_message')
+      flash_message = t('.withdrawal_cancelled_message')
     else
       team.destroy
-      flash_message = t('.team_invitation_withdrawn_message')
+      flash_message = t('.invitation_withdrawn_message')
     end
     redirect_to user_path(@user.id), flash: {
       success: flash_message
@@ -192,7 +193,7 @@ class UsersController < ApplicationController
     } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:confirm] == 'true'
-      team.is_pending = false
+      team.application_status = 1
       team.save
       flash_message = t('.team_invitation_accepted_message')
     else

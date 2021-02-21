@@ -8,7 +8,7 @@ team_1:
   team_name: "with_advisor"
   has_dropped: false
   project_level: "vostok"
-  is_pending: false
+  application_status: false
   invitor_student_id: 10
   cohort: 2018
   video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
@@ -23,7 +23,7 @@ team_2:
   team_name: "missing_advisor"
   has_dropped: false
   project_level: "vostok"
-  is_pending: false
+  application_status: false
   invitor_student_id: 11
   cohort: 2018
   video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"
@@ -37,7 +37,7 @@ team_31:
   team_name: "I am team 31"
   has_dropped: false
   project_level: 0
-  is_pending: false
+  application_status: false
   cohort: 2018
   poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
   video_link:
@@ -51,7 +51,7 @@ team_32:
   team_name: "I am team 32"
   has_dropped: false
   project_level: 0
-  is_pending: false
+  application_status: false
   cohort: 2018
   poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
   video_link:
@@ -65,7 +65,7 @@ team_33:
   team_name: "I am team 33"
   has_dropped: false
   project_level: 1
-  is_pending: false
+  application_status: false
   cohort: 2018
   poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
   video_link:
@@ -79,7 +79,7 @@ team_34:
   team_name: "I am team 34"
   has_dropped: false
   project_level: 1
-  is_pending: false
+  application_status: false
   cohort: 2018
   poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
   video_link:
@@ -93,7 +93,7 @@ team_35:
   team_name: "I am team 35"
   has_dropped: false
   project_level: 1
-  is_pending: false
+  application_status: false
   cohort: 2018
   poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
   video_link:
@@ -110,7 +110,7 @@ team_<%= n %>:
   team_name: "I am team <%= n %>"
   has_dropped: false
   project_level: 0
-  is_pending: false
+  application_status: false
   cohort: 2019
   poster_link: "http://beardstyle.net/wp-content/uploads/2016/06/girls-with-mustaches-6.jpg"
   video_link: "https://www.youtube.com/watch?v=MAjY8mCTXWk"
@@ -126,7 +126,7 @@ team_<%= n %>:
   team_name: "I am team <%= n %>"
   has_dropped: false
   project_level: 0
-  is_pending: false
+  application_status: false
   cohort: 2019
   poster_link: "http://limingu.com/wp-content/uploads/2018/01/blonde-asian.jpg"
   video_link: "https://www.youtube.com/watch?v=kfXdP7nZIiE"
@@ -142,7 +142,7 @@ team_<%= n %>:
   team_name: "I am team <%= n %>"
   has_dropped: false
   project_level: 1
-  is_pending: false
+  application_status: false
   cohort: 2019
   poster_link: "https://www.planwallpaper.com/static/images/funny-527.jpg"
   video_link: "https://www.youtube.com/watch?v=TMB6-YflpA4"
@@ -157,7 +157,7 @@ team_1737:
   team_name: "I am team 1737"
   has_dropped: false
   project_level: 1
-  is_pending: false
+  application_status: false
   cohort: 2019
   poster_link: null
   video_link:
@@ -172,7 +172,7 @@ team_<%= n %>:
   team_name: "I am team <%= n %>"
   has_dropped: false
   project_level: 2
-  is_pending: false
+  application_status: false
   cohort: 2019
   poster_link: "https://i.pinimg.com/736x/28/3d/1d/283d1d5648c027afa6cdb6c9535ce152--funny-monday-memes-monday-quotes.jpg"
   video_link: "https://www.youtube.com/watch?v=eS2T9IiOYbc"
@@ -187,7 +187,7 @@ team_1740:
   team_name: "I am team 1740"
   has_dropped: false
   project_level: 2
-  is_pending: false
+  application_status: false
   cohort: 2019
   poster_link:
   video_link:
@@ -203,7 +203,7 @@ team_<%= n %>:
   team_name: "missing_advisor and missing_mentor"
   has_dropped: false
   project_level: "vostok"
-  is_pending: false
+  application_status: false
   invitor_student_id: 11
   cohort: 2019
   video_link: "https://www.youtube.com/watch?v=ZRMaxD-sCw0"

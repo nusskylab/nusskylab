@@ -602,7 +602,7 @@ en:
       no_registered_student_found_message: >
         No currently registered student with specified email
       student_found_team_message: >
-        Student with specified email has found a team
+        Student with specified email has been invited by others or already formed a team
       student_invited_by_others: >
         Student with specified email has already received an invitation from others
       cannot_register_team_message: >

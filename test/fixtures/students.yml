@@ -6,7 +6,7 @@ stu_<%= n %>:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 31
-  is_pending: FALSE
+  application_status: FALSE
   cohort: 2018
 <% end %>
 
@@ -17,7 +17,7 @@ stu_<%= n %>:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 32
-  is_pending: FALSE
+  application_status: FALSE
   cohort: 2018
 <% end %>
 
@@ -28,7 +28,7 @@ stu_<%= n %>:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 33
-  is_pending: FALSE
+  application_status: FALSE
   cohort: 2018
 <% end %>
 
@@ -39,7 +39,7 @@ stu_<%= n %>:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id:
-  is_pending: FALSE
+  application_status: FALSE
   cohort: 2018
 <% end %>
 
@@ -49,7 +49,7 @@ stu_21:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 1801
-  is_pending: FALSE
+  application_status: FALSE
   cohort: 2018
 
 stu_22:
@@ -58,7 +58,7 @@ stu_22:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 1802
-  is_pending: FALSE
+  application_status: FALSE
   cohort: 2018
 
 # fixtures for students cohort 2019
@@ -69,7 +69,7 @@ stu_<%= n %>:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 1731
-  is_pending: false
+  application_status: false
   cohort: 2019
 <% end %>
 
@@ -80,7 +80,7 @@ stu_<%= n %>:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 1732
-  is_pending: false
+  application_status: false
   cohort: 2019
 <% end %>
 
@@ -91,7 +91,7 @@ stu_<%= n %>:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 1733
-  is_pending: false
+  application_status: false
   cohort: 2019
 <% end %>
 
@@ -102,7 +102,7 @@ stu_<%= n %>:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 1735
-  is_pending: false
+  application_status: false
   cohort: 2019
 <% end %>
 
@@ -112,7 +112,7 @@ stu_1719:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 1737
-  is_pending: false
+  application_status: false
   cohort: 2019
 
 stu_1720:
@@ -121,5 +121,5 @@ stu_1720:
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   team_id: 1739
-  is_pending: false
+  application_status: false
   cohort: 2019

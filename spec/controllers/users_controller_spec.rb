@@ -222,11 +222,11 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(user_path(subject.current_user))
         expect(flash[:danger]).not_to be_nil
 
-        student = FactoryGirl.create(:student, user: subject.current_user, is_pending: false)
+        student = FactoryGirl.create(:student, user: subject.current_user, application_status: false)
         get :register_as_team, id: subject.current_user.id
         expect(response).to render_template(:register_as_team)
 
-        student.is_pending = true
+        student.application_status = true
         student.save
         get :register_as_team, id: subject.current_user.id
         expect(response).to render_template(:register_as_team)
@@ -265,7 +265,7 @@ RSpec.describe UsersController, type: :controller do
         expect(flash[:danger]).not_to be_nil
 
         team = FactoryGirl.create(:team, team_name: '1.user.controller.spec')
-        student = FactoryGirl.create(:student, user: user, team: team, is_pending: true)
+        student = FactoryGirl.create(:student, user: user, team: team, application_status: true)
         post :register_team, id: subject.current_user.id, team: {
           email: '1@user.controller.spec'
         }
@@ -280,7 +280,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(user_path(subject.current_user))
         expect(flash[:danger]).not_to be_nil
 
-        FactoryGirl.create(:student, user: subject.current_user, is_pending: true, team: nil)
+        FactoryGirl.create(:student, user: subject.current_user, application_status: true, team: nil)
         post :register_team, id: subject.current_user.id, team: {
           email: '1@user.controller.spec'
         }
@@ -307,7 +307,7 @@ RSpec.describe UsersController, type: :controller do
 
         current_user = subject.current_user
         team = FactoryGirl.create(:team, team_name: '1.user.controller.spec')
-        student = FactoryGirl.create(:student, user: current_user, team: team, is_pending: true)
+        student = FactoryGirl.create(:student, user: current_user, team: team, application_status: true)
         post :confirm_team, id: current_user.id, team: {'confirm': 'false'}
         expect(response).to redirect_to(user_path(subject.current_user))
         expect(flash[:success]).not_to be_nil

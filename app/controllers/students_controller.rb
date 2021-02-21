@@ -6,9 +6,9 @@ class StudentsController < RolesController
 
   def role_params
     stu = params.require(:student).permit(
-      :user_id, :team_id, :is_pending, :cohort
+      :user_id, :team_id, :application_status, :cohort
     )
-    #stu.delete(:is_pending) unless stu[:is_pending] && @role.is_pending
+    #stu.delete(:application_status) unless stu[:application_status] && @role.application_status
     stu
   end
 
@@ -95,5 +95,5 @@ class StudentsController < RolesController
     params.require(:team).permit(:proposal_link)
   end
 
-  helper_method :get_proposal_link
+  #helper_method :get_proposal_link
 end

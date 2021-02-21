@@ -57,7 +57,7 @@ class Team < ActiveRecord::Base
   end
 
   def to_csv_row
-    csv_row = [id, team_name, get_project_level, has_dropped, is_pending, poster_link, video_link]
+    csv_row = [id, team_name, get_project_level, has_dropped, application_status, poster_link, video_link]
     export_add_team_members(csv_row)
     export_adviser_and_mentor(csv_row)
     ratings_hash = get_average_evaluation_ratings
