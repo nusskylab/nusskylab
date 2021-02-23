@@ -142,11 +142,33 @@ class UsersController < ApplicationController
     student_team = student.team
     # @page_title = t('.page_title') # to-do: what's this?
     # team_params = params.require(:team).permit(:proposal_link)
-    # latest: store and redirect
     render locals: {
       student: student,
       student_team: student_team
     }
+  end
+
+  def update_proposal_links
+    # authenticate (to-do: why?)
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    student = Student.student?(@user.id, cohort: current_cohort)
+    return redirect_to user_path(@user.id), flash: {
+      danger: t('.register_as_student_message') #to-do
+    } unless student
+    team_id = student.team.id
+    # get the params
+    team_params = params.require(:team).permit(:proposal_link)
+    # update the teams
+    @team = Team.find(team_id)
+    @team.update(proposal_link: team_params[:proposal_link])
+    # redirect
+    #to-do: en.yml, stay on the previous page
+    flash_message = 'proposal link successfully'
+    redirect_to user_path(@user.id), flash: {
+      success: flash_message
+    }
+    #to-do: error conditions
   end
 
   def withdraw_invitation ##try remove
@@ -164,7 +186,7 @@ class UsersController < ApplicationController
   def confirm_withdraw
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
-    team_params = params.require(:team).permit(:withdraw) #student_team vs team
+    team_params = params.require(:team).permit(:withdraw)
     student_user = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
       danger: t('.cannot_withdraw_invitation_message')

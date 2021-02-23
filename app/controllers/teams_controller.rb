@@ -162,7 +162,7 @@ class TeamsController < ApplicationController
     teamsMentorMatching = MentorMatching.find_by(:team_id => params[:id], :mentor_id => params[:mentor_id])
     if !@mentor.nil? && !teamsMentorMatching.nil? && teamsMentorMatching.mentor_accepted
       @team.update(mentor_id: @mentor.id)
-      @mentor.teams << @team
+      @mentor.teams << @team #to-do: what's this?
       redirect_to team_path(@team.id), flash: {
         success: t('.success_message',
                    mentor_name: @mentor.user.user_name)
