@@ -72,7 +72,7 @@ class UsersController < ApplicationController
     registration.save
     student = Student.student?(@user.id, cohort: current_cohort) ||
               Student.new(user_id: @user.id, cohort: current_cohort,
-                          application_status: 1)
+                          application_status: 'a')
     student.save
     redirect_to user_path(@user.id)
   end
@@ -118,7 +118,8 @@ class UsersController < ApplicationController
       danger: t('.cannot_register_team_message')
     } if !invitor_student || invitor_student.team
     team = Team.new(
-      team_name: ("I am team temp"), application_status: 1,
+      team_name: ("I am team temp"), application_status: 'a',
+      # to-do: fix
       # team_name: ("I am team #{Team.order('id').last.id + 1}"), application_status: true,
       cohort: current_cohort, invitor_student_id: invitor_student.id,
       project_level: Team.get_project_level_from_raw("Project Gemini"))
@@ -213,7 +214,7 @@ class UsersController < ApplicationController
     } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:confirm] == 'true'
-      team.application_status = 2
+      team.application_status = 'b'
       team.save
       flash_message = t('.team_invitation_accepted_message')
     else

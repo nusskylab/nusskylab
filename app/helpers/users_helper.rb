@@ -19,14 +19,14 @@ module UsersHelper
     cohort ||= current_cohort
     return unless @user
     stu = Student.student?(@user.id, cohort: cohort)
-    stu if stu && !stu.application_status
+    stu if stu && stu.application_status == 'd1'
   end
 
   def user_pending_student?(cohort = nil)
     cohort ||= current_cohort
     return unless @user
     stu = Student.student?(@user.id, cohort: cohort)
-    stu if stu && stu.application_status
+    stu if stu && stu.application_status != 'd1'
   end
 
   def current_cohort

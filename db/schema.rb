@@ -172,7 +172,7 @@ ActiveRecord::Schema.define(version: 20200404104546) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "team_id"
-    t.boolean  "application_status", default: 1
+    t.string  "application_status", default: a
     t.integer  "cohort"
   end
 
@@ -215,7 +215,7 @@ ActiveRecord::Schema.define(version: 20200404104546) do
     t.string   "team_name"
     t.boolean  "has_dropped",        default: false
     t.integer  "project_level",      default: 0
-    t.boolean  "application_status",         default: 1
+    t.string  "application_status",         default: a
     t.integer  "invitor_student_id"
     t.integer  "cohort"
     t.string   "poster_link"
