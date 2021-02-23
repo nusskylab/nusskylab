@@ -77,9 +77,9 @@
                         <% if stu.team %>
                           <% case stu.team.application_status%>
                           <!-- successful applicants-->
-                          <% when 0 %>
-                          <!-- stage 1, form teams -->
-                          <% when 1 %>
+                          <% when 'd1' %>
+                          <!-- stage a, form teams -->
+                          <% when 'a' %>
                             <% if stu.team.invitor_student_id != stu.id %>	
                               <p>	
                               You have been invited to participate in Orbital as a team with <strong><%= stu.team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the invitation </a> now?	
@@ -92,15 +92,15 @@
                               You may withdraw your invitation at <a href="<%= withdraw_invitation_user_path(@user.id) %>" class="btn btn-warning">Withdraw</a>.
                               </p>
                             <% end %>
-                          <!-- stage 2, submit proposal -->
-                          <% when 2 %>
+                          <!-- stage b, submit proposal -->
+                          <% when 'b' %>
                               <p>	
                               You have successfully teamed up with user lalala. Please use the section below to <a href="<%= submit_proposal_user_path(@user.id) %>" class="btn btn-warning"> submit </a> a project proposal for your team. Only one member of the team needs to do the submission. 
                               </p>
-                          <!-- stage 3, peer evaluation -->
-                          <% when 3 %>
-                          <!-- stage 4, release result -->
-                          <% when 4 %>
+                          <!-- stage c, peer evaluation -->
+                          <% when 'c' %>
+                          <!-- stage d, release result -->
+                          <% when 'd' %>
                           <% end %>
                         <% else %>	
                           <p>	
