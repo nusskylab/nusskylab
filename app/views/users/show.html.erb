@@ -94,6 +94,9 @@
                             <% end %>
                           <!-- stage 2, submit proposal -->
                           <% when 2 %>
+                              <p>	
+                              You have successfully teamed up with user lalala. Please use the section below to <a href="<%= submit_proposal_user_path(@user.id) %>" class="btn btn-warning"> submit </a> a project proposal for your team. Only one member of the team needs to do the submission. 
+                              </p>
                           <!-- stage 3, peer evaluation -->
                           <% when 3 %>
                           <!-- stage 4, release result -->

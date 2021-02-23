@@ -132,24 +132,22 @@ class UsersController < ApplicationController
     }
   end
 
-  # def withdraw_invitation
-  #   student_user = Student.student?(@user.id, cohort: current_cohort)
-  #   return redirect_to user_path(@user.id), flash: {
-  #     danger: t('.cannot_withdraw_invitation_message')
-  #   } if !student_user
-  #   team = student_user.team
-  #   team.destroy
-  #   flash[:success] = t('.team_invitation_withdrawn_message')
-  #   # if team_params[:withdraw] == 'false'
-  #   #   flash_message = t('.team_withdrawal_cancelled_message')
-  #   # else
-  #   #   team.destroy
-  #   #   flash_message = t('.team_invitation_withdrawn_message')
-  #   # end
-  #   # redirect_to user_path(@user.id), flash: {
-  #   #   success: flash_message
-  #   # }
-  # end
+  def submit_proposal
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    student = Student.student?(@user.id, cohort: current_cohort)
+    return redirect_to user_path(@user.id), flash: {
+      danger: t('.register_as_student_message') #to-do
+    } unless student
+    student_team = student.team
+    # @page_title = t('.page_title') # to-do: what's this?
+    # team_params = params.require(:team).permit(:proposal_link)
+    # latest: store and redirect
+    render locals: {
+      student: student,
+      student_team: student_team
+    }
+  end
 
   def withdraw_invitation ##try remove
     @user = User.find(params[:id]) || (record_not_found && return)
@@ -193,7 +191,7 @@ class UsersController < ApplicationController
     } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:confirm] == 'true'
-      team.application_status = 1
+      team.application_status = 2
       team.save
       flash_message = t('.team_invitation_accepted_message')
     else

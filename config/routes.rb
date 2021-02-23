@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       patch 'register'
       get 'register_as_team'
       get 'withdraw_invitation'
+      get 'submit_proposal'
       post 'confirm_withdraw'
       patch 'confirm_withdraw'
       post 'register_team'
