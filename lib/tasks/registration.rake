@@ -2,8 +2,9 @@ namespace :registration do
   desc 'Push all pending students to live in current cohort'
   task push_students_to_non_pending: :environment do
     current_cohort = Time.now.year
+    #to-do: try to remove
     Student.where(cohort: current_cohort, application_status: 'd1').each do |student|
-      student.application_status = 0
+      student.application_status = 'd1'
       student.save
     end
   end

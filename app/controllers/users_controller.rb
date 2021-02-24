@@ -118,9 +118,9 @@ class UsersController < ApplicationController
       danger: t('.cannot_register_team_message')
     } if !invitor_student || invitor_student.team
     team = Team.new(
-      team_name: ("I am team temp"), application_status: 'a',
+      # team_name: ("I am team temp"), application_status: 'a',
       # to-do: fix
-      # team_name: ("I am team #{Team.order('id').last.id + 1}"), application_status: true,
+      team_name: ("I am team #{Team.order('id').last.id + 1}"), application_status: 'a',
       cohort: current_cohort, invitor_student_id: invitor_student.id,
       project_level: Team.get_project_level_from_raw("Project Gemini"))
     team.save
@@ -144,12 +144,11 @@ class UsersController < ApplicationController
     # @page_title = t('.page_title') # to-do: what's this?
     # team_params = params.require(:team).permit(:proposal_link)
     render locals: {
-      student: student,
       student_team: student_team
     }
   end
 
-  def update_proposal_links
+  def upload_proposal
     # authenticate (to-do: why?)
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
@@ -158,28 +157,24 @@ class UsersController < ApplicationController
       danger: t('.register_as_student_message') #to-do
     } unless student
     team_id = student.team.id
-    # get the params
-    team_params = params.require(:team).permit(:proposal_link)
     # update the teams
     @team = Team.find(team_id)
-    @team.update(proposal_link: team_params[:proposal_link])
-    # redirect
-    #to-do: en.yml, stay on the previous page
-    flash_message = 'proposal link successfully'
+    @team.update_attributes(application_params)
+    # redirect to-do: en.yml, stay on the previous page
+    flash_message = 'proposal link submitted successfully'
     redirect_to user_path(@user.id), flash: {
       success: flash_message
     }
     #to-do: error conditions
   end
 
-  def withdraw_invitation ##try remove
+  def withdraw_invitation
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id, cohort: current_cohort)
     student_team = student.team
     @page_title = t('.page_title')
     render locals: {
-      student: student,
       student_team: student_team
     }
   end
@@ -204,6 +199,39 @@ class UsersController < ApplicationController
     }
   end
 
+  def remove_proposal
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    student = Student.student?(@user.id, cohort: current_cohort)
+    student_team = student.team
+    @page_title = t('.page_title')
+    render locals: {
+      student_team: student_team
+    }
+  end
+
+  #to-do: link and proposal (wording)
+  def confirm_remove_proposal
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    team_params = params.require(:team).permit(:remove_link)
+    student_user = Student.student?(@user.id, cohort: current_cohort)
+    #to-do
+    return redirect_to user_path(@user.id), flash: {
+      danger: t('.cannot_withdraw_invitation_message')
+    } if !student_user || !student_user.team
+    team = student_user.team
+    if team_params[:remove_link] == 'false'
+      flash_message = "Removal of proposal cancelled"
+    else
+      team.update_attribute(:proposal_link, nil)
+      flash_message = "Removal of proposal successful"
+    end
+    redirect_to user_path(@user.id), flash: {
+      success: flash_message
+    }
+  end
+
   def confirm_team
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
@@ -214,7 +242,7 @@ class UsersController < ApplicationController
     } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:confirm] == 'true'
-      team.application_status = 'b'
+      team.update_attribute(:application_status, 'b')
       team.save
       flash_message = t('.team_invitation_accepted_message')
     else
@@ -314,5 +342,9 @@ end
 
   def registration_params
     params.require(:questions).permit!
+  end
+
+  def application_params
+    params.require(:team).permit(:proposal_link)
   end
 end

@@ -87,13 +87,4 @@ class StudentsController < RolesController
     end
     relevant_users
   end
-
-  def get_proposal_link
-    proposal_link = proposal_link_params[:proposal_link]
-
-  def proposal_link_params
-    params.require(:team).permit(:proposal_link)
-  end
-
-  #helper_method :get_proposal_link
 end
