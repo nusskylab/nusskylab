@@ -1,0 +1,30 @@
+<% content_for :main_content do %>
+    <div class="container">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="text-center">Remove a proposal</h3>
+        </div>
+        <div class="panel-body">
+          <%= simple_form_for student_team, wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+              url: confirm_remove_proposal_user_path(@user) do |f| %>
+              <%= render 'shared/error_messages', locals: {target_model: student_team} %>
+              <div class="form-group">
+                <label class="radio required col-sm-3 control-label">
+                  <abbr title="required">*</abbr> Confirm to remove your proposal link <%= student_team.proposal_link %>
+                </label>
+                <div class="col-sm-9">
+                  <label class="radio-inline"><input type="radio" name="team[remove_link]" value="true">Yes</label>
+                  <label class="radio-inline"><input type="radio" name="team[remove_link]" value="false">No</label>
+                </div>
+              </div>
+              <br><br>
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                  <%= f.submit 'Submit', class: 'btn btn-success' %>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+<% end %>

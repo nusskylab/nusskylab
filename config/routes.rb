@@ -28,12 +28,17 @@ Rails.application.routes.draw do
       get 'register_as_team'
       get 'withdraw_invitation'
       get 'submit_proposal'
+      get 'remove_proposal'
       post 'confirm_withdraw'
       patch 'confirm_withdraw'
       post 'register_team'
       patch 'register_team'
       post 'confirm_team'
       patch 'confirm_team'
+      post 'upload_proposal'
+      patch 'upload_proposal'
+      post 'confirm_remove_proposal'
+      patch 'confirm_remove_proposal'
     end
   end
 

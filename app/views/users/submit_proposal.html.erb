@@ -1,19 +1,31 @@
-<%= simple_form_for locals[:student_team], url: update_proposal_links_user_path(:user) do |f| %>
-    <%= render 'shared/error_messages', locals: {target_model: locals[:student_team]} %>
-    <div class="form-group">
-      <!-- to-do: change link -->
-      <p>Please upload your proposal to the following google drive folder: https://folder.com. Copy the shareable link and submit it via the box below:</p>
-      <label class="string required col-sm-3 control-label" for="teammate_email">
-        <abbr title="required">*</abbr> Google drive link
-      </label>
-      <div class="col-sm-9">
-        <input placeholder="Enter the read-only google drive link to your project proposal." class="string required form-control" type="url" name="team[proposal_link]" id="proposal_link">
-      </div>
-    </div>
-    <br><br>
-    <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-9">
-        <%= f.submit 'Submit', class: 'btn btn-success' %>
+<% content_for :main_content do %>
+    <div class="container">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="text-center">Upload a proposal</h3>
+        </div>
+        <div class="panel-body">
+          <%= simple_form_for student_team,  wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+              url: upload_proposal_user_path(@user) do |f| %>
+              <%= render 'shared/error_messages', locals: {target_model: student_team} %>
+              <div class="form-group">
+                <!-- to-do: change link -->
+                <p>Please upload your proposal to the following google drive folder: https://folder.com. Copy the shareable link and submit it via the box below:</p>
+                <label class="string required col-sm-3 control-label" for="teammate_email">
+                  <abbr title="required">*</abbr> Google drive link
+                </label>
+                <div class="col-sm-9">
+                  <input placeholder="Enter the read-only google drive link to your project proposal." class="string required form-control" type="url" name="team[proposal_link]" id="proposal_link">
+                </div>
+              </div>
+              <br><br>
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                  <%= f.submit 'Submit', class: 'btn btn-success' %>
+                </div>
+              </div>
+          <% end %>
+        </div>
       </div>
     </div>
 <% end %>
