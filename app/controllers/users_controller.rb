@@ -254,6 +254,14 @@ class UsersController < ApplicationController
     }
   end
 
+  def do_evaluation
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    student = Student.student?(@user.id, cohort: current_cohort)
+    student_team = student.team
+    @page_title = t('.page_title')
+  end
+
   def show
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return

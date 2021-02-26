@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       patch 'upload_proposal'
       post 'confirm_remove_proposal'
       patch 'confirm_remove_proposal'
+      get 'do_evaluation'
     end
   end
 

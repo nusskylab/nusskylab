@@ -110,7 +110,11 @@
                           <% end %>
                         <!-- stage c, peer evaluation -->
                         <% elsif status[0] == 'c' %>
-                          <p>peer evaluation</p>
+                        <p>Please <a href="<%= do_evaluation_user_path(@user) %>" class="btn btn-primary">evaluate</a> other teams’ submissions by 10/03/2021. Both members of your team have to finish the evaluation.</p>
+
+                        <p>If you have already submitted the peer evaluation, please wait for the release of application result email. There is no more action required for the application.</p>
+
+                        <p>Note: After the submission, you will receive an email confirmation. Please retain the email as evidence of your submission and wait for the application result on 14/03/2021.</p>
                         <!-- stage d, release result -->
                         <% elsif status[0] == 'd' %>
                           <p>release result</p>
