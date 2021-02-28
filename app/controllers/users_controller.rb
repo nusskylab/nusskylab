@@ -258,14 +258,35 @@ class UsersController < ApplicationController
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id, cohort: current_cohort)
-    student_team = student.team
+    evaluatee_links = []
+    evaluatee_ids = student.evaluatee_ids
+    evaluatee_ids.each do |id|
+      evaluatee = Team.find_by(id: id)
+      evaluatee_link = evaluatee.proposal_link
+      evaluatee_links << evaluatee_link
+    end
     @page_title = t('.page_title')
+    render locals:{
+      links: evaluatee_links
+    }
   end
 
   def show
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     @page_title = t('.page_title', user_name: @user.user_name)
+    form_team_ddl = ApplicationDeadlines.find_by(name: 'form team deadline').submission_deadline
+    submit_proposal_ddl = ApplicationDeadlines.find_by(name: 'submit proposal deadline').submission_deadline
+    peer_evaluation_open_date = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline
+    peer_evaluation_ddl = ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
+    result_release_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline
+    render locals:{
+      form_team_ddl: form_team_ddl,
+      submit_proposal_ddl: submit_proposal_ddl,
+      peer_evaluation_open_date: peer_evaluation_open_date,
+      peer_evaluation_ddl: peer_evaluation_ddl,
+      result_release_date: result_release_date
+    }
   end
 
   def edit

@@ -43,8 +43,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get "users/withdraw_invitation" => "users#withdraw_invitation"
-
   resources :students do
     get 'new_batch', on: :collection
     post 'create_batch', on: :collection
@@ -71,6 +69,8 @@ Rails.application.routes.draw do
     end
   end
   resources :mentor_matchings, only: :index
+  resources :applicant_admin, only: [:index]
+
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
     get 'new_batch', on: :collection
     post 'create_batch', on: :collection
@@ -96,6 +96,8 @@ Rails.application.routes.draw do
       get 'match_mentor'
       post 'match_mentor_success'
       post 'accept_mentor'
+      post 'applicant_eval_matching'
+      patch 'applicant_eval_matching'
     end
   end
   resources :evaluatings, only: [:index, :new, :create,
@@ -112,6 +114,9 @@ Rails.application.routes.draw do
       resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
     end
   end
+
+  resources :application_deadlines, only: [:index, :show, :edit, :update]
+
   resources :survey_templates, except: [:destroy] do
     member do
       get 'preview'

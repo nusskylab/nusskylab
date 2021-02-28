@@ -1,0 +1,13 @@
+<% content_for :main_content do %>
+    <% javascript 'milestones.js' %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h2 class="text-center">
+          <%= @deadline.name %>
+        </h2>
+      </div>
+      <div class="panel-body">
+        <%= render 'deadline_info', locals: {deadline: @deadline} %>
+      </div>
+    </div>
+<% end %>

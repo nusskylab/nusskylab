@@ -1,4 +1,4 @@
-module ApplicantEvaluationHelper
+module ApplicantAdminHelper
     # input args: arrays of IDs
     # returns: applicant to teams hashes 
     def getEvaluatedTeams(beginI, endI, teamIDs, size)
@@ -12,7 +12,7 @@ module ApplicantEvaluationHelper
         return teams
     end
     
-    def self.applicant_to_team_matching(teamIDs, size, team_to_persons)
+    def applicant_to_team_matching(teamIDs, size, team_to_persons)
         matching = Hash.new
         teamIDs = teamIDs.shuffle
         teamIDs.each_with_index do |teamID, i|

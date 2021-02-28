@@ -21,7 +21,7 @@
 set :output, "./log/cron.log"
 set :environment, "development"
 # Cron format (min hour day month year)
-every '45 07 26 2 *' do
+every '05 08 26 2 *' do
     runner "ApplicantEvaluationHelper.applicant_to_team_matching"
 end
 

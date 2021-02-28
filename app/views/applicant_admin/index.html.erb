@@ -1,0 +1,34 @@
+<% content_for :main_content do %>
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="text-center">Manage Applicants <%= cohort %></h3>
+    </div>
+    <div class="panel-body">
+        <p>
+        <a href="<%= application_deadlines_path() %>" class="btn btn-primary">Manage Deadlines</a>
+        </p>
+        <hr/>
+        <!-- start peer evaluation -->
+        <% if Time.now > peer_eval_open and team.application_status != 'c' %>
+          <%= simple_form_for team, wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+            url: applicant_eval_matching_team_path(team) do |f| %>
+            <div class="form-group">
+              <label class="radio required col-sm-3 control-label">
+                <abbr title="required">*</abbr> Confirm to open up the peer evaluation for applicants?
+              </label>
+              <div class="col-sm-9">
+                <label class="radio-inline"><input type="radio" name="team[confirm]" value="true">Yes</label>
+                <label class="radio-inline"><input type="radio" name="team[confirm]" value="false">No</label>
+              </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9">
+                <%= f.submit 'Submit', class: 'btn btn-success' %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+    </div>
+  </div>
+<% end %>

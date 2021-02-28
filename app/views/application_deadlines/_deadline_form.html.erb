@@ -1,0 +1,7 @@
+<%= simple_form_for(locals[:deadline], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+                    url: {action: 'update'}) do |f| %>
+    <%= f.error_notification %>
+    <!--to-do: check what's this-->
+    <%= f.input :submission_deadline, as: :string, input_html: { value: (l(f.object.submission_deadline) if f.object.submission_deadline), class: 'datetime-picker' } %>
+    <%= f.button :submit_centred, class: 'btn-success' %>
+<% end %>

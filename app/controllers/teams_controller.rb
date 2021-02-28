@@ -176,13 +176,72 @@ class TeamsController < ApplicationController
     end
   end
 
+  def getEvaluatedTeams(beginI, endI, teamIDs, size)
+    if beginI + size - 1 > endI
+        teamsBack = teamIDs[beginI..teamIDs.length() - 1]
+        teamsFront = teamIDs[0..endI]
+        teams = teamsFront + teamsBack
+    else
+        teams = teamIDs[beginI..endI]
+    end
+    return teams
+  end
+
+  # to-do-now: routes
+  def applicant_eval_matching
+    # authenticate users
+    !authenticate_user(true, true) && return
+    # if confirm false, return
+    confirm_params = params.require(:team).permit(:confirm)
+    # to-do: if confirm open, change the view
+    if confirm_params[:confirm] == false
+      redirect_to applicant_admin_index_path(), flash: {
+        success: 'cancelled'
+      }
+    else
+      teams = Team.all
+      teamIDs = []
+      teams.each do |team|
+        teamIDs << team.id
+      end
+      teamIDs = teamIDs.shuffle
+      size = 4
+      # to-do: if teamIDs.length < size + 1:
+      #   msg = 'Invalid size'
+      teamIDs.each_with_index do |teamID, i|
+          team = Team.find_by(id: teamID)
+          team.application_status = 'c'
+          team.save
+          members = team.students
+          # update params, shift the links to peer eval page
+          member1 = members[0].id
+          member2 = members[1].id
+          member1Begin = i % teamIDs.length()
+          member1End = (i + size - 1) % teamIDs.length()
+          member2Begin = (i + size) % teamIDs.length()
+          member2End = (i + size + size - 1) % teamIDs.length()
+          teamsBy1 = getEvaluatedTeams(member1Begin, member1End, teamIDs, size)
+          teamsBy2 = getEvaluatedTeams(member2Begin, member2End, teamIDs, size)
+          members[0].evaluatee_ids = teamsBy1
+          members[1].evaluatee_ids = teamsBy2
+          members[0].save
+          members[1].save
+          end
+          #members[0].update_attributes(:evalua, )
+      # update team attributes: for each member, evaluaters, evaluatees, application status   
+      redirect_to applicant_admin_index_path(), flash: {
+        success: 'success'
+      }
+    end
+  end
+
   private
 
   def team_params
     team_ps = params.require(:team).permit(:team_name, :project_level,
                                            :adviser_id, :mentor_id,
                                            :has_dropped, :cohort, :poster_link, 
-                                           :video_link, :status, :comment)
+                                           :video_link, :status, :comment, :application_status)
     team_ps[:project_level] = Team.get_project_level_from_raw(
       team_ps[:project_level]) if team_ps[:project_level]
     team_ps
