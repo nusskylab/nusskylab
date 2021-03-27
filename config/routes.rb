@@ -26,13 +26,20 @@ Rails.application.routes.draw do
       post 'register'
       patch 'register'
       get 'register_as_team'
+      post 'register_team'
+      patch 'register_team'
+    end
+  end
+
+  resources :students do
+    get 'new_batch', on: :collection
+    post 'create_batch', on: :collection
+    member do
       get 'withdraw_invitation'
       get 'submit_proposal'
       get 'remove_proposal'
       post 'confirm_withdraw'
       patch 'confirm_withdraw'
-      post 'register_team'
-      patch 'register_team'
       post 'confirm_team'
       patch 'confirm_team'
       post 'upload_proposal'
@@ -41,11 +48,6 @@ Rails.application.routes.draw do
       patch 'confirm_remove_proposal'
       get 'do_evaluation'
     end
-  end
-
-  resources :students do
-    get 'new_batch', on: :collection
-    post 'create_batch', on: :collection
   end
 
   resources :advisers, only: [:index, :new, :create, :show, :destroy] do

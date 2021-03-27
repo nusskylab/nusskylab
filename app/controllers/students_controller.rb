@@ -87,4 +87,156 @@ class StudentsController < RolesController
     end
     relevant_users
   end
+
+  def submit_proposal
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    student = Student.student?(@user.id, cohort: current_cohort)
+    return redirect_to user_path(@user.id), flash: {
+      danger: t('.register_as_student_message') #to-do
+    } unless student
+    student_team = student.team
+    # @page_title = t('.page_title') # to-do: what's this?
+    # team_params = params.require(:team).permit(:proposal_link)
+    render locals: {
+      student_team: student_team
+    }
+  end
+
+  def upload_proposal
+    # authenticate (to-do: why?)
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    student = Student.student?(@user.id, cohort: current_cohort)
+    return redirect_to user_path(@user.id), flash: {
+      danger: t('.register_as_student_message') #to-do
+    } unless student
+    team_id = student.team.id
+    # update the teams
+    team = Team.find(team_id)
+    team.update_attributes(application_params)
+    team.application_status = 'c'
+    team.save
+    UserMailer.welcome_email(@user, user_ps[:password]).deliver_now
+    # redirect to-do: en.yml, stay on the previous page
+    flash_message = 'proposal link submitted successfully'
+    redirect_to user_path(@user.id), flash: {
+      success: flash_message
+    }
+    #to-do: error conditions
+  end
+
+  def withdraw_invitation
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    student = Student.student?(@user.id, cohort: current_cohort)
+    student_team = student.team
+    if !student_team
+      msg = 'Your invitation has already been rejected.'
+      redirect_to user_path(@user.id), flash: {
+        success: msg
+      }
+    end
+    @page_title = t('.page_title')
+    render locals: {
+      student_team: student_team
+    }
+  end
+
+  def confirm_withdraw
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    team_params = params.require(:team).permit(:withdraw)
+    student_user = Student.student?(@user.id, cohort: current_cohort)
+    return redirect_to user_path(@user.id), flash: {
+      danger: t('.cannot_withdraw_invitation_message')
+    } if !student_user || !student_user.team
+    team = student_user.team
+    if team_params[:withdraw] == 'false'
+      flash_message = t('.withdrawal_cancelled_message')
+    else
+      team.destroy
+      flash_message = t('.invitation_withdrawn_message')
+    end
+    redirect_to user_path(@user.id), flash: {
+      success: flash_message
+    }
+  end
+
+  def remove_proposal
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    student = Student.student?(@user.id, cohort: current_cohort)
+    student.team.application_status = 'b'
+    student.team.save
+    @page_title = t('.page_title')
+    render locals: {
+      student_team: student.team
+    }
+  end
+
+  #to-do: link and proposal (wording)
+  def confirm_remove_proposal
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    team_params = params.require(:team).permit(:remove_link)
+    student_user = Student.student?(@user.id, cohort: current_cohort)
+    #to-do
+    return redirect_to user_path(@user.id), flash: {
+      danger: t('.cannot_withdraw_invitation_message')
+    } if !student_user || !student_user.team
+    team = student_user.team
+    if team_params[:remove_link] == 'false'
+      flash_message = "Removal of proposal cancelled"
+    else
+      team.update_attribute(:proposal_link, nil)
+      flash_message = "Removal of proposal successful"
+    end
+    redirect_to user_path(@user.id), flash: {
+      success: flash_message
+    }
+  end
+
+  def do_evaluation
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    student = Student.student?(@user.id, cohort: current_cohort)
+    evaluatee_links = []
+    evaluatee_ids = student.evaluatee_ids
+    evaluatee_ids.each do |id|
+      evaluatee = Team.find_by(id: id)
+      evaluatee_link = evaluatee.proposal_link
+      evaluatee_links << evaluatee_link
+    end
+    @page_title = t('.page_title')
+    render locals:{
+      links: evaluatee_links
+    }
+  end
+
+  def show
+    @user = User.find(params[:id]) || (record_not_found && return)
+    !authenticate_user(true, false, [@user]) && return
+    @page_title = t('.page_title', user_name: @user.user_name)
+    form_team_ddl = ApplicationDeadlines.find_by(name: 'form team deadline').submission_deadline
+    submit_proposal_ddl = ApplicationDeadlines.find_by(name: 'submit proposal deadline').submission_deadline
+    peer_evaluation_open_date = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline
+    peer_evaluation_ddl = ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
+    result_release_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline
+    portal_open_date = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
+    render locals:{
+      form_team_ddl: form_team_ddl,
+      submit_proposal_ddl: submit_proposal_ddl,
+      peer_evaluation_open_date: peer_evaluation_open_date,
+      peer_evaluation_ddl: peer_evaluation_ddl,
+      result_release_date: result_release_date,
+      portal_open_date: portal_open_date
+    }
+  end
+
+  private
+  
+  def application_params
+    params.require(:team).permit(:proposal_link)
+  end
 end

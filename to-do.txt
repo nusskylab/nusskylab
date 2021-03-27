@@ -1,8 +1,6 @@
 now:
-failure cases
-mailer
 purge + remove applicant teams management
-student view bug (refactor to student)
+student view bug (refactor to student, registration form)
 
 to-do:
 teams edit redirect

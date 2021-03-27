@@ -16,6 +16,11 @@
         <p>
         <a href="<%= applicant_admin_prepare_peer_eval_path(team) %>" class="btn btn-warning">Prepare peer evaluation</a>
         </p>
+        <% if Time.now > website_open%>
+          <p>
+          <a href="<%= applicant_admin_purge_and_open_path(team) %>" class="btn btn-warning">Purge the unsuccessful and grant access for the successful</a>
+          </p>
+        <% end %>
         <hr/>
         <p>
         <a href="<%= team_upload_csv_path(team) %>" class="btn btn-success">Import CSV</a>
