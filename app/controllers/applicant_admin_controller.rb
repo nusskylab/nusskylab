@@ -13,5 +13,14 @@ class ApplicantAdminController < ApplicationController
           team: team
       }
     end
+
+    def prepare_peer_eval
+      !authenticate_user(true, true) && return
+      team = Team.first
+      #to-do: if no team
+      render locals: {
+          team: team
+      }
+    end
   end
   

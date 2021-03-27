@@ -39,6 +39,10 @@
                                       include_blank: false %>
     <%= f.input :comment, placeholder: true, placeholder: 'Enter comments and include your name' %>
   <% end %>
+  <% if current_user_admin? %>
+    <!--to-do: checking the status is c -->
+    <%= f.input :application_status, collection: {'Fail'.to_sym => 'fail', 'Success'.to_sym => 'success'}%>
+  <% end %>
   <% if locals[:is_new] %>
     <input type="hidden" name="team[cohort]" value="<%= locals[:cohort] %>">
   <% end %>

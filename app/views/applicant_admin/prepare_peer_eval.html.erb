@@ -1,0 +1,18 @@
+<%= simple_form_for team, wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+  url: applicant_eval_matching_team_path(team) do |f| %>
+  <div class="form-group">
+    <label class="radio required col-sm-3 control-label">
+      <abbr title="required">*</abbr> Start matching?
+    </label>
+    <div class="col-sm-9">
+      <label class="radio-inline"><input type="radio" name="team[confirm]" value="true">Yes</label>
+      <label class="radio-inline"><input type="radio" name="team[confirm]" value="false">No</label>
+    </div>
+  </div>
+  <br><br>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <%= f.submit 'Submit', class: 'btn btn-success' %>
+    </div>
+  </div>
+<% end %>

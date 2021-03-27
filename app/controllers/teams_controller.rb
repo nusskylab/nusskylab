@@ -83,6 +83,52 @@ class TeamsController < ApplicationController
     end
   end
 
+  def upload_csv
+    !authenticate_user(true, true) && return
+    render locals: {
+      team: Team.first
+    }
+  end
+
+  def update_teams
+    require 'csv'
+    uploaded_io = params[:team][:uploaded_csv]
+    File.open(File.join('public', uploaded_io.original_filename), 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
+    #to-do: error checking, check title and whether there is any parsing error
+    csv_text = CSV.read(Rails.root.join('public', uploaded_io.original_filename))
+    elements_per_row = 5
+    rows = []
+    count = 0
+    row = []
+    for i in 0..csv_text.length - 1
+      if i == 0
+        next
+      end
+      row = csv_text[i]
+      rank = row[0]
+      teamID = row[1]
+      avg_rank = row[2]
+      evaluators = row[3]
+      evaluator_students = evaluators.split('\', \'')
+      evaluator_students[0] = evaluator_students[0][2, -1]
+      evaluator_students[-1] = evaluator_students[-1][0, -3]
+      # puts '@@@@@@@@@'
+      # puts evaluator_students.length
+      application_status = row[5]
+      team_to_update = Team.find_by(id: teamID)
+      team_to_update.avg_rank = avg_rank.to_f
+      team_to_update.evaluator_students = evaluator_students
+      team_to_update.application_status = application_status
+      team_to_update.save
+    end
+    msg = 'success'
+    redirect_to applicant_admin_index_path(), flash: {
+      success: msg
+    }
+  end
+
   def destroy
     !authenticate_user(true, true) && return
     @team = Team.find(params[:id])
@@ -176,7 +222,7 @@ class TeamsController < ApplicationController
     end
   end
 
-  def getEvaluatedTeams(beginI, endI, teamIDs, size)
+  def getEvaluatedTeams(beginI, endI, teamID, teamIDs, size)
     if beginI + size - 1 > endI
         teamsBack = teamIDs[beginI..teamIDs.length() - 1]
         teamsFront = teamIDs[0..endI]
@@ -184,34 +230,37 @@ class TeamsController < ApplicationController
     else
         teams = teamIDs[beginI..endI]
     end
+    if teams.delete(teamID)
+      if beginI > 0
+        teams << teamIDs[beginI - 1]
+      else
+        teams << teamIDs[endI + 1]
+      end
+    end
     return teams
   end
 
-  # to-do-now: routes
   def applicant_eval_matching
     # authenticate users
     !authenticate_user(true, true) && return
     # if confirm false, return
     confirm_params = params.require(:team).permit(:confirm)
-    # to-do: if confirm open, change the view
-    if confirm_params[:confirm] == false
+    if confirm_params[:confirm] == 'false'
       redirect_to applicant_admin_index_path(), flash: {
         success: 'cancelled'
       }
     else
-      teams = Team.all
+      teams = Team.where("application_status='c'")
       teamIDs = []
       teams.each do |team|
         teamIDs << team.id
       end
       teamIDs = teamIDs.shuffle
       size = 4
-      # to-do: if teamIDs.length < size + 1:
-      #   msg = 'Invalid size'
+      # to-do: 'Invalid size': < 2 * size + 1
+      # fix self evaluate
       teamIDs.each_with_index do |teamID, i|
           team = Team.find_by(id: teamID)
-          team.application_status = 'c'
-          team.save
           members = team.students
           # update params, shift the links to peer eval page
           member1 = members[0].id
@@ -220,14 +269,13 @@ class TeamsController < ApplicationController
           member1End = (i + size - 1) % teamIDs.length()
           member2Begin = (i + size) % teamIDs.length()
           member2End = (i + size + size - 1) % teamIDs.length()
-          teamsBy1 = getEvaluatedTeams(member1Begin, member1End, teamIDs, size)
-          teamsBy2 = getEvaluatedTeams(member2Begin, member2End, teamIDs, size)
+          teamsBy1 = getEvaluatedTeams(member1Begin, member1End, teamID, teamIDs, size)
+          teamsBy2 = getEvaluatedTeams(member2Begin, member2End, teamID, teamIDs, size)
           members[0].evaluatee_ids = teamsBy1
           members[1].evaluatee_ids = teamsBy2
           members[0].save
           members[1].save
-          end
-          #members[0].update_attributes(:evalua, )
+        end
       # update team attributes: for each member, evaluaters, evaluatees, application status   
       redirect_to applicant_admin_index_path(), flash: {
         success: 'success'

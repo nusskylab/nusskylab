@@ -87,6 +87,15 @@
       </a>
     </p>
   </div>
+  <%# to remove after application stage %>
+  <div class="col-sm-12">
+    <p class="col-sm-3 col-sm-offset-2">Proposal link:</p>
+    <p class="col-sm-7">
+      <a href="<%=locals[:team].proposal_link%>" style="word-wrap: break-word; width: 100%;">
+        <%= locals[:team].proposal_link ? locals[:team].proposal_link : 'Nil' %>
+      </a>
+    </p>
+  </div>
     <div class="col-sm-12">
     <p class="col-sm-3 col-sm-offset-2">Status:</p>
     <p class="col-sm-7">

@@ -10,7 +10,8 @@
         <% if !@team.mentor_id.present? &&
           current_user_student? &&
           current_user_student?.team_id &&
-          current_user_student?.team_id == @team.id || current_user_admin? %>
+          current_user_student?.team_id == @team.id ||
+          current_user_admin? && !@team.application_status %>
           <a href="<%= match_mentor_team_path() %>" class="btn btn-info">Match Mentor</a>
         <% end %>
       </h1>
@@ -24,7 +25,7 @@
               Basic information
             </a>
           </li>
-          <% if current_user_admin? %>
+          <% if current_user_admin? and !@team.application_status%>
             <li role="presentation">
               <a href="#mentor-matching-status-panel" aria-controls="mentor-matching-status-panel"
                  role="tab" data-toggle="tab">
@@ -53,7 +54,7 @@
                 View peer evaluations
               </a>
             </li>
-            <% if !@team.mentor_id.present? && @teamsMentorMatchings.length > 0 %>
+            <% if !@team.mentor_id.present? && @teamsMentorMatchings.length > 0 and !@team.application_status%>
               <li role="presentation">
                 <a href="#mentor-matching-status-panel" aria-controls="mentor-matching-status-panel"
                    role="tab" data-toggle="tab">
@@ -87,9 +88,13 @@
             <div class="well">
               <p class="small"><%= t '.basic_info_instruction' %></p>
             </div>
-            <%= render 'team_basic_info', locals: {team: @team, teamsMentorMatchings: @teamsMentorMatchings} %>
+            <% if @team.application_status %>
+              <%= render 'pending_team_basic_info', locals: {team: @team} %>
+            <% else %>
+              <%= render 'team_basic_info', locals: {team: @team, teamsMentorMatchings: @teamsMentorMatchings} %>
+            <% end %>
           </div>
-          <% if current_user_admin? %>
+          <% if current_user_admin? and !@team.application_status %>
             <div role="tabpanel" class="tab-pane fade" id="mentor-matching-status-panel">
               <h2 class="text-center">View Mentor Matching</h2>
               <div class="well">

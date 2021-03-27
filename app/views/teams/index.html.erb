@@ -16,18 +16,6 @@
             <a href="<%= new_team_path(cohort: cohort) %>" class="btn btn-success">Create New Team</a>
           </div>
           <% end %>
-          <div class="col-sm-1 col-sm-offset-3">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="bi bi-filter"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Official Teams</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">All Teams</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Unsuccessful Teams</a>
-            </div>
-          </div>
         </div>
         <%= render 'teams_table', locals: { teams: @teams } %>
         <br><br><hr>

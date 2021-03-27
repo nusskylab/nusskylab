@@ -69,7 +69,9 @@ Rails.application.routes.draw do
     end
   end
   resources :mentor_matchings, only: :index
-  resources :applicant_admin, only: [:index]
+  resources :applicant_admin, only: [:index] do
+    get 'prepare_peer_eval'
+  end
 
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
     get 'new_batch', on: :collection
@@ -91,6 +93,9 @@ Rails.application.routes.draw do
     post 'create_batch', on: :collection
   end
   resources :teams do
+    get 'upload_csv'
+    post 'update_teams'
+    patch 'update_teams'
     resources :feedbacks, only: [:new, :create, :edit, :update]
     member do
       get 'match_mentor'
@@ -115,7 +120,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :application_deadlines, only: [:index, :show, :edit, :update]
+  resources :application_deadlines, only: [:index, :edit, :update]
 
   resources :survey_templates, except: [:destroy] do
     member do

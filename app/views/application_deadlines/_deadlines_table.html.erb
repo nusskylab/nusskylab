@@ -8,7 +8,6 @@
         <td><%= deadline.name %></td>
         <td><%= l deadline.submission_deadline %></td>
         <td>
-          <a class="btn btn-primary btn-xs" href="<%= application_deadline_path(deadline.id) %>">View</a>
           <a class="btn btn-default btn-xs" href="<%= edit_application_deadline_path(deadline.id) %>">Edit</a>
         </td>
       </tr>

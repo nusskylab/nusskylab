@@ -30,17 +30,32 @@ class Student < ActiveRecord::Base
     CSV.generate(options) do |csv|
       csv << generate_csv_header_row
       exported_stus.each do |student|
-        csv_row = [student.user.user_name, student.user.email]
+        csv_row = [student.user.user_name, student.id, student.user.email]
         csv_row.concat(student.team_adviser_info)
-        csv_row.concat([student.created_at.to_s(format=:db)])
+        #csv_row.concat([student.created_at.to_s(format=:db)])
+        if student.team
+          csv_row.concat([student.team.id])
+        else
+          csv_row.concat(['No Team'])
+        end
+        if student.evaluatee_ids
+          evaluated_links = []
+          student.evaluatee_ids.each do |teamID|
+            team = Team.find(teamID)
+            evaluated_links << team.proposal_link
+          end
+          csv_row.concat([student.evaluatee_ids.join(', '), evaluated_links.join(', ')])
+        else
+          csv_row.concat(['No evalutee'])
+        end
         csv << csv_row
       end
     end
   end
 
   def self.generate_csv_header_row
-    ['User Name', 'User Email', 'Team Name', 'Project Level',
-     'Adviser Name', 'Has Dropped', 'Registered on']
+    ['User Name', 'User ID', 'User Email', 'Team Name', 'Project Level',
+     'Adviser Name', 'Has Dropped', 'Team ID', 'Evaluated Teams IDs', 'Evaluated Proposal links']
   end
 
   def get_teammates

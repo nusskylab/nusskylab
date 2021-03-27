@@ -125,8 +125,9 @@
 
                           <p>Note: After the submission, you will receive an email confirmation. Please retain the email as evidence of your submission and wait for the application result on <%= result_release_date%>.</p>
                         <!-- stage d, release result -->
-                        <% elsif status[0] == 'd' %>
-                          <p>release result</p>
+                        <% elsif status == 'success' %>
+                          <p>Application status: Successful.</p>
+                          <p>You will be able to access the Skylab as an official student from <%= portal_open_date %>.</p>
                         <% end %>
                       <% end %>
                   <% end %>

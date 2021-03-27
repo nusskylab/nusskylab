@@ -1,4 +1,23 @@
+now:
+failure cases
+mailer
+purge + remove applicant teams management
+student view bug (refactor to student)
+
 to-do:
+teams edit redirect
+fix rank students: emtpy teams
+customize view
+import csv check: file names, columns rows number...
+fix view evaluators
+failure cases
+teams that didn't submit peer evaluation report
 edit size, google form link
 modify look & check & documentation
-student view bug
+click invite button, should check whether alr invited, and similar (page alr open but not updated)
+automate database
+messages
+style, color of flowchart
+applicant to team matching refactor
+basic check link
+database migration file
