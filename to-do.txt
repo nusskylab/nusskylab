@@ -1,6 +1,7 @@
 now:
 purge + remove applicant teams management
-student view bug (refactor to student, registration form)
+identify students who did not do peer evaluation
+
 
 to-do:
 teams edit redirect

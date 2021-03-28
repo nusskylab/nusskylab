@@ -3,7 +3,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h2>
-        <span>Hi, <%= @user.user_name %> </span>
+        <span>Hi, <%= User.find_by(id: locals[:student].user_id).user_name %> </span>
       </h2>
     </div>
     <div class="panel-body">
@@ -40,14 +40,14 @@
                   <% else %>
                     <% if !locals[:student].team %>
                       <p>	
-                        You have not formed a team. You may <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary">invite</a> a teammate now.
+                        You have not formed a team. You may <a href="<%= register_as_team_user_path(locals[:student].user_id) %>" class="btn btn-primary">invite</a> a teammate now.
                       </p>
                       <p>
                         Please ensure that you are in a team by <%= form_team_ddl %>.
                       </p>
                     <% elsif locals[:student].team.invitor_student_id != locals[:student].id %>	
                       <p>	
-                        You have been invited to participate in Orbital as a team with <strong><%= locals[:student].team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the invitation </a> now?	
+                        You have been invited to participate in Orbital as a team with <strong><%= locals[:student].team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(locals[:student].user_id) %>" class="btn btn-primary"> the invitation </a> now?	
                       </p>
                       <p>
                         Please ensure that you are in a team by <%= form_team_ddl %>.
@@ -57,7 +57,7 @@
                         You have invited <strong><%= locals[:student].team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
                       </p>	
                       <p>
-                        You may withdraw your invitation at <a href="<%= withdraw_invitation_user_path(@user.id) %>" class="btn btn-warning">Withdraw</a>.
+                        You may withdraw your invitation at <a href="<%= withdraw_invitation_student_path(locals[:student].user_id) %>" class="btn btn-warning">Withdraw</a>.
                       </p>
                       <p>
                         Please ensure that you are in a team by <%= form_team_ddl %>.
@@ -66,19 +66,19 @@
                   <% end %>
                 <!-- stage b, submit proposal -->
                 <% elsif status == 'b' or Time.now < peer_evaluation_open_date %>
-                  <% if Time.now > submit_proposal_deadline %>
+                  <% if Time.now > submit_proposal_ddl %>
                     <p> Your team did not submit the project proposal on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
                   <% else %>
                     <% if !locals[:student].team.proposal_link%>
                       <p>	
-                      You have successfully teamed up with user lalala. Please use the section below to <a href="<%= submit_proposal_user_path(@user.id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
+                      You have successfully teamed up with user lalala. Please use the section below to <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
                       </p>
                     <% else %>
                       <p>
                       Your team has submitted the project proposal on time. Please come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no action required from you for now.
                       </p>
                       <p>
-                      You may <a href="<%= remove_proposal_user_path(@user.id) %>" class="btn btn-warning">delete</a> your old submission and resubmit by the deadline.
+                      You may <a href="<%= remove_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning">delete</a> your old submission and resubmit by the deadline.
                       </p>
                     <% end %>
                   <% end %>
@@ -87,7 +87,7 @@
                   <% if Time.now > peer_evaluation_deadline %>
                     <p>Your team did not submit the peer evaluation on time, and therefore we cannot proceed with your application. Thanks for your participation!</p>
                   <% else %>
-                    <p>Please <a href="<%= do_evaluation_user_path(@user) %>" class="btn btn-primary">evaluate</a> other teams’ submissions by <%= peer_evaluation_ddl%>. Both members of your team have to finish the evaluation.</p>
+                    <p>Please <a href="<%= do_evaluation_student_path(locals[:student].user_id) %>" class="btn btn-primary">evaluate</a> other teams’ submissions by <%= peer_evaluation_ddl%>. Both members of your team have to finish the evaluation.</p>
 
                     <p>If you have already submitted the peer evaluation, please wait for the release of application result email. There is no more action required for the application.</p>
 

@@ -2,7 +2,7 @@
   <% javascript 'students.js' %>
   <% stu = Student.find_by(id: @role.id)%>
   <% open_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline%>
-  <% if  Time.now > open_date and stu.team.application_status == 'success'%>
+  <% if  Time.now > open_date and stu.application_status == 'success'%>
     <%= render 'student_with_team', locals: {
       student: stu, role_data: role_data
     } %>

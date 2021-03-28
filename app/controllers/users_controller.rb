@@ -193,6 +193,43 @@ class UsersController < ApplicationController
     }
   end
 
+  
+  def confirm_purge_and_open
+    !authenticate_user(true, true) && return
+    @user = User.find(params[:id])
+    confirm_purge = params.require(:user).permit(:confirm)
+    
+    #failure cases
+    if confirm_purge[:confirm] == 'false'
+      flash_message = 'Cancelled'
+    else
+      #purge: delete students, delete application_status attributes, delete evaluators attributes
+      teams = Team.where('application_status = \'success\'')
+      teams.each do |team|
+        # expected: successful teams disappear, users and stus disappear
+        # team 10, stu 10 and 11, user 12
+        team.students.each do |stu|
+          id = stu.user_id
+          stu.destroy
+          user = User.find_by(id: id)
+          user.destroy
+        end
+        team.destroy
+      end
+
+      all_students = Student.all
+      all_students.each do |student|
+        id = student.user_id
+        student.evaluatee_ids = ''
+        student.application_status = 'success'
+      end
+      flash_message = 'Success'
+    end
+    redirect_to applicant_admin_index_path(@user.id), flash: {
+      success: flash_message
+    }
+  end
+
   private
 
   def user_params(generate_pswd = false)
@@ -209,37 +246,37 @@ class UsersController < ApplicationController
   end
  
   def calculate_matric_number(num)
-  matric_regex = /^A\d{7}|U\d{6,7}/
+    matric_regex = /^A\d{7}|U\d{6,7}/
 
-  if (num.present? && matric_regex.match(num.upcase))
-  matches = matric_regex.match(num.upcase)
-  match = matches[0]
+    if (num.present? && matric_regex.match(num.upcase))
+    matches = matric_regex.match(num.upcase)
+    match = matches[0]
 
-    if (match[0].eql?('U') && match.length === 8)
-      match = match[0, 3] + match[4]
-    end
+      if (match[0].eql?('U') && match.length === 8)
+        match = match[0, 3] + match[4]
+      end
 
-    weights = {
-      U: [0, 1, 3, 1, 2, 7],
-      A: [1, 1, 1, 1, 1, 1]
-    }
+      weights = {
+        U: [0, 1, 3, 1, 2, 7],
+        A: [1, 1, 1, 1, 1, 1]
+      }
 
-    weights = weights[:"#{match[0]}"]
+      weights = weights[:"#{match[0]}"]
 
-    sum = 0
-    digits = match[2, 7]
+      sum = 0
+      digits = match[2, 7]
 
       for i in 0..6 do
         sum += weights[i].to_i * digits[i].to_i
       end
-    calculated_id = match.to_s + 'YXWURNMLJHEAB' [sum % 13]
-        if(num.upcase == calculated_id)
-          return (match.to_s + 'YXWURNMLJHEAB' [sum % 13])
-        end
+      calculated_id = match.to_s + 'YXWURNMLJHEAB' [sum % 13]
+      if(num.upcase == calculated_id)
+        return (match.to_s + 'YXWURNMLJHEAB' [sum % 13])
+      end
+    end
+        #trigger invalid matric number warning if its not correct
+    return "invalid matric number" 
   end
-      #trigger invalid matric number warning if its not correct
-      return "invalid matric number" 
-end
 
   def registration_params
     params.require(:questions).permit!

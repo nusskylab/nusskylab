@@ -28,6 +28,10 @@ Rails.application.routes.draw do
       get 'register_as_team'
       post 'register_team'
       patch 'register_team'
+      post 'confirm_purge_and_open'
+      patch 'confirm_purge_and_open'
+      post 'confirm_team'
+      patch 'confirm_team'
     end
   end
 
@@ -40,8 +44,6 @@ Rails.application.routes.draw do
       get 'remove_proposal'
       post 'confirm_withdraw'
       patch 'confirm_withdraw'
-      post 'confirm_team'
-      patch 'confirm_team'
       post 'upload_proposal'
       patch 'upload_proposal'
       post 'confirm_remove_proposal'
@@ -73,6 +75,7 @@ Rails.application.routes.draw do
   resources :mentor_matchings, only: :index
   resources :applicant_admin, only: [:index] do
     get 'prepare_peer_eval'
+    get 'purge_and_open'
   end
 
   resources :admins, only: [:index, :new, :create, :show, :destroy] do

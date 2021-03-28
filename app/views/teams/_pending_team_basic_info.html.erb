@@ -38,10 +38,8 @@
   <div class="col-sm-12">
     <p class="col-sm-3 col-sm-offset-2">Evaluator students:</p>
     <p class="col-sm-7">
-      <% locals[:team].evaluator_students.each do |evaluator| %>
-            <%= evaluator %></a>
-      <% end %>
-      <% if locals[:team].evaluator_students.length == 0 %>
+      <%= locals[:team].evaluator_students %>
+      <% if !locals[:team].evaluator_students %>
           <span class="text-muted">Not evaluator assigned to this team</span>
       <% end %>
     </p>
