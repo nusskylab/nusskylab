@@ -214,12 +214,6 @@ class StudentsController < RolesController
     }
   end
 
-  def show
-    @user = User.find(params[:id]) || (record_not_found && return)
-    !authenticate_user(true, false, [@user]) && return
-    @page_title = t('.page_title', user_name: @user.user_name)
-  end
-
   private
   
   def application_params

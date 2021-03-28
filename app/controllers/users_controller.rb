@@ -155,8 +155,6 @@ class UsersController < ApplicationController
     }
   end
 
-  
-
   def show
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
