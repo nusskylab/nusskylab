@@ -57,7 +57,8 @@
                       <% end %>	
                     </p>		
                   <% else %>
-                      <a href="<% student_path(stu.id) %>" class="btn btn-primary">Use Skylab as a student</a>
+                      <p>Use Skylab as a:</p>
+                      <a href="<%= student_path(stu.id) %>" class="btn btn-primary btn-lg">A Student<a>
                   <% end %>
                   <br>	
                 <% else%>	

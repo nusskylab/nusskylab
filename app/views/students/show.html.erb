@@ -1,87 +1,12 @@
 <% content_for :main_content do %>
   <% javascript 'students.js' %>
-  <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
-  <br>
-  <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
-    <div style="background: #0066cc; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
-    <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0066cc;"></div>
-    <div style="background: #0066cc; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
-    <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0066cc;"></div>
-    <div style="background: #0066cc; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
-    <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0066cc;"></div>
-    <div style="background: #0066cc; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
-  </div>
-  <br>
-  <!-- to-do: should maintain only 1 application status for either student or team -> team -->
-  <% status = (@role.team == nil ? @role.application_status : @role.team.application_status)%>
-  <!-- stage a, form teams -->
-  <% if status == 'a' %>
-    <% if Time.now > form_team_ddl %>
-      <p> You did not form a team on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
-    <% else %>
-      <% if !@role.team %>
-        <p>	
-          You have not formed a team. You may <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary">invite</a> a teammate now.
-        </p>
-        <p>
-          Please ensure that you are in a team by <%= form_team_ddl %>.
-        </p>
-      <% elsif @role.team.invitor_student_id != @role.id %>	
-        <p>	
-          You have been invited to participate in Orbital as a team with <strong><%= @role.team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(@user.id) %>" class="btn btn-primary"> the invitation </a> now?	
-        </p>
-        <p>
-          Please ensure that you are in a team by <%= form_team_ddl %>.
-        </p>	
-      <% elsif @role.team.invitor_student_id == @role.id %>	
-        <p>	
-          You have invited <strong><%= @role.team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
-        </p>	
-        <p>
-          You may withdraw your invitation at <a href="<%= withdraw_invitation_user_path(@user.id) %>" class="btn btn-warning">Withdraw</a>.
-        </p>
-        <p>
-          Please ensure that you are in a team by <%= form_team_ddl %>.
-        </p>
-      <% end %>
-    <% end %>
-  <!-- stage b, submit proposal -->
-  <% elsif status == 'b' or Time.now < peer_evaluation_open_date %>
-    <% if Time.now > submit_proposal_deadline %>
-      <p> Your team did not submit the project proposal on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
-    <% else %>
-      <% if !@role.team.proposal_link%>
-        <p>	
-        You have successfully teamed up with user lalala. Please use the section below to <a href="<%= submit_proposal_user_path(@user.id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
-        </p>
-      <% else %>
-        <p>
-        Your team has submitted the project proposal on time. Please come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no action required from you for now.
-        </p>
-        <p>
-        You may <a href="<%= remove_proposal_user_path(@user.id) %>" class="btn btn-warning">delete</a> your old submission and resubmit by the deadline.
-        </p>
-      <% end %>
-    <% end %>
-  <!-- stage c, peer evaluation -->
-  <% elsif status == 'c' or Time.now < result_release_date%>
-    <% if Time.now > peer_evaluation_deadline %>
-      <p>Your team did not submit the peer evaluation on time, and therefore we cannot proceed with your application. Thanks for your participation!</p>
-    <% else %>
-      <p>Please <a href="<%= do_evaluation_user_path(@user) %>" class="btn btn-primary">evaluate</a> other teams’ submissions by <%= peer_evaluation_ddl%>. Both members of your team have to finish the evaluation.</p>
-
-      <p>If you have already submitted the peer evaluation, please wait for the release of application result email. There is no more action required for the application.</p>
-
-      <p>Note: After the submission, you will receive an email confirmation. Please retain the email as evidence of your submission and wait for the application result on <%= result_release_date%>.</p>
-    <% end %>
-    <!-- stage d, release result -->
+  <% stu = Student.find_by(user_id: @user.id)%>
+  <% open_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline%>
+  <% if  Time.now > open_date and stu.team.application_status == 'success'%>
+    <%= render 'student_with_team', locals: {
+      student: stu, role_data: role_data
+    } %>
   <% else %>
-    <% if status == 'success' %>
-      <p>Application status: Successful.</p>
-      <p>You will be able to access the Skylab as an official student from <%= portal_open_date %>.</p>
-    <% else %>
-      <p> Application status: Unsuccessful. </p>
-      <p> Thank you for your participation!</p> 
-    <% end %>
+    <%= render 'student_pending', locals: { student: stu } %>
   <% end %>
 <% end %>
