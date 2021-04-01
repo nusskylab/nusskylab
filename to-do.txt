@@ -1,7 +1,8 @@
 now:
-purge + remove applicant teams management
+fix check csv
 identify students who did not do peer evaluation
-
+fix other bugs
+report and plan
 
 to-do:
 teams edit redirect
