@@ -250,7 +250,7 @@ class TeamsController < ApplicationController
         success: 'cancelled'
       }
     else
-      teams = Team.where("application_status='c'")
+      teams = Team.where("proposal_link != \'\'")
       teamIDs = []
       teams.each do |team|
         teamIDs << team.id

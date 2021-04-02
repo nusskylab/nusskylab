@@ -30,7 +30,7 @@ class Student < ActiveRecord::Base
     CSV.generate(options) do |csv|
       csv << generate_csv_header_row
       exported_stus.each do |student|
-        csv_row = [student.user.user_name, student.id, student.user.email]
+        csv_row = [student.user.user_name, student.user.id, student.user.email]
         csv_row.concat(student.team_adviser_info)
         #csv_row.concat([student.created_at.to_s(format=:db)])
         if student.team
@@ -41,13 +41,14 @@ class Student < ActiveRecord::Base
         if student.evaluatee_ids
           evaluated_links = []
           student.evaluatee_ids.each do |teamID|
-            team = Team.find(teamID)
+            team = Team.find_by(id: teamID)
             evaluated_links << team.proposal_link
           end
           csv_row.concat([student.evaluatee_ids.join(', '), evaluated_links.join(', ')])
         else
-          csv_row.concat(['No evalutee'])
+          csv_row.concat(['No evalutee', 'No evaluated links'])
         end
+        
         csv << csv_row
       end
     end
