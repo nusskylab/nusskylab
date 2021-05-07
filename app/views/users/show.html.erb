@@ -40,7 +40,7 @@
             <div class="col-sm-12">	
             <br>	
               <div class="jumbotron">	
-                <% adm, adv, men, stu = user_admin?, user_adviser?, user_mentor?, user_student? || user_pending_student? %>	
+                <% adm, adv, men, stu = user_admin?, user_adviser?, user_mentor?, user_student?%>	
                 <% if adm or adv or men or stu %>
                   <% if !stu %>
                     <p>Use Skylab as:</p>	

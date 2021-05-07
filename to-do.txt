@@ -8,9 +8,8 @@ to-do:
 teams edit redirect
 fix rank students: emtpy teams
 customize view
-import csv check: file names, columns rows number...
+import csv check: columns rows number...
 fix view evaluators
-failure cases
 teams that didn't submit peer evaluation report
 edit size, google form link
 modify look & check & documentation
@@ -20,4 +19,3 @@ messages
 style, color of flowchart
 applicant to team matching refactor
 basic check link
-database migration file

@@ -117,7 +117,6 @@ class StudentsController < RolesController
     team.update_attributes(application_params)
     team.application_status = 'c'
     team.save
-    UserMailer.welcome_email(@user, user_ps[:password]).deliver_now
     # redirect to-do: en.yml, stay on the previous page
     flash_message = 'proposal link submitted successfully'
     redirect_to user_path(@user.id), flash: {

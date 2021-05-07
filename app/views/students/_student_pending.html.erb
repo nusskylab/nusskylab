@@ -66,34 +66,35 @@
                   <% end %>
                 <!-- stage b, submit proposal -->
                 <% elsif status == 'b' or Time.now < peer_evaluation_open_date %>
-                  <% if Time.now > submit_proposal_ddl %>
+                  <% if Time.now > submit_proposal_ddl and status == 'b'%>
                     <p> Your team did not submit the project proposal on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
                   <% else %>
-                    <% if !locals[:student].team.proposal_link%>
+                    <% if status == 'b'%>
                       <p>	
-                      You have successfully teamed up with user lalala. Please use the section below to <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
+                      You have successfully teamed up. Please use the section below to <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
                       </p>
-                    <% else %>
+                    <% elsif status == 'c'%>
                       <p>
                       Your team has submitted the project proposal on time. Please come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no action required from you for now.
                       </p>
-                      <p>
-                      You may <a href="<%= remove_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning">delete</a> your old submission and resubmit by the deadline.
-                      </p>
+                      <% if Time.now < submit_proposal_ddl %>
+                        <p>
+                        You may <a href="<%= remove_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning">delete</a> your old submission and resubmit by the deadline.
+                        </p>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <!-- stage c, peer evaluation -->
-                <% elsif status == 'c' or Time.now < result_release_date%>
-                  <% if Time.now > peer_evaluation_deadline %>
+                <% elsif status[0] == 'c' or Time.now < result_release_date%>
+                  <% if status == 'cf-never submit peer evaluation' %>
                     <p>Your team did not submit the peer evaluation on time, and therefore we cannot proceed with your application. Thanks for your participation!</p>
-                  <% else %>
+                  <% elsif Time.now < peer_evaluation_ddl %>
                     <p>Please <a href="<%= do_evaluation_student_path(locals[:student].user_id) %>" class="btn btn-primary">evaluate</a> other teams’ submissions by <%= peer_evaluation_ddl%>. Both members of your team have to finish the evaluation.</p>
-
-                    <p>If you have already submitted the peer evaluation, please wait for the release of application result email. There is no more action required for the application.</p>
-
                     <p>Note: After the submission, you will receive an email confirmation. Please retain the email as evidence of your submission and wait for the application result on <%= result_release_date%>.</p>
-                  <% end %>
-                  <!-- stage d, release result -->
+                  <% else %>
+                    <p>Please wait for the release of application result taking place on <%= result_release_date %>. There is no more action required for the application.</p>
+                  <% end%>
+                <!-- stage d, release result -->
                 <% else %>
                   <% if status == 'success' %>
                     <p>Application status: Successful.</p>
