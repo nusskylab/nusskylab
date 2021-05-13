@@ -128,7 +128,6 @@ ActiveRecord::Schema.define(version: 20200404104546) do
     t.text     "public_content"
     t.text     "private_content"
     t.datetime "created_at",                         null: false
-    t.boolean  "published"
     t.integer  "team_id"
     t.integer  "submission_id"
     t.integer  "adviser_id"
@@ -182,7 +181,6 @@ ActiveRecord::Schema.define(version: 20200404104546) do
   create_table "submissions", force: :cascade do |t|
     t.integer  "milestone_id",                     null: false
     t.integer  "team_id",                          null: false
-    t.boolean  "published",        default: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.string   "video_link"

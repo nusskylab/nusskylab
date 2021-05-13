@@ -162,7 +162,7 @@ class PeerEvaluationsController < ApplicationController
 
   def evaluation_params
     eval_params = params.require(:peer_evaluation).permit(
-      :public_content, :private_content, :submission_id, :published)
+      :public_content, :private_content, :submission_id)
     if params[:team_id]
       eval_params[:team_id] = params[:team_id]
     elsif params[:adviser_id]

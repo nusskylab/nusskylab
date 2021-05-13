@@ -4,7 +4,6 @@ peer_eval_1:
   id: 1
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
-  published: false
   team_id: 1732
   submission_id: 1748
   owner_type: "teams"
@@ -14,7 +13,6 @@ peer_eval_2:
   id: 2
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
-  published: false
   team_id: 1733
   submission_id: 1749
   owner_type: "teams"

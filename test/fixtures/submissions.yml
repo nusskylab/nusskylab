@@ -5,7 +5,6 @@ submission_1746:
   id: 1746
   milestone_id: 1
   team_id: 1731
-  published: false
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   poster_link: "https://i.ytimg.com/vi/RTfvXkEXa-k/maxresdefault.jpg"
@@ -18,7 +17,6 @@ submission_1747:
   id: 1747
   milestone_id: 2
   team_id: 1732
-  published: false
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   poster_link:
@@ -31,7 +29,6 @@ submission_1748:
   id: 1748
   milestone_id: 3
   team_id: 1733
-  published: false
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   poster_link:
@@ -44,7 +41,6 @@ submission_1749:
   id: 1749
   milestone_id: 1
   team_id: 1735
-  published: false
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   poster_link: "https://i.ytimg.com/vi/XlUPuj2V6PM/maxresdefault.jpg"
@@ -57,7 +53,6 @@ submission_1750:
   id: 1750
   milestone_id: 2
   team_id: 1735
-  published: false
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   poster_link:
@@ -70,7 +65,6 @@ submission_1751:
   id: 1751
   milestone_id: 3
   team_id: 1735
-  published: false
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   poster_link: "http://cdn.ebaumsworld.com/mediaFiles/picture/604025/84556534.jpg"
@@ -83,7 +77,6 @@ submission_1752:
   id: 1752
   milestone_id: 1
   team_id: 1738
-  published: false
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   poster_link: "https://i.ytimg.com/vi/xzWEJkh800o/maxresdefault.jpg"
@@ -96,7 +89,6 @@ submission_1753:
   id: 1753
   milestone_id: 2
   team_id: 1738
-  published: false
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   poster_link:
@@ -109,7 +101,6 @@ submission_1754:
   id: 1754
   milestone_id: 3
   team_id: 1738
-  published: false
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   poster_link:
@@ -122,7 +113,6 @@ submission_1755:
   id: 1755
   milestone_id: 2
   team_id: 1740
-  published: false
   created_at: <%= 0.days.from_now.to_s :db %>
   updated_at: <%= 0.days.from_now.to_s :db %>
   poster_link: "http://breadnmolasses.com/wp-content/uploads/2009/04/1755-logo-petit-300x260.jpg"
