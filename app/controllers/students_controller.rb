@@ -93,7 +93,7 @@ class StudentsController < RolesController
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
-      danger: t('.register_as_student_message') #to-do
+      danger: 'Invalid action.'
     } unless student
     student_team = student.team
     # @page_title = t('.page_title') # to-do: what's this?
@@ -109,16 +109,17 @@ class StudentsController < RolesController
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
-      danger: t('.register_as_student_message') #to-do
+      danger: 'Invalid action.' #to-do
     } unless student
     team_id = student.team.id
     # update the teams
-    team = Team.find(team_id)
-    team.update_attributes(application_params)
+    team = student.team
+    team_params = params.require(:team).permit(:proposal_link)
+    team.update_attributes(team_params)
     team.application_status = 'c'
     team.save
     # redirect to-do: en.yml, stay on the previous page
-    flash_message = 'proposal link submitted successfully'
+    flash_message = 'Proposal link submitted successfully.'
     redirect_to user_path(@user.id), flash: {
       success: flash_message
     }
@@ -130,12 +131,6 @@ class StudentsController < RolesController
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id, cohort: current_cohort)
     student_team = student.team
-    if !student_team
-      msg = 'Your invitation has already been rejected.'
-      redirect_to user_path(@user.id), flash: {
-        success: msg
-      }
-    end
     @page_title = t('.page_title')
     render locals: {
       student_team: student_team
@@ -146,16 +141,16 @@ class StudentsController < RolesController
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     team_params = params.require(:team).permit(:withdraw)
-    student_user = Student.student?(@user.id, cohort: current_cohort)
+    student_user = Student.find_by(user_id: @user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
-      danger: t('.cannot_withdraw_invitation_message')
+      danger: 'Invalid action.'
     } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:withdraw] == 'false'
-      flash_message = t('.withdrawal_cancelled_message')
+      flash_message = 'Withdrawl cancalled.'
     else
       team.destroy
-      flash_message = t('.invitation_withdrawn_message')
+      flash_message = 'Success.'
     end
     redirect_to user_path(@user.id), flash: {
       success: flash_message
@@ -186,10 +181,10 @@ class StudentsController < RolesController
     } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:remove_link] == 'false'
-      flash_message = "Removal of proposal cancelled"
+      flash_message = "Removal of proposal cancelled."
     else
       team.update_attribute(:proposal_link, nil)
-      flash_message = "Removal of proposal successful"
+      flash_message = "Removal of proposal successful."
     end
     redirect_to user_path(@user.id), flash: {
       success: flash_message
@@ -211,11 +206,5 @@ class StudentsController < RolesController
     render locals:{
       links: evaluatee_links
     }
-  end
-
-  private
-  
-  def application_params
-    params.require(:team).permit(:proposal_link)
   end
 end

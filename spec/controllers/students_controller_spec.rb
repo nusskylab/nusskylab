@@ -252,4 +252,74 @@ RSpec.describe StudentsController, type: :controller do
 
     end
   end
+
+  describe 'GET #withdraw_invitation' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        get :withdraw_invitation, id: 1
+        expect(response.status).to eql 404
+      end
+    end
+
+    context 'student logged in and reach withdrawal confirmation' do
+      login_user
+      it 'should render confirmation page' do
+        team = FactoryGirl.create(:team, team_name: '1.stu.controller.spec')
+        student = FactoryGirl.create(:student, user: subject.current_user, team: team, application_status: 'a')
+        get :withdraw_invitation, id: subject.current_user.id
+        expect(response).to render_template(:withdraw_invitation)
+      end
+    end
+
+    context 'invitation successfully withdrawn' do
+      login_user
+      it 'should destroy team' do
+        team = FactoryGirl.create(:team, team_name: '1.stu.controller.spec')
+        current_user = subject.current_user
+        student = FactoryGirl.create(:student, user_id: current_user.id, team: team)
+        expect(Student.find_by(user_id: current_user.id).team_id).to_not be_nil
+        post :confirm_withdraw, id: student.user.id, team: {withdraw: 'true'}
+        expect(Student.find_by(user_id: current_user.id).team_id).to be_nil
+      end
+    end
+
+    context 'invitation withdrawl cancelled' do
+      login_user
+      it 'should keep team' do 
+        team = FactoryGirl.create(:team, team_name: '1.stu.controller.spec')
+        current_user = subject.current_user
+        student = FactoryGirl.create(:student, user_id: current_user.id, team: team)
+        post :confirm_withdraw, id: student.user.id, team: {withdraw: 'false'}
+        expect(Student.find_by(user_id: current_user.id).team_id).to_not be_nil
+      end
+    end
+  end
+
+  describe 'stage b: submit proposal' do
+    context 'team formed and submit / remove proposal' do
+      login_user
+      it 'should show submit proposal page, take in submission and update application status' do 
+        team = FactoryGirl.create(:team, team_name: '1.stu.controller.spec')
+        current_user = subject.current_user
+        student = FactoryGirl.create(:student, user_id: current_user.id, team: team)
+        get :submit_proposal, id: current_user.id
+        expect(response).to render_template(:submit_proposal)
+
+        post :upload_proposal, id: current_user.id, team: {proposal_link: 'test_link'}
+        expect(Student.find_by(user_id: current_user.id).team.application_status).to eq('c')
+        expect(Student.find_by(user_id: current_user.id).team.proposal_link).to_not be_nil
+
+        # resubmit proposal
+        get :remove_proposal, id: current_user.id
+        expect(response).to render_template(:remove_proposal)
+
+        post :confirm_remove_proposal, id: current_user.id, team: {remove_link: 'false'}
+        expect(Student.find_by(user_id: current_user.id).team.proposal_link).to_not be_nil
+
+        post :confirm_remove_proposal, id: current_user.id, team: {remove_link: 'true'}
+        expect(Student.find_by(user_id: current_user.id).team.application_status).to eq('b')
+        expect(Student.find_by(user_id: current_user.id).team.proposal_link).to be_nil
+      end
+    end
+  end
 end

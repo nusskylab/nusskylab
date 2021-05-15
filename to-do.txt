@@ -19,3 +19,4 @@ messages
 style, color of flowchart
 applicant to team matching refactor
 basic check link
+highlight current application stage

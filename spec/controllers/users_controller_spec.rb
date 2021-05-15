@@ -226,7 +226,7 @@ RSpec.describe UsersController, type: :controller do
         get :register_as_team, id: subject.current_user.id
         expect(response).to render_template(:register_as_team)
 
-        student.application_status = true
+        student.application_status = 'a'
         student.save
         get :register_as_team, id: subject.current_user.id
         expect(response).to render_template(:register_as_team)
