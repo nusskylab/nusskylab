@@ -20,3 +20,6 @@ style, color of flowchart
 applicant to team matching refactor
 basic check link
 highlight current application stage
+refactor post purge and open to get purge and open
+hint:
+have not generated peer eval relations

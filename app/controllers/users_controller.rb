@@ -201,12 +201,12 @@ class UsersController < ApplicationController
     
     #failure cases
     if confirm_purge[:confirm] == 'false'
-      flash_message = 'Cancelled'
+      flash_message = 'Cancelled.'
     else
       #purge: delete students, delete application_status attributes, delete evaluators attributes
-      teams = Team.where('application_status = \'success\'')
+      teams = Team.where('application_status <> \'success\'')
       teams.each do |team|
-        # expected: successful teams disappear, users and stus disappear
+        # expected: unsuccessful teams disappear, users and stus disappear
         # team 10, stu 10 and 11, user 12
         team.students.each do |stu|
           id = stu.user_id
@@ -219,9 +219,7 @@ class UsersController < ApplicationController
 
       all_students = Student.all
       all_students.each do |student|
-        id = student.user_id
         student.evaluatee_ids = ''
-        student.application_status = 'success'
       end
       flash_message = 'Success'
     end

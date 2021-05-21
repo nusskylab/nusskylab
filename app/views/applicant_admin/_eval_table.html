@@ -1,0 +1,27 @@
+<table id = "teams-table" class="table tablesorter">
+    <thead>
+    <tr>
+      <th class="unsortable sort-index">Index</th><th>Evaluated Team</th><th>Evaluators</th><th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+      <!--to-do: sort with avg score, add attributes-->
+      <% locals[:teams].each_with_index do |team, idx| %>
+        <tr>
+          <td class="col-md-1"><%= idx + 1 %></td>
+          <td class="col-md-1">
+            <%= render 'team_name_representation', locals: {team: team} %>
+          </td>
+          <td class="col-md-1">
+            Evaluators
+          </td>
+          <td class="col-md-1">
+            <% if can_current_user_edit_team(team) %>
+              <a class="btn btn-default btn-xs" href="#">Edit</a>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  

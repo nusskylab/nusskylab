@@ -1,7 +1,7 @@
 <% content_for :main_content do %>
   <div class="panel panel-info">
     <div class="panel-heading">
-      <h3 class="text-center">Manage Applicants <%= cohort %></h3>
+      <h3 class="text-center"> Applicants Selection <%= cohort %></h3>
     </div>
     <div class="panel-body">
         <p>
@@ -11,25 +11,13 @@
         <%# <% if Time.now > peer_eval_open and team.application_status != 'c' %>
           <!-- start peer evaluation -->
         <p>
-        <a href="<%= students_path(format: 'csv', applicant: 'applicant') %>" class="btn btn-primary">Check peer evaluation</a>
+        <a href="<%= teams_path(format: 'csv', cohort: cohort) %>" class="btn btn-primary">Download applicants rank</a>
         </p>
         <p>
-        <a href="<%= applicant_admin_prepare_peer_eval_path(team) %>" class="btn btn-warning">Prepare peer evaluation</a>
+        <a href="<%= applicant_admin_manage_peer_eval_path() %>" class="btn btn-warning">Manage Peer Evaluation</a>
         </p>
-        <% if Time.now > website_open%>
-          <p>
-          <a href="<%= applicant_admin_purge_and_open_path(team) %>" class="btn btn-warning">Purge the unsuccessful and grant access for the successful</a>
-          </p>
-        <% end %>
-        <hr/>
         <p>
-        <a href="<%= team_upload_csv_path(team) %>" class="btn btn-success">Import CSV</a>
-        </p>
-        <div class="panel-heading">
-          <h3 class="text-center">Applicants Table</h3>
-        </div>
-        <p>
-        <%= render 'applicant_table', locals: { teams: Team.order(:avg_rank)} %>
+        <%= render 'applicant_table', locals: { teams: Team.where("application_status >= 'c'").order(:avg_rank)} %>
         </p>
     </div>
   </div>

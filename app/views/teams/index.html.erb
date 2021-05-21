@@ -17,7 +17,7 @@
           </div>
           <% end %>
         </div>
-        <%= render 'teams_table', locals: { teams: @teams } %>
+        <%= render 'teams_table', locals: { teams: @teams, portal_open_date: portal_open_date } %>
         <br><br><hr>
         <div class="col-sm-12">
           <% all_cohorts.each do |cohort| %>

@@ -435,4 +435,38 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
+
+  describe 'POST #confirm_purge_and_open' do
+    context 'purge and open button is triggered' do
+      login user
+      # create successful and unsuccessful teams
+      user1 = FactoryGirl.create(:user, email: '1@user.controller.spec', uid: '1.user.controller.spec')
+      user2 = FactoryGirl.create(:user, email: '2@user.controller.spec', uid: '2.user.controller.spec')
+      team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+      student1 = FactoryGirl.create(:student, user: user1, team: team)
+      student2 = FactoryGirl.create(:student, user: user2, team: team)
+      team.students << student1
+      team.students << student2
+      team.application_status = 'success'
+      team.save
+      it 'should not purge successful students'
+
+      end
+      it 'should not purge successful users'
+      end
+      it 'should not purge successful teams'
+      end
+      it 'should reset evaluatee_ids for successful teams'
+      end
+      it 'should purge unsuccessful students'
+          
+      end
+      it 'should purge unsuccessful users'
+      end
+      it 'should purge unsuccessful teams'
+      end
+      it 'should redirect to the admin index page'
+      end
+    end
+  end
 end

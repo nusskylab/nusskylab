@@ -5,11 +5,13 @@ class TeamsController < ApplicationController
     cohort = params[:cohort] || current_cohort
     @teams = Team.order(:team_name).where(cohort: cohort)
     @page_title = t('.page_title')
+    portal_open_date = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
     respond_to do |format|
       format.html do
         render locals: {
           all_cohorts: all_cohorts,
-          cohort: cohort
+          cohort: cohort,
+          portal_open_date: portal_open_date
         }
       end
       format.csv { send_data Team.to_csv(cohort: cohort) }
@@ -114,8 +116,6 @@ class TeamsController < ApplicationController
       evaluator_students = evaluators.split('\', \'')
       evaluator_students[0] = evaluator_students[0][2, -1]
       evaluator_students[-1] = evaluator_students[-1][0, -3]
-      # puts '@@@@@@@@@'
-      # puts evaluator_students.length
       application_status = row[5]
       team_to_update = Team.find_by(id: teamID)
       team_to_update.avg_rank = avg_rank.to_f
@@ -222,66 +222,6 @@ class TeamsController < ApplicationController
     end
   end
 
-  def getEvaluatedTeams(beginI, endI, teamID, teamIDs, size)
-    if beginI + size - 1 > endI
-        teamsBack = teamIDs[beginI..teamIDs.length() - 1]
-        teamsFront = teamIDs[0..endI]
-        teams = teamsFront + teamsBack
-    else
-        teams = teamIDs[beginI..endI]
-    end
-    if teams.delete(teamID)
-      if beginI > 0
-        teams << teamIDs[beginI - 1]
-      else
-        teams << teamIDs[endI + 1]
-      end
-    end
-    return teams
-  end
-
-  def applicant_eval_matching
-    # authenticate users
-    !authenticate_user(true, true) && return
-    # if confirm false, return
-    confirm_params = params.require(:team).permit(:confirm)
-    if confirm_params[:confirm] == 'false'
-      redirect_to applicant_admin_index_path(), flash: {
-        success: 'cancelled'
-      }
-    else
-      teams = Team.where("proposal_link != \'\'")
-      teamIDs = []
-      teams.each do |team|
-        teamIDs << team.id
-      end
-      teamIDs = teamIDs.shuffle
-      size = 4
-      # to-do: 'Invalid size': < 2 * size + 1
-      # fix self evaluate
-      teamIDs.each_with_index do |teamID, i|
-          team = Team.find_by(id: teamID)
-          members = team.students
-          # update params, shift the links to peer eval page
-          member1 = members[0].id
-          member2 = members[1].id
-          member1Begin = i % teamIDs.length()
-          member1End = (i + size - 1) % teamIDs.length()
-          member2Begin = (i + size) % teamIDs.length()
-          member2End = (i + size + size - 1) % teamIDs.length()
-          teamsBy1 = getEvaluatedTeams(member1Begin, member1End, teamID, teamIDs, size)
-          teamsBy2 = getEvaluatedTeams(member2Begin, member2End, teamID, teamIDs, size)
-          members[0].evaluatee_ids = teamsBy1
-          members[1].evaluatee_ids = teamsBy2
-          members[0].save
-          members[1].save
-        end
-      # update team attributes: for each member, evaluaters, evaluatees, application status   
-      redirect_to applicant_admin_index_path(), flash: {
-        success: 'success'
-      }
-    end
-  end
 
   private
 

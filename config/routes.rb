@@ -73,10 +73,18 @@ Rails.application.routes.draw do
     end
   end
   resources :mentor_matchings, only: :index
-  resources :applicant_admin, only: [:index] do
-    get 'prepare_peer_eval'
-    get 'purge_and_open'
-  end
+  get 'applicant_admin', to: 'applicant_admin#index'
+  get 'applicant_admin/manage_peer_eval', to: 'applicant_admin#manage_peer_eval'
+  get 'applicant_admin/manage_peer_eval/prepare_peer_eval', to: 'applicant_admin#prepare_peer_eval'
+  post 'applicant_admin/applicant_eval_matching', to: 'applicant_admin#applicant_eval_matching'
+  patch 'applicant_admin/applicant_eval_matching', to: 'applicant_admin#applicant_eval_matching'
+  # resources :applicant_admin, only: [:index] do
+  #   get 'manage_peer_eval'
+  #   get 'prepare_peer_eval'
+  #   get 'purge_and_open'
+  #   post 'applicant_eval_matching'
+  #   patch 'applicant_eval_matching'
+  # end
 
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
     get 'new_batch', on: :collection
@@ -106,8 +114,6 @@ Rails.application.routes.draw do
       get 'match_mentor'
       post 'match_mentor_success'
       post 'accept_mentor'
-      post 'applicant_eval_matching'
-      patch 'applicant_eval_matching'
     end
   end
   resources :evaluatings, only: [:index, :new, :create,
