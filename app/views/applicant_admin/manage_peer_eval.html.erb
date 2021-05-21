@@ -4,7 +4,8 @@
       <h3 class="text-center"> Peer Evaluation Management</h3>
     </div>
     <div class="panel-body">
-        <a href="<% applicant_admin_manage_peer_eval_prepare_peer_eval_path() %>" class="btn btn-default">Generate Relations</a>
+        <%= link_to 'Generate Relations', applicant_admin_manage_peer_eval_path(), method: :applicant_eval_matching, class: 'btn btn-default',
+              data: { confirm: 'Start matching?' } %>
         <a href="#" class="btn btn-default">Import Relations</a>
         <a href="#" class="btn btn-default">Download Relations</a>
         <p>

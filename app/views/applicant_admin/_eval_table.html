@@ -13,7 +13,7 @@
             <%= render 'team_name_representation', locals: {team: team} %>
           </td>
           <td class="col-md-1">
-            Evaluators
+            <a href="<%= applicant_admin_show_evaluators_path(team) %>">Evaluators</a>
           </td>
           <td class="col-md-1">
             <% if can_current_user_edit_team(team) %>

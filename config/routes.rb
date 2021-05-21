@@ -75,9 +75,10 @@ Rails.application.routes.draw do
   resources :mentor_matchings, only: :index
   get 'applicant_admin', to: 'applicant_admin#index'
   get 'applicant_admin/manage_peer_eval', to: 'applicant_admin#manage_peer_eval'
-  get 'applicant_admin/manage_peer_eval/prepare_peer_eval', to: 'applicant_admin#prepare_peer_eval'
-  post 'applicant_admin/applicant_eval_matching', to: 'applicant_admin#applicant_eval_matching'
-  patch 'applicant_admin/applicant_eval_matching', to: 'applicant_admin#applicant_eval_matching'
+  # get 'applicant_admin/manage_peer_eval/prepare_peer_eval', to: 'applicant_admin#prepare_peer_eval'
+  post 'applicant_admin/manage_peer_eval', to: 'applicant_admin#applicant_eval_matching'
+  patch 'applicant_admin/manage_peer_eval', to: 'applicant_admin#applicant_eval_matching'
+  get 'applicant_admin/show_evaluators/:id', to: 'applicant_admin#show_evaluators'
   # resources :applicant_admin, only: [:index] do
   #   get 'manage_peer_eval'
   #   get 'prepare_peer_eval'

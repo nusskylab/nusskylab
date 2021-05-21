@@ -23,3 +23,5 @@ highlight current application stage
 refactor post purge and open to get purge and open
 hint:
 have not generated peer eval relations
+redirection after selecting teams
+decimal place for ranking
