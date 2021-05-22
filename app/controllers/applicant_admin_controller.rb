@@ -15,15 +15,6 @@ class ApplicantAdminController < ApplicationController
           stage: stage
       }
     end
-
-    def prepare_peer_eval
-      !authenticate_user(true, true) && return
-      puts '!!!!!!!'
-      #to-do: if no team
-      render locals: {
-          teams: Team.all
-      }
-    end
     
     def getEvaluatedTeams(beginI, endI, teamID, teamIDs, size)
       if beginI + size - 1 > endI
@@ -72,19 +63,18 @@ class ApplicantAdminController < ApplicationController
         members[1].evaluatee_ids = teamsBy2
         members[0].save
         members[1].save
+        teamsBy1.each do |team|
+          team.evaluator_students << member1.name
+          team.save
+        end
+        teamsBy2.each do |team|
+          team.evaluator_students << member2.name
+          team.save
+        end
       end
       # update team attributes: for each member, evaluaters, evaluatees, application status   
       redirect_to applicant_admin_manage_peer_eval_path(), flash: {
         success: 'Success.'
-      }
-    end
-
-    def show_evaluators
-      !authenticate_user(true, true) && return
-      team = Team.find(params[:id])
-      render locals: {
-        evaluators: team.evaluatee_ids,
-        team: team
       }
     end
 

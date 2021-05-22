@@ -76,9 +76,9 @@ Rails.application.routes.draw do
   get 'applicant_admin', to: 'applicant_admin#index'
   get 'applicant_admin/manage_peer_eval', to: 'applicant_admin#manage_peer_eval'
   # get 'applicant_admin/manage_peer_eval/prepare_peer_eval', to: 'applicant_admin#prepare_peer_eval'
-  post 'applicant_admin/manage_peer_eval', to: 'applicant_admin#applicant_eval_matching'
-  patch 'applicant_admin/manage_peer_eval', to: 'applicant_admin#applicant_eval_matching'
-  get 'applicant_admin/show_evaluators/:id', to: 'applicant_admin#show_evaluators'
+  # post 'applicant_admin/manage_peer_eval', to: 'applicant_admin#applicant_eval_matching'
+  # patch 'applicant_admin/manage_peer_eval', to: 'applicant_admin#applicant_eval_matching'
+  # get 'applicant_admin/show_evaluators/:id', to: 'applicant_admin#show_evaluators'
   # resources :applicant_admin, only: [:index] do
   #   get 'manage_peer_eval'
   #   get 'prepare_peer_eval'
@@ -106,10 +106,18 @@ Rails.application.routes.draw do
     get 'new_batch', on: :collection
     post 'create_batch', on: :collection
   end
+
+  #todo: change to  on collection
   resources :teams do
     get 'upload_csv'
     post 'update_teams'
     patch 'update_teams'
+    post 'applicant_eval_matching', on: :collection
+    patch 'applicant_eval_matching', on: :collection
+    get 'prepare_peer_eval_path', on: :collection
+    member do
+      get 'show_evaluators'
+    end
     resources :feedbacks, only: [:new, :create, :edit, :update]
     member do
       get 'match_mentor'
