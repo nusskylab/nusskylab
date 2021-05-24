@@ -221,8 +221,22 @@ class TeamsController < ApplicationController
       return
     end
   end
+  
+  def applicant_main
+    !authenticate_user(true, true) && return
+    cohort = current_cohort
+    peer_eval_open = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline
+    website_open = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
+    stage = 'all'
+    #to-do: if no team
+    render locals: {
+        cohort: cohort,
+        peer_eval_open: peer_eval_open,
+        website_open: website_open,
+        stage: stage
+    }
+  end
 
-      
   def getEvaluatedTeams(beginI, endI, teamID, teamIDs, size)
     if beginI + size - 1 > endI
         teamsBack = teamIDs[beginI..teamIDs.length() - 1]
@@ -288,7 +302,7 @@ class TeamsController < ApplicationController
   def prepare_peer_eval
     !authenticate_user(true, true) && return
     cohort = current_cohort
-    #to-do: if no team
+    #to-do: if no team, and only the qualified team
     render locals: {
         teams: Team.find(cohort: cohort)
     }

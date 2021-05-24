@@ -1,20 +1,18 @@
 class ApplicantAdminController < ApplicationController
-    def index
-      !authenticate_user(true, true) && return
-      cohort = current_cohort
-      peer_eval_open = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline
-      website_open = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
-      team = Team.first
-      stage = 'all'
-      #to-do: if no team
-      render locals: {
-          cohort: cohort,
-          peer_eval_open: peer_eval_open,
-          team: team,
-          website_open: website_open,
-          stage: stage
-      }
-    end
+    # def index
+    #   !authenticate_user(true, true) && return
+    #   cohort = current_cohort
+    #   peer_eval_open = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline
+    #   website_open = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
+    #   stage = 'all'
+    #   #to-do: if no team
+    #   render locals: {
+    #       cohort: cohort,
+    #       peer_eval_open: peer_eval_open,
+    #       website_open: website_open,
+    #       stage: stage
+    #   }
+    # end
     
     def getEvaluatedTeams(beginI, endI, teamID, teamIDs, size)
       if beginI + size - 1 > endI

@@ -73,19 +73,10 @@ Rails.application.routes.draw do
     end
   end
   resources :mentor_matchings, only: :index
-  get 'applicant_admin', to: 'applicant_admin#index'
-  get 'applicant_admin/manage_peer_eval', to: 'applicant_admin#manage_peer_eval'
   # get 'applicant_admin/manage_peer_eval/prepare_peer_eval', to: 'applicant_admin#prepare_peer_eval'
   # post 'applicant_admin/manage_peer_eval', to: 'applicant_admin#applicant_eval_matching'
   # patch 'applicant_admin/manage_peer_eval', to: 'applicant_admin#applicant_eval_matching'
   # get 'applicant_admin/show_evaluators/:id', to: 'applicant_admin#show_evaluators'
-  # resources :applicant_admin, only: [:index] do
-  #   get 'manage_peer_eval'
-  #   get 'prepare_peer_eval'
-  #   get 'purge_and_open'
-  #   post 'applicant_eval_matching'
-  #   patch 'applicant_eval_matching'
-  # end
 
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
     get 'new_batch', on: :collection
@@ -107,14 +98,17 @@ Rails.application.routes.draw do
     post 'create_batch', on: :collection
   end
 
+  
   #todo: change to  on collection
+  get '/teams/prepare_peer_eval', to: 'teams#prepare_peer_eval'
   resources :teams do
     get 'upload_csv'
     post 'update_teams'
     patch 'update_teams'
+    get 'prepare_peer_eval', on: :collection
+    get 'applicant_main', on: :collection
     post 'applicant_eval_matching', on: :collection
     patch 'applicant_eval_matching', on: :collection
-    get 'prepare_peer_eval_path', on: :collection
     member do
       get 'show_evaluators'
     end

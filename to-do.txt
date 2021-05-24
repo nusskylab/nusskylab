@@ -25,3 +25,6 @@ hint:
 have not generated peer eval relations
 redirection after selecting teams
 decimal place for ranking
+check user true true
+edit team status
+limit status options

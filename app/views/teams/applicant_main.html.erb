@@ -14,7 +14,7 @@
         <a href="<%= teams_path(format: 'csv', cohort: cohort) %>" class="btn btn-primary">Download applicants rank</a>
         </p>
         <p>
-        <a href="<%= applicant_admin_manage_peer_eval_path() %>" class="btn btn-warning">Manage Peer Evaluation</a>
+        <a href="<%= prepare_peer_eval_teams_path %>" class="btn btn-default">Manage Peer Evaluation</a>
         </p>
         <p>
         <%= render 'applicant_table', locals: { teams: Team.where("application_status >= 'c'").order(:avg_rank)} %>
