@@ -23,11 +23,7 @@
             <a class="btn btn-primary btn-xs" href="<%=  team_path(team.id) %>">View</a>
           <% end %>
           <% if can_current_user_edit_team(team) %>
-            <a class="btn btn-default btn-xs" href="<%= edit_team_path(team.id) %>">Edit</a>
-          <% end %>
-          <% if can_current_user_delete_team(team) %>
-            <%= link_to 'Delete', team_path(team.id), method: :delete, class: 'btn btn-danger btn-xs',
-              data: { confirm: 'Are you sure you want to delete this team and all associated resources?' } %>
+            <a class="btn btn-default btn-xs" href="<%= select_team_path(team.id) %>">Edit</a>
           <% end %>
         </td>
       </tr>

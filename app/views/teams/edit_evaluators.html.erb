@@ -1,0 +1,49 @@
+<% content_for :main_content do %>
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="text-center">Evaluators For Team <%= render 'team_name_representation', locals: {team: team} %></h3>
+    </div>
+    <div class="panel-body">
+      <table class="table tablesorter">
+        <thead>
+        <tr>
+          <th class="unsortable">User Name</th><th>User Email</th><th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+          <!--to-do: sort with avg score, add attributes-->
+          <% evaluators.each_with_index do |evaluator_email, idx| %>
+            <tr>
+              <td class="col-md-1">
+                <%= evaluator_names[idx] %>
+              </td>
+              <td class="col-md-1">
+                <%= evaluator_email %>
+              </td>
+              <td class="col-md-1">
+                <a href="<%= delete_eval_path(team, evaluator_email)%>" class="btn btn-danger btn-xs">delete</a>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div>
+        <%= simple_form_for team, html: {class: 'form-horizontal'}, url: add_evaluators_team_path(team) do |f| %>
+            <div class="form-group">
+                <label class="string required col-sm-3 control-label" for="evaluator_email">
+                    <abbr title="required">*</abbr> Add new evaluator
+                </label>
+                <div class="col-sm-9">
+                    <input placeholder="New evaluator's email" class="string required form-control" type="email" name="team[email]" id="evaluator_email">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <%= f.submit 'Submit', class: 'btn btn-success' %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+  </div>
+<% end %>

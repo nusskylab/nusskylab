@@ -20,21 +20,23 @@ class ApplicantEvaluatingsController < ApplicationController
       #     user_id: current_user.id,
       #     cohort: cohort).advised_teams_evaluatings
       else
-        fail ActionController::RoutingError, t(
-          'application.path_not_found_message')
+        fail ActionController::RoutingError, "routing error"
       end
-      @page_title = t('.page_title')
       render locals: {
-        teams: @teams
+        cohort: cohort,
+        teams: @teams,
+        team: Team.first
       }
     end
 
-    def generate_relations
+      
+    def prepare_eval
       !authenticate_user(true, true) && return
       cohort = current_cohort
-      #to-do: only the qualified team
+      #to-do: if no team, and only the qualified team
       render locals: {
-          teams: Team.find(cohort: cohort)
+          teams: Team.find(cohort: cohort),
+          # team: Team.first
       }
     end
  
@@ -59,15 +61,15 @@ class ApplicantEvaluatingsController < ApplicationController
     def applicant_eval_matching
       # authenticate users
       !authenticate_user(true, true) && return
-      confirm = params.permit(:confirm)
-      if confirm[:confirm] == 'false'
-        redirect_to applicant_evaluatings_path(), flash: {
-          warning: 'Cancelled.'
-        }
-      end
+      # confirm = params.permit(:confirm)
+      # if confirm[:confirm] == 'false'
+      #   redirect_to applicant_evaluatings_path(), flash: {
+      #     warning: 'Cancelled.'
+      #   }
+      # end
 
       #todo: cohort
-      teams = Team.where("proposal_link <> \'\'")
+      teams = Team.where("application_status = 'c'")
       teamIDs = []
       teams.each do |team|
         teamIDs << team.id
@@ -92,11 +94,13 @@ class ApplicantEvaluatingsController < ApplicationController
         members[1].evaluatee_ids = teamsBy2
         members[0].save
         members[1].save
-        teamsBy1.each do |team|
+        teamsBy1.each do |id|
+          team = Team.find_by(id: id)
           team.evaluator_students << member1.name
           team.save
         end
-        teamsBy2.each do |team|
+        teamsBy2.each do |id|
+          team = Team.find_by(id: id)
           team.evaluator_students << member2.name
           team.save
         end
@@ -105,9 +109,6 @@ class ApplicantEvaluatingsController < ApplicationController
       redirect_to applicant_evaluatings_path(), flash: {
         success: 'Success.'
       }
-    end
-    
-    def import_relations
     end
     # def new
     #   !authenticate_user(true, false, Adviser.all.map(&:user)) && return

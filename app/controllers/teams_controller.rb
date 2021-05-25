@@ -85,6 +85,44 @@ class TeamsController < ApplicationController
     end
   end
 
+  def upload_csv_eval
+    !authenticate_user(true, true) && return
+    render locals: {
+      team: Team.first
+    }
+  end
+
+  def update_eval
+    require 'csv'
+    uploaded_io = params[:team][:uploaded_csv]
+    File.open(File.join('public', uploaded_io.original_filename), 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
+    #to-do: error checking, check title and whether there is any parsing error
+    csv_text = CSV.read(Rails.root.join('public', uploaded_io.original_filename))
+    count = 0
+    for i in 0..csv_text.length - 1
+      if i == 0
+        next
+      end
+      row = csv_text[i]
+      teamID = row[0]
+      evaluator_students = row[-1]
+      if evaluator_students.blank?
+        next
+      end
+      team_to_update = Team.find_by(id: teamID)
+      evaluator_students = evaluator_students[2..-3]
+      evaluator_students = evaluator_students.split('", "')
+      team_to_update.evaluator_students = evaluator_students
+      team_to_update.save
+    end
+    msg = 'success'
+    redirect_to applicant_evaluatings_path(), flash: {
+      success: msg
+    }
+  end
+
   def upload_csv
     !authenticate_user(true, true) && return
     render locals: {
@@ -101,9 +139,7 @@ class TeamsController < ApplicationController
     #to-do: error checking, check title and whether there is any parsing error
     csv_text = CSV.read(Rails.root.join('public', uploaded_io.original_filename))
     elements_per_row = 5
-    rows = []
     count = 0
-    row = []
     for i in 0..csv_text.length - 1
       if i == 0
         next
@@ -113,9 +149,7 @@ class TeamsController < ApplicationController
       teamID = row[1]
       avg_rank = row[2]
       evaluators = row[3]
-      evaluator_students = evaluators.split('\', \'')
-      evaluator_students[0] = evaluator_students[0][2, -1]
-      evaluator_students[-1] = evaluator_students[-1][0, -3]
+      evaluator_students = evaluators[2..-3].split('\', \'')
       application_status = row[5]
       team_to_update = Team.find_by(id: teamID)
       team_to_update.avg_rank = avg_rank.to_f
@@ -227,13 +261,12 @@ class TeamsController < ApplicationController
     cohort = current_cohort
     peer_eval_open = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline
     website_open = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
-    stage = 'all'
     #to-do: if no team
     render locals: {
         cohort: cohort,
         peer_eval_open: peer_eval_open,
         website_open: website_open,
-        stage: stage
+        team: Team.first
     }
   end
 
@@ -304,15 +337,80 @@ class TeamsController < ApplicationController
     cohort = current_cohort
     #to-do: if no team, and only the qualified team
     render locals: {
-        teams: Team.find(cohort: cohort)
+        teams: Team.find(cohort: cohort),
+        team: Team.first
     }
   end
 
   def show_evaluators 
     !authenticate_user(true, true) && return
     team = Team.find(params[:id]) || (record_not_found && return)
+    evaluators = team.evaluator_students
+    evaluator_names = []
+    evaluators.each do |evaluator| 
+      user = User.find_by(email: evaluator)
+      evaluator_names << user.user_name
+    end
     render locals: {
-      team: team
+      team: team,
+      evaluators: evaluators,
+      evaluator_names: evaluator_names
+    }
+  end
+
+  def edit_evaluators
+    !authenticate_user(true, true) && return
+    team = Team.find(params[:id]) || (record_not_found && return)
+    evaluators = team.evaluator_students
+    evaluator_names = []
+    evaluators.each do |evaluator| 
+      user = User.find_by(email: evaluator)
+      evaluator_names << user.user_name
+    end
+    render locals: {
+      team: team,
+      evaluators: evaluators,
+      evaluator_names: evaluator_names
+    }
+  end
+
+  def add_evaluators
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id]) || (record_not_found && return)
+    email_params = params.require(:team).permit(:email)
+    @team.evaluator_students << email_params[:email]
+    # todo: update students' evaluatee_ids
+    if @team.save
+      redirect_to edit_evaluators_team_path(@team), flash: {
+        success: "Success."
+      }
+    else
+      redirect_to edit_evaluators_team_path(@team), flash: {
+        danger: "Action Failed."
+      }
+    end
+  end
+  
+  def delete_evaluator 
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id]) || (record_not_found && return)
+    @team.evaluator_students.delete(params[:evaluator_email])
+    if @team.save
+      redirect_to edit_evaluators_team_path(@team), flash: {
+        success: "Success."
+      }
+    else
+      redirect_to edit_evaluators_team_path(@team), flash: {
+        danger: "Action Failed."
+      }
+    end
+  end
+
+  def select_team 
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id]) || (record_not_found && return)
+    render locals: {
+      team: @team
     }
   end
 

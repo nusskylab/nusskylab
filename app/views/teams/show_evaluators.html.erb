@@ -4,7 +4,27 @@
       <h3 class="text-center">Evaluators For Team <%= render 'team_name_representation', locals: {team: team} %></h3>
     </div>
     <div class="panel-body">
-        <%= team.evaluator_students %>
+      <table class="table tablesorter">
+        <thead>
+        <tr>
+          <th class="unsortable">User Name</th><th>User Email</th>
+        </tr>
+        </thead>
+        <tbody>
+          <!--to-do: sort with avg score, add attributes-->
+          <% evaluators.each_with_index do |evaluator_email, idx| %>
+            <tr>
+              <td class="col-md-1">
+                <%= evaluator_names[idx] %>
+              </td>
+              <td class="col-md-1">
+                <%= evaluator_email %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
     </div>
   </div>
 <% end %>

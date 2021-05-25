@@ -4,18 +4,10 @@
       <h3 class="text-center"> Applicants Selection <%= cohort %></h3>
     </div>
     <div class="panel-body">
-        <p>
-        <a href="<%= application_deadlines_path() %>" class="btn btn-primary">Manage Deadlines</a>
-        </p>
-        <hr/>
         <%# <% if Time.now > peer_eval_open and team.application_status != 'c' %>
           <!-- start peer evaluation -->
-        <p>
-        <a href="<%= teams_path(format: 'csv', cohort: cohort) %>" class="btn btn-primary">Download applicants rank</a>
-        </p>
-        <p>
-        <a href="<%= prepare_peer_eval_teams_path %>" class="btn btn-default">Manage Peer Evaluation</a>
-        </p>
+        <a href="<%= teams_path(format: 'csv', cohort: cohort) %>" class="btn btn-default">Download applicants rank</a>
+        <a href="<%= team_upload_csv_path(team) %>" class="btn btn-default">Import applicants rank</a>
         <p>
         <%= render 'applicant_table', locals: { teams: Team.where("application_status >= 'c'").order(:avg_rank)} %>
         </p>

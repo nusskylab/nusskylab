@@ -28,3 +28,4 @@ decimal place for ranking
 check user true true
 edit team status
 limit status options
+edit teams

@@ -16,9 +16,7 @@
             <a href="<%= show_evaluators_team_path(team) %>">Evaluators</a>
           </td>
           <td class="col-md-1">
-            <% if can_current_user_edit_team(team) %>
-              <a class="btn btn-default btn-xs" href="#">Edit</a>
-            <% end %>
+            <a class="btn btn-default btn-xs" href="edit_evaluating_path(team)">Edit</a>
           </td>
         </tr>
       <% end %>
