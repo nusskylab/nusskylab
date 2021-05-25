@@ -106,7 +106,9 @@ class ApplicantEvaluatingsController < ApplicationController
         success: 'Success.'
       }
     end
-  
+    
+    def import_relations
+    end
     # def new
     #   !authenticate_user(true, false, Adviser.all.map(&:user)) && return
     #   @evaluating = Evaluating.new
