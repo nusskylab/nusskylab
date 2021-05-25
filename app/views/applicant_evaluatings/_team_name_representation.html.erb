@@ -1,0 +1,7 @@
+<% if locals[:team].has_dropped %>
+    <span data-toggle="tooltip" data-placement="top" title="<%= I18n.t('teams.has_dropped_tooltip') %>">
+      <del><%= locals[:team].team_name %></del>
+    </span>
+<% else %>
+    <span><%= locals[:team].team_name %></span>
+<% end %>

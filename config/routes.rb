@@ -100,7 +100,6 @@ Rails.application.routes.draw do
 
   
   #todo: change to  on collection
-  get '/teams/prepare_peer_eval', to: 'teams#prepare_peer_eval'
   resources :teams do
     get 'upload_csv'
     post 'update_teams'
@@ -121,6 +120,13 @@ Rails.application.routes.draw do
   end
   resources :evaluatings, only: [:index, :new, :create,
                                  :edit, :update, :destroy]
+  resources :applicant_evaluatings, only: [:index] do
+    member do
+      get 'generate_relations'
+    end
+    post 'applicant_eval_matching', on: :collection
+    patch 'applicant_eval_matching', on: :collection
+  end
   resources :milestones do
     resources :teams, only: [:show] do
       resources :submissions, only: [:new, :create, :edit, :update, :show]
