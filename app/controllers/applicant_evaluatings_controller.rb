@@ -15,17 +15,14 @@ class ApplicantEvaluatingsController < ApplicationController
         @evaluatings = ApplicantEvaluatings.all
         #to-do: add in application status
         @teams = Team.where(cohort: cohort)
-      # elsif current_user_adviser?
-      #   @evaluatings = Adviser.find_by(
-      #     user_id: current_user.id,
-      #     cohort: cohort).advised_teams_evaluatings
       else
         fail ActionController::RoutingError, "routing error"
       end
       render locals: {
         cohort: cohort,
         teams: @teams,
-        team: Team.first
+        team: Team.first,
+        available_time: ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
       }
     end
 

@@ -24,4 +24,8 @@ module ApplicationHelper
   def survey_template_type_to_human(survey_template_type)
     survey_template_type.split('_')[2..-1].map(&:capitalize!).join(' ')
   end
+
+  def get_portal_open_date 
+    open_date = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
+  end
 end

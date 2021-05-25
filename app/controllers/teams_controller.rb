@@ -261,11 +261,15 @@ class TeamsController < ApplicationController
     cohort = current_cohort
     peer_eval_open = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline
     website_open = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
+    available_time = ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
+    result_release_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline
     #to-do: if no team
     render locals: {
         cohort: cohort,
+        available_time: available_time,
         peer_eval_open: peer_eval_open,
         website_open: website_open,
+        result_release_date: result_release_date,
         team: Team.first
     }
   end
@@ -410,7 +414,7 @@ class TeamsController < ApplicationController
     !authenticate_user(true, true) && return
     @team = Team.find(params[:id]) || (record_not_found && return)
     render locals: {
-      team: @team
+      team: @team,
     }
   end
 
