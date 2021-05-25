@@ -62,11 +62,11 @@ class ApplicantAdminController < ApplicationController
         members[0].save
         members[1].save
         teamsBy1.each do |team|
-          team.evaluator_students << member1.name
+          team.evaluator_students << member1.email
           team.save
         end
         teamsBy2.each do |team|
-          team.evaluator_students << member2.name
+          team.evaluator_students << member2.email
           team.save
         end
       end

@@ -104,6 +104,9 @@ Rails.application.routes.draw do
     get 'upload_csv'
     post 'update_teams'
     patch 'update_teams'
+    get 'upload_csv_eval'
+    post 'update_eval'
+    patch 'update_eval'
     get 'prepare_peer_eval', on: :collection
     get 'applicant_main', on: :collection
     post 'applicant_eval_matching', on: :collection
