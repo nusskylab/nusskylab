@@ -98,7 +98,8 @@ Rails.application.routes.draw do
     post 'create_batch', on: :collection
   end
 
-  post '/teams/:id/delete_evaluator_team_path/:evaluator_email', to: 'teams#delete_evaluator', as: :delete_eval
+  get '/teams/:id/delete_evaluator_team_path/:evaluator_email', to: 'teams#delete_evaluator', as: :delete_eval
+  patch '/teams/:id/confirm_delete_relation_team_path/:evaluator_email', to: 'teams#confirm_delete_relation', as: :delete_rel
   #todo: change to  on collection
   resources :teams do
     get 'upload_csv'

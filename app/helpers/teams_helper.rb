@@ -37,4 +37,22 @@ module TeamsHelper
     (not team.adviser_id.blank? and current_user and current_user.id == team.adviser.user_id)
   end
 
+    
+  def delete_evaluator 
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id]) || (record_not_found && return)
+    @team.evaluator_students.delete(params[:evaluator_email])
+    puts '!!!!!!!!!!!!!!'
+    puts params[:evaluator_email]
+    puts @team.evaluator_students
+    if @team.save
+      redirect_to edit_evaluators_team_path(@team), flash: {
+        success: "Success."
+      }
+    else
+      redirect_to edit_evaluators_team_path(@team), flash: {
+        danger: "Action Failed."
+      }
+    end
+  end
 end

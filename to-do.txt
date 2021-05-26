@@ -29,3 +29,5 @@ check user true true
 edit team status
 limit status options
 edit teams
+rename messages
+add evaluatees to edit eavaluators page

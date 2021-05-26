@@ -398,7 +398,16 @@ class TeamsController < ApplicationController
   def delete_evaluator 
     !authenticate_user(true, true) && return
     @team = Team.find(params[:id]) || (record_not_found && return)
-    @team.evaluator_students.delete(params[:evaluator_email])
+    render locals:{
+      team: @team,
+      evaluator_email: params[:evaluator_email]
+    }
+  end
+
+  def confirm_delete_relation
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id])
+    @team.evaluator_students.delete(params[:evaluator_email] + '.com')
     if @team.save
       redirect_to edit_evaluators_team_path(@team), flash: {
         success: "Success."
