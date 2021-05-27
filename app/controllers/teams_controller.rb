@@ -118,7 +118,7 @@ class TeamsController < ApplicationController
       team_to_update.save
     end
     msg = 'success'
-    redirect_to applicant_evaluatings_path(), flash: {
+    redirect_to applicant_eval_team_path(), flash: {
       success: msg
     }
   end
@@ -255,7 +255,25 @@ class TeamsController < ApplicationController
       return
     end
   end
-  
+
+  def applicant_eval
+    !authenticate_user(true, true) && return
+    cohort = params[:cohort] || current_cohort
+    cohort = cohort.to_i
+    if current_user_admin?
+      #to-do: add in application status
+      @teams = Team.where(cohort: cohort)
+    else
+      fail ActionController::RoutingError, "routing error"
+    end
+    render locals: {
+      cohort: cohort,
+      teams: @teams,
+      team: Team.first,
+      available_time: ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
+    }
+  end
+
   def applicant_main
     !authenticate_user(true, true) && return
     cohort = current_cohort
@@ -295,16 +313,22 @@ class TeamsController < ApplicationController
   def applicant_eval_matching
     # authenticate users
     !authenticate_user(true, true) && return
-
-    teams = Team.where("proposal_link <> \'\'")
+    set_google_form_link(params[:google_form_link])
+    #to-do: add cohort
+    teams = Team.where("application_status >= 'c'")
     teamIDs = []
     teams.each do |team|
       teamIDs << team.id
     end
     teamIDs = teamIDs.shuffle
-    size = 4
+    size = params[:matching_size].to_i
+    teamIDs.each do |teamID|
+      team = Team.find_by(id: teamID)
+      team.evaluator_students = []
+      team.save
+    end
+
     # to-do: 'Invalid size': < 2 * size + 1
-    # fix self evaluate
     teamIDs.each_with_index do |teamID, i|
       team = Team.find_by(id: teamID)
       members = team.students
@@ -322,27 +346,36 @@ class TeamsController < ApplicationController
       members[0].save
       members[1].save
       teamsBy1.each do |team|
-        team.evaluator_students << member1.name
-        team.save
+        @team = Team.find_by(id: team)
+        uid = members[0].user_id
+        @user = User.find_by(id: uid)
+        if not @team.evaluator_students.include?(@user.email)
+          @team.evaluator_students << @user.email
+          @team.save
+        end
       end
       teamsBy2.each do |team|
-        team.evaluator_students << member2.name
-        team.save
+        @team = Team.find_by(id: team)
+        uid = members[1].user_id
+        @user = User.find_by(id: uid)
+        if not @team.evaluator_students.include?(@user.email)
+          @team.evaluator_students << @user.email
+          @team.save
+        end
       end
     end
     # update team attributes: for each member, evaluaters, evaluatees, application status   
-    redirect_to applicant_admin_manage_peer_eval_path(), flash: {
+    redirect_to applicant_eval_teams_path, flash: {
       success: 'Success.'
     }
   end
   
-  def prepare_peer_eval
+  def prepare_eval
     !authenticate_user(true, true) && return
     cohort = current_cohort
     #to-do: if no team, and only the qualified team
     render locals: {
-        teams: Team.find(cohort: cohort),
-        team: Team.first
+        teams: Team.where(cohort: cohort)
     }
   end
 

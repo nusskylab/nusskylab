@@ -98,6 +98,7 @@ Rails.application.routes.draw do
     post 'create_batch', on: :collection
   end
 
+  get '/teams/prepare_eval', to: 'teams#prepare_eval'
   get '/teams/:id/delete_evaluator_team_path/:evaluator_email', to: 'teams#delete_evaluator', as: :delete_eval
   patch '/teams/:id/confirm_delete_relation_team_path/:evaluator_email', to: 'teams#confirm_delete_relation', as: :delete_rel
   #todo: change to  on collection
@@ -107,10 +108,11 @@ Rails.application.routes.draw do
     patch 'update_teams'
     get 'upload_csv_eval'
     post 'update_eval'
-    patch 'update_eval' 
-    get 'applicant_main', on: :collection
+    patch 'update_eval'
     post 'applicant_eval_matching', on: :collection
     patch 'applicant_eval_matching', on: :collection
+    get 'applicant_eval', on: :collection
+    get 'applicant_main', on: :collection
     member do
       get 'select'
       get 'show_evaluators'
@@ -127,11 +129,6 @@ Rails.application.routes.draw do
   end
   resources :evaluatings, only: [:index, :new, :create,
                                  :edit, :update, :destroy]
-  resources :applicant_evaluatings, only: [:index] do
-    get 'prepare_eval'
-    post 'applicant_eval_matching', on: :collection
-    patch 'applicant_eval_matching', on: :collection
-  end
   resources :milestones do
     resources :teams, only: [:show] do
       resources :submissions, only: [:new, :create, :edit, :update, :show]

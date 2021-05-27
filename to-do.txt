@@ -31,3 +31,6 @@ limit status options
 edit teams
 rename messages
 add evaluatees to edit eavaluators page
+change to on collection
+reset database
+student's application status

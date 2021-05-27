@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include CohortHelper
 
+  before_action :set_google_form_link
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def authenticate_user(login_required = true, admin_only = false,
@@ -96,6 +97,14 @@ class ApplicationController < ActionController::Base
   def record_not_found
     respond_to do |f|
       f.html { render file: "#{Rails.root}/public/404.html", status: 404 }
+    end
+  end
+
+  def set_google_form_link(link)
+    if link.blank?
+      @google_form_link = "https://forms.gle/UdjGRunfqvuWkD459"
+    else
+      @google_form_link = link
     end
   end
 

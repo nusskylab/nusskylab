@@ -225,11 +225,6 @@ RSpec.describe UsersController, type: :controller do
         student = FactoryGirl.create(:student, user: subject.current_user, application_status: false)
         get :register_as_team, id: subject.current_user.id
         expect(response).to render_template(:register_as_team)
-
-        student.application_status = 'a'
-        student.save
-        get :register_as_team, id: subject.current_user.id
-        expect(response).to render_template(:register_as_team)
       end
     end
   end

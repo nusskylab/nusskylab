@@ -28,7 +28,7 @@
       <td><%= get_student_team_project_level(student) %></td>
       <td><%= get_student_team_adviser_name(student) %></td>
       <td><%= get_student_team_dropped_status(student) %></td>
-      <td><%= student.application_status %></td>
+      <td><%= get_student_team_application_status(student) %></td>
       <td><%= student.created_at %></td>
       <td>
         <a class="btn btn-primary btn-xs" href="<%=  student_path(student.id) %>">View</a>

@@ -1,0 +1,36 @@
+<% content_for :main_content do %>
+    <div class="container">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="text-center">Generate Peer Evaluation Relations</h3>
+        </div>
+        <div class="panel-body">
+          <%= simple_form_for :teams, wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+              url: applicant_eval_matching_teams_path do |f| %>,
+            <div class="form-group">
+                <label class="string required col-sm-3 control-label" for="matching_size">
+                  <abbr title="required">*</abbr> One student should evaluate how many teams?
+                </label>
+                <div class="col-sm-9">
+                  <input placeholder="Default value: 4" class="string form-control" type="number" name="matching_size" id="matching_size">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="string required col-sm-3 control-label" for="google_form_link">
+                  <abbr title="required">*</abbr> What is the google form link for peer evaluation?
+                </label>
+                <div class="col-sm-9">
+                  <input placeholder="Google form link" class="string form-control" type="url" name="google_form_link" id="google_form_link">
+                </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9">
+                <%= f.submit 'Submit', class: 'btn btn-success' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+<% end %>

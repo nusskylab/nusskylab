@@ -7,24 +7,6 @@
 #   edit:    edit and evaluating
 #   destroy: delete an evaluating
 class ApplicantEvaluatingsController < ApplicationController
-    def index
-      !authenticate_user(true, true) && return
-      cohort = params[:cohort] || current_cohort
-      cohort = cohort.to_i
-      if current_user_admin?
-        @evaluatings = ApplicantEvaluatings.all
-        #to-do: add in application status
-        @teams = Team.where(cohort: cohort)
-      else
-        fail ActionController::RoutingError, "routing error"
-      end
-      render locals: {
-        cohort: cohort,
-        teams: @teams,
-        team: Team.first,
-        available_time: ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
-      }
-    end
 
       
     def prepare_eval
@@ -103,7 +85,7 @@ class ApplicantEvaluatingsController < ApplicationController
         end
       end
       # update team attributes: for each member, evaluaters, evaluatees, application status   
-      redirect_to applicant_evaluatings_path(), flash: {
+      redirect_to applicant_eval_team_path(), flash: {
         success: 'Success.'
       }
     end

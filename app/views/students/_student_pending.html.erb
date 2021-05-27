@@ -32,7 +32,7 @@
                     result_release_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline
                     portal_open_date = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline %>
                 <!-- to-do: should maintain only 1 application status for either student or team -> team -->
-                <% status = (locals[:student].team == nil ? locals[:student].application_status : locals[:student].team.application_status)%>
+                <% status = get_student_team_application_status(locals[:student])%>
                 <!-- stage a, form teams -->
                 <% if status == 'a' %>
                   <% if Time.now > form_team_ddl %>
