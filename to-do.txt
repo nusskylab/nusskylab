@@ -34,3 +34,15 @@ add evaluatees to edit eavaluators page
 change to on collection
 reset database
 student's application status
+edit selection
+if csv got error -> exception -> msg
+you have successfully teamed up with who?
+https://folder.com
+sort the deadlines
+indicate current
+compulsory for google form
+error notification (admin_link_form)
+evaluatee and evaluators sync
+can only modify teams that reach the last stage
+debug peer evaluation matching
+date and time format for students page

@@ -28,6 +28,7 @@
       <li><a href="<%= teams_path %>">All Teams</a></li>
       <li><a href="<%= application_deadlines_path %>">Manage Application Deadlines</a></li>
       <% if Time.now < get_portal_open_date %>
+        <li><a href="<%= admin_links_path %>">Manage Google Links</a></li>
         <li><a href="<%= applicant_eval_teams_path %>">Applicant Evaluating Relations</a></li>
         <li><a href="<%= applicant_main_teams_path %>">Select Applicants</a></li>
       <% else %>

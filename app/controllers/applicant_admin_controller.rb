@@ -36,7 +36,7 @@ class ApplicantAdminController < ApplicationController
       # authenticate users
       !authenticate_user(true, true) && return
 
-      teams = Team.where("proposal_link <> \'\'")
+      teams = Team.where("proposal_link != ?", "")
       teamIDs = []
       teams.each do |team|
         teamIDs << team.id
@@ -73,14 +73,6 @@ class ApplicantAdminController < ApplicationController
       # update team attributes: for each member, evaluaters, evaluatees, application status   
       redirect_to applicant_admin_manage_peer_eval_path(), flash: {
         success: 'Success.'
-      }
-    end
-
-    def purge_and_open
-      !authenticate_user(true, true) && return
-      user = User.first
-      render locals: {
-        user: user
       }
     end
 

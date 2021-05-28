@@ -87,9 +87,6 @@ class TeamsController < ApplicationController
 
   def upload_csv_eval
     !authenticate_user(true, true) && return
-    render locals: {
-      team: Team.first
-    }
   end
 
   def update_eval
@@ -100,7 +97,6 @@ class TeamsController < ApplicationController
     end
     #to-do: error checking, check title and whether there is any parsing error
     csv_text = CSV.read(Rails.root.join('public', uploaded_io.original_filename))
-    count = 0
     for i in 0..csv_text.length - 1
       if i == 0
         next
@@ -125,9 +121,6 @@ class TeamsController < ApplicationController
 
   def upload_csv
     !authenticate_user(true, true) && return
-    render locals: {
-      team: Team.first
-    }
   end
 
   def update_teams
@@ -138,8 +131,6 @@ class TeamsController < ApplicationController
     end
     #to-do: error checking, check title and whether there is any parsing error
     csv_text = CSV.read(Rails.root.join('public', uploaded_io.original_filename))
-    elements_per_row = 5
-    count = 0
     for i in 0..csv_text.length - 1
       if i == 0
         next
@@ -157,9 +148,8 @@ class TeamsController < ApplicationController
       team_to_update.application_status = application_status
       team_to_update.save
     end
-    msg = 'success'
-    redirect_to applicant_admin_index_path(), flash: {
-      success: msg
+    redirect_to applicant_main_teams_path(), flash: {
+      success: 'Success.'
     }
   end
 
@@ -261,34 +251,34 @@ class TeamsController < ApplicationController
     cohort = params[:cohort] || current_cohort
     cohort = cohort.to_i
     if current_user_admin?
-      #to-do: add in application status
-      @teams = Team.where(cohort: cohort)
+      @teams = Team.where("cohort = ? and application_status = ?", cohort, 'c')
     else
       fail ActionController::RoutingError, "routing error"
     end
     render locals: {
       cohort: cohort,
       teams: @teams,
-      team: Team.first,
-      available_time: ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
+      peer_eval_open_time: ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline,
+      peer_eval_ddl: ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
     }
   end
 
   def applicant_main
     !authenticate_user(true, true) && return
     cohort = current_cohort
+    
+    submit_proposal_ddl = ApplicationDeadlines.find_by(name: 'submit proposal deadline').submission_deadline
     peer_eval_open = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline
-    website_open = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
-    available_time = ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
+    peer_eval_ddl = ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
     result_release_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline
-    #to-do: if no team
+    website_open = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
     render locals: {
         cohort: cohort,
-        available_time: available_time,
+        peer_eval_ddl: peer_eval_ddl,
         peer_eval_open: peer_eval_open,
         website_open: website_open,
         result_release_date: result_release_date,
-        team: Team.first
+        submit_proposal_ddl: submit_proposal_ddl
     }
   end
 
@@ -300,6 +290,7 @@ class TeamsController < ApplicationController
     else
         teams = teamIDs[beginI..endI]
     end
+    #to-do
     if teams.delete(teamID)
       if beginI > 0
         teams << teamIDs[beginI - 1]
@@ -313,22 +304,24 @@ class TeamsController < ApplicationController
   def applicant_eval_matching
     # authenticate users
     !authenticate_user(true, true) && return
-    set_google_form_link(params[:google_form_link])
-    #to-do: add cohort
-    teams = Team.where("application_status >= 'c'")
+    cohort = current_cohort
+    teams = Team.where("application_status = ? and cohort = ?", "c", cohort)
     teamIDs = []
     teams.each do |team|
       teamIDs << team.id
     end
     teamIDs = teamIDs.shuffle
-    size = params[:matching_size].to_i
+    if params[:matching_size].blank?
+      size = 4
+    else
+      size = params[:matching_size].to_i
+    end
     teamIDs.each do |teamID|
       team = Team.find_by(id: teamID)
       team.evaluator_students = []
       team.save
     end
 
-    # to-do: 'Invalid size': < 2 * size + 1
     teamIDs.each_with_index do |teamID, i|
       team = Team.find_by(id: teamID)
       members = team.students
@@ -345,19 +338,19 @@ class TeamsController < ApplicationController
       members[1].evaluatee_ids = teamsBy2
       members[0].save
       members[1].save
+      uid = members[0].user_id
+      @user = User.find_by(id: uid)
       teamsBy1.each do |team|
         @team = Team.find_by(id: team)
-        uid = members[0].user_id
-        @user = User.find_by(id: uid)
         if not @team.evaluator_students.include?(@user.email)
           @team.evaluator_students << @user.email
           @team.save
         end
       end
+      uid = members[1].user_id
+      @user = User.find_by(id: uid)
       teamsBy2.each do |team|
         @team = Team.find_by(id: team)
-        uid = members[1].user_id
-        @user = User.find_by(id: uid)
         if not @team.evaluator_students.include?(@user.email)
           @team.evaluator_students << @user.email
           @team.save
@@ -452,14 +445,31 @@ class TeamsController < ApplicationController
     end
   end
 
-  def select_team 
+  def select
     !authenticate_user(true, true) && return
     @team = Team.find(params[:id]) || (record_not_found && return)
     render locals: {
-      team: @team,
+      team: @team
     }
   end
 
+  def update_status 
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id]) || (record_not_found && return)
+
+    new_status = params.require(:team).permit(:application_status)[:application_status]
+    @team.application_status = new_status.to_s
+    if @team.save
+      redirect_to applicant_main_teams_path, flash: {
+        success: "Success."
+      }
+    else
+      redirect_to applicant_main_teams_path, flash: {
+        danger: "Failed."
+      }
+    end
+
+  end
   private
 
   def team_params

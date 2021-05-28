@@ -1,0 +1,6 @@
+<%= simple_form_for(locals[:link], wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+                    url: {action: 'update'}) do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :url, placeholder: true, placeholder: 'Enter in url form e.g. https//...' %>
+    <%= f.button :submit_centred, class: 'btn-success' %>
+<% end %>

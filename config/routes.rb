@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   get '/auth/failure' => 'sessions#failure', :as => :nus_openid_login_failure
 
   resources :users do
+    get 'purge_and_open', on: :collection
+    post 'confirm_purge_and_open', on: :collection
+    patch 'confirm_purge_and_open', on: :collection
     member do
       post 'preview_as'
       get 'register_as_student'
@@ -28,8 +31,6 @@ Rails.application.routes.draw do
       get 'register_as_team'
       post 'register_team'
       patch 'register_team'
-      post 'confirm_purge_and_open'
-      patch 'confirm_purge_and_open'
       post 'confirm_team'
       patch 'confirm_team'
     end
@@ -103,18 +104,20 @@ Rails.application.routes.draw do
   patch '/teams/:id/confirm_delete_relation_team_path/:evaluator_email', to: 'teams#confirm_delete_relation', as: :delete_rel
   #todo: change to  on collection
   resources :teams do
-    get 'upload_csv'
-    post 'update_teams'
-    patch 'update_teams'
-    get 'upload_csv_eval'
-    post 'update_eval'
-    patch 'update_eval'
+    get 'upload_csv', on: :collection
+    post 'update_teams', on: :collection
+    patch 'update_teams', on: :collection
+    get 'upload_csv_eval', on: :collection
+    post 'update_eval', on: :collection
+    patch 'update_eval', on: :collection
     post 'applicant_eval_matching', on: :collection
     patch 'applicant_eval_matching', on: :collection
     get 'applicant_eval', on: :collection
     get 'applicant_main', on: :collection
     member do
       get 'select'
+      post 'update_status'
+      patch 'update_status'
       get 'show_evaluators'
       get 'edit_evaluators'
       post 'add_evaluators'
@@ -143,6 +146,7 @@ Rails.application.routes.draw do
   end
 
   resources :application_deadlines, only: [:index, :edit, :update]
+  resources :admin_links, only: [:index, :edit, :update]
 
   resources :survey_templates, except: [:destroy] do
     member do

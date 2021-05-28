@@ -117,12 +117,16 @@ class UsersController < ApplicationController
     return redirect_to user_path(@user.id), flash: {
       danger: t('.cannot_register_team_message')
     } if !invitor_student || invitor_student.team
+    teamID = 1
+    if Team.all.length != 0
+      teamID = Team.order('id').last.id + 1
+    end
     team = Team.new(
-      # team_name: ("I am team temp"), application_status: 'a',
-      # to-do: fix
-      team_name: ("I am team #{Team.order('id').last.id + 1}"), application_status: 'a',
+      team_name: ("I am team #{teamID}"), 
+      application_status: 'a',
       cohort: current_cohort, invitor_student_id: invitor_student.id,
       project_level: Team.get_project_level_from_raw("Project Gemini"))
+    # team.name = "team" + team.id.to_s
     team.save
     invited_student.team_id = team.id
     invited_student.save
@@ -193,39 +197,58 @@ class UsersController < ApplicationController
     }
   end
 
+  def purge_and_open
+    !authenticate_user(true, true) && return
+  end
   
   def confirm_purge_and_open
     !authenticate_user(true, true) && return
-    @user = User.find(params[:id])
-    confirm_purge = params.require(:user).permit(:confirm)
-    
-    #failure cases
+    confirm_purge = params.permit(:confirm)
+
     if confirm_purge[:confirm] == 'false'
       flash_message = 'Cancelled.'
     else
-      #purge: delete students, delete application_status attributes, delete evaluators attributes
-      teams = Team.where('application_status <> \'success\'')
+      teams = Team.where("application_status != ?", "success")
       teams.each do |team|
-        # expected: unsuccessful teams disappear, users and stus disappear
-        # team 10, stu 10 and 11, user 12
-        team.students.each do |stu|
+        students = team.students
+        team.destroy
+        students.each do |stu|
           id = stu.user_id
           stu.destroy
-          user = User.find_by(id: id)
-          user.destroy
         end
-        team.destroy
       end
 
-      all_students = Student.all
-      all_students.each do |student|
-        student.evaluatee_ids = ''
+      remaining_teams = Team.all
+      remaining_teams.each do |team|
+        team.evaluator_students = []
+        team.save
       end
-      flash_message = 'Success'
+
+      remaining_stus = Student.all
+      remaining_stus.each do |student|
+        if student.team.nil?
+          id = student.user_id
+          student.destroy
+        end
+      end
+
+      remaining_stus = Student.all
+      remaining_stus.each do |student|
+        student.evaluatee_ids = []
+        student.save
+      end
+      flash_message = 'Success.'
     end
-    redirect_to applicant_admin_index_path(@user.id), flash: {
-      success: flash_message
-    }
+
+    if flash_message == 'Success.'
+      redirect_to applicant_main_teams_path, flash: {
+        success: flash_message
+      }
+    else
+      redirect_to applicant_main_teams_path, flash: {
+        danger: flash_message
+      }
+    end
   end
 
   private

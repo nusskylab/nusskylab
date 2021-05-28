@@ -42,8 +42,6 @@ module TeamsHelper
     !authenticate_user(true, true) && return
     @team = Team.find(params[:id]) || (record_not_found && return)
     @team.evaluator_students.delete(params[:evaluator_email])
-    puts '!!!!!!!!!!!!!!'
-    puts params[:evaluator_email]
     puts @team.evaluator_students
     if @team.save
       redirect_to edit_evaluators_team_path(@team), flash: {

@@ -1,5 +1,5 @@
-<%= simple_form_for team, wrapper: :horizontal_form, html: {class: 'form-horizontal'},
-    url: team_update_teams_path(team) do |f| %>
+<%= simple_form_for :team, wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+    url: update_teams_teams_path do |f| %>
   <%= f.file_field :uploaded_csv %>
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-9">
