@@ -10,7 +10,7 @@
               <%= render 'shared/error_messages', locals: {target_model: student_team} %>
               <div class="form-group">
                 <!-- to-do: change link -->
-                <p>Please upload your proposal to the following google drive folder: https://folder.com. Copy the shareable link and submit it via the box below:</p>
+                <p>Please upload your proposal to the <li class="list-group-item"><a href = "<%= AdminLinks.find_by(name: 'project_proposal_folder').url %>" target="_blank">Google Drive Folder</li>. Copy the link of your submitted proposal and submit it via the box below:</p>
                 <label class="string required col-sm-3 control-label" for="teammate_email">
                   <abbr title="required">*</abbr> Google drive link
                 </label>

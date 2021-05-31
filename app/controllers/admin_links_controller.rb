@@ -17,18 +17,17 @@ class AdminLinksController < ApplicationController
       puts params
       puts params[:id]
       @link = AdminLinks.find(params[:id])
-      @link.url = "AAA"
-      @link.save
-      puts '!!!!!'
-      # puts params.require(:link).permit(:url)[:url]
-      # puts '!!!!!!'
-      # puts @link.url
-      # @link.url = params.require(:link).permit(:url)[:url]
-      # puts @link.url
-      # success = @link.save
-      redirect_to admin_links_path, flash: {
-        success: 'Success.'
-      }
+      @link.url = params[:admin_links][:url]
+      success = @link.save!
+      if success
+        redirect_to admin_links_path, flash: {
+          success: 'Success.'
+        }
+      else
+        redirect_to admin_links_path, flash: {
+          danger: 'Action failed.'
+        }
+      end
     end
   end
 
