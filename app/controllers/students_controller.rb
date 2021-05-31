@@ -104,26 +104,28 @@ class StudentsController < RolesController
   end
 
   def upload_proposal
-    # authenticate (to-do: why?)
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
-      danger: 'Invalid action.' #to-do
+      danger: 'Invalid action.'
     } unless student
     team_id = student.team.id
-    # update the teams
     team = student.team
     team_params = params.require(:team).permit(:proposal_link)
     team.update_attributes(team_params)
     team.application_status = 'c'
-    team.save
-    # redirect to-do: en.yml, stay on the previous page
-    flash_message = 'Proposal link submitted successfully.'
-    redirect_to user_path(@user.id), flash: {
-      success: flash_message
-    }
-    #to-do: error conditions
+    success = team.save!
+    if success
+      flash_message = 'Proposal link submitted successfully.'
+      redirect_to user_path(@user.id), flash: {
+        success: flash_message
+      }
+    else
+      redirect_to user_path(@user.id), flash: {
+        danger: 'Submission failed.'
+      }
+    end
   end
 
   def withdraw_invitation

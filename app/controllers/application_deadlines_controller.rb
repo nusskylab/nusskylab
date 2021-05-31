@@ -2,7 +2,7 @@ class ApplicationDeadlinesController < ApplicationController
     def index
       !authenticate_user(true, true) && return
       @page_title = t('.page_title')
-      @deadlines = ApplicationDeadlines.all()
+      @deadlines = ApplicationDeadlines.order(:id)
     end
     
     # find out how to modify the deadlines without backend changes
