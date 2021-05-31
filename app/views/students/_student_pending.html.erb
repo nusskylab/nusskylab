@@ -58,7 +58,7 @@
                         You have invited <strong><%= locals[:student].team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
                       </p>	
                       <p>
-                        You may withdraw your invitation at <a href="<%= withdraw_invitation_student_path(locals[:student].user_id) %>" class="btn btn-warning">Withdraw</a>.
+                        You may <a href="<%= withdraw_invitation_student_path(locals[:student].user_id) %>" class="btn btn-warning">withdraw</a> your invitation.
                       </p>
                       <p>
                         Please ensure that you are in a team by <%= form_team_ddl %>.
@@ -72,7 +72,7 @@
                   <% else %>
                     <% if status == 'b'%>
                       <p>	
-                      You have successfully teamed up. Please use the section below to <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
+                      You have successfully teamed up. Please <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
                       </p>
                     <% elsif status == 'c'%>
                       <p>
