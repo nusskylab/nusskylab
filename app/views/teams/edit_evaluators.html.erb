@@ -34,14 +34,10 @@
                 <label class="string required col-sm-3 control-label" for="evaluator_email">
                     <abbr title="required">*</abbr> Add new evaluator
                 </label>
-                <div class="col-sm-9">
+                <div class="col-sm-6">
                     <input placeholder="New evaluator's email" class="string required form-control" type="email" name="team[email]" id="evaluator_email">
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-9">
-                    <%= f.submit 'Submit', class: 'btn btn-success' %>
-                </div>
+                <%= f.submit 'Submit', class: 'btn btn-success' %>
             </div>
         <% end %>
     </div>

@@ -36,16 +36,6 @@
   </div>
   <hr>
   <div class="col-sm-12">
-    <p class="col-sm-3 col-sm-offset-2">Evaluator students:</p>
-    <p class="col-sm-7">
-      <%= locals[:team].evaluator_students %>
-      <% if !locals[:team].evaluator_students %>
-          <span class="text-muted">Not evaluator assigned to this team</span>
-      <% end %>
-    </p>
-  </div>
-  <hr>
-  <div class="col-sm-12">
     <p class="col-sm-3 col-sm-offset-2">Proposal link:</p>
     <p class="col-sm-7">
       <a href="<%=locals[:team].proposal_link%>" style="word-wrap: break-word; width: 100%;">
@@ -54,7 +44,7 @@
     </p>
   </div>
     <div class="col-sm-12">
-    <p class="col-sm-3 col-sm-offset-2">Status:</p>
+    <p class="col-sm-3 col-sm-offset-2">Application status:</p>
     <p class="col-sm-7">
       <%= locals[:team].application_status %>
     </p>

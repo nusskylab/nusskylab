@@ -107,11 +107,11 @@ class TeamsController < ApplicationController
       if evaluator_students.blank?
         next
       end
-      team_to_update = Team.find_by(id: teamID)
+      @team_to_update = Team.find_by(id: teamID)
       evaluator_students = evaluator_students[2..-3]
       evaluator_students = evaluator_students.split('", "')
-      team_to_update.evaluator_students = evaluator_students
-      team_to_update.save
+      @team_to_update.evaluator_students = evaluator_students
+      @team_to_update.save
     end
     msg = 'success'
     redirect_to applicant_eval_team_path(), flash: {
@@ -129,7 +129,6 @@ class TeamsController < ApplicationController
     File.open(File.join('public', uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
-    #to-do: error checking, check title and whether there is any parsing error
     csv_text = CSV.read(Rails.root.join('public', uploaded_io.original_filename))
     for i in 0..csv_text.length - 1
       if i == 0
@@ -139,12 +138,9 @@ class TeamsController < ApplicationController
       rank = row[0]
       teamID = row[1]
       avg_rank = row[2]
-      evaluators = row[3]
-      evaluator_students = evaluators[2..-3].split('\', \'')
-      application_status = row[5]
+      application_status = row[-1]
       team_to_update = Team.find_by(id: teamID)
       team_to_update.avg_rank = avg_rank.to_f
-      team_to_update.evaluator_students = evaluator_students
       team_to_update.application_status = application_status
       team_to_update.save
     end
@@ -258,8 +254,7 @@ class TeamsController < ApplicationController
     render locals: {
       cohort: cohort,
       teams: @teams,
-      peer_eval_open_time: ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline,
-      peer_eval_ddl: ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
+      submit_proposal_ddl: ApplicationDeadlines.find_by(name: 'submit proposal deadline').submission_deadline,
     }
   end
 
@@ -366,9 +361,8 @@ class TeamsController < ApplicationController
   def prepare_eval
     !authenticate_user(true, true) && return
     cohort = current_cohort
-    #to-do: if no team, and only the qualified team
     render locals: {
-        teams: Team.where(cohort: cohort)
+        teams: Team.where("application_status = ? and cohort = ?", "c", cohort)
     }
   end
 

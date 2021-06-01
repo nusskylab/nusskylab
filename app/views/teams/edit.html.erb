@@ -5,10 +5,14 @@
         <h3 class="text-center">Edit team</h3>
       </div>
       <div class="panel-body">
+        <% if Time.now < get_portal_open_date %>
+          <p>Can only edit the team when it becomes official.</p>
+        <% else%>
         <%= render 'team_form', locals: {team: @team,
                                          is_new: false,
                                          advisers: advisers,
                                          mentors: mentors} %>
+        <% end %>
       </div>
     </div>
 <% end %>

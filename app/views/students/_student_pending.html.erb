@@ -25,12 +25,12 @@
                   <div style="background: #0066cc; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
                 </div>
                 <br>
-                <% form_team_ddl = ApplicationDeadlines.find_by(name: 'form team deadline').submission_deadline.to_s[0..-6]
-                    submit_proposal_ddl = ApplicationDeadlines.find_by(name: 'submit proposal deadline').submission_deadline.to_s[0..-6]
-                    peer_evaluation_open_date = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline.to_s[0..-6]
-                    peer_evaluation_ddl = ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline.to_s[0..-6]
-                    result_release_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline.to_s[0..-6]
-                    portal_open_date = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline.to_s[0..-6] %>
+                <% form_team_ddl = ApplicationDeadlines.find_by(name: 'form team deadline').submission_deadline.to_s[0..-10]
+                    submit_proposal_ddl = ApplicationDeadlines.find_by(name: 'submit proposal deadline').submission_deadline.to_s[0..-10]
+                    peer_evaluation_open_date = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline.to_s[0..-10]
+                    peer_evaluation_ddl = ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline.to_s[0..-10]
+                    result_release_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline.to_s[0..-10]
+                    portal_open_date = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline.to_s[0..-10] %>
                 <!-- to-do: should maintain only 1 application status for either student or team -> team -->
                 <% status = get_student_team_application_status(locals[:student])%>
                 <!-- stage a, form teams -->
@@ -58,7 +58,7 @@
                         You have invited <strong><%= locals[:student].team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
                       </p>	
                       <p>
-                        You may <a href="<%= withdraw_invitation_student_path(locals[:student].user_id) %>" class="btn btn-warning">withdraw</a> your invitation.
+                        You may <a href="<%= withdraw_invitation_student_path(locals[:student].user_id) %>" class="btn btn-warning">withdraw</a> your invitation to start over.
                       </p>
                       <p>
                         Please ensure that you are in a team by <%= form_team_ddl %>.
@@ -73,11 +73,12 @@
                     <% if status == 'b'%>
                       <% parter_name = locals[:student].team.students[0].id == locals[:student].id ? locals[:student].team.get_team_members[1].user_name : locals[:team].team.get_team_members[1].user_name%>
                       <p>	
-                      You have successfully teamed up with <%= parter_name%>. Please <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
+                      You have successfully teamed up with <strong><%= parter_name%></strong>. Please <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
                       </p>
                     <% elsif status == 'c'%>
                       <p>
-                      Your team has submitted the project proposal on time. Please come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no action required from you for now.
+                      Your team has submitted the project proposal on time. Please ensure that the <a href="<% locals[:student].team.proposal_link %>" target="_blank" class="btn btn-default">submitted proposal</a> is correct 
+                      and come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no further action required from you for now.
                       </p>
                       <% if Time.now < submit_proposal_ddl %>
                         <p>
@@ -88,7 +89,7 @@
                   <% end %>
                 <!-- stage c, peer evaluation -->
                 <% elsif status[0] == 'c' or Time.now < result_release_date%>
-                  <% if status == 'cf-never submit peer evaluation' %>
+                  <% if status[0..1] == 'cf' %>
                     <p>Your team did not submit the peer evaluation on time, and therefore we cannot proceed with your application. Thanks for your participation!</p>
                   <% elsif Time.now < peer_evaluation_ddl %>
                     <p>Please <a href="<%= do_evaluation_student_path(locals[:student].user_id) %>" class="btn btn-primary">evaluate</a> other teams’ submissions by <%= peer_evaluation_ddl%>. Both members of your team have to finish the evaluation.</p>

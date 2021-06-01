@@ -96,8 +96,6 @@ class StudentsController < RolesController
       danger: 'Invalid action.'
     } unless student
     student_team = student.team
-    # @page_title = t('.page_title') # to-do: what's this?
-    # team_params = params.require(:team).permit(:proposal_link)
     render locals: {
       student_team: student_team
     }
@@ -113,13 +111,12 @@ class StudentsController < RolesController
     team_id = student.team.id
     team = student.team
     team_params = params.require(:team).permit(:proposal_link)
-    team.update_attributes(team_params)
+    team.proposal_link = team_params[:proposal_link]
     team.application_status = 'c'
     success = team.save!
     if success
-      flash_message = 'Proposal link submitted successfully.'
       redirect_to user_path(@user.id), flash: {
-        success: flash_message
+        success: 'Proposal link submitted successfully.'
       }
     else
       redirect_to user_path(@user.id), flash: {
@@ -133,7 +130,6 @@ class StudentsController < RolesController
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id, cohort: current_cohort)
     student_team = student.team
-    @page_title = t('.page_title')
     render locals: {
       student_team: student_team
     }
@@ -150,14 +146,18 @@ class StudentsController < RolesController
     team = student_user.team
     if team_params[:withdraw] == 'false'
       flash_message = 'Withdrawl cancalled.'
+      redirect_to user_path(@user.id), flash: {
+        warning: flash_message
+      }
     else
       team.destroy
       flash_message = 'Success.'
+      redirect_to user_path(@user.id), flash: {
+        success: flash_message
+      }
     end
-    redirect_to user_path(@user.id), flash: {
-      success: flash_message
-    }
   end
+    
 
   def remove_proposal
     @user = User.find(params[:id]) || (record_not_found && return)
@@ -165,32 +165,32 @@ class StudentsController < RolesController
     student = Student.student?(@user.id, cohort: current_cohort)
     student.team.application_status = 'b'
     student.team.save
-    @page_title = t('.page_title')
     render locals: {
       student_team: student.team
     }
   end
 
-  #to-do: link and proposal (wording)
   def confirm_remove_proposal
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     team_params = params.require(:team).permit(:remove_link)
     student_user = Student.student?(@user.id, cohort: current_cohort)
-    #to-do
     return redirect_to user_path(@user.id), flash: {
-      danger: t('.cannot_withdraw_invitation_message')
+      warning: "Cannot withdraw invitation"
     } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:remove_link] == 'false'
       flash_message = "Removal of proposal cancelled."
+      redirect_to user_path(@user.id), flash: {
+        warning: flash_message
+      }
     else
       team.update_attribute(:proposal_link, nil)
       flash_message = "Removal of proposal successful."
+      redirect_to user_path(@user.id), flash: {
+        success: flash_message
+      }
     end
-    redirect_to user_path(@user.id), flash: {
-      success: flash_message
-    }
   end
 
   def do_evaluation
@@ -204,7 +204,6 @@ class StudentsController < RolesController
       evaluatee_link = evaluatee.proposal_link
       evaluatee_links << evaluatee_link
     end
-    @page_title = t('.page_title')
     render locals:{
       links: evaluatee_links
     }

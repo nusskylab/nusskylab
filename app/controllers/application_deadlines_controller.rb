@@ -1,22 +1,17 @@
 class ApplicationDeadlinesController < ApplicationController
     def index
       !authenticate_user(true, true) && return
-      @page_title = t('.page_title')
       @deadlines = ApplicationDeadlines.order(:id)
     end
-    
-    # find out how to modify the deadlines without backend changes
 
     def show
       !authenticate_user(true, true) && return
       @deadline = ApplicationDeadlines.find(params[:id])
-      # to-do: page title
     end
   
     def edit
       !authenticate_user(true, true) && return
       @deadline = ApplicationDeadlines.find(params[:id])
-      # to-do: page title
     end
   
     def update
@@ -36,7 +31,6 @@ class ApplicationDeadlinesController < ApplicationController
   
     def redirect_after_actions(is_success, success_path, failure_path)
       if is_success
-        #to-do
         msg = "success"
         redirect_to success_path, flash: {
           success: msg

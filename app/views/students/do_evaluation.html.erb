@@ -8,10 +8,9 @@
           <p>Please read other teams' proposals and rank them. You are required to give candid and careful feedback.</p>
           <p>After submitting the peer evaluation feedback, please retain the google form email as your submission proof.</p>
           <ul class="list-group">
-            <li class="list-group-item"><a href = "<%= links.at(0) %>" target="_blank">Team 1 Proposal</a></li>
-            <li class="list-group-item"><a href = "<%= links.at(1) %>" target="_blank">Team 2 Proposal</a></li>
-            <li class="list-group-item"><a href = "<%= links.at(2) %>" target="_blank">Team 3 Proposal</a></li>
-            <li class="list-group-item"><a href = "<%= links.at(3) %>" target="_blank">Team 4 Proposal</a></li>
+            <% links.each_with_index do |link, i| %>
+            <li class="list-group-item"><a href = "<%= link %>" target="_blank">Team <%=i + 1%> Proposal</a></li>
+            <% end %>
             <li class="list-group-item"><a href = "<%= AdminLinks.find_by(name: 'peer_evaluation_form').url %>" target="_blank">Feedback Form</li>
           </ul>
         </div>

@@ -1,12 +1,12 @@
 <% content_for :main_content do %>
   <% javascript 'students.js' %>
   <% stu = Student.find_by(id: @role.id)%>
-  <% open_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline%>
-  <% if  Time.now > open_date and stu.application_status == 'success'%>
+  <% status = get_student_team_application_status(stu) %>
+  <% if  Time.now > get_portal_open_date and status == 'success'%>
     <%= render 'student_with_team', locals: {
       student: stu, role_data: role_data
     } %>
   <% else %>
-    <%= render 'student_pending', locals: { student: stu } %>
+    <%= render 'student_pending', locals: { student: stu , status: status} %>
   <% end %>
 <% end %>

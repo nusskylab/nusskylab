@@ -1,19 +1,6 @@
 to-do:
-fix rank students: emtpy teams
-remove view evaluators from teams
 automate database
 - style, color of flowchart
-basic check link for student side
-highlight current application stage
-check user true true
-remove edit teams
-rename messages
-change to on collection
+- highlight current application stage
 reset database
-student's application status
 - if csv got error -> exception -> msg
-evaluatee and evaluators sync
-can only modify teams that reach the last stage
-teams.cohort
-debug peer evaluation matching
-error conditions

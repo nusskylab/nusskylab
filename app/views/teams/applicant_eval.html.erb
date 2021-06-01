@@ -4,16 +4,21 @@
       <h3 class="text-center"> Peer Evaluation Management </h3>
     </div>
     <div class="panel-body">
-    <% if Time.now < peer_eval_ddl %>
+    <% if Time.now < submit_proposal_ddl %>
       <p>Peer evaluation stage not reached yet.</p>
     <% else %>
-        <%= link_to 'Generate Relations', teams_prepare_eval_path, class: 'btn btn-default' %>
-        <%= link_to 'Import Relations',upload_csv_eval_teams_path, class: 'btn btn-default' %>
-        <%= link_to 'Download Relations', teams_path(format: 'csv', cohort: cohort), class: 'btn btn-default' %>
-        <p>
-        <%= render 'eval_table', locals: { teams: teams} %>
-        </p>
-      <% end %>
+      <br>
+      <div class="col-sm-12">
+        <div class="col-sm-2 col-sm-offset-3">
+          <%= link_to 'Generate Relations', teams_prepare_eval_path, class: 'btn btn-default' %>
+        </div>
+        <div class="col-sm-2 col-sm-offset-3">
+          <%= link_to 'Download Relations', teams_path(format: 'csv', cohort: cohort), class: 'btn btn-default' %>
+        </div>
+      </div>
+      <br><br>
+      <%= render 'eval_table', locals: { teams: teams} %>
+    <% end %>
     </div>
   </div>
 <% end %>

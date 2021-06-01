@@ -7,10 +7,16 @@
         <% if Time.now < peer_eval_ddl %>
           <p> Selection stage not reached yet.</p>
         <% else %>
-          <a href="<%= upload_csv_teams_path %>" class="btn btn-default">Import applicants rank</a>
-          <p>
-          <%= render 'applicant_table', locals: { teams: Team.where("application_status > 'c'").order(:avg_rank)} %>
-          </p>
+          <% if Team.where("application_status > ? and cohort = ?", 'c', cohort).length == 0%>
+            <p>No eligible teams yet. Please check whether you have imported the applicants rank csv file.</p>
+            <p>To obtain the csv file, please run rank_applicants.py with <%= link_to 'Student CSV', students_path(format: 'csv', cohort: cohort), class: 'btn btn-primary' %> and the google form response csv file as input files.</p>
+            <p>Please then <a href="<%= upload_csv_teams_path %>" class="btn btn-default">import applicants rank</a>. </p>
+          <% else%>
+            <a href="<%= upload_csv_teams_path %>" class="btn btn-warning">Import applicants rank</a>
+            <p>
+            <%= render 'applicant_table', locals: { teams: Team.where("application_status > ? and application_status != ? and cohort = ?", 'c', 'cf-never submit peer evaluation', cohort).order(:avg_rank)} %>
+            </p>
+          <% end %>
         <% end %>
         <% if Time.now > result_release_date %>
           <a href="<%= purge_and_open_users_path %>" class="btn btn-danger">Delete Unsuccessful Applicants</a>

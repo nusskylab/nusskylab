@@ -74,10 +74,6 @@ Rails.application.routes.draw do
     end
   end
   resources :mentor_matchings, only: :index
-  # get 'applicant_admin/manage_peer_eval/prepare_peer_eval', to: 'applicant_admin#prepare_peer_eval'
-  # post 'applicant_admin/manage_peer_eval', to: 'applicant_admin#applicant_eval_matching'
-  # patch 'applicant_admin/manage_peer_eval', to: 'applicant_admin#applicant_eval_matching'
-  # get 'applicant_admin/show_evaluators/:id', to: 'applicant_admin#show_evaluators'
 
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
     get 'new_batch', on: :collection
