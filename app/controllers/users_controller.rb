@@ -71,8 +71,7 @@ class UsersController < ApplicationController
     registration.response_content = registration_params.to_json
     registration.save
     student = Student.student?(@user.id, cohort: current_cohort) ||
-              Student.new(user_id: @user.id, cohort: current_cohort,
-                          application_status: 'a')
+              Student.new(user_id: @user.id, cohort: current_cohort)
     student.save
     redirect_to user_path(@user.id)
   end

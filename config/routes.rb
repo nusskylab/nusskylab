@@ -103,9 +103,6 @@ Rails.application.routes.draw do
     get 'upload_csv', on: :collection
     post 'update_teams', on: :collection
     patch 'update_teams', on: :collection
-    get 'upload_csv_eval', on: :collection
-    post 'update_eval', on: :collection
-    patch 'update_eval', on: :collection
     post 'applicant_eval_matching', on: :collection
     patch 'applicant_eval_matching', on: :collection
     get 'applicant_eval', on: :collection

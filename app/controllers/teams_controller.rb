@@ -5,13 +5,11 @@ class TeamsController < ApplicationController
     cohort = params[:cohort] || current_cohort
     @teams = Team.order(:team_name).where(cohort: cohort)
     @page_title = t('.page_title')
-    portal_open_date = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
     respond_to do |format|
       format.html do
         render locals: {
           all_cohorts: all_cohorts,
-          cohort: cohort,
-          portal_open_date: portal_open_date
+          cohort: cohort
         }
       end
       format.csv { send_data Team.to_csv(cohort: cohort) }
@@ -83,40 +81,6 @@ class TeamsController < ApplicationController
                   error_message: @team.errors.full_messages.join(', '))
       }
     end
-  end
-
-  def upload_csv_eval
-    !authenticate_user(true, true) && return
-  end
-
-  def update_eval
-    require 'csv'
-    uploaded_io = params[:team][:uploaded_csv]
-    File.open(File.join('public', uploaded_io.original_filename), 'wb') do |file|
-      file.write(uploaded_io.read)
-    end
-    #to-do: error checking, check title and whether there is any parsing error
-    csv_text = CSV.read(Rails.root.join('public', uploaded_io.original_filename))
-    for i in 0..csv_text.length - 1
-      if i == 0
-        next
-      end
-      row = csv_text[i]
-      teamID = row[0]
-      evaluator_students = row[-1]
-      if evaluator_students.blank?
-        next
-      end
-      @team_to_update = Team.find_by(id: teamID)
-      evaluator_students = evaluator_students[2..-3]
-      evaluator_students = evaluator_students.split('", "')
-      @team_to_update.evaluator_students = evaluator_students
-      @team_to_update.save
-    end
-    msg = 'success'
-    redirect_to applicant_eval_team_path(), flash: {
-      success: msg
-    }
   end
 
   def upload_csv
@@ -228,7 +192,7 @@ class TeamsController < ApplicationController
     teamsMentorMatching = MentorMatching.find_by(:team_id => params[:id], :mentor_id => params[:mentor_id])
     if !@mentor.nil? && !teamsMentorMatching.nil? && teamsMentorMatching.mentor_accepted
       @team.update(mentor_id: @mentor.id)
-      @mentor.teams << @team #to-do: what's this?
+      @mentor.teams << @team
       redirect_to team_path(@team.id), flash: {
         success: t('.success_message',
                    mentor_name: @mentor.user.user_name)
@@ -247,7 +211,7 @@ class TeamsController < ApplicationController
     cohort = params[:cohort] || current_cohort
     cohort = cohort.to_i
     if current_user_admin?
-      @teams = Team.where("cohort = ? and application_status = ?", cohort, 'c')
+      @teams = Team.where("cohort = ? and application_status >= ?", cohort, 'c')
     else
       fail ActionController::RoutingError, "routing error"
     end
@@ -261,19 +225,12 @@ class TeamsController < ApplicationController
   def applicant_main
     !authenticate_user(true, true) && return
     cohort = current_cohort
-    
-    submit_proposal_ddl = ApplicationDeadlines.find_by(name: 'submit proposal deadline').submission_deadline
-    peer_eval_open = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline
     peer_eval_ddl = ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
     result_release_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline
-    website_open = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
     render locals: {
         cohort: cohort,
         peer_eval_ddl: peer_eval_ddl,
-        peer_eval_open: peer_eval_open,
-        website_open: website_open,
         result_release_date: result_release_date,
-        submit_proposal_ddl: submit_proposal_ddl
     }
   end
 
@@ -297,7 +254,6 @@ class TeamsController < ApplicationController
   end
 
   def applicant_eval_matching
-    # authenticate users
     !authenticate_user(true, true) && return
     cohort = current_cohort
     teams = Team.where("application_status = ? and cohort = ?", "c", cohort)
@@ -319,8 +275,6 @@ class TeamsController < ApplicationController
 
     teamIDs.each_with_index do |teamID, i|
       team = Team.find_by(id: teamID)
-      members = team.students
-      # update params, shift the links to peer eval page
       member1 = members[0].id
       member2 = members[1].id
       member1Begin = i % teamIDs.length()
@@ -352,7 +306,6 @@ class TeamsController < ApplicationController
         end
       end
     end
-    # update team attributes: for each member, evaluaters, evaluatees, application status   
     redirect_to applicant_eval_teams_path, flash: {
       success: 'Success.'
     }
@@ -403,8 +356,15 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id]) || (record_not_found && return)
     email_params = params.require(:team).permit(:email)
     @team.evaluator_students << email_params[:email]
-    # todo: update students' evaluatee_ids
-    if @team.save
+    
+    @team.evaluator_students.each do |stu_email|
+      @user = User.find_by(email: stu_email)
+      @stu = Student.find_by(user_id: @user.id)
+      @stu.evaluatee_ids << @team.id
+      @stu.save
+    end
+
+    if @team.save!
       redirect_to edit_evaluators_team_path(@team), flash: {
         success: "Success."
       }
@@ -427,8 +387,14 @@ class TeamsController < ApplicationController
   def confirm_delete_relation
     !authenticate_user(true, true) && return
     @team = Team.find(params[:id])
+    @team.evaluator_students.each do |stu_email|
+      @user = User.find_by(email: stu_email)
+      @stu = Student.find_by(user_id: @user.id)
+      @stu.evaluatee_ids.delete(@team.id)
+      @stu.save
+    end
     @team.evaluator_students.delete(params[:evaluator_email] + '.com')
-    if @team.save
+    if @team.save!
       redirect_to edit_evaluators_team_path(@team), flash: {
         success: "Success."
       }

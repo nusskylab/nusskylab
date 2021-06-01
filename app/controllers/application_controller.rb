@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     cohort ||= current_cohort
     return unless current_user
     stu = Student.student?(current_user.id, cohort: cohort)
-    stu if stu && stu.application_status == 'd1'
+    stu if stu
   end
 
   def current_user_adviser?(cohort = nil)

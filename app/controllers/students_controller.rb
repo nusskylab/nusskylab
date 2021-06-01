@@ -8,7 +8,6 @@ class StudentsController < RolesController
     stu = params.require(:student).permit(
       :user_id, :team_id, :application_status, :cohort, :evaluator_ids, :evaluatee_ids
     )
-    #stu.delete(:application_status) unless stu[:application_status] && @role.application_status
     stu
   end
 

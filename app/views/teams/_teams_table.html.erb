@@ -1,6 +1,6 @@
 <table id = "teams-table" class="table tablesorter">
   
-  <% if Time.now > locals[:portal_open_date] %>
+  <% if Time.now > get_portal_open_date %>
     <thead>
       <tr>
         <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th><th>Status</th><th>Student 1</th><th>Student 2</th>
