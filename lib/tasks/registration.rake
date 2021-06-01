@@ -1,14 +1,4 @@
 namespace :registration do
-  desc 'Push all pending students to live in current cohort'
-  task push_students_to_non_pending: :environment do
-    current_cohort = Time.now.year
-    #to-do: try to remove
-    Student.where(cohort: current_cohort, application_status: 'd1').each do |student|
-      student.application_status = 'd1'
-      student.save
-    end
-  end
-
   desc 'Match students without teams yet'
   task match_students_without_teams: :environment do
     tag_freq_table = {}
@@ -70,7 +60,7 @@ namespace :registration do
     current_cohort = Time.now.year
     if user_type == 'pending_students'
       pending_students = Student.where(
-        cohort: current_cohort, application_status: 'a', team_id: nil
+        'cohort = ? and application_status <> ?', current_cohort, 'success'
       )
     else
       fail ArgumentError, 'Unrecognized user type for match making'

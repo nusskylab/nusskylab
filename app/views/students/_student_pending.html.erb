@@ -36,7 +36,6 @@
                 <!-- stage a, form teams -->
                 <% if status == 'a' %>
                   <% if Time.now > form_team_ddl %>
-                    <%# <%= status %>
                     <p> You did not form a team on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
                   <% else %>
                     <% if !locals[:student].team %>

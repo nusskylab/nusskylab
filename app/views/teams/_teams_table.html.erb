@@ -19,7 +19,7 @@
         <td class="col-md-1 <%= team.get_team_status_short + '_status' %>", title='<%= team.get_team_status + "\n" %><%= team.get_team_comment %>'>
           <%= team.get_team_status_short %>
         </td>
-        <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[0].user_name %></td>
+        <td class="col-md-1"><%= team.get_team_members[0] == nil ? "": team.get_team_members[0].user_name %></td>
         <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
         <td class="col-md-1"><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
         <td class="col-md-1"><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
@@ -64,7 +64,7 @@
           <%= render 'team_name_representation', locals: {team: team} %>
         </td>
         <td class="col-md-1"><%= team.application_status %></td>
-        <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[0].user_name %></td>
+        <td class="col-md-1"><%= team.get_team_members[0] == nil ? "": team.get_team_members[0].user_name %></td>
         <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
         <td class="col-md-1">
           <% if can_current_user_view_team(team) %>

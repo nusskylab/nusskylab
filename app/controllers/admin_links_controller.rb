@@ -14,8 +14,6 @@ class AdminLinksController < ApplicationController
   
     def update
       !authenticate_user(true, true) && return
-      puts params
-      puts params[:id]
       @link = AdminLinks.find(params[:id])
       @link.url = params[:admin_links][:url]
       success = @link.save!
@@ -29,10 +27,5 @@ class AdminLinksController < ApplicationController
         }
       end
     end
-  end
-
-  private
-  def link_params
-      params.require(:admin_links).permit(:url)
   end
   

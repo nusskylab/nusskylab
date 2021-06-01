@@ -212,7 +212,6 @@ class UsersController < ApplicationController
         students = team.students
         team.destroy
         students.each do |stu|
-          id = stu.user_id
           stu.destroy
         end
       end
@@ -226,7 +225,6 @@ class UsersController < ApplicationController
       remaining_stus = Student.all
       remaining_stus.each do |student|
         if student.team.nil?
-          id = student.user_id
           student.destroy
         end
       end

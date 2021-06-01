@@ -14,7 +14,7 @@
         <td class="col-md-1">
           <%= render 'team_name_representation', locals: {team: team} %>
         </td>
-        <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[0].user_name %></td>
+        <td class="col-md-1"><%= team.get_team_members[0] == nil ? "": team.get_team_members[0].user_name %></td>
         <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
         <td class="col-md-1"><%= team.application_status%></td>
         <td class="col-md-1"><%= team.avg_rank%></td>

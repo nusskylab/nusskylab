@@ -25,7 +25,7 @@
               Basic information
             </a>
           </li>
-          <% if current_user_admin? and !@team.application_status%>
+          <% if current_user_admin? %>
             <li role="presentation">
               <a href="#mentor-matching-status-panel" aria-controls="mentor-matching-status-panel"
                  role="tab" data-toggle="tab">
@@ -54,7 +54,7 @@
                 View peer evaluations
               </a>
             </li>
-            <% if !@team.mentor_id.present? && @teamsMentorMatchings.length > 0 and !@team.application_status%>
+            <% if !@team.mentor_id.present? && @teamsMentorMatchings.length > 0 %>
               <li role="presentation">
                 <a href="#mentor-matching-status-panel" aria-controls="mentor-matching-status-panel"
                    role="tab" data-toggle="tab">
@@ -94,7 +94,7 @@
               <%= render 'team_basic_info', locals: {team: @team, teamsMentorMatchings: @teamsMentorMatchings} %>
             <% end %>
           </div>
-          <% if current_user_admin? and !@team.application_status %>
+          <% if current_user_admin? %>
             <div role="tabpanel" class="tab-pane fade" id="mentor-matching-status-panel">
               <h2 class="text-center">View Mentor Matching</h2>
               <div class="well">
