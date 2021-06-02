@@ -272,11 +272,15 @@ class TeamsController < ApplicationController
       team.evaluator_students = []
       team.save
     end
+    students = Student.all
+    students.each do |student|
+      student.evaluatee_ids = []
+      student.save
+    end
 
     teamIDs.each_with_index do |teamID, i|
       team = Team.find_by(id: teamID)
-      member1 = members[0].id
-      member2 = members[1].id
+      members = team.students
       member1Begin = i % teamIDs.length()
       member1End = (i + size - 1) % teamIDs.length()
       member2Begin = (i + size) % teamIDs.length()

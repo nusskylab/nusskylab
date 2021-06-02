@@ -75,11 +75,15 @@
                       You have successfully teamed up with <strong><%= parter_name%></strong>. Please <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
                       </p>
                     <% elsif status == 'c'%>
+                      <% if Time.now > submit_proposal_ddl %>
                       <p>
-                      Your team has submitted the project proposal on time. Please ensure that the <a href="<% locals[:student].team.proposal_link %>" target="_blank" class="btn btn-default">submitted proposal</a> is correct 
-                      and come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no further action required from you for now.
+                      Your team has submitted the project proposal on time. Please come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no further action required from you for now.
                       </p>
-                      <% if Time.now < submit_proposal_ddl %>
+                      <% else %>
+                        <p>
+                        Your team has submitted the project proposal on time. Please ensure that the <a href="<%= locals[:student].team.proposal_link %>" class="btn btn-default" target="_blank">submitted proposal</a> is correct 
+                        and come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no further action required from you for now.
+                        </p>
                         <p>
                         You may <a href="<%= remove_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning">delete</a> your old submission and resubmit by the deadline.
                         </p>

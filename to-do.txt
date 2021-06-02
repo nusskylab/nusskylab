@@ -4,3 +4,5 @@ automate database
 - highlight current application stage
 reset database
 - if csv got error -> exception -> msg
+add evaluator:
+    no evaluator found, alr existing, self evaluate, clashes with teammate

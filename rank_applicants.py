@@ -21,11 +21,11 @@ with open('students.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     for row in csv_reader:
-        if line_count > 0 and len(row) == 10:
+        if line_count > 0 and len(row) == 10 and row[8] != '':
             name = row[0]
             email = row[2]
             teamID = row[7]
-            evaluatedTeamIDs = row[8].split(', ') #todo
+            evaluatedTeamIDs = row[8].split(', ')
             evaluatedLinks = row[9].split(', ')
             emailToEvaluatedLinks[email] = evaluatedLinks
             emailToTeam[email] = teamID
@@ -44,7 +44,6 @@ for email in emailToEvaluatedTeams.keys():
     evalutedLinks = emailToEvaluatedLinks[email]
     for i in range(len(evaluatedTeams)):
         teamToLink[evaluatedTeams[i]] = evalutedLinks[i]
-
 
 with open('2021 Orbital Peer Evaluation for Project Proposals.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
@@ -79,22 +78,20 @@ for teamID in teamToEvaluatorEmails.keys():
     #average rank
     evalEmails = teamToEvaluatorEmails[teamID]
     totalScore = 0
+    effectiveEvals = len(evalEmails)
+    #evaluator email
     for email in evalEmails:
         # assigned evaluator didn't submit feedback
         if email not in emailToFeedbacks.keys():
+            effectiveEvals -= 1
             continue
         else:
             scores = emailToFeedbacks[email]
             seq = emailTeamToSeq[email + ' ' + teamID]
             score = scores[seq]
             totalScore += score
-            
-    effectiveEvals = evalEmails.copy()
-    for evalEmail in evalEmails:
-        if noEvalPerson[evalEmail] and evalEmail in effectiveEvals:
-            effectiveEvals.remove(evalEmail)
-            
-    avgScore = totalScore / len(effectiveEvals)
+  
+    avgScore = totalScore / effectiveEvals
     teamInfo.append(round(avgScore, 2))
     
     #project links
