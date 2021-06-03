@@ -10,8 +10,7 @@
         <% if !@team.mentor_id.present? &&
           current_user_student? &&
           current_user_student?.team_id &&
-          current_user_student?.team_id == @team.id ||
-          current_user_admin? && !@team.application_status %>
+          current_user_student?.team_id == @team.id || current_user_admin? %>
           <a href="<%= match_mentor_team_path() %>" class="btn btn-info">Match Mentor</a>
         <% end %>
       </h1>
