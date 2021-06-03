@@ -1,12 +1,12 @@
-class AdminLinksController < ApplicationController
+class AdminLinkController < ApplicationController
     def index
       !authenticate_user(true, true) && return
-      @links = AdminLinks.all
+      @links = AdminLink.all
     end
   
     def edit
       !authenticate_user(true, true) && return
-      @link = AdminLinks.find(params[:id])
+      @link = AdminLink.find(params[:id])
       render locals:{
         link: @link
       }
@@ -14,7 +14,7 @@ class AdminLinksController < ApplicationController
   
     def update
       !authenticate_user(true, true) && return
-      @link = AdminLinks.find(params[:id])
+      @link = AdminLink.find(params[:id])
       @link.url = params[:admin_links][:url]
       success = @link.save!
       if success

@@ -1,22 +1,22 @@
-class ApplicationDeadlinesController < ApplicationController
+class ApplicationDeadlineController < ApplicationController
     def index
       !authenticate_user(true, true) && return
-      @deadlines = ApplicationDeadlines.order(:id)
+      @deadlines = ApplicationDeadline.order(:id)
     end
 
     def show
       !authenticate_user(true, true) && return
-      @deadline = ApplicationDeadlines.find(params[:id])
+      @deadline = ApplicationDeadline.find(params[:id])
     end
   
     def edit
       !authenticate_user(true, true) && return
-      @deadline = ApplicationDeadlines.find(params[:id])
+      @deadline = ApplicationDeadline.find(params[:id])
     end
   
     def update
       !authenticate_user(true, true) && return
-      @deadline = ApplicationDeadlines.find(params[:id])
+      @deadline = ApplicationDeadline.find(params[:id])
       is_success = @deadline.update(ddl_params)
       redirect_after_actions(is_success, application_deadlines_path,
                              edit_application_deadline_path(@deadline))

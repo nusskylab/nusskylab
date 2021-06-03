@@ -218,15 +218,15 @@ class TeamsController < ApplicationController
     render locals: {
       cohort: cohort,
       teams: @teams,
-      submit_proposal_ddl: ApplicationDeadlines.find_by(name: 'submit proposal deadline').submission_deadline,
+      submit_proposal_ddl: ApplicationDeadline.find_by(name: 'submit proposal deadline').submission_deadline,
     }
   end
 
   def applicant_main
     !authenticate_user(true, true) && return
     cohort = current_cohort
-    peer_eval_ddl = ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline
-    result_release_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline
+    peer_eval_ddl = ApplicationDeadline.find_by(name: 'peer evaluation deadline').submission_deadline
+    result_release_date = ApplicationDeadline.find_by(name: 'result release date').submission_deadline
     render locals: {
         cohort: cohort,
         peer_eval_ddl: peer_eval_ddl,

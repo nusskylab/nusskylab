@@ -7,7 +7,7 @@ diff a/app/controllers/teams_controller.rb b/app/controllers/teams_controller.rb
      cohort = params[:cohort] || current_cohort
      @teams = Team.order(:team_name).where(cohort: cohort)
      @page_title = t('.page_title')
-+    portal_open_date = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
++    portal_open_date = ApplicationDeadline.find_by(name: 'portal open date').submission_deadline
      respond_to do |format|
        format.html do
          render locals: {

@@ -26,6 +26,6 @@ module ApplicationHelper
   end
 
   def get_portal_open_date 
-    open_date = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline
+    open_date = ApplicationDeadline.find_by(name: 'portal open date').submission_deadline
   end
 end

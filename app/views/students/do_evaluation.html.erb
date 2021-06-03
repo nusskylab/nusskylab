@@ -11,7 +11,7 @@
             <% links.each_with_index do |link, i| %>
             <li class="list-group-item"><a href = "<%= link %>" target="_blank">Team <%=i + 1%> Proposal</a></li>
             <% end %>
-            <li class="list-group-item"><a href = "<%= AdminLinks.find_by(name: 'peer_evaluation_form').url %>" target="_blank">Feedback Form</li>
+            <li class="list-group-item"><a href = "<%= AdminLink.find_by(name: 'peer_evaluation_form').url %>" target="_blank">Feedback Form</li>
           </ul>
         </div>
       </div>

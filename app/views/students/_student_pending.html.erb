@@ -25,12 +25,12 @@
                   <div style="background: #0066cc; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
                 </div>
                 <br>
-                <% form_team_ddl = ApplicationDeadlines.find_by(name: 'form team deadline').submission_deadline.to_s[0..-10]
-                    submit_proposal_ddl = ApplicationDeadlines.find_by(name: 'submit proposal deadline').submission_deadline.to_s[0..-10]
-                    peer_evaluation_open_date = ApplicationDeadlines.find_by(name: 'peer evaluation open date').submission_deadline.to_s[0..-10]
-                    peer_evaluation_ddl = ApplicationDeadlines.find_by(name: 'peer evaluation deadline').submission_deadline.to_s[0..-10]
-                    result_release_date = ApplicationDeadlines.find_by(name: 'result release date').submission_deadline.to_s[0..-10]
-                    portal_open_date = ApplicationDeadlines.find_by(name: 'portal open date').submission_deadline.to_s[0..-10] %>
+                <% form_team_ddl = ApplicationDeadline.find_by(name: 'form team deadline').submission_deadline.to_s[0..-10]
+                    submit_proposal_ddl = ApplicationDeadline.find_by(name: 'submit proposal deadline').submission_deadline.to_s[0..-10]
+                    peer_evaluation_open_date = ApplicationDeadline.find_by(name: 'peer evaluation open date').submission_deadline.to_s[0..-10]
+                    peer_evaluation_ddl = ApplicationDeadline.find_by(name: 'peer evaluation deadline').submission_deadline.to_s[0..-10]
+                    result_release_date = ApplicationDeadline.find_by(name: 'result release date').submission_deadline.to_s[0..-10]
+                    portal_open_date = ApplicationDeadline.find_by(name: 'portal open date').submission_deadline.to_s[0..-10] %>
                 <!-- to-do: should maintain only 1 application status for either student or team -> team -->
                 <% status = get_student_team_application_status(locals[:student])%>
                 <!-- stage a, form teams -->
