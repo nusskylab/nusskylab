@@ -527,4 +527,133 @@ RSpec.describe TeamsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #applicant_eval' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        get :applicant_eval
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should render correspondeing template' do
+        submit_proposal_ddl = FactoryGirl.create(:application_deadline, name: 'submit proposal deadline', submission_deadline: '2032-05-28 09:44:00')
+        get :applicant_eval
+        expect(response).to render_template(:applicant_eval)
+      end
+    end
+  end
+
+  describe 'GET #applicant_main' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        get :applicant_main
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should render correspondeing template' do
+        peer_eval_ddl = FactoryGirl.create(:application_deadline, name: 'peer evaluation deadline', submission_deadline: '2032-05-28 09:44:00')
+        result_release_date = FactoryGirl.create(:application_deadline, name: 'result release date', submission_deadline: '2032-05-28 09:44:00')
+        get :applicant_main
+        expect(response).to render_template(:applicant_main)
+      end
+    end
+  end
+
+  describe 'GET #select' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        team = FactoryGirl.create(:team)
+        get :select, id: team.id
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should render correspondeing template' do
+        team = FactoryGirl.create(:team)
+        get :select, id: team.id
+        expect(response).to render_template(:select)
+      end
+    end
+  end
+
+  describe 'GET #show_evaluators' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        team = FactoryGirl.create(:team)
+        evaluators = ['']
+        evaluator_names = ['']
+        get :show_evaluators, id: team.id
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should render correspondeing template' do
+        user = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        student = FactoryGirl.create(:student, user: user)
+        team = FactoryGirl.create(:team, team_name: '3.team.controller.spec', evaluator_students: [user.email])
+        get :show_evaluators, id: team.id
+        expect(response).to render_template(:show_evaluators)
+      end
+    end
+  end
+
+  describe 'GET #edit_evaluators' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        user = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        student = FactoryGirl.create(:student, user: user)
+        team = FactoryGirl.create(:team, team_name: '3.team.controller.spec', evaluator_students: [user.email])
+        get :edit_evaluators, id: team.id
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should render correspondeing template' do
+        user = FactoryGirl.create(:user, email: '1@team.controller.spec', uid: '1.team.controller.spec')
+        student = FactoryGirl.create(:student, user: user)
+        team = FactoryGirl.create(:team, team_name: '3.team.controller.spec', evaluator_students: [user.email])
+        get :edit_evaluators, id: team.id
+        expect(response).to render_template(:edit_evaluators)
+      end
+    end
+  end
+
+  describe 'GET #prepare_eval' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        get :prepare_eval
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should render correspondeing template' do
+        get :prepare_eval
+        expect(response).to render_template(:prepare_eval)
+      end
+    end
+  end
+
+  describe 'GET #delete_evaluator' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        team = FactoryGirl.create(:team)
+        get :delete_evaluator, id: team.id, evaluator_email: ''
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
 end
