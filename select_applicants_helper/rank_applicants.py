@@ -7,6 +7,7 @@ import csv
 from collections import defaultdict
 
 teamToEvaluatorEmails = defaultdict(list)
+teamToStatus = {}
 emailToFeedbacks = {}
 emailTeamToSeq = {}
 emailToEvaluatedTeams = defaultdict(list)
@@ -21,7 +22,7 @@ with open('students.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     for row in csv_reader:
-        if line_count > 0 and len(row) == 10 and row[8] != '':
+        if line_count > 0 and len(row) == 11 and row[8] != '':
             name = row[0]
             email = row[2]
             teamID = row[7]
@@ -29,6 +30,7 @@ with open('students.csv') as csv_file:
             evaluatedLinks = row[9].split(', ')
             emailToEvaluatedLinks[email] = evaluatedLinks
             emailToTeam[email] = teamID
+            teamToStatus[teamID] = row[-1]
             for seq, teamID in enumerate(evaluatedTeamIDs):
                 teamID = teamID.strip()
                 emailToEvaluatedTeams[email].append(teamID)
@@ -90,7 +92,6 @@ for teamID in teamToEvaluatorEmails.keys():
             seq = emailTeamToSeq[email + ' ' + teamID]
             score = scores[seq]
             totalScore += score
-  
     avgScore = totalScore / effectiveEvals
     teamInfo.append(round(avgScore, 2))
     
@@ -102,7 +103,10 @@ for teamID in teamToEvaluatorEmails.keys():
     if noEval[teamID]:
         teamInfo.append('cf-never submit peer evaluation')
     else:
-        teamInfo.append('d-pending selection')
+        if teamToStatus[teamID] == 'c':
+            teamInfo.append('d-pending selection')
+        else:
+            teamInfo.append(teamToStatus[teamID])
     teamsInfo.append(teamInfo)
 
 teamsInfo.sort(key = lambda x:x[1])
