@@ -115,7 +115,7 @@ class StudentsController < RolesController
     success = team.save!
     if success
       redirect_to user_path(@user.id), flash: {
-        success: 'Proposal link submitted successfully.'
+        success: 'Proposal link submitted successfully. Please proceed to check your submitted proposal.'
       }
     else
       redirect_to user_path(@user.id), flash: {
