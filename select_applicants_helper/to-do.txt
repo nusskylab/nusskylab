@@ -2,8 +2,5 @@ to-do:
 automate database
 - style, color of flowchart
 - highlight current application stage
-reset database
-- if csv got error -> exception -> msg
 add evaluator:
     no evaluator found, alr existing, self evaluate, clashes with teammate
-admin check

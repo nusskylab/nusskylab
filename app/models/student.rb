@@ -45,6 +45,8 @@ class Student < ActiveRecord::Base
           end
           csv_row.concat([student.evaluatee_ids.join(', '), evaluated_links.join(', ')])
         end
+        application_status = student.team ? student.team.application_status : 'a'
+        csv_row.concat([application_status])
         
         csv << csv_row
       end
@@ -53,7 +55,7 @@ class Student < ActiveRecord::Base
 
   def self.generate_csv_header_row
     ['User Name', 'User ID', 'User Email', 'Team Name', 'Project Level',
-     'Adviser Name', 'Has Dropped', 'Team ID', 'Evaluated Teams IDs', 'Evaluated Proposal links']
+     'Adviser Name', 'Has Dropped', 'Team ID', 'Evaluated Teams IDs', 'Evaluated Proposal links', 'Application Status']
   end
 
   def get_teammates

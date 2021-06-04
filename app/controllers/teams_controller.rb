@@ -211,7 +211,7 @@ class TeamsController < ApplicationController
     cohort = params[:cohort] || current_cohort
     cohort = cohort.to_i
     if current_user_admin?
-      @teams = Team.where("cohort = ? and application_status >= ?", cohort, 'c')
+      @teams = Team.where("cohort = ? and application_status = ?", cohort, 'c')
     else
       fail ActionController::RoutingError, "routing error"
     end
@@ -242,14 +242,6 @@ class TeamsController < ApplicationController
     else
         teams = teamIDs[beginI..endI]
     end
-    #to-do
-    if teams.delete(teamID)
-      if beginI > 0
-        teams << teamIDs[beginI - 1]
-      else
-        teams << teamIDs[-1]
-      end
-    end
     return teams
   end
 
@@ -261,7 +253,6 @@ class TeamsController < ApplicationController
     teams.each do |team|
       teamIDs << team.id
     end
-    teamIDs = teamIDs.shuffle
     if params[:matching_size].blank?
       size = 4
     else
