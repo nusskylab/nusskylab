@@ -243,7 +243,7 @@ class UsersController < ApplicationController
       }
     else
       redirect_to applicant_main_teams_path, flash: {
-        danger: flash_message
+        warning: flash_message
       }
     end
   end

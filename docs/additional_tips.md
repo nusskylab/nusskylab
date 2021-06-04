@@ -14,3 +14,6 @@
   Run `bundle exec rspec path/to/test_files` to run a particular test.\
   See rspec github page for more examples.\
 
+* How do I see the existing routes?\
+  See all the routes at: `http://localhost:3000/rails/info/routes`\
+
