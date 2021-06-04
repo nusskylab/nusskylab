@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ApplicationDeadlinesController, type: :controller do
+RSpec.describe AdminLinksController, type: :controller do
   describe 'GET #index' do
     context 'user not logged in' do
       it 'should redirect to root_path for non_user' do

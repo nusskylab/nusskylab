@@ -1,4 +1,4 @@
-class ApplicationDeadlineController < ApplicationController
+class ApplicationDeadlinesController < ApplicationController
     def index
       !authenticate_user(true, true) && return
       @deadlines = ApplicationDeadline.order(:id)

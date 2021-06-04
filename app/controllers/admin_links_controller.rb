@@ -1,4 +1,4 @@
-class AdminLinkController < ApplicationController
+class AdminLinksController < ApplicationController
     def index
       !authenticate_user(true, true) && return
       @links = AdminLink.all
