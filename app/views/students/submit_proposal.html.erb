@@ -9,7 +9,7 @@
               url: upload_proposal_student_path(@user) do |f| %>
               <%= render 'shared/error_messages', locals: {target_model: student_team} %>
               <div class="col-sm-11">
-                  <p>Please upload your proposal to the <a href = "<%= AdminLink.find_by(name: 'project_proposal_folder').url %>" class="btn btn-primary btn-sm" target="_blank">Google Drive Folder</a>. After that, copy the link of your submitted proposal and submit it via the box below:</p>
+                  <p>Please copy the link of your submitted proposal and submit it via the box below:</p>
                   <div class="form-group">
                       <label class="string required col-sm-2 control-label" style="float: left; padding-left: 0" for="teammate_email">
                         <abbr title="required">*</abbr> Proposal link

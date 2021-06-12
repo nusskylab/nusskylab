@@ -104,7 +104,7 @@ class TeamsController < ApplicationController
       avg_rank = row[2]
       application_status = row[-1]
       team_to_update = Team.find_by(id: teamID)
-      team_to_update.avg_rank = avg_rank.to_f
+      team_to_update.avg_rank = avg_rank
       team_to_update.application_status = application_status
       team_to_update.save
     end

@@ -25,7 +25,7 @@ class ApplicationDeadlinesController < ApplicationController
     private
   
     def ddl_params
-        params.require(:application_deadlines).permit(:name,
+        params.require(:application_deadline).permit(:name,
                                         :submission_deadline)
     end
   
