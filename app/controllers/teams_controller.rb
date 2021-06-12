@@ -254,7 +254,7 @@ class TeamsController < ApplicationController
       teamIDs << team.id
     end
     if params[:matching_size].blank?
-      size = 4
+      size = 3
     else
       size = params[:matching_size].to_i
     end
@@ -269,13 +269,14 @@ class TeamsController < ApplicationController
       student.save
     end
 
+    teamIDs.shuffle
     teamIDs.each_with_index do |teamID, i|
       team = Team.find_by(id: teamID)
       members = team.students
-      member1Begin = i % teamIDs.length()
-      member1End = (i + size - 1) % teamIDs.length()
-      member2Begin = (i + size) % teamIDs.length()
-      member2End = (i + size + size - 1) % teamIDs.length()
+      member1Begin = i % teamIDs.length
+      member1End = (i + size - 1) % teamIDs.length
+      member2Begin = (i + size) % teamIDs.length
+      member2End = (i + size + size - 1) % teamIDs.length
       teamsBy1 = getEvaluatedTeams(member1Begin, member1End, teamID, teamIDs, size)
       teamsBy2 = getEvaluatedTeams(member2Begin, member2End, teamID, teamIDs, size)
       members[0].evaluatee_ids = teamsBy1
