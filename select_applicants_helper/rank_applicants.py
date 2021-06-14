@@ -31,11 +31,11 @@ with open('students.csv') as csv_file:
             emailToEvaluatedLinks[email] = evaluatedLinks
             emailToTeam[email] = teamID
             teamToStatus[teamID] = row[-1]
-            for seq, teamID in enumerate(evaluatedTeamIDs):
-                teamID = teamID.strip()
-                emailToEvaluatedTeams[email].append(teamID)
-                teamToEvaluatorEmails[teamID].append(email)
-                emailTeam = email + ' ' + teamID
+            for seq, teamID2 in enumerate(evaluatedTeamIDs):
+                teamID2 = teamID2.strip()
+                emailToEvaluatedTeams[email].append(teamID2)
+                teamToEvaluatorEmails[teamID2].append(email)
+                emailTeam = email + ' ' + teamID2
                 emailTeamToSeq[emailTeam] = seq
         
         line_count += 1
@@ -53,13 +53,13 @@ with open('2021 Orbital Peer Evaluation for Project Proposals.csv') as csv_file:
     evaluatedTeamsSize = 4
     for row in csv_reader:
         if line_count > 0:
-            #to change if there is a change in size
             teamScores = []
             for i in range(1, evaluatedTeamsSize + 1):
                 teamScores.append(int(row[i][0]))
             email = row[-1]
             emailToFeedbacks[email] = teamScores
         else:
+            #to change if there is a change in size
             evaluatedTeamsSize = (len(row) - 2) // 2
             
         line_count += 1
@@ -68,16 +68,15 @@ for email in emailToTeam.keys():
     if email not in emailToFeedbacks.keys():
         team = emailToTeam[email]
         noEval[team] = True
-        noEvalPerson[email] = True
 
 csv_header = ['rank', 'teamID', 'average rank', 'project links', 'application status']
 teamsInfo = []
 for teamID in teamToEvaluatorEmails.keys():
     teamInfo = []
-    # teamID
+    # teamID represents the id of one evaluated team
     teamInfo.append(teamID)
     
-    #average rank
+    # evaluators' email
     evalEmails = teamToEvaluatorEmails[teamID]
     totalScore = 0
     effectiveEvals = len(evalEmails)

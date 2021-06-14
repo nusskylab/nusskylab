@@ -236,7 +236,7 @@ class TeamsController < ApplicationController
 
   def getEvaluatedTeams(beginI, endI, teamID, teamIDs, size)
     if beginI + size - 1 > endI
-        teamsBack = teamIDs[beginI..teamIDs.length() - 1]
+        teamsBack = teamIDs[beginI..teamIDs.length - 1]
         teamsFront = teamIDs[0..endI]
         teams = teamsFront + teamsBack
     else
@@ -273,10 +273,13 @@ class TeamsController < ApplicationController
     teamIDs.each_with_index do |teamID, i|
       team = Team.find_by(id: teamID)
       members = team.students
-      member1Begin = i % teamIDs.length
-      member1End = (i + size - 1) % teamIDs.length
-      member2Begin = (i + size) % teamIDs.length
-      member2End = (i + size + size - 1) % teamIDs.length
+      member1Begin = (i + 1) % teamIDs.length
+      member1End = (i + size) % teamIDs.length
+      puts teamID
+      puts member1Begin
+      puts member1End
+      member2Begin = (i + size + 1) % teamIDs.length
+      member2End = (i + size + size) % teamIDs.length
       teamsBy1 = getEvaluatedTeams(member1Begin, member1End, teamID, teamIDs, size)
       teamsBy2 = getEvaluatedTeams(member2Begin, member2End, teamID, teamIDs, size)
       members[0].evaluatee_ids = teamsBy1
@@ -415,7 +418,7 @@ class TeamsController < ApplicationController
 
     new_status = params.require(:team).permit(:application_status)[:application_status]
     @team.application_status = new_status.to_s
-    if @team.save
+    if @team.save!
       redirect_to applicant_main_teams_path, flash: {
         success: "Success."
       }
@@ -424,8 +427,8 @@ class TeamsController < ApplicationController
         danger: "Failed."
       }
     end
-
   end
+
   private
 
   def team_params

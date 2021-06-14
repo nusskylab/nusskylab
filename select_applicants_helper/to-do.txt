@@ -1,6 +1,47 @@
 to-do:
-automate database
-- style, color of flowchart
-- highlight current application stage
 add evaluator:
     no evaluator found, alr existing, self evaluate, clashes with teammate
+testing:
+student side
+    check user
+    stage a (form team)
+        withdraw invitation
+            confirm yes
+                flash msg
+                team destroyed
+            no
+                flash msg
+    stage b (submit proposal)
+        submit
+            flash msg
+        delete
+            confirm yes
+            no
+    stage c
+        peer evaluation displayed correctly
+    stage d
+
+    pages are rendered correctly
+        a: invite, invited
+        b: submit
+        c: wait for peer eval to open, peer eval
+        d: wait for result release, result release
+
+        failure cases
+
+# admin side
+    prepare peer evaluation
+        when size is valid:
+        no team self evaluate / same-team members eval the same team
+
+    edit peer evaluation
+        add, remove correctly
+
+    rank applicants
+        scores calculated correctly
+            if assigned evaluator never submits eval, remove from score calculation
+        evaluatee, evaluator, project proposal displayed correctly
+        peer eval missing identified correctly
+        repeated submission affects the score?
+        even when disqualified, any feedback counts.
+        only the registered email feedback counts.
