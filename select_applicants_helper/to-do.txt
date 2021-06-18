@@ -2,33 +2,6 @@ to-do:
 add evaluator:
     no evaluator found, alr existing, self evaluate, clashes with teammate
 testing:
-student side
-    check user
-    stage a (form team)
-        withdraw invitation
-            confirm yes
-                flash msg
-                team destroyed
-            no
-                flash msg
-    stage b (submit proposal)
-        submit
-            flash msg
-        delete
-            confirm yes
-            no
-    stage c
-        peer evaluation displayed correctly
-    stage d
-
-    pages are rendered correctly
-        a: invite, invited
-        b: submit
-        c: wait for peer eval to open, peer eval
-        d: wait for result release, result release
-
-        failure cases
-
 # admin side
     prepare peer evaluation
         when size is valid:
