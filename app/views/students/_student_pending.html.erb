@@ -106,7 +106,7 @@
                         <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
                       </div>
                       <br>
-                      <% parter_name = locals[:student].team.students[0].id == locals[:student].id ? locals[:student].team.get_team_members[1].user_name : locals[:team].team.get_team_members[1].user_name%>
+                      <% parter_name = locals[:student].team.students[0].id == locals[:student].id ? locals[:student].team.get_team_members[1].user_name : locals[:student].team.get_team_members[0].user_name%>
                       <p>	
                       You have successfully teamed up with <strong><%= parter_name%></strong>. Please <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
                       </p>
@@ -166,7 +166,7 @@
                           <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
                         </div>
                         <br>
-                    <p>Please <a href="<%= do_evaluation_student_path(locals[:student].user_id) %>" class="btn btn-warning">evaluate</a> other teams’ submissions by <%= peer_evaluation_ddl%>. Both members of your team have to finish the evaluation.</p>
+                    <p>Please <a href="<%= do_evaluation_student_path(locals[:student].user_id) %>" class="btn btn-warning">evaluate</a> other teams’ submissions by <%= peer_evaluation_ddl%>. <b>Both members of your team have to finish the evaluation.</b></p>
                     <p>Note: After the submission, you will receive an email confirmation. Please retain the email as evidence of your submission and wait for the application result on <%= result_release_date%>.</p>
                   <% else %>
                     <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
