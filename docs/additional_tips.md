@@ -17,3 +17,11 @@
 * How do I see the existing routes?\
   See all the routes at: `http://localhost:3000/rails/info/routes`\
 
+* How do I login without NUSNET id?\
+  Create a new user via the database\
+  Then set the user's password directly via rails console.\
+  To launch the console, enter `rails c` when you are on `/vagrant` path.\
+  To set the password, directly use `user.password = 'password'` and save the change using
+  `user.save!`.\
+  Note that the password has to be at least 8 characters long.\
+
