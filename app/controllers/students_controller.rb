@@ -162,8 +162,6 @@ class StudentsController < RolesController
     @user = User.find(params[:id]) || (record_not_found && return)
     !authenticate_user(true, false, [@user]) && return
     student = Student.student?(@user.id, cohort: current_cohort)
-    student.team.application_status = 'b'
-    student.team.save
     render locals: {
       student_team: student.team
     }
@@ -175,7 +173,7 @@ class StudentsController < RolesController
     team_params = params.require(:team).permit(:remove_link)
     student_user = Student.student?(@user.id, cohort: current_cohort)
     return redirect_to user_path(@user.id), flash: {
-      warning: "Cannot withdraw invitation"
+      warning: "Cannot remove proposal"
     } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:remove_link] == 'false'
@@ -184,6 +182,8 @@ class StudentsController < RolesController
         warning: flash_message
       }
     else
+      team.application_status = 'b'
+      team.save
       team.update_attribute(:proposal_link, nil)
       flash_message = "Removal of proposal successful."
       redirect_to user_path(@user.id), flash: {
