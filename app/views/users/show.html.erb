@@ -3,6 +3,9 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h2>
+        <% unless @role == nil %>
+        <%= @user = @role.user %>
+        <% end %>
         <span>Hi, <%= @user.user_name %> </span>
       </h2>
     </div>
@@ -25,7 +28,7 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active" id="user-details">
             <div class="col-sm-12">
-              <%= render 'user_details', locals: {user: @user} %>
+              <%= render 'users/user_details', locals: {user: @user} %>
               <div class="panel panel-info">
                 <div class="panel-heading">
                   <h3 class="text-center">Forum Contributions [<%= @user.thredded_user_detail.posts_count %>]</h3>

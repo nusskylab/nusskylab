@@ -3,7 +3,7 @@
   <% if @role.is_pending %>
     <%= render 'student_pending', locals: { student: @role } %>
   <% elsif @role.team_id.blank? %>
-    <%= render 'student_without_team', locals: { student: @role } %>
+    <%= render :template => 'users/show'%>
   <% else %>
     <%= render 'student_with_team', locals: {
       student: @role, role_data: role_data
