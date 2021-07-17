@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :student do
     user
     team
-    is_pending false
+    application_status false
     cohort Time.now.year
   end
 end

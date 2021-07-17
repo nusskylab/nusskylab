@@ -1,0 +1,29 @@
+<% content_for :main_content do %>
+    <div class="container">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="text-center">Upload a proposal</h3>
+        </div>
+        <div class="panel-body">
+          <%= simple_form_for student_team,  wrapper: :horizontal_form, html: {class: 'form-horizontal'},
+              url: upload_proposal_student_path(@user) do |f| %>
+              <%= render 'shared/error_messages', locals: {target_model: student_team} %>
+              <div class="col-sm-11">
+                  <p>Please copy the link of your submitted proposal and submit it via the box below:</p>
+                  <div class="form-group">
+                      <label class="string required col-sm-2 control-label" style="float: left; padding-left: 0" for="teammate_email">
+                        <abbr title="required">*</abbr> Proposal link
+                      </label>
+                      <div class="col-sm-8">
+                        <input placeholder="Please enter the read-only google drive link to your project proposal." class="string required form-control" type="url" name="team[proposal_link]" id="proposal_link">
+                      </div>
+                      <div class="col-sm-2">
+                        <%= f.submit 'Submit', class: 'btn btn-success' %>
+                      </div>
+                  </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+<% end %>

@@ -1,0 +1,6 @@
+to-do:
+automate database
+- style, color of flowchart
+- highlight current application stage
+add evaluator:
+    no evaluator found, alr existing, self evaluate, clashes with teammate

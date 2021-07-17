@@ -1,0 +1,16 @@
+<table class="table table-hover">
+  <thead>
+  <tr><th>Deadline name</th><th>Submission Deadline</th><th>Action</th></tr>
+  </thead>
+  <tbody>
+  <% @deadlines.each do |deadline| %>
+      <tr>
+        <td><%= deadline.name %></td>
+        <td><%= l deadline.submission_deadline %></td>
+        <td>
+          <a class="btn btn-default btn-xs" href="<%= edit_application_deadline_path(deadline.id) %>">Edit</a>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

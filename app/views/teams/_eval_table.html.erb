@@ -1,0 +1,23 @@
+<table id = "teams-table" class="table tablesorter">
+    <thead>
+    <tr>
+      <th class="unsortable sort-index">Index</th><th>Evaluated Team</th><th>Evaluators</th><th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% locals[:teams].each_with_index do |team, idx| %>
+        <tr>
+          <td class="col-md-1"><%= idx + 1 %></td>
+          <td class="col-md-1">
+            <%= render 'team_name_representation', locals: {team: team} %>
+          </td>
+          <td class="col-md-1">
+            <a href="<%= show_evaluators_team_path(team) %>">Evaluators</a>
+          </td>
+          <td class="col-md-1">
+            <a class="btn btn-default btn-xs" href="<%= edit_evaluators_team_path(team) %>">Edit</a>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
