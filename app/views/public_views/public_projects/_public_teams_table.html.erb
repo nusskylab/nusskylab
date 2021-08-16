@@ -60,6 +60,9 @@
         </button>
       <% end %>
     </h3>
+    <button>
+        <%= link_to "Poster Link", team.video_link, target: '_blank' %>
+    </button>
     <p class="text-muted"><strong>Team ID:</strong> <%= team.id %></p>
     <p class="text-muted"><strong>Students:</strong> <%= team.students.map{|student| student.user.user_name}.join(' & ') %></p>
     <p class="text-muted"><strong>Advised by:</strong> <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></p>
