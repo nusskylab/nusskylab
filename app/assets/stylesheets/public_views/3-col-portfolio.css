@@ -109,6 +109,41 @@ footer {
     padding: 12px 30px;
 }
 
+.button_video_link, .button_video_link:active, .button_video_link:visited {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 10px;
+    border-radius: 8px;
+    border: 2px solid #4CAF50;
+    padding: 8px 8px;
+    display: inline-block;
+    margin: 0px 15px;
+    text-decoration: none;
+}
+
+.button_video_link:hover {
+    background-color: white;
+    color: black;
+    font-size: 10px;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    padding: 8px 8px;
+    margin: 0px 15px;
+    text-decoration: none;
+}
+
+.team_title_area {
+    font-size: 16px;
+    color: #0091ff;
+    width: 100%;
+    padding: 10px;
+}
+
+
+.button_video_row {
+    padding: 0px 0px 10px 0px;
+}
+
 /* Carousel caption styling */
 .info {
   display: inline-block;

@@ -50,19 +50,21 @@
     <!-- this assumes that submission has valid poster and video links -->
     <h3>
       <% submissions = Submission.where(team_id: team.id).order(:milestone_id)%>
-      <% if not submissions.length == 0 %>
-        <button class="button button_team" id="button_<%= team.id %>">
-          <%= idx + 1 %>. <strong><%= team.team_name %></strong>
-        </button>
-      <% else %>
-        <button class="button button_team_disabled" id="button_<%= team.id %>" disabled>
-          <%= idx + 1 %>. <strong><%= team.team_name %></strong>
-        </button>
-      <% end %>
+
+      <div class="team_title_area">
+        <%= idx + 1 %>. <strong><%= team.team_name %></strong>
+      </div>
     </h3>
-    <button>
-        <%= link_to "Poster Link", team.video_link, target: '_blank' %>
-    </button>
+    <% if team.video_link and team.poster_link %>
+        <div class="row button_video_row">
+            <a role="button" class="button button_video_link" href="<%= team.poster_link %>" target="_blank">
+                View Project Poster
+            </a>
+            <a role="button" class="button button_video_link" href="<%= team.video_link %>" target="_blank">
+                Watch Project Video
+            </a>
+        </div>
+    <% end %>
     <p class="text-muted"><strong>Team ID:</strong> <%= team.id %></p>
     <p class="text-muted"><strong>Students:</strong> <%= team.students.map{|student| student.user.user_name}.join(' & ') %></p>
     <p class="text-muted"><strong>Advised by:</strong> <%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></p>
