@@ -275,9 +275,6 @@ class TeamsController < ApplicationController
       members = team.students
       member1Begin = (i + 1) % teamIDs.length
       member1End = (i + size) % teamIDs.length
-      puts teamID
-      puts member1Begin
-      puts member1End
       member2Begin = (i + size + 1) % teamIDs.length
       member2End = (i + size + size) % teamIDs.length
       teamsBy1 = getEvaluatedTeams(member1Begin, member1End, teamID, teamIDs, size)

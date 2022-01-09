@@ -29,4 +29,10 @@ ALTER TABLE teams
 ADD COLUMN avg_rank float;
 
 ALTER TABLE teams
+ADD COLUMN application_status text;
+
+ALTER TABLE teams
+ADD COLUMN proposal_link text;
+
+ALTER TABLE teams
 ADD COLUMN evaluator_students text[];
