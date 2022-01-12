@@ -17,7 +17,7 @@ If you do not want to use Vagrant but instead you want to have a real local setu
 
 ### Development
 
-We are following the [GitHub Flow](https://guides.github.com/introduction/flow/index.html). See the [contributing guide](./docs/contributing_guide.md) for more details.
+We are following the [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow). See the [contributing guide](./docs/contributing_guide.md) for more details.
 
 ### Test
 
