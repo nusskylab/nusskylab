@@ -50,15 +50,15 @@
 					No Data Available
 				<% end %>
 			</div>
-      <div id="artemis<%=cohort%>" class="tab-pane fade in active">
-        <% if teams.select{|team| team.artemis?}.length > 0 %>
-          <%= render 'public_teams_table', locals: {teams: teams,
-            selected_teams: teams.select{|team| team.artemis?},
-            selected_type: 'Artemis'} %>
-        <% else %>
-          No Data Available
-        <% end %>
-      </div>
+			<div id="artemis<%=cohort%>" class="tab-pane fade in active">
+				<% if teams.select{|team| team.artemis?}.length > 0 %>
+				<%= render 'public_teams_table', locals: {teams: teams,
+					selected_teams: teams.select{|team| team.artemis?},
+					selected_type: 'Artemis'} %>
+				<% else %>
+				No Data Available
+				<% end %>
+			</div>
 		</div>
 	</div>
 <% end %>
