@@ -84,7 +84,7 @@ source 'https://rubygems.org' do
   end
 end
 
-source 'https://rails-assets.org' do
+source 'http://insecure.rails-assets.org/' do
   gem 'rails-assets-jquery.tablesorter', '~> 2.23.2'
   gem 'rails-assets-select2', '~> 4.0.0'
   gem 'rails-assets-autosize', '~> 3.0.13'
