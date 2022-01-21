@@ -131,6 +131,10 @@ class Team < ActiveRecord::Base
     project_level.gsub(/_/, ' ').split(' ').map(&:capitalize).join(' ')
   end
 
+  def is_artemis?
+    self.get_project_level == "Artemis"
+  end
+
   def get_relevant_users(include_evaluator = false, include_evaluated = false)
     relevant_users = get_team_members
     relevant_users.append(adviser.user) unless adviser_id.blank?
