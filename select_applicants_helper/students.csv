@@ -1,0 +1,17 @@
+User Name,User ID,User Email,Team Name,Project Level,Adviser Name,Has Dropped,Team ID,Evaluated Teams IDs,Evaluated Proposal links,Application Status
+student_3,3,3@qq.com,I am team 88,Project Gemini,,false,88,"","",b
+student_7,7,7@qq.com,I am team 89,Project Gemini,,false,89,"90, 91, 92","stu8, stu14, stu15",c
+student_5,5,5@qq.com,I am team 89,Project Gemini,,false,89,"89, 93, 94","stu7, stu20, stu11",c
+student_9,9,9@qq.com,I am team 90,Project Gemini,,false,90,"91, 92, 93","stu14, stu15, stu20",c
+student_8,8,8@qq.com,I am team 90,Project Gemini,,false,90,"89, 90, 94","stu7, stu8, stu11",c
+student_14,14,14@qq.com,I am team 91,Project Gemini,,false,91,"92, 93, 94","stu15, stu20, stu11",c
+student_13,13,13@qq.com,I am team 91,Project Gemini,,false,91,"89, 90, 91","stu7, stu8, stu14",c
+student_16,16,16@qq.com,I am team 92,Project Gemini,,false,92,"89, 93, 94","stu7, stu20, stu11",c
+student_15,15,15@qq.com,I am team 92,Project Gemini,,false,92,"90, 91, 92","stu8, stu14, stu15",c
+student_17,17,17@qq.com,I am team 93,Project Gemini,,false,93,"89, 90, 94","stu7, stu8, stu11",c
+student_19,19,19@qq.com,I am team 93,Project Gemini,,false,93,"91, 92, 93","stu14, stu15, stu20",c
+student_12,12,12@qq.com,I am team 94,Project Gemini,,false,94,"89, 90, 91","stu7, stu8, stu14",c
+student_11,11,11@qq.com,I am team 94,Project Gemini,,false,94,"92, 93, 94","stu15, stu20, stu11",c
+student_2,2,2@qq.com,nil,nil,nil,nil,No Team,"","",a
+student_10,10,10@qq.com,nil,nil,nil,nil,No Team,"","",a
+student_4,4,4@qq.com,I am team 88,Project Gemini,,false,88,"","",b
