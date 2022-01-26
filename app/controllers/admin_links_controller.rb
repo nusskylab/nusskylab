@@ -15,7 +15,7 @@ class AdminLinksController < ApplicationController
     def update
       !authenticate_user(true, true) && return
       @link = AdminLink.find(params[:id])
-      @link.url = params[:admin_links][:url]
+      @link.url = params[:admin_link][:url]
       success = @link.save!
       if success
         redirect_to admin_links_path, flash: {
