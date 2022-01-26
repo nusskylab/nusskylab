@@ -4,7 +4,7 @@
       <h3 class="text-center"> Peer Evaluation Management </h3>
     </div>
     <div class="panel-body">
-    <% if Time.now < submit_proposal_ddl %>
+    <% if Time.now + 8.hours < submit_proposal_ddl %>
       <p>Peer evaluation stage not reached yet.</p>
     <% else %>
       <br>

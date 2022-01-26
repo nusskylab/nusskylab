@@ -22,7 +22,7 @@
                 <!-- to-do: should maintain only 1 application status for either student or team -> team -->
                 <% status = get_student_team_application_status(locals[:student])%>
 
-                <% if Time.now < form_team_ddl%> <!-- prompt or (invited or invitor) or wait -->
+                <% if Time.now + 8.hours < form_team_ddl%> <!-- prompt or (invited or invitor) or wait -->
                   <% if status == 'a' %>
                     <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
                     <br>
@@ -99,7 +99,7 @@
                     You may <a href="<%= remove_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning">delete</a> your old submission and resubmit by the deadline.
                     </p>
                   <% end %>
-                <% elsif Time.now > form_team_ddl and Time.now < submit_proposal_ddl%> <!-- fail or prompt or wait-->
+                <% elsif Time.now + 8.hours > form_team_ddl and Time.now + 8.hours < submit_proposal_ddl%> <!-- fail or prompt or wait-->
                   <% if status == 'a'%>
                     <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
                     <br>
@@ -154,7 +154,7 @@
                   <% else%>
                     <p> Invalid application status. Please check with the admin for more information. </p>
                   <% end%>
-                <% elsif Time.now > submit_proposal_ddl and Time.now < peer_evaluation_open_date%> <!-- fail or wait-->
+                <% elsif Time.now + 8.hours > submit_proposal_ddl and Time.now + 8.hours < peer_evaluation_open_date%> <!-- fail or wait-->
                   <% if status == 'a'%>
                     <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
                     <br>
@@ -202,7 +202,7 @@
                   <% else%>
                     <p> Invalid application status. Please check with the admin for more information. </p>
                   <% end%>
-                <% elsif Time.now > peer_evaluation_open_date and Time.now < result_release_date%> <!-- prompt/wait -->
+                <% elsif Time.now + 8.hours > peer_evaluation_open_date and Time.now + 8.hours < result_release_date%> <!-- prompt/wait -->
                   <% if status == 'a'%>
                     <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
                     <br>
@@ -231,7 +231,7 @@
                     </div>
                     <br>
                     <p> Your team did not submit the project proposal on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
-                  <% elsif status == 'c' and Time.now < peer_evaluation_ddl%>
+                  <% elsif status == 'c' and Time.now + 8.hours < peer_evaluation_ddl%>
                     <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
                     <br>
                     <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
@@ -246,10 +246,10 @@
                     <br>
                     <p>Please <a href="<%= do_evaluation_student_path(locals[:student].user_id) %>" class="btn btn-warning">evaluate</a> other teams’ submissions by <%= peer_evaluation_ddl%>. <b>Both members of your team have to finish the evaluation.</b></p>
                     <p>Note: After the submission, you will receive an email confirmation. Please retain the email as evidence of your submission and wait for the application result on <%= result_release_date%>.</p>
-                  <% elsif Time.now > peer_evaluation_ddl%>
+                  <% elsif Time.now + 8.hours > peer_evaluation_ddl%>
                     <p> We are currently shortlisting candidates. Please wait for the application result on <%= result_release_date%>.</p>
                   <% end%>
-                <% elsif Time.now > result_release_date%> <!-- fail (peer eval or not selected) or success-->
+                <% elsif Time.now + 8.hours > result_release_date%> <!-- fail (peer eval or not selected) or success-->
                   <% if status == 'a'%>
                     <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
                     <br>

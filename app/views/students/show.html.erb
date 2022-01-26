@@ -2,7 +2,7 @@
   <% javascript 'students.js' %>
   <% stu = Student.find_by(id: @role.id)%>
   <% status = get_student_team_application_status(stu) %>
-  <% if  Time.now > get_portal_open_date and status == 'success'%>
+  <% if  Time.now + 8.hours > get_portal_open_date and status == 'success'%>
     <%= render 'student_with_team', locals: {
       student: stu, role_data: role_data
     } %>

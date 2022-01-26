@@ -87,7 +87,7 @@
             <div class="well">
               <p class="small"><%= t '.basic_info_instruction' %></p>
             </div>
-            <% if Time.now < get_portal_open_date %>
+            <% if Time.now + 8.hours < get_portal_open_date %>
               <%= render 'pending_team_basic_info', locals: {team: @team} %>
             <% else %>
               <%= render 'team_basic_info', locals: {team: @team, teamsMentorMatchings: @teamsMentorMatchings} %>
