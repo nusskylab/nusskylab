@@ -36,8 +36,12 @@
             </div>
             <div role="tabpanel" class="tab-pane fade" id="private-content">
               <h2 class="text-center">Evaluation private part</h2>
-              <%= render 'eval_private_compiled', locals: {evals_table: team_evaluations_table,
-                                                           survey_template: survey_template} %>
+              <% if DateTime.current > milestone.peer_evaluation_deadline %>
+                <%= render 'eval_private_compiled', locals: {evals_table: team_evaluations_table,
+                                                            survey_template: survey_template} %>
+              <% else %>
+                <p class="text-center">Private evaluations will only be displayed after its submission deadline. Please check again later!</p>
+              <% end %>
             </div>
           </div>
         </div>
