@@ -10,7 +10,7 @@
                                             'Artemis'.to_sym => 'Artemis'},
                                 selected: locals[:team].get_project_level,
                                 include_blank: false, required: true %>
-  <% elsif !is_project_level_locked? && current_user_adviser? && !locals[:team].is_artemis? %>
+  <% elsif !is_project_level_locked? && current_user_adviser? && !locals[:team].artemis? %>
     <%= f.input :project_level, collection: {Vostok: 'Vostok',
                                             'Project Gemini'.to_sym => 'Project Gemini',
                                             'Apollo 11'.to_sym => 'Apollo 11'},
