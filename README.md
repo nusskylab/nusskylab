@@ -15,6 +15,8 @@ If you do not want to use Vagrant but instead you want to have a real local setu
 
 [Instructions for local setup for Mac OS](https://github.com/nusskylab/nusskylab/wiki/Local-Installations-(Non-Vagrant))
 
+For additional tips from past developers, you may refer to the `docs` folder in repository.  
+
 ### Development
 
 We are following the [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow). See the [contributing guide](./docs/contributing_guide.md) for more details.

@@ -18,14 +18,28 @@
   <li><a href="<%= milestones_path %>">Milestones</a></li>
   <li><a href="<%= survey_templates_path %>">Survey Templates</a></li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teams <span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <li><a href="<%= teams_path %>">Teams</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="<%= mentor_matchings_path %>">Mentor matchings</a></li>
+    <% if Time.now + 8.hours < get_portal_open_date %>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Applicant Teams <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+    <% else %>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teams <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+    <% end %>
+      <li><a href="<%= teams_path %>">All Teams</a></li>
+      <li><a href="<%= application_deadlines_path %>">Manage Application Deadlines</a></li>
+      <% if Time.now + 8.hours < get_portal_open_date %>
+        <li><a href="<%= admin_links_path %>">Manage Google Links</a></li>
+        <li><a href="<%= applicant_eval_teams_path %>">Applicant Evaluating Relations</a></li>
+        <li><a href="<%= applicant_main_teams_path %>">Select Applicants</a></li>
+      <% else %>
+        <li><a href="<%= applicant_main_teams_path %>">Select Applicants</a></li>
+        <li><a href="<%= mentor_matchings_path %>">Mentor Matchings</a></li>
+      <% end %>
     </ul>
   </li>
-  <li><a href="<%= evaluatings_path %>">Evaluating relations</a></li>
+  <% if Time.now + 8.hours > get_portal_open_date %>
+    <li><a href="<%= evaluatings_path %>">Evaluating Relations</a></li>
+  <% end %>
   <li><a href="<%= forum_path %>">Forum</a></li>
   <li><a href="<%= submissions_path %>">All Teams</a></li>
 </ul>

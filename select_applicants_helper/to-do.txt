@@ -1,0 +1,20 @@
+to-do:
+add evaluator:
+    no evaluator found, alr existing, self evaluate, clashes with teammate
+testing:
+# admin side
+    prepare peer evaluation
+        when size is valid:
+        no team self evaluate / same-team members eval the same team
+
+    edit peer evaluation
+        add, remove correctly
+
+    rank applicants
+        scores calculated correctly
+            if assigned evaluator never submits eval, remove from score calculation
+        evaluatee, evaluator, project proposal displayed correctly
+        peer eval missing identified correctly
+        repeated submission affects the score?
+        even when disqualified, any feedback counts.
+        only the registered email feedback counts.

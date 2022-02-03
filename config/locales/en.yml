@@ -409,7 +409,7 @@ en:
       pending_instruction: >
         You registration as a student is currently still pending. Be patient for the great to come :)
       no_team_instruction: >
-        Currently you are not in any team so there is nothing to show. Get teamed up first :P
+        You may either create a new team and invite your friend to join the same team, or directly join the team created by your friend.
       submit_submission_instruction: >
         Submissions to milestones are listed here.
         You can submit for a milestone or edit a previously created submission.
@@ -602,16 +602,24 @@ en:
       no_registered_student_found_message: >
         No currently registered student with specified email
       student_found_team_message: >
-        Student with specified email has found a team
+        Student with specified email has been invited by others or already formed a team
+      student_invited_by_others: >
+        Student with specified email has already received an invitation from others
       cannot_register_team_message: >
         Seems you cannot register a team any more
+      cannot_withdraw_invitation_message: >
+        Unsuccessful withdrawal of invitation
+      withdrawal_cancelled_message: >
+        Withdrawal of invitation cancelled
+      invitation_withdrawn_message: >
+        Invitation successfully withdrawn
       team_invitation_success_message: >
         Team invitation sent successfully
     confirm_team:
       cannot_confirm_team_message: >
         Seems you cannot confirm a team invitation any more
       team_invitation_accepted_message: >
-        Team confirmation has been accepted
+        Team confirmation has been accepted. Please proceed to submit a project proposal.
       team_invitation_rejected_message: >
         Team confirmation has been rejected
     edit:

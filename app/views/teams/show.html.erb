@@ -4,7 +4,7 @@
     <div class="panel-heading">
       <h1>
         <%= render 'team_name_representation', locals: {team: @team} %>
-        <% if can_current_user_edit_team %>
+        <% if can_current_user_edit_team%>
             <a href="<%= edit_team_path(@team) %>" class="btn btn-info">Edit Team</a>
         <% end %>
         <% if !@team.mentor_id.present? &&
@@ -87,7 +87,11 @@
             <div class="well">
               <p class="small"><%= t '.basic_info_instruction' %></p>
             </div>
-            <%= render 'team_basic_info', locals: {team: @team, teamsMentorMatchings: @teamsMentorMatchings} %>
+            <% if Time.now + 8.hours < get_portal_open_date %>
+              <%= render 'pending_team_basic_info', locals: {team: @team} %>
+            <% else %>
+              <%= render 'team_basic_info', locals: {team: @team, teamsMentorMatchings: @teamsMentorMatchings} %>
+            <% end %>
           </div>
           <% if current_user_admin? %>
             <div role="tabpanel" class="tab-pane fade" id="mentor-matching-status-panel">

@@ -1,0 +1,19 @@
+<% content_for :main_content do %>
+    <div class="container">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="text-center">Do Evaluation</h3>
+        </div>
+        <div class="panel-body">
+          <p>Please read other teams' proposals and rank them. You are required to give candid and careful feedback.</p>
+          <p>After submitting the peer evaluation feedback, please retain the google form email as your submission proof.</p>
+          <ul class="list-group">
+            <% links.each_with_index do |link, i| %>
+            <li class="list-group-item"><a href = "<%= link %>" target="_blank">Team <%=i + 1%> Proposal</a></li>
+            <% end %>
+            <li class="list-group-item"><a href = "<%= AdminLink.find_by(name: 'peer_evaluation_form').url %>" target="_blank">Feedback Form</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<% end %>

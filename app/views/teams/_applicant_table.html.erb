@@ -1,0 +1,31 @@
+<table id = "teams-table" class="table tablesorter">
+  <thead>
+  <tr>
+    <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Student 1</th><th>Student 2</th>
+    <th>Application Stage</th><th>Average Ranking</th>
+    <th class="unsortable">Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% locals[:teams].each_with_index do |team, idx| %>
+      <tr>
+        <td class="col-md-1"><%= idx + 1 %></td>
+        <td class="col-md-1">
+          <%= render 'team_name_representation', locals: {team: team} %>
+        </td>
+        <td class="col-md-1"><%= team.get_team_members[0] == nil ? "": team.get_team_members[0].user_name %></td>
+        <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
+        <td class="col-md-1"><%= team.application_status%></td>
+        <td class="col-md-1"><%= team.avg_rank%></td>
+        <td class="col-md-1">
+          <% if can_current_user_view_team(team) %>
+            <a class="btn btn-primary btn-xs" href="<%=  team_path(team.id) %>">View</a>
+          <% end %>
+          <% if can_current_user_edit_team(team)%>
+            <a class="btn btn-default btn-xs" href="<%= select_team_path(team.id) %>">Edit</a>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

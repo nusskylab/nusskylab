@@ -1,19 +1,356 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h1>
-      <% if (not locals[:student]) %>
-          <span class="text-danger">Not a student </span>
-      <% else %>
-          <span><%= locals[:student].user.user_name %> </span>
-      <% end %>
-      <% if (not locals[:student]) %>
-          <span class="text-danger"> (Not a student)</span>
-      <% elsif locals[:student] and (not locals[:student].team_id) %>
-          <span class="text-muted"> (Currently no team)</span>
-      <% end %>
-    </h1>
+<% content_for :main_content do %>
+  <% javascript 'users.js' %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>
+        <span>Hi, <%= User.find_by(id: locals[:student].user_id).user_name %> </span>
+      </h2>
+    </div>
+    <div class="panel-body">
+      <div role="tabpanel">
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active" id="user-roles">
+            <div class="col-sm-12">	
+            <br>		
+              <div class="jumbotron">
+                <% form_team_ddl = ApplicationDeadline.find_by(name: 'form team deadline').submission_deadline.to_s[0..-10]
+                    submit_proposal_ddl = ApplicationDeadline.find_by(name: 'submit proposal deadline').submission_deadline.to_s[0..-10]
+                    peer_evaluation_open_date = ApplicationDeadline.find_by(name: 'peer evaluation open date').submission_deadline.to_s[0..-10]
+                    peer_evaluation_ddl = ApplicationDeadline.find_by(name: 'peer evaluation deadline').submission_deadline.to_s[0..-10]
+                    result_release_date = ApplicationDeadline.find_by(name: 'result release date').submission_deadline.to_s[0..-10]
+                    portal_open_date = ApplicationDeadline.find_by(name: 'portal open date').submission_deadline.to_s[0..-10] %>
+                <!-- to-do: should maintain only 1 application status for either student or team -> team -->
+                <% status = get_student_team_application_status(locals[:student])%>
+
+                <% if Time.now + 8.hours < form_team_ddl%> <!-- prompt or (invited or invitor) or wait -->
+                  <% if status == 'a' %>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #f0ad4e; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #f0ad4e;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0275d8;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0275d8;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <% if !locals[:student].team %>
+                      <p>	
+                        You have not formed a team. You may <a href="<%= register_as_team_user_path(locals[:student].user_id) %>" class="btn btn-warning">invite</a> a teammate now.
+                      </p>
+                      <p>
+                        Please ensure that you are in a team by <%= form_team_ddl %>.
+                      </p>
+                    <% elsif locals[:student].team.invitor_student_id != locals[:student].id %>	
+                      <p>	
+                        You have been invited to participate in Orbital as a team with <strong><%= locals[:student].team.invitor_student.user.user_name %></strong>. Respond to <a href="<%= register_as_team_user_path(locals[:student].user_id) %>" class="btn btn-warning"> the invitation </a> now?	
+                      </p>
+                      <p>
+                        Please ensure that you are in a team by <%= form_team_ddl %>.
+                      </p>	
+                    <% elsif locals[:student].team.invitor_student_id == locals[:student].id %>	
+                      <p>	
+                        You have invited <strong><%= locals[:student].team.invitee_student.user.user_name %></strong> to your team and we are waiting for his/her confirmation.
+                      </p>	
+                      <p>
+                        You may <a href="<%= withdraw_invitation_student_path(locals[:student].user_id) %>" class="btn btn-warning">withdraw</a> your invitation to start over.
+                      </p>
+                      <p>
+                        Please ensure that you are in a team by <%= form_team_ddl %>.
+                      </p>
+                    <% end %>
+                  <% elsif status == 'b' %>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #f0ad4e; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #f0ad4e;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0275d8;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <% parter_name = locals[:student].team.students[0].id == locals[:student].id ? locals[:student].team.get_team_members[1].user_name : locals[:student].team.get_team_members[0].user_name%>
+                    <p>	
+                    You have successfully teamed up with <strong><%= parter_name%></strong>. Please <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
+                    </p>
+                  <% elsif status == 'c'%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0275d8;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p>
+                    Your team has submitted the project proposal on time. Please ensure that the <a href="<%= locals[:student].team.proposal_link %>" class="btn btn-default" target="_blank">submitted proposal</a> is correct 
+                    and come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no further action required from you for now.
+                    </p>
+                    <p>
+                    You may <a href="<%= remove_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning">delete</a> your old submission and resubmit by the deadline.
+                    </p>
+                  <% end %>
+                <% elsif Time.now + 8.hours > form_team_ddl and Time.now + 8.hours < submit_proposal_ddl%> <!-- fail or prompt or wait-->
+                  <% if status == 'a'%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p> You did not form a team on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
+                  <% elsif status == 'b'%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                      <br>
+                      <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                        <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                        <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                        <div style="background: #f0ad4e; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                        <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #f0ad4e;"></div>
+                        <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                        <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0275d8;"></div>
+                        <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                      </div>
+                      <br>
+                      <% parter_name = locals[:student].team.students[0].id == locals[:student].id ? locals[:student].team.get_team_members[1].user_name : locals[:student].team.get_team_members[0].user_name%>
+                      <p>	
+                      You have successfully teamed up with <strong><%= parter_name%></strong>. Please <a href="<%= submit_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning"> submit </a> a project proposal for your team by <%= submit_proposal_ddl %>. Only one member of the team needs to do the submission. 
+                      </p>
+                  <% elsif status == 'c'%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0275d8;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p>
+                    Your team has submitted the project proposal on time. Please ensure that the <a href="<%= locals[:student].team.proposal_link %>" class="btn btn-default" target="_blank">submitted proposal</a> is correct 
+                    and come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no further action required from you for now.
+                    </p>
+                    <p>
+                    You may <a href="<%= remove_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning">delete</a> your old submission and resubmit by the deadline.
+                    </p>
+                  <% else%>
+                    <p> Invalid application status. Please check with the admin for more information. </p>
+                  <% end%>
+                <% elsif Time.now + 8.hours > submit_proposal_ddl and Time.now + 8.hours < peer_evaluation_open_date%> <!-- fail or wait-->
+                  <% if status == 'a'%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p> You did not form a team on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
+                  <% elsif status == 'b' %>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p> Your team did not submit the project proposal on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
+                  <% elsif status == 'c'%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0275d8;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p>
+                      Your team has submitted the project proposal on time. Please come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no further action required from you for now.
+                    </p>
+                  <% else%>
+                    <p> Invalid application status. Please check with the admin for more information. </p>
+                  <% end%>
+                <% elsif Time.now + 8.hours > peer_evaluation_open_date and Time.now + 8.hours < result_release_date%> <!-- prompt/wait -->
+                  <% if status == 'a'%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p> You did not form a team on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
+                  <% elsif status == 'b' %>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p> Your team did not submit the project proposal on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
+                  <% elsif status == 'c' and Time.now + 8.hours < peer_evaluation_ddl%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #f0ad4e; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #f0ad4e;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p>Please <a href="<%= do_evaluation_student_path(locals[:student].user_id) %>" class="btn btn-warning">evaluate</a> other teams’ submissions by <%= peer_evaluation_ddl%>. <b>Both members of your team have to finish the evaluation.</b></p>
+                    <p>Note: After the submission, you will receive an email confirmation. Please retain the email as evidence of your submission and wait for the application result on <%= result_release_date%>.</p>
+                  <% elsif Time.now + 8.hours > peer_evaluation_ddl%>
+                    <p> We are currently shortlisting candidates. Please wait for the application result on <%= result_release_date%>.</p>
+                  <% end%>
+                <% elsif Time.now + 8.hours > result_release_date%> <!-- fail (peer eval or not selected) or success-->
+                  <% if status == 'a'%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p> You did not form a team on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
+                  <% elsif status == 'b' %>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p> Your team did not submit the project proposal on time, and therefore we cannot proceed with your application. Thanks for your participation! </p>
+                  <% elsif status == 'c'%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #0275d8;"></div>
+                      <div style="background: #0275d8; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p>
+                    Your team has submitted the project proposal on time. Please ensure that the <a href="<%= locals[:student].team.proposal_link %>" class="btn btn-default" target="_blank">submitted proposal</a> is correct 
+                    and come back to the Skylab for peer evaluation on <%= peer_evaluation_open_date %>. There is no further action required from you for now.
+                    </p>
+                    <p>
+                    You may <a href="<%= remove_proposal_student_path(locals[:student].user_id) %>" class="btn btn-warning">delete</a> your old submission and resubmit by the deadline.
+                    </p>
+                  
+                  <% elsif status[0..1] == 'cf' %>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                    <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <p>Your team did not submit the peer evaluation on time, and therefore we cannot proceed with your application. Thanks for your participation!</p>
+                  <% elsif status == 'success'%>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                      <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #5cb85c;"></div>
+                      <div style="background: #5cb85c; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p>Application status: Successful.</p>
+                    <p>You will be able to access the Skylab as an official student from <%= portal_open_date %>.</p>
+                  <% else %>
+                    <div style="margin: 0 auto; font-size: 20px; text-align: center;">Application Procedure</div>
+                        <br>
+                    <div style="overflow: hidden; width: 1000px; margin: auto; padding-left: 42px; text-align: center;">
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Form Team</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Submit Proposal</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Peer Evaluation</div>
+                      <div style="float: left; width: 0; height: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 20px solid #c2c2c2;"></div>
+                      <div style="background: #c2c2c2; width: 210px; height: 40px; float: left; color: white; padding-top: 10px;">Release of application result</div>
+                    </div>
+                    <br>
+                    <p> Application status: Unsuccessful. </p>
+                    <p> Thank you for your participation!</p> 
+                  <% end %>
+                <% else %> <!-- invalid status-->
+                  <p> Invalid application status. Please check with the admin for more information. </p>
+                <% end%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="panel-body">
-    <%= t ('students.show.pending_instruction') %>
-  </div>
-</div>
+<% end %>

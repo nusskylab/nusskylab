@@ -1,7 +1,6 @@
 <% content_for :main_content do %>
     <% javascript 'teams.js' %>
     <%= stylesheet_link_tag :teams %>
-    <div class="panel panel-info" style="width: min-content">
       <div class="panel-heading">
         <h3 class="text-center">Teams in cohort <%= cohort %></h3>
       </div>
@@ -18,8 +17,7 @@
           </div>
           <% end %>
         </div>
-        <br><hr>
-        <%= render 'teams_table', locals: { teams: @teams } %>
+        <%= render 'teams_table', locals: { teams: @teams} %>
         <br><br><hr>
         <div class="col-sm-12">
           <% all_cohorts.each do |cohort| %>

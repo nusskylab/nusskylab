@@ -50,6 +50,7 @@ source 'https://rubygems.org' do
   gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
   # Gravatar
   gem 'gravtastic', '~> 3.2.6'
+  gem 'whenever', require: false
 
   # Use Capistrano for deployment
   # gem 'capistrano-rails', group: :development

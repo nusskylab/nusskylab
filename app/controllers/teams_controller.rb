@@ -83,6 +83,36 @@ class TeamsController < ApplicationController
     end
   end
 
+  def upload_csv
+    !authenticate_user(true, true) && return
+  end
+
+  def update_teams
+    require 'csv'
+    uploaded_io = params[:team][:uploaded_csv]
+    File.open(File.join('public', uploaded_io.original_filename), 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
+    csv_text = CSV.read(Rails.root.join('public', uploaded_io.original_filename))
+    for i in 0..csv_text.length - 1
+      if i == 0
+        next
+      end
+      row = csv_text[i]
+      rank = row[0]
+      teamID = row[1]
+      avg_rank = row[2]
+      application_status = row[-1]
+      team_to_update = Team.find_by(id: teamID)
+      team_to_update.avg_rank = avg_rank
+      team_to_update.application_status = application_status
+      team_to_update.save
+    end
+    redirect_to applicant_main_teams_path(), flash: {
+      success: 'Success.'
+    }
+  end
+
   def destroy
     !authenticate_user(true, true) && return
     @team = Team.find(params[:id])
@@ -176,13 +206,233 @@ class TeamsController < ApplicationController
     end
   end
 
+  def applicant_eval
+    !authenticate_user(true, true) && return
+    cohort = params[:cohort] || current_cohort
+    cohort = cohort.to_i
+    if current_user_admin?
+      @teams = Team.where("cohort = ? and application_status = ?", cohort, 'c')
+    else
+      fail ActionController::RoutingError, "routing error"
+    end
+    render locals: {
+      cohort: cohort,
+      teams: @teams,
+      submit_proposal_ddl: ApplicationDeadline.find_by(name: 'submit proposal deadline').submission_deadline,
+    }
+  end
+
+  def applicant_main
+    !authenticate_user(true, true) && return
+    cohort = current_cohort
+    peer_eval_ddl = ApplicationDeadline.find_by(name: 'peer evaluation deadline').submission_deadline
+    result_release_date = ApplicationDeadline.find_by(name: 'result release date').submission_deadline
+    render locals: {
+        cohort: cohort,
+        peer_eval_ddl: peer_eval_ddl,
+        result_release_date: result_release_date,
+    }
+  end
+
+  def getEvaluatedTeams(beginI, endI, teamID, teamIDs, size)
+    if beginI + size - 1 > endI
+        teamsBack = teamIDs[beginI..teamIDs.length - 1]
+        teamsFront = teamIDs[0..endI]
+        teams = teamsFront + teamsBack
+    else
+        teams = teamIDs[beginI..endI]
+    end
+    return teams
+  end
+
+  def applicant_eval_matching
+    !authenticate_user(true, true) && return
+    cohort = current_cohort
+    teams = Team.where("application_status = ? and cohort = ?", "c", cohort)
+    teamIDs = []
+    teams.each do |team|
+      teamIDs << team.id
+    end
+    if params[:matching_size].blank?
+      size = 3
+    else
+      size = params[:matching_size].to_i
+    end
+    teamIDs.each do |teamID|
+      team = Team.find_by(id: teamID)
+      team.evaluator_students = []
+      team.save
+    end
+    students = Student.all
+    students.each do |student|
+      student.evaluatee_ids = []
+      student.save
+    end
+
+    teamIDs.shuffle
+    teamIDs.each_with_index do |teamID, i|
+      team = Team.find_by(id: teamID)
+      members = team.students
+      member1Begin = (i + 1) % teamIDs.length
+      member1End = (i + size) % teamIDs.length
+      member2Begin = (i + size + 1) % teamIDs.length
+      member2End = (i + size + size) % teamIDs.length
+      teamsBy1 = getEvaluatedTeams(member1Begin, member1End, teamID, teamIDs, size)
+      teamsBy2 = getEvaluatedTeams(member2Begin, member2End, teamID, teamIDs, size)
+      members[0].evaluatee_ids = teamsBy1
+      members[1].evaluatee_ids = teamsBy2
+      members[0].save
+      members[1].save
+      uid = members[0].user_id
+      @user = User.find_by(id: uid)
+      teamsBy1.each do |team|
+        @team = Team.find_by(id: team)
+        if not @team.evaluator_students.include?(@user.email)
+          @team.evaluator_students << @user.email
+          @team.save
+        end
+      end
+      uid = members[1].user_id
+      @user = User.find_by(id: uid)
+      teamsBy2.each do |team|
+        @team = Team.find_by(id: team)
+        if not @team.evaluator_students.include?(@user.email)
+          @team.evaluator_students << @user.email
+          @team.save
+        end
+      end
+    end
+    redirect_to applicant_eval_teams_path, flash: {
+      success: 'Success.'
+    }
+  end
+  
+  def prepare_eval
+    !authenticate_user(true, true) && return
+    cohort = current_cohort
+    render locals: {
+        teams: Team.where("application_status = ? and cohort = ?", "c", cohort)
+    }
+  end
+
+  def show_evaluators 
+    !authenticate_user(true, true) && return
+    team = Team.find(params[:id]) || (record_not_found && return)
+    evaluators = team.evaluator_students
+    evaluator_names = []
+    evaluators.each do |evaluator| 
+      user = User.find_by(email: evaluator)
+      evaluator_names << user.user_name
+    end
+    render locals: {
+      team: team,
+      evaluators: evaluators,
+      evaluator_names: evaluator_names
+    }
+  end
+
+  def edit_evaluators
+    !authenticate_user(true, true) && return
+    team = Team.find(params[:id]) || (record_not_found && return)
+    evaluators = team.evaluator_students
+    evaluator_names = []
+    evaluators.each do |evaluator| 
+      user = User.find_by(email: evaluator)
+      evaluator_names << user.user_name
+    end
+    render locals: {
+      team: team,
+      evaluators: evaluators,
+      evaluator_names: evaluator_names
+    }
+  end
+
+  def add_evaluators
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id]) || (record_not_found && return)
+    email_params = params.require(:team).permit(:email)
+    @team.evaluator_students << email_params[:email]
+    
+    @team.evaluator_students.each do |stu_email|
+      @user = User.find_by(email: stu_email)
+      @stu = Student.find_by(user_id: @user.id)
+      @stu.evaluatee_ids << @team.id
+      @stu.save
+    end
+
+    if @team.save!
+      redirect_to edit_evaluators_team_path(@team), flash: {
+        success: "Success."
+      }
+    else
+      redirect_to edit_evaluators_team_path(@team), flash: {
+        danger: "Action Failed."
+      }
+    end
+  end
+  
+  def delete_evaluator 
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id]) || (record_not_found && return)
+    render locals:{
+      team: @team,
+      evaluator_email: params[:evaluator_email]
+    }
+  end
+
+  def confirm_delete_relation
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id])
+    @team.evaluator_students.each do |stu_email|
+      @user = User.find_by(email: stu_email)
+      @stu = Student.find_by(user_id: @user.id)
+      @stu.evaluatee_ids.delete(@team.id)
+      @stu.save
+    end
+    @team.evaluator_students.delete(params[:evaluator_email] + '.com')
+    if @team.save!
+      redirect_to edit_evaluators_team_path(@team), flash: {
+        success: "Success."
+      }
+    else
+      redirect_to edit_evaluators_team_path(@team), flash: {
+        danger: "Action Failed."
+      }
+    end
+  end
+
+  def select
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id]) || (record_not_found && return)
+    render locals: {
+      team: @team
+    }
+  end
+
+  def update_status 
+    !authenticate_user(true, true) && return
+    @team = Team.find(params[:id]) || (record_not_found && return)
+
+    new_status = params.require(:team).permit(:application_status)[:application_status]
+    @team.application_status = new_status.to_s
+    if @team.save!
+      redirect_to applicant_main_teams_path, flash: {
+        success: "Success."
+      }
+    else
+      redirect_to applicant_main_teams_path, flash: {
+        danger: "Failed."
+      }
+    end
+  end
+
   private
 
   def team_params
     team_ps = params.require(:team).permit(:team_name, :project_level,
                                            :adviser_id, :mentor_id,
                                            :has_dropped, :cohort, :poster_link, 
-                                           :video_link, :status, :comment)
+                                           :video_link, :status, :comment, :application_status)
     team_ps[:project_level] = Team.get_project_level_from_raw(
       team_ps[:project_level]) if team_ps[:project_level]
     team_ps
@@ -215,4 +465,5 @@ class TeamsController < ApplicationController
       adviser_feedbacks: @team.get_feedbacks_for_adviser
     }
   end
+
 end

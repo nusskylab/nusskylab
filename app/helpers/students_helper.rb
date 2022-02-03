@@ -3,6 +3,10 @@ module StudentsHelper
     current_user_admin?
   end
 
+  def get_student_team_application_status(student)
+    student.team ? student.team.application_status : 'a'
+  end
+
   def get_student_team_name(student)
     student.team ? student.team.team_name : 'Nil'
   end

@@ -1,12 +1,12 @@
 <% content_for :main_content do %>
   <% javascript 'students.js' %>
-  <% if @role.is_pending %>
-    <%= render 'student_pending', locals: { student: @role } %>
-  <% elsif @role.team_id.blank? %>
-    <%= render 'student_without_team', locals: { student: @role } %>
-  <% else %>
+  <% stu = Student.find_by(id: @role.id)%>
+  <% status = get_student_team_application_status(stu) %>
+  <% if  Time.now + 8.hours > get_portal_open_date and status == 'success'%>
     <%= render 'student_with_team', locals: {
-      student: @role, role_data: role_data
+      student: stu, role_data: role_data
     } %>
+  <% else %>
+    <%= render 'student_pending', locals: { student: stu , status: status} %>
   <% end %>
 <% end %>

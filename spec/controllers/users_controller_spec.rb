@@ -222,12 +222,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(user_path(subject.current_user))
         expect(flash[:danger]).not_to be_nil
 
-        student = FactoryGirl.create(:student, user: subject.current_user, is_pending: false)
-        get :register_as_team, id: subject.current_user.id
-        expect(response).to render_template(:register_as_team)
-
-        student.is_pending = true
-        student.save
+        student = FactoryGirl.create(:student, user: subject.current_user, application_status: false)
         get :register_as_team, id: subject.current_user.id
         expect(response).to render_template(:register_as_team)
       end
@@ -265,7 +260,7 @@ RSpec.describe UsersController, type: :controller do
         expect(flash[:danger]).not_to be_nil
 
         team = FactoryGirl.create(:team, team_name: '1.user.controller.spec')
-        student = FactoryGirl.create(:student, user: user, team: team, is_pending: true)
+        student = FactoryGirl.create(:student, user: user, team: team, application_status: true)
         post :register_team, id: subject.current_user.id, team: {
           email: '1@user.controller.spec'
         }
@@ -280,7 +275,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(user_path(subject.current_user))
         expect(flash[:danger]).not_to be_nil
 
-        FactoryGirl.create(:student, user: subject.current_user, is_pending: true, team: nil)
+        FactoryGirl.create(:student, user: subject.current_user, application_status: true, team: nil)
         post :register_team, id: subject.current_user.id, team: {
           email: '1@user.controller.spec'
         }
@@ -307,7 +302,7 @@ RSpec.describe UsersController, type: :controller do
 
         current_user = subject.current_user
         team = FactoryGirl.create(:team, team_name: '1.user.controller.spec')
-        student = FactoryGirl.create(:student, user: current_user, team: team, is_pending: true)
+        student = FactoryGirl.create(:student, user: current_user, team: team, application_status: true)
         post :confirm_team, id: current_user.id, team: {'confirm': 'false'}
         expect(response).to redirect_to(user_path(subject.current_user))
         expect(flash[:success]).not_to be_nil
@@ -432,6 +427,52 @@ RSpec.describe UsersController, type: :controller do
         user = FactoryGirl.create(:user, email: '1@user.controller.spec', uid: '1.user.controller.spec')
         delete :destroy, id: (user.id + 1)
         expect(response.status).to eql 404
+      end
+    end
+  end
+
+  describe 'POST #confirm_purge_and_open' do
+    context 'purge button is triggered' do
+      login_admin
+      user1 = FactoryGirl.create(:user, email: '1@user.controller.spec', uid: '1.user.controller.spec')
+      user2 = FactoryGirl.create(:user, email: '2@user.controller.spec', uid: '2.user.controller.spec')
+      team = FactoryGirl.create(:team, team_name: '1.team.controller.spec')
+      student1 = FactoryGirl.create(:student, user: user1, team: team, evaluatee_ids: [team.id])
+      student2 = FactoryGirl.create(:student, user: user2, team: team, evaluatee_ids: [team.id])
+      team.students << student1
+      team.students << student2
+      team.save
+      it 'should purge successful students, teams and evaluating rels' do
+        post :confirm_purge_and_open
+        expect(Team.all.length).to eql(0)
+        expect(Student.all.length).to eql(0)
+        expect(flash[:success]).not_to be_nil
+        expect(response).to redirect_to(applicant_main_teams_path)
+      end
+    end
+  end
+
+  describe 'GET #purge_and_open' do
+    context 'user not logged in' do
+      it 'should redirect to root_path for non_user' do
+        get :purge_and_open
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'user logged in but not admin' do
+      login_user
+      it 'should redirect to home_path for non_admin' do
+        get :purge_and_open
+        expect(response).to redirect_to(controller.home_path)
+      end
+    end
+
+    context 'user logged in and admin' do
+      login_admin
+      it 'should render correspondeing template' do
+        get :purge_and_open
+        expect(response).to render_template(:purge_and_open)
       end
     end
   end

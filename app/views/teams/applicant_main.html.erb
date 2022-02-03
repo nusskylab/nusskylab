@@ -1,0 +1,34 @@
+<% content_for :main_content do %>
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="text-center"> Applicants Selection <%= cohort %></h3>
+    </div>
+    <div class="panel-body">
+        <% if Time.now + 8.hours < peer_eval_ddl %>
+          <p> Selection stage not reached yet.</p>
+        <% else %>
+          <% if Team.where("application_status > ? and cohort = ?", 'c', cohort).length == 0%>
+            <p>No eligible teams yet. Please check whether you have imported the applicants rank csv file.</p>
+            <p>To obtain the csv file, please run rank_applicants.py with <%= link_to 'Student CSV', students_path(format: 'csv', cohort: cohort), class: 'btn btn-primary' %> and the google form response csv file as input files.</p>
+            <p>Please then <a href="<%= upload_csv_teams_path %>" class="btn btn-default">import applicants rank</a>. </p>
+          <% else%>
+          <div class="col-sm-12">
+          <div class="col-sm-2 col-sm-offset-3">
+            <%= link_to 'Download Student CSV', students_path(format: 'csv', cohort: cohort), class: 'btn btn-primary' %>
+          </div>
+          <div class="col-sm-2 col-sm-offset-3">  
+            <a href="<%= upload_csv_teams_path %>" class="btn btn-warning">Import applicants rank</a>
+          </div>
+          </div>
+            <%= render 'applicant_table', locals: { teams: Team.where("application_status > ? and application_status != ? and cohort = ?", 'c', 'cf-never submit peer evaluation', cohort).order(:avg_rank)} %>
+            </p>
+          <% end %>
+        <% end %>
+        <% if Time.now + 8.hours > result_release_date %>
+        <div style="float: right; margin-right: 5em;">
+          <a href="<%= purge_and_open_users_path %>" class="btn btn-danger">Delete Unsuccessful Applicants</a>
+        </div>
+        <% end %>
+    </div>
+  </div>
+<% end %>

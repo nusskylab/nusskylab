@@ -71,8 +71,7 @@ class UsersController < ApplicationController
     registration.response_content = registration_params.to_json
     registration.save
     student = Student.student?(@user.id, cohort: current_cohort) ||
-              Student.new(user_id: @user.id, cohort: current_cohort,
-                          is_pending: true)
+              Student.new(user_id: @user.id, cohort: current_cohort)
     student.save
     redirect_to user_path(@user.id)
   end
@@ -107,6 +106,9 @@ class UsersController < ApplicationController
     return redirect_to user_path(@user.id), flash: {
       danger: t('.no_registered_student_found_message')
     } if !invited_student
+    # return redirect_to user_path(@user.id), flash: {
+    #   danger: t('.student_invited_by_others')
+    # } if invited_student.team_id
     return redirect_to user_path(@user.id), flash: {
       danger: t('.student_found_team_message')
     } if invited_student.team
@@ -114,10 +116,16 @@ class UsersController < ApplicationController
     return redirect_to user_path(@user.id), flash: {
       danger: t('.cannot_register_team_message')
     } if !invitor_student || invitor_student.team
+    teamID = 1
+    if Team.all.length != 0
+      teamID = Team.order('id').last.id + 1
+    end
     team = Team.new(
-      team_name: ("I am team #{Team.order('id').last.id + 1}"), is_pending: true,
+      team_name: ("I am team #{teamID}"), 
+      application_status: 'a',
       cohort: current_cohort, invitor_student_id: invitor_student.id,
       project_level: Team.get_project_level_from_raw("Project Gemini"))
+    # team.name = "team" + team.id.to_s
     team.save
     invited_student.team_id = team.id
     invited_student.save
@@ -138,7 +146,7 @@ class UsersController < ApplicationController
     } if !student_user || !student_user.team
     team = student_user.team
     if team_params[:confirm] == 'true'
-      team.is_pending = false
+      team.update_attribute(:application_status, 'b')
       team.save
       flash_message = t('.team_invitation_accepted_message')
     else
@@ -188,6 +196,58 @@ class UsersController < ApplicationController
     }
   end
 
+  def purge_and_open
+    !authenticate_user(true, true) && return
+  end
+  
+  def confirm_purge_and_open
+    !authenticate_user(true, true) && return
+    confirm_purge = params.permit(:confirm)
+
+    if confirm_purge[:confirm] == 'false'
+      flash_message = 'Cancelled.'
+    else
+      teams = Team.where("application_status != ?", "success")
+      teams.each do |team|
+        students = team.students
+        team.destroy
+        students.each do |stu|
+          stu.destroy
+        end
+      end
+
+      remaining_teams = Team.all
+      remaining_teams.each do |team|
+        team.evaluator_students = []
+        team.save
+      end
+
+      remaining_stus = Student.all
+      remaining_stus.each do |student|
+        if student.team.nil?
+          student.destroy
+        end
+      end
+
+      remaining_stus = Student.all
+      remaining_stus.each do |student|
+        student.evaluatee_ids = []
+        student.save
+      end
+      flash_message = 'Success.'
+    end
+
+    if flash_message == 'Success.'
+      redirect_to applicant_main_teams_path, flash: {
+        success: flash_message
+      }
+    else
+      redirect_to applicant_main_teams_path, flash: {
+        warning: flash_message
+      }
+    end
+  end
+
   private
 
   def user_params(generate_pswd = false)
@@ -204,37 +264,37 @@ class UsersController < ApplicationController
   end
  
   def calculate_matric_number(num)
-  matric_regex = /^A\d{7}|U\d{6,7}/
+    matric_regex = /^A\d{7}|U\d{6,7}/
 
-  if (num.present? && matric_regex.match(num.upcase))
-  matches = matric_regex.match(num.upcase)
-  match = matches[0]
+    if (num.present? && matric_regex.match(num.upcase))
+    matches = matric_regex.match(num.upcase)
+    match = matches[0]
 
-    if (match[0].eql?('U') && match.length === 8)
-      match = match[0, 3] + match[4]
-    end
+      if (match[0].eql?('U') && match.length === 8)
+        match = match[0, 3] + match[4]
+      end
 
-    weights = {
-      U: [0, 1, 3, 1, 2, 7],
-      A: [1, 1, 1, 1, 1, 1]
-    }
+      weights = {
+        U: [0, 1, 3, 1, 2, 7],
+        A: [1, 1, 1, 1, 1, 1]
+      }
 
-    weights = weights[:"#{match[0]}"]
+      weights = weights[:"#{match[0]}"]
 
-    sum = 0
-    digits = match[2, 7]
+      sum = 0
+      digits = match[2, 7]
 
       for i in 0..6 do
         sum += weights[i].to_i * digits[i].to_i
       end
-    calculated_id = match.to_s + 'YXWURNMLJHEAB' [sum % 13]
-        if(num.upcase == calculated_id)
-          return (match.to_s + 'YXWURNMLJHEAB' [sum % 13])
-        end
+      calculated_id = match.to_s + 'YXWURNMLJHEAB' [sum % 13]
+      if(num.upcase == calculated_id)
+        return (match.to_s + 'YXWURNMLJHEAB' [sum % 13])
+      end
+    end
+        #trigger invalid matric number warning if its not correct
+    return "invalid matric number" 
   end
-      #trigger invalid matric number warning if its not correct
-      return "invalid matric number" 
-end
 
   def registration_params
     params.require(:questions).permit!

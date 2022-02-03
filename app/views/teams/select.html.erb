@@ -1,0 +1,16 @@
+<% content_for :main_content do %>
+    <% javascript 'teams.js' %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="text-center">Edit Team Application Status</h3>
+      </div>
+      <div class="panel-body">
+        <%= simple_form_for(:team, wrapper: :horizontal_form, html: {class: 'form-horizontal'}, url: update_status_team_path(team)) do |f| %>
+          <% if current_user_admin? %>
+            <%= f.input :application_status, collection: {'Fail'.to_sym => 'fail', 'Success'.to_sym => 'success', 'd-pending selection'.to_sym => 'd-pending selection'}%>
+          <% end %>
+          <%= f.button :submit_centred, class: 'btn-success' %>
+        <% end %>
+      </div>
+    </div>
+<% end %>

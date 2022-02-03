@@ -53,17 +53,23 @@ class Team < ActiveRecord::Base
     ['Team ID', 'Team Name', 'Project Level', 'Has Dropped', 'Is Pending', 'Poster Link', 'Video Link',
      'Student 1 UserID', 'Student 1 Name', 'Student 1 Email', 'Student 2 UserID', 'Student 2 Name',
      'Student 2 Email', 'Adviser UserID', 'Adviser Name', 'Mentor UserID',
-     'Mentor Name', 'Average PE Score', 'Submission 1', 'Submission 2', 'Submission 3', 'Team Status', 'Comments']
+     'Mentor Name', 'Average PE Score', 'Submission 1', 'Submission 2', 'Submission 3', 'Team Status', 'Comments', 'Evaluator Students']
   end
 
   def to_csv_row
-    csv_row = [id, team_name, get_project_level, has_dropped, is_pending, poster_link, video_link]
+    csv_row = [id, team_name, get_project_level, has_dropped, application_status, poster_link, video_link]
     export_add_team_members(csv_row)
     export_adviser_and_mentor(csv_row)
     ratings_hash = get_average_evaluation_ratings
     csv_row.append(ratings_hash[:all])
     export_submission_status(csv_row)
     export_team_status(csv_row)
+    csv_row.append(self.evaluator_students)
+    csv_row
+  end
+
+  def export_add_team_members(csv_row)
+    csv_row.concat(members_data)
     csv_row
   end
 

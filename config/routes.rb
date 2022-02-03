@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   get '/auth/failure' => 'sessions#failure', :as => :nus_openid_login_failure
 
   resources :users do
+    get 'purge_and_open', on: :collection
+    post 'confirm_purge_and_open', on: :collection
+    patch 'confirm_purge_and_open', on: :collection
     member do
       post 'preview_as'
       get 'register_as_student'
@@ -36,6 +39,18 @@ Rails.application.routes.draw do
   resources :students do
     get 'new_batch', on: :collection
     post 'create_batch', on: :collection
+    member do
+      get 'withdraw_invitation'
+      get 'submit_proposal'
+      get 'remove_proposal'
+      post 'confirm_withdraw'
+      patch 'confirm_withdraw'
+      post 'upload_proposal'
+      patch 'upload_proposal'
+      post 'confirm_remove_proposal'
+      patch 'confirm_remove_proposal'
+      get 'do_evaluation'
+    end
   end
 
   resources :advisers, only: [:index, :new, :create, :show, :destroy] do
@@ -59,6 +74,7 @@ Rails.application.routes.draw do
     end
   end
   resources :mentor_matchings, only: :index
+
   resources :admins, only: [:index, :new, :create, :show, :destroy] do
     get 'new_batch', on: :collection
     post 'create_batch', on: :collection
@@ -78,7 +94,28 @@ Rails.application.routes.draw do
     get 'new_batch', on: :collection
     post 'create_batch', on: :collection
   end
+
+  get '/teams/prepare_eval', to: 'teams#prepare_eval'
+  get '/teams/:id/delete_evaluator_team_path/:evaluator_email', to: 'teams#delete_evaluator', as: :delete_eval
+  patch '/teams/:id/confirm_delete_relation_team_path/:evaluator_email', to: 'teams#confirm_delete_relation', as: :delete_rel
+  #todo: change to  on collection
   resources :teams do
+    get 'upload_csv', on: :collection
+    post 'update_teams', on: :collection
+    patch 'update_teams', on: :collection
+    post 'applicant_eval_matching', on: :collection
+    patch 'applicant_eval_matching', on: :collection
+    get 'applicant_eval', on: :collection
+    get 'applicant_main', on: :collection
+    member do
+      get 'select'
+      post 'update_status'
+      patch 'update_status'
+      get 'show_evaluators'
+      get 'edit_evaluators'
+      post 'add_evaluators'
+      patch 'add_evaluators'
+    end
     resources :feedbacks, only: [:new, :create, :edit, :update]
     member do
       get 'match_mentor'
@@ -100,6 +137,10 @@ Rails.application.routes.draw do
       resources :peer_evaluations, only: [:new, :create, :edit, :update, :show]
     end
   end
+
+  resources :application_deadlines, only: [:index, :edit, :update]
+  resources :admin_links, only: [:index, :edit, :update]
+
   resources :survey_templates, except: [:destroy] do
     member do
       get 'preview'

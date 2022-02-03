@@ -1,11 +1,13 @@
 <table id = "teams-table" class="table tablesorter">
-  <thead>
-  <tr>
-    <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th><th>Status</th><th>Student 1</th><th>Student 2</th>
-    <th>Adviser</th><th>Mentor</th><th>Mil. 1</th><th>Mil. 2</th><th>Mil. 3</th><th class="unsortable">Actions</th>
-  </tr>
-  </thead>
-  <tbody>
+  
+  <% if Time.now + 8.hours > get_portal_open_date %>
+    <thead>
+      <tr>
+        <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Project Level</th><th>Has dropped</th><th>Status</th><th>Student 1</th><th>Student 2</th>
+        <th>Adviser</th><th>Mentor</th><th>Mil. 1</th><th>Mil. 2</th><th>Mil. 3</th><th class="unsortable">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
     <% locals[:teams].each_with_index do |team, idx| %>
       <tr>
         <td class="col-md-1"><%= idx + 1 %></td>
@@ -17,7 +19,7 @@
         <td class="col-md-1 <%= team.get_team_status_short + '_status' %>", title='<%= team.get_team_status + "\n" %><%= team.get_team_comment %>'>
           <%= team.get_team_status_short %>
         </td>
-        <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[0].user_name %></td>
+        <td class="col-md-1"><%= team.get_team_members[0] == nil ? "": team.get_team_members[0].user_name %></td>
         <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
         <td class="col-md-1"><%= team.adviser ? team.adviser.user.user_name : 'Not assigned' %></td>
         <td class="col-md-1"><%= team.mentor ? team.mentor.user.user_name : 'Not assigned' %></td>
@@ -37,6 +39,41 @@
           <% if can_current_user_view_team(team) %>
             <a class="btn btn-primary btn-xs" href="<%=  team_path(team.id) %>">View</a>
           <% end %>
+          <% if can_current_user_edit_team(team)%>
+            <% if Time.now + 8.hours < get_portal_open_date %>
+              <a class="btn btn-default btn-xs" href="<%= select_team_path(team.id) %>">Edit</a>
+            <% else %>
+              <a class="btn btn-default btn-xs" href="<%= edit_team_path(team.id) %>">Edit</a>
+            <% end %>
+          <% end %>
+          <% if can_current_user_delete_team(team) %>
+            <%= link_to 'Delete', team_path(team.id), method: :delete, class: 'btn btn-danger btn-xs',
+              data: { confirm: 'Are you sure you want to delete this team and all associated resources?' } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+  <% else %>
+    <thead>
+      <tr>
+        <th class="unsortable sort-index">Index</th><th>Team Name</th><th>Application Status</th><th>Student 1</th><th>Student 2</th><th class="unsortable">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% locals[:teams].each_with_index do |team, idx| %>
+      <tr>
+        <td class="col-md-1"><%= idx + 1 %></td>
+        <td class="col-md-1">
+          <%= render 'team_name_representation', locals: {team: team} %>
+        </td>
+        <td class="col-md-1"><%= team.application_status %></td>
+        <td class="col-md-1"><%= team.get_team_members[0] == nil ? "": team.get_team_members[0].user_name %></td>
+        <td class="col-md-1"><%= team.get_team_members[1] == nil ? "": team.get_team_members[1].user_name %></td>
+        <td class="col-md-1">
+          <% if can_current_user_view_team(team) %>
+            <a class="btn btn-primary btn-xs" href="<%=  team_path(team.id) %>">View</a>
+          <% end %>
           <% if can_current_user_edit_team(team) %>
             <a class="btn btn-default btn-xs" href="<%= edit_team_path(team.id) %>">Edit</a>
           <% end %>
@@ -48,4 +85,5 @@
       </tr>
     <% end %>
   </tbody>
+  <% end %>
 </table>
