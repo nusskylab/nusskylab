@@ -8,7 +8,7 @@
   </style>
 </head>
 <div class="panel panel-info">
-  <div class="panel-heading"><h3 class="text-center">User details</h3></div>
+  <div class="panel-heading"><h3 class="text-center">User Details</h3></div>
   <div class="panel-body">
     <div class="row">
     <div class="col-md-3">
@@ -21,6 +21,48 @@
       <div>LinkedIn: <%= auto_link(locals[:user].linkedin_link) %></div>
       <div>Personal website: <%= auto_link(locals[:user].blog_link) %></div>
       <div>Self Introduction: <%= auto_link(locals[:user].self_introduction) %></div>
+      <!-- Role Description -->
+      <!-- TODO: Users role description depend on the role they are using -->
+      <% if current_user_admin? %>
+        <div class="panel-group" id="accordion">
+          <a data-toggle="collapse" data-parent="#accordion" href="#role">Role: Admin</a>
+          <div id="role" class="panel-collapse collapse out">
+            As an admin, you have authority over all features. 
+            You can view/create/edit/delete users, teams, milestones and everything that is available on the navbar above. 
+            In addition, you can control registration and project level status under Registration Management, and preview as
+            any user.
+          </div>
+        </div>
+      <% elsif current_user_adviser? %>
+        <div class="panel-group" id="accordion">
+          <a data-toggle="collapse" data-parent="#accordion" href="#role">Role: Adviser</a>
+          <div id="role" class="panel-collapse collapse out">
+            As an adviser, you can view all students in the cohort, manage evaluation relationships and teams under you, and evaluate your teams.
+          </div>
+        </div>
+      <% elsif current_user_student? %>
+        <div class="panel-group" id="accordion">
+          <a data-toggle="collapse" data-parent="#accordion" href="#role">Role: Student</a>
+          <div id="role" class="panel-collapse collapse out">
+            As a student, you can update your project submissions and peer evaluations, edit your team's name and links, and interact in the forum.
+          </div>
+        </div>
+      <% elsif current_user_mentor? %>
+        <div class="panel-group" id="accordion">
+          <a data-toggle="collapse" data-parent="#accordion" href="#role">Role: Mentor</a>
+          <div id="role" class="panel-collapse collapse out">
+            As a mentor, you can view/edit the details (except for project level) of the teams you are mentoring, as well as matching mentors.
+          </div>
+        </div>
+      <% else %>
+        <div class="panel-group" id="accordion">
+          <a data-toggle="collapse" data-parent="#accordion" href="#role">Role: User</a>
+          <div id="role" class="panel-collapse collapse out">
+            As a user, you can view past orbital projects and staff, and interact in the forum.
+          </div>
+        </div>
+      <% end %>
+      
     </div>
     <div class="col-sm-12"><br><i>You may change your profile picture with <a href="http://www.gravatar.org/">Gravatar</a>.</i></div>
     </div>

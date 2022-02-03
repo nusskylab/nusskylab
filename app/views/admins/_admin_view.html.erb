@@ -10,7 +10,7 @@
         <li role="presentation" class="active">
           <a href="#user-details" aria-controls="user-details"
              role="tab" data-toggle="tab">
-            User details
+            User Details
           </a>
         </li>
         <li role="presentation">
@@ -24,7 +24,6 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane fade in active" id="user-details">
         <div class="col-sm-12">
-          <div class="well">You can use navbar above to look around</div>
           <%= render 'users/user_details', locals: {user: locals[:admin].user} %>
           <br>
           <hr>

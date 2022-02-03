@@ -12,6 +12,12 @@
     <div role="tabpanel">
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
+          <a href="#user-details" aria-controls="user-details"
+            role="tab" data-toggle="tab">
+            User Details
+          </a>
+        </li>
+        <li role="presentation">
           <a href="#project-panel" aria-controls="project-panel"
              role="tab" data-toggle="tab">
             Submit project log
@@ -43,7 +49,12 @@
         </li>
       </ul>
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade in active" id="project-panel">
+        <div role="tabpanel" class="tab-pane fade in active" id="user-details">
+          <div class="col-sm-12">
+            <%= render 'users/user_details', locals: {user: locals[:student].user} %>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="project-panel">
           <h2 class="text-center">Submissions</h2>
           <div class="well">
             <p class="small"><%= t '.submit_submission_instruction' %></p>

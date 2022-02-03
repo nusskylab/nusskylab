@@ -8,6 +8,12 @@
     <div role="tabpanel">
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
+          <a href="#user-details" aria-controls="user-details"
+            role="tab" data-toggle="tab">
+            User Details
+          </a>
+        </li>
+        <li role="presentation">
           <a href="#teams-panel" aria-controls="teams-panel"
              role="tab" data-toggle="tab">
             View all your teams
@@ -29,7 +35,12 @@
         <% end %>
       </ul>
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade in active" id="teams-panel">
+        <div role="tabpanel" class="tab-pane fade in active" id="user-details">
+          <div class="col-sm-12">
+            <%= render 'users/user_details', locals: {user: locals[:mentor].user} %>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="teams-panel">
           <h2 class="text-center">Teams</h2>
           <%= render 'mentors_teams', locals: {mentor: @role} %>
           <hr/>

@@ -1,0 +1,78 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>
+        <span>Hi, <%= @role.user.user_name %> </span>
+      </h2>
+    </div>
+    <div class="panel-body">
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#user-details" aria-controls="user-details"
+              role="tab" data-toggle="tab">
+              User Details
+            </a>
+          </li>
+          <li role="presentation">
+            <a href="#teams-panel" aria-controls="teams-panel"
+               role="tab" data-toggle="tab">
+              View all your teams
+            </a>
+          </li>
+          <li role="presentation">
+            <a href="#evaluations-panel" aria-controls="evaluations-panel"
+               role="tab" data-toggle="tab">
+              Submit evaluations
+            </a>
+          </li>
+          <li role="presentation">
+            <a href="#evaluatings-panel" aria-controls="evaluatings-panel"
+               role="tab" data-toggle="tab">
+              View more info
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active" id="user-details">
+            <div class="col-sm-12">
+              <%= render 'users/user_details', locals: {user: locals[:adviser].user} %>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="teams-panel">
+            <h2 class="text-center">Teams</h2>
+            <div class="well">
+              <p class="small"><%= t '.view_teams_instruction' %></p>
+            </div>
+            <%= render 'adviser_teams', locals: { adviser: @role, milestones: locals[:milestones]} %>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="evaluations-panel">
+            <h2 class="text-center">Evaluations</h2>
+            <div class="well">
+              <p class="small"><%= t '.evaluation_instruction' %></p>
+            </div>
+            <%= render 'adviser_milestones', locals: {
+              adviser: @role,
+              milestones: locals[:milestones],
+              teams_submissions: locals[:teams_submissions],
+              own_evaluations: locals[:own_evaluations]
+            } %>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="evaluatings-panel">
+            <h2 class="text-center">More info</h2>
+            <div class="well">
+              <p class="small"><%= t '.more_info_instruction' %></p>
+            </div>
+            <hr>
+            <div class="text-center">
+              You can view feedbacks for you
+              <a href="<%= milestone_adviser_received_feedbacks_path(3, @role.id) %>"
+                 class="btn btn-success">here</a>
+              <br><hr>
+              You can send emails to your students via
+              <%= link_to 'General Mailing', general_mailing_adviser_path(@role.id), class: 'btn btn-success' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

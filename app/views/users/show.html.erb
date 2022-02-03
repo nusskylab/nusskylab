@@ -43,13 +43,17 @@
                 <% adm, adv, men, stu = user_admin?, user_adviser?, user_mentor?, user_student? %>	
                 <% if adm or adv or men or stu %>	
                 <p>Use Skylab as:</p>	
-                <p>	
-                  <% if adm and adv %>	
-                    <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>	
-                    <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>	
-                  <% elsif adm %>	
-                    <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>	
-                  <% elsif adv %>	
+                <p>
+                  <!-- Only admin can take on multiple roles -->
+                  <% if adm %>	
+                    <a href="<%= admin_path(adm.id) %>" class="btn btn-primary btn-lg">An Admin</a>
+                    <% if adv %>
+                      <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>	
+                    <% end %>
+                    <% if men %>
+                      <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">A Mentor</a>
+                    <% end %>
+                  <% elsif adv %>
                     <a href="<%= adviser_path(adv.id) %>" class="btn btn-primary btn-lg">An Adviser</a>	
                   <% elsif men %>	
                     <a href="<%= mentor_path(men.id) %>" class="btn btn-primary btn-lg">A Mentor</a>	
