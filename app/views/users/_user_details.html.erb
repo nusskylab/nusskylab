@@ -22,6 +22,7 @@
       <div>Personal website: <%= auto_link(locals[:user].blog_link) %></div>
       <div>Self Introduction: <%= auto_link(locals[:user].self_introduction) %></div>
       <!-- Role Description -->
+      <!-- TODO: Users role description depend on the role they are using -->
       <% if current_user_admin? %>
         <div class="panel-group" id="accordion">
           <a data-toggle="collapse" data-parent="#accordion" href="#role">Role: Admin</a>
