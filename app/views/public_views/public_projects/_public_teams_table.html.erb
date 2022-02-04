@@ -35,7 +35,7 @@
     <a role="button" onclick="createModalBox(<%= team.team_name %>)" id="button_<%= team.team_name %>">
       <% if !team.poster_link.blank? %>
         <%= link_to image_tag(team.poster_link, size: "200", alt: "Team's Poster Link is not in image form",
-          title: "Click to view an enlarged version of this image.", id: "img_#{team.team_name}", onerror: "onerror=null;replaceImg(this, '#{team.project_level}')"), team.poster_link %>
+          title: "Click to view an enlarged version of this image.", id: "img_#{team.team_name}", onerror: "onerror=null;replaceImg(this, '#{team.project_level}')"), team.poster_link, target: :_blank, rel: 'noopener noreferrer' %>
       <% elsif locals[:selected_type] == 'Vostok' %>
         <%= image_tag("Vostok_Icon.jpg", size: "200", class: 'img-rounded inactive_link') %>
       <% elsif locals[:selected_type] == 'Project Gemini' %>
@@ -81,7 +81,7 @@
       <% if not submissions.length == 0 %>
         <% if not submissions[-1].video_link.blank? %>
           <div class="col-md-6">
-            <a role="button" class="button button_video" href="<%= submissions[-1].video_link %>">
+            <a role="button" class="button button_video" href="<%= submissions[-1].video_link %>"  target="_blank" rel="noopener noreferrer">
               Watch Project Video
             </a>
           </div>
@@ -90,7 +90,7 @@
         <% end %>
         <% if not submissions[-1].poster_link.blank? %>
           <div class="col-md-6">
-            <a role="button" class="button button_video" href="<%= submissions[-1].poster_link %>">
+            <a role="button" class="button button_video" href="<%= submissions[-1].poster_link %>"  target="_blank" rel="noopener noreferrer">
               View Project Poster
             </a>
           </div>
