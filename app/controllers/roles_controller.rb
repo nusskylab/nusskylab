@@ -104,6 +104,7 @@ class RolesController < ApplicationController
 
   def show
     @role = role_cls.find(params[:id])
+    #if the user is not authenticated then an error is shown
     !authenticate_user(true, false, additional_users_for_show) && return
     @page_title = t('.page_title', user_name: @role.user.user_name)
     render locals: {
