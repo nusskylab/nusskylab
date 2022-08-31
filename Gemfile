@@ -21,7 +21,7 @@ source 'https://rubygems.org' do
   # Use devise for email sign-up and sign-in
   gem 'devise', '~> 3.5.2'
   # Use omniauth for openid authentication
-  gem 'omniauth', '~> 1.6.1'
+  gem 'omniauth', '~> 1.9.2'
   gem 'omniauth-openid', '~> 1.0.1'
 
   # Turbolinks makes following links in your web application faster.
